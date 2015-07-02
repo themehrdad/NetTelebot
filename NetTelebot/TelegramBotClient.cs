@@ -293,6 +293,15 @@ namespace NetTelebot
             {
                 updateTimer = new Timer(updateTimer_Callback, null, CheckInterval, Timeout.Infinite);
             }
+            else
+            {
+                updateTimer.Change(CheckInterval, Timeout.Infinite);
+            }
+        }
+
+        public void StopCheckUpdates()
+        {
+            updateTimer.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
         private void updateTimer_Callback(object state)
