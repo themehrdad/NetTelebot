@@ -8,14 +8,17 @@ using System.Threading.Tasks;
 
 namespace NetTelebot
 {
+    /// <summary>
+    /// This object represents a group chat.
+    /// </summary>
     public class GroupChatInfo :IConversationSource
     {
-        public GroupChatInfo(string jsonText)
+        internal GroupChatInfo(string jsonText)
         {
             Parse(jsonText);
         }
 
-        public GroupChatInfo(JObject jsonObject)
+        internal GroupChatInfo(JObject jsonObject)
         {
             Parse(jsonObject);
         }
@@ -31,8 +34,13 @@ namespace NetTelebot
             var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
-
+        /// <summary>
+        /// Unique identifier for this group chat
+        /// </summary>
         public int Id { get; set; }
+        /// <summary>
+        /// Unique identifier for this group chat
+        /// </summary>
         public string Title { get; set; }
     }
 }

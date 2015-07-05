@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace NetTelebot
 {
+    /// <summary>
+    /// When calling GetUserProfilePhotos method on TelegramBotClient class, this object will be returned.
+    /// </summary>
     public class GetUserProfilePhotosResult
     {
-        public GetUserProfilePhotosResult(string jsonText)
+        internal GetUserProfilePhotosResult(string jsonText)
         {
             Parse(jsonText);
         }
-        public GetUserProfilePhotosResult(JObject jsonObject)
+        internal GetUserProfilePhotosResult(JObject jsonObject)
         {
             Parse(jsonObject);
         }

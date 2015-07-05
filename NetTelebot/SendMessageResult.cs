@@ -8,14 +8,17 @@ using System.Threading.Tasks;
 
 namespace NetTelebot
 {
+    /// <summary>
+    /// When calling SendMessage method on TelegramBotClient class, this object will be returned.
+    /// </summary>
     public class SendMessageResult
     {
-        public SendMessageResult(string jsonText)
+        internal SendMessageResult(string jsonText)
         {
             Parse(jsonText);
         }
 
-        public SendMessageResult(JObject jsonObject)
+        internal SendMessageResult(JObject jsonObject)
         {
             Parse(jsonObject);
         }

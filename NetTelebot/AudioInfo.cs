@@ -8,16 +8,17 @@ using Newtonsoft.Json;
 
 namespace NetTelebot
 {
+    /// <summary>
+    /// This object represents an audio file (voice note).
+    /// </summary>
     public class AudioInfo
     {
-        private JObject jObject;
-
-        public AudioInfo(JObject jsonObject)
+        internal AudioInfo(JObject jsonObject)
         {
             Parse(jsonObject);
         }
 
-        public AudioInfo(string jsonText)
+        internal AudioInfo(string jsonText)
         {
             Parse(jsonText);
         }
@@ -38,9 +39,21 @@ namespace NetTelebot
                 FileSize = jsonObject["file_size"].Value<int>();
         }
 
+        /// <summary>
+        /// Unique identifier for this file
+        /// </summary>
         public string FileId { get; set; }
+        /// <summary>
+        /// Duration of the audio in seconds as defined by sender
+        /// </summary>
         public int Duration { get; set; }
+        /// <summary>
+        /// Optional. MIME type of the file as defined by sender
+        /// </summary>
         public string MimeType { get; set; }
+        /// <summary>
+        /// Optional. File size
+        /// </summary>
         public int FileSize { get; set; }
     }
 }

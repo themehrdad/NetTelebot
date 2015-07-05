@@ -8,9 +8,18 @@ using System.Threading.Tasks;
 
 namespace NetTelebot
 {
+    /// <summary>
+    /// The main class to use Telegram Bot API. Get an instance of this class and set the Token property and start calling methods.
+    /// </summary>
     public class TelegramBotClient
     {
+        /// <summary>
+        /// Your bot token
+        /// </summary>
         public string Token { get; set; }
+        /// <summary>
+        /// Interval time in milliseconds to get latest messages sent to your bot.
+        /// </summary>
         public int CheckInterval { get; set; } = 1000;
         private const string getMeUri = "/bot{0}/getMe";
         private const string getUpdatesUri = "/bot{0}/getUpdates";
@@ -28,8 +37,15 @@ namespace NetTelebot
         private RestClient restClient = new RestClient("https://api.telegram.org");
         private Timer updateTimer;
         private int lastUpdateId = 0;
+        /// <summary>
+        /// Whenever a message is sent to your bot, this event will be raised.
+        /// </summary>
         public event EventHandler<TelegramUpdateEventArgs> UpdatesReceived;
 
+        /// <summary>
+        /// Gets information about your bot. You can call this method as a ping
+        /// </summary>
+        /// <returns></returns>
         public MeInfo GetMe()
         {
             var request = new RestRequest(string.Format(getMeUri, Token), Method.GET);
@@ -37,22 +53,41 @@ namespace NetTelebot
             return new MeInfo(response.Content);
         }
 
-
+        /// <summary>
+        /// Gets first 100 messages sent to your bot.
+        /// </summary>
+        /// <returns>Returns a class containing messages sent to your bot</returns>
         public GetUpdatesResult GetUpdates()
         {
             return GetUpdatesInternal(null, null);
         }
 
+        /// <summary>
+        /// Gets maximum 100 messages sent to your bot, starting from update_id set by offset
+        /// </summary>
+        /// <param name="offset">First update_id to be downloaded</param>
+        /// <returns>Returns a class containing messages sent to your bot</returns>
         public GetUpdatesResult GetUpdates(int offset)
         {
             return GetUpdatesInternal(offset, null);
         }
 
+        /// <summary>
+        /// Gets messages sent to your bot, starting from update_id set by offset, maximum number is set by limit
+        /// </summary>
+        /// <param name="offset">First update_id to be downloaded</param>
+        /// <param name="limit">Maximum number of messages to receive. It cannot be more than 100</param>
+        /// <returns>Returns a class containing messages sent to your bot</returns>
         public GetUpdatesResult GetUpdates(int offset, byte limit)
         {
             return GetUpdatesInternal(offset, limit);
         }
 
+        /// <summary>
+        /// Gets messages sent to your bot, from the begining and maximum number of limit set as parameter
+        /// </summary>
+        /// <param name="limit">Maximum number of messages to receive. It cannot be more than 100</param>
+        /// <returns>Returns a class containing messages sent to your bot</returns>
         public GetUpdatesResult GetUpdates(byte limit)
         {
             return GetUpdatesInternal(null, limit);
@@ -72,6 +107,15 @@ namespace NetTelebot
                 throw new Exception(response.StatusDescription);
         }
 
+        /// <summary>
+        /// Use this method to send text messages. On success, the sent Message is returned.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="text">Text of the message to be sent</param>
+        /// <param name="disableWebPagePreview">Disables link previews for links in this message</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+        /// <returns></returns>
         public SendMessageResult SendMessage(int chatId, string text,
             bool? disableWebPagePreview = null,
             int? replyToMessageId = null,
@@ -93,6 +137,13 @@ namespace NetTelebot
                 throw new Exception(response.StatusDescription);
         }
 
+        /// <summary>
+        /// Use this method to forward messages of any kind. On success, the sent Message is returned.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="fromChatId">Unique identifier for the chat where the original message was sent — User or GroupChat id</param>
+        /// <param name="messageId">Unique message identifier</param>
+        /// <returns></returns>
         public SendMessageResult ForwardMessage(int chatId, int fromChatId, int messageId)
         {
             var request = new RestRequest(string.Format(forwardMessageUri, Token), Method.POST);
@@ -106,6 +157,15 @@ namespace NetTelebot
                 throw new Exception(response.StatusDescription);
         }
 
+        /// <summary>
+        /// Use this method to send photos. On success, the sent Message is returned.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="photo">Photo to send. You can either pass a file_id as String to resend a photo that is already on the Telegram servers (using ExistingFile class), or upload a new photo using multipart/form-data. (Using NewFile class)</param>
+        /// <param name="caption">Photo caption (may also be used when resending photos by file_id).</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+        /// <returns></returns>
         public SendMessageResult SendPhoto(int chatId, IFile photo,
             string caption = null,
             int? replyToMessageId = null,
@@ -136,6 +196,14 @@ namespace NetTelebot
                 throw new Exception(response.StatusDescription);
         }
 
+        /// <summary>
+        /// Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="audio">Audio file to send. You can either pass a file_id as String to resend an audio that is already on the Telegram servers, or upload a new audio file using multipart/form-data.</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+        /// <returns></returns>
         public SendMessageResult SendAudio(int chatId, IFile audio,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
@@ -163,6 +231,14 @@ namespace NetTelebot
                 throw new Exception(response.StatusDescription);
         }
 
+        /// <summary>
+        /// Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="document">File to send. You can either pass a file_id as String to resend a file that is already on the Telegram servers, or upload a new file using multipart/form-data.</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+        /// <returns></returns>
         public SendMessageResult SendDocument(int chatId, IFile document,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
@@ -190,6 +266,14 @@ namespace NetTelebot
                 throw new Exception(response.StatusDescription);
         }
 
+        /// <summary>
+        /// Use this method to send .webp stickers. On success, the sent Message is returned.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="sticker">Sticker to send. You can either pass a file_id as String to resend a sticker that is already on the Telegram servers, or upload a new sticker using multipart/form-data.</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+        /// <returns></returns>
         public SendMessageResult SendSticker(int chatId, IFile sticker,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
@@ -217,7 +301,15 @@ namespace NetTelebot
                 throw new Exception(response.StatusDescription);
         }
 
-        public SendMessageResult SendVideio(int chatId, IFile video,
+        /// <summary>
+        /// Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="video">Video to send. You can either pass a file_id as String to resend a video that is already on the Telegram servers, or upload a new video file using multipart/form-data.</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+        /// <returns></returns>
+        public SendMessageResult SendVideo(int chatId, IFile video,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
@@ -244,6 +336,15 @@ namespace NetTelebot
                 throw new Exception(response.StatusDescription);
         }
 
+        /// <summary>
+        /// Use this method to send point on the map. On success, the sent Message is returned.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="latitude">Latitude of location</param>
+        /// <param name="longitude">Longitude of location</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+        /// <returns></returns>
         public SendMessageResult SendLocation(int chatId, float latitude, float longitude,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
@@ -263,6 +364,11 @@ namespace NetTelebot
                 throw new Exception(response.StatusDescription);
         }
 
+        /// <summary>
+        /// Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="action">Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.</param>
         public void SendChatAction(int chatId, ChatActions action)
         {
             var request = new RestRequest(string.Format(sendChatActionUri, Token), Method.POST);
@@ -273,6 +379,13 @@ namespace NetTelebot
                 throw new Exception(response.StatusDescription);
         }
 
+        /// <summary>
+        /// Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
+        /// </summary>
+        /// <param name="userId">Unique identifier of the target user</param>
+        /// <param name="offset">Sequential number of the first photo to be returned. By default, all photos are returned.</param>
+        /// <param name="limit">Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.</param>
+        /// <returns></returns>
         public GetUserProfilePhotosResult GetUserProfilePhotos(int userId, int? offset=null, byte? limit=null)
         {
             var request = new RestRequest(string.Format(getUserProfilePhotosUri, Token), Method.POST);
@@ -287,6 +400,10 @@ namespace NetTelebot
             else
                 throw new Exception(response.StatusDescription);
         }
+
+        /// <summary>
+        /// Checks new updates (sent messages to your bot) automatically. Set CheckInterval property and handle UpdatesReceived event.
+        /// </summary>
         public void StartCheckingUpdates()
         {
             if (updateTimer == null)
@@ -299,6 +416,9 @@ namespace NetTelebot
             }
         }
 
+        /// <summary>
+        /// Stops automatic checking updates
+        /// </summary>
         public void StopCheckUpdates()
         {
             updateTimer.Change(Timeout.Infinite, Timeout.Infinite);

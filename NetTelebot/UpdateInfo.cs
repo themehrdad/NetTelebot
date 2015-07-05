@@ -8,14 +8,17 @@ using System.Threading.Tasks;
 
 namespace NetTelebot
 {
+    /// <summary>
+    /// Represents an incoming message to your bot.
+    /// </summary>
     public class UpdateInfo
     {
-        public UpdateInfo(string jsonText)
+        internal UpdateInfo(string jsonText)
         {
             Parse(jsonText);
         }
 
-        public UpdateInfo(JObject jsonObject)
+        internal UpdateInfo(JObject jsonObject)
         {
             Parse(jsonObject);
         }

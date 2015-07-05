@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace NetTelebot
 {
+    /// <summary>
+    /// This object represents a general file (as opposed to photos and audio files).
+    /// </summary>
     public class DocumentInfo
     {
-        public DocumentInfo(string jsonText)
+        internal DocumentInfo(string jsonText)
         {
             Parse(jsonText);
         }
-        public DocumentInfo(JObject jsonObject)
+        internal DocumentInfo(JObject jsonObject)
         {
             Parse(jsonObject);
         }
@@ -36,11 +39,25 @@ namespace NetTelebot
             if (jsonObject["file_size"] != null)
                 FileSize = jsonObject["file_size"].Value<int>();
         }
-
+        /// <summary>
+        /// Unique file identifier
+        /// </summary>
         public string FileId { get; set; }
+        /// <summary>
+        /// Document thumbnail as defined by sender
+        /// </summary>
         public PhotoSizeInfo Thumb { get; set; }
+        /// <summary>
+        /// Optional. Original filename as defined by sender
+        /// </summary>
         public string FileName { get; set; }
+        /// <summary>
+        /// Optional. MIME type of the file as defined by sender
+        /// </summary>
         public string MimeType { get; set; }
+        /// <summary>
+        /// Optional. File size
+        /// </summary>
         public int FileSize { get; set; }
     }
 }

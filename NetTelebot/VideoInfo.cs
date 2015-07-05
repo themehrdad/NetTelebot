@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace NetTelebot
 {
+    /// <summary>
+    /// This object represents a video file.
+    /// </summary>
     public class VideoInfo
     {
-        public VideoInfo(string jsonText)
+        internal VideoInfo(string jsonText)
         {
             Parse(jsonText);
         }
-        public VideoInfo(JObject jsonObject)
+        internal VideoInfo(JObject jsonObject)
         {
             Parse(jsonObject);
         }
@@ -37,13 +40,37 @@ namespace NetTelebot
             if (jsonObject["caption"] != null)
                 Caption = jsonObject["caption"].Value<string>();
         }
+        /// <summary>
+        /// Unique identifier for this file
+        /// </summary>
         public string FileId { get; set; }
+        /// <summary>
+        /// Video width as defined by sender
+        /// </summary>
         public int Width { get; set; }
+        /// <summary>
+        /// Video height as defined by sender
+        /// </summary>
         public int Height { get; set; }
+        /// <summary>
+        /// Duration of the video in seconds as defined by sender
+        /// </summary>
         public int Duration { get; set; }
+        /// <summary>
+        /// Video thumbnail
+        /// </summary>
         public PhotoSizeInfo Thumb { get; set; }
+        /// <summary>
+        /// Optional. Mime type of a file as defined by sender
+        /// </summary>
         public string MimeType { get; set; }
+        /// <summary>
+        /// Optional. File size
+        /// </summary>
         public int FileSize { get; set; }
+        /// <summary>
+        /// Optional. Text description of the video (usually empty)
+        /// </summary>
         public string Caption { get; set; }
     }
 }

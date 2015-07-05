@@ -8,14 +8,17 @@ using System.Threading.Tasks;
 
 namespace NetTelebot
 {
+    /// <summary>
+    /// When calling GetUpdates method on TelegramBotClient, this object will be returned.
+    /// </summary>
     public class GetUpdatesResult
     {
-        public GetUpdatesResult(string jsonText)
+        internal GetUpdatesResult(string jsonText)
         {
             Parse(jsonText);
         }
 
-        public GetUpdatesResult(JObject jsonObject)
+        internal GetUpdatesResult(JObject jsonObject)
         {
             Parse(jsonObject);
         }

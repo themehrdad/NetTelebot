@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace NetTelebot
 {
+    /// <summary>
+    /// This object represents a sticker.
+    /// </summary>
     public class StickerInfo
     {
-        public StickerInfo(string jsonText)
+        internal StickerInfo(string jsonText)
         {
             Parse(jsonText);
         }
-        public StickerInfo(JObject jsonObject)
+        internal StickerInfo(JObject jsonObject)
         {
             Parse(jsonObject);
         }
@@ -34,10 +37,25 @@ namespace NetTelebot
             if (jsonObject["file_size"] != null)
                 FileSize = jsonObject["file_size"].Value<int>();
         }
+        /// <summary>
+        /// Unique identifier for this file
+        /// </summary>
         public string FileId { get; set; }
+        /// <summary>
+        /// Sticker width
+        /// </summary>
         public int Width { get; set; }
+        /// <summary>
+        /// Sticker height
+        /// </summary>
         public int Height { get; set; }
+        /// <summary>
+        /// Sticker thumbnail in .webp or .jpg format
+        /// </summary>
         public PhotoSizeInfo Thumb { get; set; }
+        /// <summary>
+        /// Optional. File size
+        /// </summary>
         public int FileSize { get; set; }
     }
 }

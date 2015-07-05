@@ -8,9 +8,12 @@ using System.Threading.Tasks;
 
 namespace NetTelebot
 {
+    /// <summary>
+    /// When caling GetMe method on TelegramBotClient class, this object will be returned.
+    /// </summary>
     public class MeInfo
     {
-        public MeInfo(string jsonText)
+        internal MeInfo(string jsonText)
         {
             try
             {

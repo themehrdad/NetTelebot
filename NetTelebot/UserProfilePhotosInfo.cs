@@ -8,14 +8,17 @@ using System.Threading.Tasks;
 
 namespace NetTelebot
 {
+    /// <summary>
+    /// This object represent a user's profile pictures.
+    /// </summary>
     public class UserProfilePhotosInfo
     {
-        public UserProfilePhotosInfo(string jsonText)
+        internal UserProfilePhotosInfo(string jsonText)
         {
             Parse(jsonText);
         }
 
-        public UserProfilePhotosInfo(JObject jsonObject)
+        internal UserProfilePhotosInfo(JObject jsonObject)
         {
             Parse(jsonObject);
         }
@@ -34,7 +37,13 @@ namespace NetTelebot
             Parse(jsonObject);
         }
 
+        /// <summary>
+        /// Total number of profile pictures the target user has
+        /// </summary>
         public int TotalCount { get; set; }
+        /// <summary>
+        /// Requested profile pictures (in up to 4 sizes each)
+        /// </summary>
         public PhotoSizeInfo[][] Photos { get; set; }
     }
 }

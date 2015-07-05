@@ -8,14 +8,17 @@ using System.Threading.Tasks;
 
 namespace NetTelebot
 {
+    /// <summary>
+    /// This object represents one size of a photo or a file / sticker thumbnail.
+    /// </summary>
     public class PhotoSizeInfo
     {
-        public PhotoSizeInfo(string jsonText)
+        internal PhotoSizeInfo(string jsonText)
         {
             Parse(jsonText);
         }
 
-        public PhotoSizeInfo(JObject jsonObject)
+        internal PhotoSizeInfo(JObject jsonObject)
         {
             Parse(jsonObject);
         }
@@ -34,12 +37,24 @@ namespace NetTelebot
             if (jsonObject["file_size"] != null)
                 FileSize = jsonObject["file_size"].Value<int>();
         }
+        /// <summary>
+        /// Unique identifier for this file
+        /// </summary>
         public string FileId { get; set; }
+        /// <summary>
+        /// Photo width
+        /// </summary>
         public int Width { get; set; }
+        /// <summary>
+        /// Photo height
+        /// </summary>
         public int Height { get; set; }
+        /// <summary>
+        /// Optional. File size
+        /// </summary>
         public int FileSize { get; set; }
 
-        public static PhotoSizeInfo[] ParseArray(JArray jsonArray)
+        internal static PhotoSizeInfo[] ParseArray(JArray jsonArray)
         {
             return jsonArray.Cast<JObject>().Select(jobject => new PhotoSizeInfo(jobject)).ToArray();
         }

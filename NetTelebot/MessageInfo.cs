@@ -8,14 +8,17 @@ using System.Threading.Tasks;
 
 namespace NetTelebot
 {
+    /// <summary>
+    /// This object represents a message.
+    /// </summary>
     public class MessageInfo
     {
-        public MessageInfo(string jsonText)
+        internal MessageInfo(string jsonText)
         {
             Parse(jsonText);
         }
 
-        public MessageInfo(JObject jsonObject)
+        internal MessageInfo(JObject jsonObject)
         {
             Parse(jsonObject);
         }
@@ -80,29 +83,97 @@ namespace NetTelebot
             else
                 return new UserInfo(jsonObject);
         }
-
+        /// <summary>
+        /// Unique message identifier
+        /// </summary>
         public int MessageId { get; private set; }
+        /// <summary>
+        /// Sender
+        /// </summary>
         public UserInfo From { get; private set; }
+        /// <summary>
+        /// Date the message was sent in Unix time
+        /// </summary>
         public int DateUnix { get; private set; }
+        /// <summary>
+        /// Date the message was sent
+        /// </summary>
         public DateTime Date { get; private set; }
+        /// <summary>
+        /// Conversation the message belongs to — user in case of a private message, GroupChat in case of a group
+        /// </summary>
         public IConversationSource Chat { get; private set; }
+        /// <summary>
+        /// Optional. For forwarded messages, sender of the original message
+        /// </summary>
         public UserInfo ForwardFrom { get; private set; }
+        /// <summary>
+        /// Optional. For forwarded messages, date the original message was sent in Unix time
+        /// </summary>
         public int ForwardDateUnix { get; private set; }
+        /// <summary>
+        /// Optional. For forwarded messages, date the original message was sent in Unix time
+        /// </summary>
         public DateTime ForwardDate { get; private set; }
+        /// <summary>
+        /// Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
+        /// </summary>
         public MessageInfo ReplyToMessage { get; private set; }
+        /// <summary>
+        /// Optional. For text messages, the actual UTF-8 text of the message
+        /// </summary>
         public string Text { get; private set; }
+        /// <summary>
+        /// Optional. Message is an audio file, information about the file
+        /// </summary>
         public AudioInfo Audio { get; private set; }
+        /// <summary>
+        /// Optional. Message is a general file, information about the file
+        /// </summary>
         public DocumentInfo Document { get; private set; }
+        /// <summary>
+        /// Optional. Message is a photo, available sizes of the photo
+        /// </summary>
         public PhotoSizeInfo[] Photo { get; private set; }
+        /// <summary>
+        /// Optional. Message is a sticker, information about the sticker
+        /// </summary>
         public StickerInfo Sticker { get; private set; }
+        /// <summary>
+        /// Optional. Message is a video, information about the video
+        /// </summary>
         public VideoInfo Video { get; private set; }
+        /// <summary>
+        /// Optional. Message is a shared contact, information about the contact
+        /// </summary>
         public ContactInfo Contact { get; private set; }
+        /// <summary>
+        /// Optional. Message is a shared location, information about the location
+        /// </summary>
         public LocationInfo Location { get; private set; }
+        /// <summary>
+        /// Optional. A new member was added to the group, information about them (this member may be bot itself)
+        /// </summary>
         public UserInfo NewChatParticipant { get; private set; }
+        /// <summary>
+        /// Optional. A member was removed from the group, information about them (this member may be bot itself)
+        /// </summary>
         public UserInfo LeftChatParticipant { get; private set; }
+        /// <summary>
+        /// Optional. A group title was changed to this value
+        /// </summary>
         public string NewChatTitle { get; private set; }
+        /// <summary>
+        /// Optional. A group photo was change to this value
+        /// </summary>
         public PhotoSizeInfo[] NewChatPhoto { get; private set; }
+        /// <summary>
+        /// Optional. Informs that the group photo was deleted
+        /// </summary>
         public bool DeleteChatPhoto { get; private set; }
+        /// <summary>
+        /// Optional. Informs that the group has been created
+        /// </summary>
         public bool GroupChatCreated { get; private set; }
     }
 }
