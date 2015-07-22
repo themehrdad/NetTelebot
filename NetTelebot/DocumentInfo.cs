@@ -31,7 +31,8 @@ namespace NetTelebot
         private void Parse(JObject jsonObject)
         {
             FileId = jsonObject["file_id"].Value<string>();
-            Thumb = new PhotoSizeInfo(jsonObject["thumb"].Value<JObject>());
+            if (jsonObject["thumb"] != null)
+                Thumb = new PhotoSizeInfo(jsonObject["thumb"].Value<JObject>());
             if (jsonObject["file_name"] != null)
                 FileName = jsonObject["file_name"].Value<string>();
             if (jsonObject["mime_type"] != null)

@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot", "NetTelebot\NetTelebot.csproj", "{49C7146E-4A6B-406F-8332-042B9BCA19EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.Commands", "NetTelebot.Commands\NetTelebot.Commands.csproj", "{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.Commands.TestApplication", "NetTelebot.Commands.TestApplication\NetTelebot.Commands.TestApplication.csproj", "{CF6021EF-9C18-4B53-AAC2-E75611F37263}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{49C7146E-4A6B-406F-8332-042B9BCA19EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49C7146E-4A6B-406F-8332-042B9BCA19EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49C7146E-4A6B-406F-8332-042B9BCA19EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF6021EF-9C18-4B53-AAC2-E75611F37263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF6021EF-9C18-4B53-AAC2-E75611F37263}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF6021EF-9C18-4B53-AAC2-E75611F37263}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF6021EF-9C18-4B53-AAC2-E75611F37263}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
