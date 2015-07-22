@@ -13,6 +13,10 @@ namespace NetTelebot
     /// </summary>
     public class TelegramBotClient
     {
+        public TelegramBotClient()
+        {
+            CheckInterval = 1000;
+        }
         /// <summary>
         /// Your bot token
         /// </summary>
@@ -20,7 +24,7 @@ namespace NetTelebot
         /// <summary>
         /// Interval time in milliseconds to get latest messages sent to your bot.
         /// </summary>
-        public int CheckInterval { get; set; } = 1000;
+        public int CheckInterval { get; set; }
         private const string getMeUri = "/bot{0}/getMe";
         private const string getUpdatesUri = "/bot{0}/getUpdates";
         private const string sendMessageUri = "/bot{0}/sendMessage";
@@ -386,7 +390,7 @@ namespace NetTelebot
         /// <param name="offset">Sequential number of the first photo to be returned. By default, all photos are returned.</param>
         /// <param name="limit">Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.</param>
         /// <returns></returns>
-        public GetUserProfilePhotosResult GetUserProfilePhotos(int userId, int? offset=null, byte? limit=null)
+        public GetUserProfilePhotosResult GetUserProfilePhotos(int userId, int? offset = null, byte? limit = null)
         {
             var request = new RestRequest(string.Format(getUserProfilePhotosUri, Token), Method.POST);
             request.AddParameter("user_id", userId);

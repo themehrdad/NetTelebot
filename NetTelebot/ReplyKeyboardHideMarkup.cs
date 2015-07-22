@@ -12,10 +12,14 @@ namespace NetTelebot
     /// </summary>
     public class ReplyKeyboardHideMarkup : IReplyMarkup
     {
+        public ReplyKeyboardHideMarkup()
+        {
+            HideKeyboard = true;
+        }
         /// <summary>
         /// Requests clients to hide the custom keyboard
         /// </summary>
-        public bool HideKeyboard { get; private set; } = true;
+        public bool HideKeyboard { get; private set; }
         /// <summary>
         /// Optional. Use this parameter if you want to hide keyboard for specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
         /// </summary>
@@ -25,7 +29,7 @@ namespace NetTelebot
         {
             var builder = new StringBuilder();
             builder.Append("{ \"hide_keyboard\" : true ");
-            if(Selective.HasValue)
+            if (Selective.HasValue)
             {
                 builder.AppendFormat(", \"selective\" : {0} ", Selective.Value.ToString().ToLower());
             }
