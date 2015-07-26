@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot", "NetTelebot\NetTelebot.csproj", "{49C7146E-4A6B-406F-8332-042B9BCA19EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.Commands", "NetTelebot.Commands\NetTelebot.Commands.csproj", "{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.Commands.TestApplication", "NetTelebot.Commands.TestApplication\NetTelebot.Commands.TestApplication.csproj", "{CF6021EF-9C18-4B53-AAC2-E75611F37263}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.Tests", "NetTelebot.Tests\NetTelebot.Tests.csproj", "{A09E8951-00AF-4575-AD51-B6AE2E34B84C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +17,10 @@ Global
 		{49C7146E-4A6B-406F-8332-042B9BCA19EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49C7146E-4A6B-406F-8332-042B9BCA19EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49C7146E-4A6B-406F-8332-042B9BCA19EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CF6021EF-9C18-4B53-AAC2-E75611F37263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF6021EF-9C18-4B53-AAC2-E75611F37263}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF6021EF-9C18-4B53-AAC2-E75611F37263}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF6021EF-9C18-4B53-AAC2-E75611F37263}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A09E8951-00AF-4575-AD51-B6AE2E34B84C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A09E8951-00AF-4575-AD51-B6AE2E34B84C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A09E8951-00AF-4575-AD51-B6AE2E34B84C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A09E8951-00AF-4575-AD51-B6AE2E34B84C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

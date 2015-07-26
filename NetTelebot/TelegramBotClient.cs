@@ -41,6 +41,8 @@ namespace NetTelebot
         private RestClient restClient = new RestClient("https://api.telegram.org");
         private Timer updateTimer;
         private int lastUpdateId = 0;
+
+        public event UnhandledExceptionEventHandler GetUpdatesError;
         /// <summary>
         /// Whenever a message is sent to your bot, this event will be raised.
         /// </summary>
@@ -109,6 +111,12 @@ namespace NetTelebot
                 return new GetUpdatesResult(response.Content);
             else
                 throw new Exception(response.StatusDescription);
+        }
+
+        protected virtual void OnGetUpdatesError(Exception exception)
+        {
+            if (GetUpdatesError != null)
+                GetUpdatesError(this, new UnhandledExceptionEventArgs(exception, false));
         }
 
         /// <summary>
@@ -431,19 +439,29 @@ namespace NetTelebot
         private void updateTimer_Callback(object state)
         {
             GetUpdatesResult updates = null;
-            if (lastUpdateId == 0)
+            bool getUpdatesSuccess = false;
+            try
             {
-                updates = GetUpdates();
+                if (lastUpdateId == 0)
+                {
+                    updates = GetUpdates();
+                }
+                else
+                {
+                    updates = GetUpdates(lastUpdateId + 1);
+                }
+                getUpdatesSuccess = true;
             }
-            else
+            catch (Exception ex)
             {
-                updates = GetUpdates(lastUpdateId + 1);
+                OnGetUpdatesError(ex);
             }
-            if (updates.Ok && updates.Result != null && updates.Result.Any())
-            {
-                lastUpdateId = updates.Result.Last().UpdateId;
-                OnUpdatesReceived(updates.Result);
-            }
+            if (getUpdatesSuccess)
+                if (updates.Ok && updates.Result != null && updates.Result.Any())
+                {
+                    lastUpdateId = updates.Result.Last().UpdateId;
+                    OnUpdatesReceived(updates.Result);
+                }
             updateTimer.Change(CheckInterval, Timeout.Infinite);
         }
 
