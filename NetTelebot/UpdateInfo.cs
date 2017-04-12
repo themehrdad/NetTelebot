@@ -34,10 +34,19 @@ namespace NetTelebot
             UpdateId = jsonObject["update_id"].Value<int>();
             if (jsonObject["message"] != null)
                 Message = new MessageInfo(jsonObject["message"].Value<JObject>());
+            if (jsonObject["inline_query"] != null)
+                InlineQuery = new InlineQuery(jsonObject["inline_query"].Value<JObject>());
+            if (jsonObject["chosen_inline_result"] != null)
+                ChosenInlineResult = new ChosenInlineResult(jsonObject["chosen_inline_result"].Value<JObject>());
+            if (jsonObject["callback_query"] != null)
+                CallbackQuery = new CallbackQuery(jsonObject["callback_query"].Value<JObject>());
         }
 
         public int UpdateId { get; private set; }
         public MessageInfo Message { get; private set; }
+        public InlineQuery InlineQuery { get; private set; }
+        public ChosenInlineResult ChosenInlineResult { get; private set; }
+        public CallbackQuery CallbackQuery { get; private set; }
 
         public static UpdateInfo[] ParseArray(string jsonText)
         {

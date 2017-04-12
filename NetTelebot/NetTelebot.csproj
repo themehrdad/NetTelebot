@@ -32,13 +32,11 @@
     <DocumentationFile>bin\Release\NetTelebot.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\..\..\..\Desktop\Проекты\TelegramBotRider\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=105.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.105.1.0\lib\net4\RestSharp.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\Desktop\Проекты\TelegramBotRider\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,7 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioInfo.cs" />
+    <Compile Include="CallbackQuery.cs" />
     <Compile Include="ChatActions.cs" />
+    <Compile Include="ChosenInlineResult.cs" />
     <Compile Include="ContactInfo.cs" />
     <Compile Include="DocumentInfo.cs" />
     <Compile Include="ExistingFile.cs" />
@@ -61,6 +61,7 @@
     <Compile Include="GroupChatInfo.cs" />
     <Compile Include="IConversationSource.cs" />
     <Compile Include="IFile.cs" />
+    <Compile Include="InlineQuery.cs" />
     <Compile Include="IReplyMarkup.cs" />
     <Compile Include="LocationInfo.cs" />
     <Compile Include="MeInfo.cs" />

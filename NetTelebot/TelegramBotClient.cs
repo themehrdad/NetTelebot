@@ -109,14 +109,12 @@ namespace NetTelebot
             var response = restClient.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new GetUpdatesResult(response.Content);
-            else
-                throw new Exception(response.StatusDescription);
+            throw new Exception(response.StatusDescription);
         }
 
         protected virtual void OnGetUpdatesError(Exception exception)
         {
-            if (GetUpdatesError != null)
-                GetUpdatesError(this, new UnhandledExceptionEventArgs(exception, false));
+            GetUpdatesError?.Invoke(this, new UnhandledExceptionEventArgs(exception, false));
         }
 
         /// <summary>
@@ -145,8 +143,7 @@ namespace NetTelebot
             var response = restClient.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
-            else
-                throw new Exception(response.StatusDescription);
+            throw new Exception(response.StatusDescription);
         }
 
         /// <summary>
