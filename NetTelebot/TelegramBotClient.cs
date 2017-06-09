@@ -124,20 +124,28 @@ namespace NetTelebot
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="text">Text of the message to be sent</param>
+        /// <param name="parseMode">Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message</param>
         /// <param name="disableWebPagePreview">Disables link previews for links in this message</param>
+        /// <param name="disableNotification">Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns></returns>
         public SendMessageResult SendMessage(int chatId, string text,
+            ParseMode? parseMode = null,
             bool? disableWebPagePreview = null,
+            bool? disableNotification = null,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
             var request = new RestRequest(string.Format(sendMessageUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("text", text);
+            if (parseMode != null)
+                request.AddParameter("parse_mode", parseMode.Value);
             if (disableWebPagePreview.HasValue)
                 request.AddParameter("disable_web_page_preview", disableWebPagePreview.Value);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
             if (replyToMessageId.HasValue)
                 request.AddParameter("reply_to_message_id", replyToMessageId.Value);
             if (replyMarkup != null)
@@ -145,8 +153,7 @@ namespace NetTelebot
             var response = restClient.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
-            else
-                throw new Exception(response.StatusDescription);
+            throw new Exception(response.StatusDescription);
         }
 
         /// <summary>
