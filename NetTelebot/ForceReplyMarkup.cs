@@ -22,7 +22,7 @@ namespace NetTelebot
 
         public string GetJson()
         {
-            var builder = new StringBuilder();
+            StringBuilder builder = new StringBuilder();
             builder.Append("{ \"force_reply\" : true ");
             if (Selective.HasValue)
             {
