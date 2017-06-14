@@ -134,7 +134,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            var request = new RestRequest(string.Format(sendMessageUri, Token), Method.POST);
+            RestRequest request = new RestRequest(string.Format(sendMessageUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("text", text);
             if (parseMode != null)
@@ -179,33 +179,38 @@ namespace NetTelebot
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="photo">Photo to send. You can either pass a file_id as String to resend a photo that is already on the Telegram servers (using ExistingFile class), or upload a new photo using multipart/form-data. (Using NewFile class)</param>
         /// <param name="caption">Photo caption (may also be used when resending photos by file_id).</param>
+        /// <param name="disableNotification">Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns></returns>
         public SendMessageResult SendPhoto(int chatId, IFile photo,
             string caption = null,
+            bool? disableNotification = null,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            var request = new RestRequest(string.Format(sendPhotoUri, Token), Method.POST);
+            RestRequest request = new RestRequest(string.Format(sendPhotoUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
-            if (photo is ExistingFile)
+            ExistingFile file = photo as ExistingFile;
+            if (file != null)
             {
-                var existingFile = (ExistingFile)photo;
+                ExistingFile existingFile = file;
                 request.AddParameter("photo", existingFile.FileId);
             }
             else
             {
-                var newFile = (NewFile)photo;
+                NewFile newFile = (NewFile)photo;
                 request.AddFile("photo", newFile.FileContent, newFile.FileName);
             }
             if (!string.IsNullOrEmpty(caption))
                 request.AddParameter("caption", caption);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
             if (replyToMessageId != null)
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
-            var response = restClient.Execute(request);
+            IRestResponse response = restClient.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
             else
