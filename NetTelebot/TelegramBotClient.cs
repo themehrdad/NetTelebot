@@ -1,10 +1,7 @@
 ﻿using RestSharp;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace NetTelebot
 {
@@ -38,7 +35,7 @@ namespace NetTelebot
         private const string sendChatActionUri = "/bot{0}/sendChatAction";
         private const string getUserProfilePhotosUri = "/bot{0}/getUserProfilePhotos";
 
-        private RestClient restClient = new RestClient("https://api.telegram.org");
+        private readonly RestClient restClient = new RestClient("https://api.telegram.org");
         private Timer updateTimer;
         private int lastUpdateId = 0;
 
@@ -54,8 +51,8 @@ namespace NetTelebot
         /// <returns></returns>
         public MeInfo GetMe()
         {
-            var request = new RestRequest(string.Format(getMeUri, Token), Method.GET);
-            var response = restClient.Execute(request);
+            RestRequest request = new RestRequest(string.Format(getMeUri, Token), Method.GET);
+            IRestResponse response = restClient.Execute(request);
             return new MeInfo(response.Content);
         }
 
@@ -101,12 +98,12 @@ namespace NetTelebot
 
         private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit)
         {
-            var request = new RestRequest(string.Format(getUpdatesUri, Token), Method.GET);
+            RestRequest request = new RestRequest(string.Format(getUpdatesUri, Token), Method.GET);
             if (offset.HasValue)
                 request.AddQueryParameter("offset", offset.Value.ToString());
             if (limit.HasValue)
                 request.AddQueryParameter("limit", limit.Value.ToString());
-            var response = restClient.Execute(request);
+            IRestResponse response = restClient.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new GetUpdatesResult(response.Content);
             else
@@ -227,23 +224,23 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            var request = new RestRequest(string.Format(sendAudioUri, Token), Method.POST);
+            RestRequest request = new RestRequest(string.Format(sendAudioUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
             if (audio is ExistingFile)
             {
-                var existingFile = (ExistingFile)audio;
+                ExistingFile existingFile = (ExistingFile)audio;
                 request.AddParameter("audio", existingFile.FileId);
             }
             else
             {
-                var newFile = (NewFile)audio;
+                NewFile newFile = (NewFile)audio;
                 request.AddFile("audio", newFile.FileContent, newFile.FileName);
             }
             if (replyToMessageId != null)
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
-            var response = restClient.Execute(request);
+            IRestResponse response = restClient.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
             else
@@ -271,7 +268,7 @@ namespace NetTelebot
             }
             else
             {
-                var newFile = (NewFile)document;
+                NewFile newFile = (NewFile)document;
                 request.AddFile("document", newFile.FileContent, newFile.FileName);
             }
             if (replyToMessageId != null)
@@ -297,23 +294,25 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            var request = new RestRequest(string.Format(sendStickerUri, Token), Method.POST);
+            RestRequest request = new RestRequest(string.Format(sendStickerUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
-            if (sticker is ExistingFile)
+
+            ExistingFile file = sticker as ExistingFile;
+            if (file != null)
             {
-                var existingFile = (ExistingFile)sticker;
+                ExistingFile existingFile = file;
                 request.AddParameter("sticker", existingFile.FileId);
             }
             else
             {
-                var newFile = (NewFile)sticker;
+                NewFile newFile = (NewFile)sticker;
                 request.AddFile("sticker", newFile.FileContent, newFile.FileName);
             }
             if (replyToMessageId != null)
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
-            var response = restClient.Execute(request);
+            IRestResponse response = restClient.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
             else
@@ -332,23 +331,26 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            var request = new RestRequest(string.Format(sendVideoUri, Token), Method.POST);
+            RestRequest request = new RestRequest(string.Format(sendVideoUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
-            if (video is ExistingFile)
+
+            ExistingFile file = video as ExistingFile;
+            if (file != null)
             {
-                var existingFile = (ExistingFile)video;
+                ExistingFile existingFile = file;
                 request.AddParameter("video", existingFile.FileId);
             }
             else
             {
-                var newFile = (NewFile)video;
+                NewFile newFile = (NewFile)video;
                 request.AddFile("video", newFile.FileContent, newFile.FileName);
             }
             if (replyToMessageId != null)
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
-            var response = restClient.Execute(request);
+
+            IRestResponse response = restClient.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
             else
@@ -368,15 +370,17 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            var request = new RestRequest(string.Format(sendLocationUri, Token), Method.POST);
+            RestRequest request = new RestRequest(string.Format(sendLocationUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("latitude", latitude);
             request.AddParameter("longitude", longitude);
+
             if (replyToMessageId != null)
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
-            var response = restClient.Execute(request);
+
+            IRestResponse response = restClient.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
             else
@@ -390,10 +394,10 @@ namespace NetTelebot
         /// <param name="action">Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.</param>
         public void SendChatAction(int chatId, ChatActions action)
         {
-            var request = new RestRequest(string.Format(sendChatActionUri, Token), Method.POST);
+            RestRequest request = new RestRequest(string.Format(sendChatActionUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("action", action.ToString().ToLower());
-            var response = restClient.Execute(request);
+            IRestResponse response = restClient.Execute(request);
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 throw new Exception(response.StatusDescription);
         }
@@ -407,13 +411,13 @@ namespace NetTelebot
         /// <returns></returns>
         public GetUserProfilePhotosResult GetUserProfilePhotos(int userId, int? offset = null, byte? limit = null)
         {
-            var request = new RestRequest(string.Format(getUserProfilePhotosUri, Token), Method.POST);
+            RestRequest request = new RestRequest(string.Format(getUserProfilePhotosUri, Token), Method.POST);
             request.AddParameter("user_id", userId);
             if (offset.HasValue)
                 request.AddParameter("offset", offset.Value);
             if (limit.HasValue)
                 request.AddParameter("limit", limit.Value);
-            var response = restClient.Execute(request);
+            IRestResponse response = restClient.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new GetUserProfilePhotosResult(response.Content);
             else
@@ -474,7 +478,7 @@ namespace NetTelebot
 
         protected virtual void OnUpdatesReceived(UpdateInfo[] updates)
         {
-            var args = new TelegramUpdateEventArgs(updates);
+            TelegramUpdateEventArgs args = new TelegramUpdateEventArgs(updates);
             if (UpdatesReceived != null)
             {
                 UpdatesReceived(this, args);
