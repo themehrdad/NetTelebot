@@ -21,7 +21,7 @@ namespace NetTelebot
 
         private void Parse(string jsonText)
         {
-            var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
+            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
 
@@ -32,12 +32,19 @@ namespace NetTelebot
                 Message = new MessageInfo(jsonObject["message"].Value<JObject>());
         }
 
+        /// <summary>
+        /// The update‘s unique identifier.
+        /// </summary>
         public int UpdateId { get; private set; }
+        
+        /// <summary>
+        /// New incoming message of any kind — text, photo, sticker, etc.
+        /// </summary>
         public MessageInfo Message { get; private set; }
 
         public static UpdateInfo[] ParseArray(string jsonText)
         {
-            var jsonArray = (JArray)JsonConvert.DeserializeObject(jsonText);
+            JArray jsonArray = (JArray)JsonConvert.DeserializeObject(jsonText);
             return ParseArray(jsonArray);
         }
 
