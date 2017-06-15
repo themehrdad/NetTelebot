@@ -335,13 +335,16 @@ namespace NetTelebot
 
         /// <summary>
         /// Use this method to send .webp stickers. On success, the sent Message is returned.
+        /// API <link href="https://core.telegram.org/bots/api#sendsticker"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="sticker">Sticker to send. You can either pass a file_id as String to resend a sticker that is already on the Telegram servers, or upload a new sticker using multipart/form-data.</param>
+        /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns></returns>
         public SendMessageResult SendSticker(int chatId, IFile sticker,
+            bool? disableNotification = null,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
@@ -359,6 +362,9 @@ namespace NetTelebot
                 NewFile newFile = (NewFile)sticker;
                 request.AddFile("sticker", newFile.FileContent, newFile.FileName);
             }
+
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
             if (replyToMessageId != null)
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
@@ -530,10 +536,7 @@ namespace NetTelebot
         protected virtual void OnUpdatesReceived(UpdateInfo[] updates)
         {
             TelegramUpdateEventArgs args = new TelegramUpdateEventArgs(updates);
-            if (UpdatesReceived != null)
-            {
-                UpdatesReceived(this, args);
-            }
+            UpdatesReceived?.Invoke(this, args);
         }
     }
 }
