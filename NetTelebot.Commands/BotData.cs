@@ -1,5 +1,6 @@
 ﻿using NDatabase.Api;
 using System;
+using System.Linq;
 
 namespace NetTelebot.Commands
 {
@@ -10,14 +11,10 @@ namespace NetTelebot.Commands
         {
             Bot = bot;
         }
-        public Bot Bot { get; private set; }
+        public Bot Bot { get; }
         internal void SetCommand(int userId, int chatId, string command)
         {
-            var commandState = GetCommandState(userId, chatId);
-            if (commandState == null)
-            {
-                commandState = new CommandState();
-            }
+            CommandState commandState = GetCommandState(userId, chatId) ?? new CommandState();
             if (string.IsNullOrEmpty(commandState.commandText) ||
                 !commandState.commandText.Equals(command, StringComparison.InvariantCultureIgnoreCase))
             {
@@ -31,21 +28,16 @@ namespace NetTelebot.Commands
 
         internal void SetParameter(int userId, int chatId, object parameter)
         {
-            var commandState = GetCommandState(userId, chatId);
-            if (commandState != null)
-            {
-                commandState.Parameters.Add(parameter);
-            }
+            CommandState commandState = GetCommandState(userId, chatId);
+            commandState?.Parameters.Add(parameter);
         }
 
         internal void DeleteCommandState(int userId, int chatId)
         {
-            var commandState = GetCommandState(userId, chatId);
-            if (commandState != null)
-            {
-                var db = GetOdb();
-                db.Delete(commandState);
-            }
+            CommandState commandState = GetCommandState(userId, chatId);
+            if (commandState == null) return;
+            IOdb db = GetOdb();
+            db.Delete(commandState);
         }
 
         private void Store(CommandState commandState)
@@ -55,16 +47,13 @@ namespace NetTelebot.Commands
 
         internal CommandState GetCommandState(int userId, int chatId)
         {
-            return GetOdb().Query<CommandState>().Execute<CommandState>().Where(cs =>
-                cs.chatId == chatId && cs.userId == userId)
-                .FirstOrDefault();
+            return GetOdb().Query<CommandState>().Execute<CommandState>()
+                .FirstOrDefault(cs => cs.chatId == chatId && cs.userId == userId);
         }
 
         private IOdb GetOdb()
         {
-            if (odb == null)
-                odb = NDatabase.OdbFactory.Open(Bot.Name);
-            return odb;
+            return odb ?? (odb = NDatabase.OdbFactory.Open(Bot.Name));
         }
 
         public void Dispose()

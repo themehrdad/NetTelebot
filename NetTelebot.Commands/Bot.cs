@@ -16,7 +16,7 @@ namespace NetTelebot.Commands
         public BotConfiguration Configuration { get; private set; }
         public TelegramBotClient Client { get; private set; }
         public string Token { get; private set; }
-        public BotData Data { get; private set; }
+        public BotData Data { get; }
         public string Name { get; private set; }
         public event EventHandler<MessageEventArgs> MessageReceived;
         public event EventHandler<MessageEventArgs> UnknownCommandReceived;
@@ -35,7 +35,7 @@ namespace NetTelebot.Commands
 
         private void Client_UpdatesReceived(object sender, TelegramUpdateEventArgs e)
         {
-            foreach (var update in e.Updates)
+            foreach (UpdateInfo update in e.Updates)
             {
                 OnMessageReceived(update.Message);
                 Process(update);
@@ -44,8 +44,7 @@ namespace NetTelebot.Commands
 
         protected virtual void OnMessageReceived(MessageInfo message)
         {
-            if (MessageReceived != null)
-                MessageReceived(this, new MessageEventArgs(message));
+            MessageReceived?.Invoke(this, new MessageEventArgs(message));
         }
 
         private void Process(UpdateInfo update)
@@ -62,7 +61,7 @@ namespace NetTelebot.Commands
 
         private void ProcessParameter(MessageInfo message)
         {
-            var commandState = Data.GetCommandState(message.From.Id, message.Chat.Id);
+            CommandState commandState = Data.GetCommandState(message.From.Id, message.Chat.Id);
             if(commandState!=null)
             {
             }
@@ -74,7 +73,7 @@ namespace NetTelebot.Commands
 
         protected virtual void ProcessCommand(MessageInfo message)
         {
-            var commandInfo = FindCommand(message.Text);
+            CommandInfo commandInfo = FindCommand(message.Text);
             if (commandInfo != null)
             {
                 Process(message, commandInfo);
@@ -109,15 +108,14 @@ namespace NetTelebot.Commands
 
         protected virtual void GetFirstParameter(MessageInfo message, CommandInfo command)
         {
-            var parameter = command.Parameters.First();
+            ParameterInfo parameter = command.Parameters.First();
             Data.SetCommand(message.From.Id, message.Chat.Id, command.Text);
             Client.SendMessage(message.Chat.Id, parameter.StaticPrompt);
         }
 
         protected virtual void OnUnknownCommandReceived(MessageInfo message)
         {
-            if (UnknownCommandReceived != null)
-                UnknownCommandReceived(this, new MessageEventArgs(message));
+            UnknownCommandReceived?.Invoke(this, new MessageEventArgs(message));
         }
 
         private CommandInfo FindCommand(string text)

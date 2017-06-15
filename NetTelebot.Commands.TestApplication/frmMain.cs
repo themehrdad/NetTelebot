@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NetTelebot.Commands.TestApplication
 {
     public partial class frmMain : Form
     {
-        private CalculatorBot bot = new CalculatorBot("118879726:AAGLhweZ3NMAR4HKdD-GL1GwnVqLWCg7vt0");
+        private readonly CalculatorBot bot = new CalculatorBot("");
         public frmMain()
         {
             InitializeComponent();
@@ -27,7 +20,7 @@ namespace NetTelebot.Commands.TestApplication
             }
             else
             {
-                txtLog.Text += string.Format("{0} : {1}\r\n", e.Message.From.FirstName, e.Message.Text);
+                txtLog.Text += $"{e.Message.From.FirstName} : {e.Message.Text}\r\n";
             }
         }
 
