@@ -7,13 +7,14 @@ namespace NetTelebot.Tests
     internal class TelegramBotClientTest : IWindowsCredential
     {
         /// <summary>
-        /// 
+        /// Test the return value (SendMessageResult.Result.Text) and send a message (SendMessageResult.Ok)
         /// </summary>
         [Test]
         public void TestSendMessage()
         {
-            bool sendMessage = TelegramBot().SendMessage(GetTelegramCredential("NetTelebotTest").ChatId, "Test").Ok;
-            Assert.True(sendMessage);
+            SendMessageResult sendMessage = TelegramBot().SendMessage(GetTelegramCredential("NetTelebotTest").ChatId, "Test");
+            Assert.AreEqual(sendMessage.Result.Text, "Test");
+            Assert.True(sendMessage.Ok);
         }
 
         /// <summary>
