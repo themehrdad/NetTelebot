@@ -72,7 +72,7 @@ namespace NetTelebot
                 GroupChatCreated = true;
         }
 
-        private IConversationSource ParseChat(JObject jsonObject)
+        private static IConversationSource ParseChat(JObject jsonObject)
         {
             if (jsonObject["title"] != null)
                 return new GroupChatInfo(jsonObject);

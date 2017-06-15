@@ -22,14 +22,14 @@ namespace NetTelebot
         private void Parse(JObject jsonObject)
         {
             TotalCount = jsonObject["total_count"].Value<int>();
-            var arrayOfArrays = jsonObject["photos"].Value<JArray>();
+            JArray arrayOfArrays = jsonObject["photos"].Value<JArray>();
             Photos =
                 arrayOfArrays.Cast<JArray>().Select(array => PhotoSizeInfo.ParseArray(array)).ToArray();
         }
 
         private void Parse(string jsonText)
         {
-            var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
+            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
 

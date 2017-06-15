@@ -479,6 +479,7 @@ namespace NetTelebot
 
         /// <summary>
         /// Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
+        /// API <link href="https://core.telegram.org/bots/api#sendchataction"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="action">Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.</param>
@@ -494,6 +495,7 @@ namespace NetTelebot
 
         /// <summary>
         /// Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
+        /// API <link href="https://core.telegram.org/bots/api#getuserprofilephotos"></link>
         /// </summary>
         /// <param name="userId">Unique identifier of the target user</param>
         /// <param name="offset">Sequential number of the first photo to be returned. By default, all photos are returned.</param>
@@ -508,11 +510,23 @@ namespace NetTelebot
             if (limit.HasValue)
                 request.AddParameter("limit", limit.Value);
             IRestResponse response = restClient.Execute(request);
+
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new GetUserProfilePhotosResult(response.Content);
-            else
-                throw new Exception(response.StatusDescription);
+            throw new Exception(response.StatusDescription);
         }
+
+        //todo getFile (https://core.telegram.org/bots/api#getfile)
+        //todo kickChatMember (https://core.telegram.org/bots/api#kickchatmember)
+        //todo unbanChatMember (https://core.telegram.org/bots/api#unbanchatmember)
+        //todo leaveChat (https://core.telegram.org/bots/api#leavechat)
+        //todo getChat (https://core.telegram.org/bots/api#getchat)
+        //todo getChatAdministrators (https://core.telegram.org/bots/api#getchatadministrators)
+        //todo getChatMembersCount (https://core.telegram.org/bots/api#getchatmemberscount)
+        //todo getChatMember (https://core.telegram.org/bots/api#getchatmember)
+        //todo answerCallbackQuery (https://core.telegram.org/bots/api#answercallbackquery)
+        //todo Inline mode methods (https://core.telegram.org/bots/api#inline-mode-methods)
+
 
         /// <summary>
         /// Checks new updates (sent messages to your bot) automatically. Set CheckInterval property and handle UpdatesReceived event.
@@ -543,14 +557,7 @@ namespace NetTelebot
             bool getUpdatesSuccess = false;
             try
             {
-                if (lastUpdateId == 0)
-                {
-                    updates = GetUpdates();
-                }
-                else
-                {
-                    updates = GetUpdates(lastUpdateId + 1);
-                }
+                updates = lastUpdateId == 0 ? GetUpdates() : GetUpdates(lastUpdateId + 1);
                 getUpdatesSuccess = true;
             }
             catch (Exception ex)
