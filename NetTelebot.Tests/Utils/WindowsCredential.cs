@@ -53,10 +53,5 @@ namespace NetTelebot.Tests.Utils
         /// 4. Use the "id" of the "chat" object to send your messages.
         /// </summary>
         public int ChatId { get; set; }
-
-        public static TelegramCredentials GetTelegramCredentials()
-        {
-            return new TelegramCredentials();
-        }
     }
 }
