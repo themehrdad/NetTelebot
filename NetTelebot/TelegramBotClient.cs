@@ -183,6 +183,7 @@ namespace NetTelebot
 
         /// <summary>
         /// Use this method to send photos. On success, the sent Message is returned.
+        /// API <link href="https://core.telegram.org/bots/api#sendphoto"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="photo">Photo to send. You can either pass a file_id as String to resend a photo that is already on the Telegram servers (using ExistingFile class), or upload a new photo using multipart/form-data. (Using NewFile class)</param>
@@ -227,21 +228,35 @@ namespace NetTelebot
 
         /// <summary>
         /// Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
+        /// API <link href="https://core.telegram.org/bots/api#sendaudio"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="audio">Audio file to send. You can either pass a file_id as String to resend an audio that is already on the Telegram servers, or upload a new audio file using multipart/form-data.</param>
+        /// <param name="caption">Audio caption, 0-200 characters</param>
+        /// <param name="duration">Duration of the audio in seconds</param> 
+        /// <param name="performer">Duration of the audio in seconds</param>
+        /// <param name="title">Track name</param>
+        /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+
         /// <returns></returns>
         public SendMessageResult SendAudio(int chatId, IFile audio,
+            string caption = null,
+            int? duration = null,
+            string performer = null,
+            string title = null,
+            bool? disableNotification = null,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
             RestRequest request = new RestRequest(string.Format(sendAudioUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
-            if (audio is ExistingFile)
+
+            ExistingFile file = audio as ExistingFile;
+            if (file != null)
             {
-                ExistingFile existingFile = (ExistingFile)audio;
+                ExistingFile existingFile = file;
                 request.AddParameter("audio", existingFile.FileId);
             }
             else
@@ -249,6 +264,17 @@ namespace NetTelebot
                 NewFile newFile = (NewFile)audio;
                 request.AddFile("audio", newFile.FileContent, newFile.FileName);
             }
+
+            if (!string.IsNullOrEmpty(caption))
+                request.AddParameter("caption", caption);
+            if (duration != null)
+                request.AddParameter("duration", duration);
+            if (!string.IsNullOrEmpty(performer))
+                request.AddParameter("performer", performer);
+            if (!string.IsNullOrEmpty(title))
+                request.AddParameter("title", title);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
             if (replyToMessageId != null)
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
