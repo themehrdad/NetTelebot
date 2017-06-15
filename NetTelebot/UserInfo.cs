@@ -20,7 +20,7 @@ namespace NetTelebot
 
         private void Parse(string jsonText)
         {
-            var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
+            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
 
