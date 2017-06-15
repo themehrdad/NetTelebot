@@ -288,21 +288,28 @@ namespace NetTelebot
 
         /// <summary>
         /// Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+        /// API <link href="https://core.telegram.org/bots/api#senddocument"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="document">File to send. You can either pass a file_id as String to resend a file that is already on the Telegram servers, or upload a new file using multipart/form-data.</param>
+        /// <param name="caption">Document caption (may also be used when resending documents by file_id), 0-200 characters</param>
+        /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns></returns>
         public SendMessageResult SendDocument(int chatId, IFile document,
+            string caption = null,
+            bool? disableNotification = null,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            var request = new RestRequest(string.Format(sendDocumentUri, Token), Method.POST);
+            RestRequest request = new RestRequest(string.Format(sendDocumentUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
-            if (document is ExistingFile)
+
+            ExistingFile file = document as ExistingFile;
+            if (file != null)
             {
-                var existingFile = (ExistingFile)document;
+                ExistingFile existingFile = file;
                 request.AddParameter("document", existingFile.FileId);
             }
             else
@@ -310,11 +317,16 @@ namespace NetTelebot
                 NewFile newFile = (NewFile)document;
                 request.AddFile("document", newFile.FileContent, newFile.FileName);
             }
+
+            if (!string.IsNullOrEmpty(caption))
+                request.AddParameter("caption", caption);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
             if (replyToMessageId != null)
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
-            var response = restClient.Execute(request);
+            IRestResponse response = restClient.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
             else
