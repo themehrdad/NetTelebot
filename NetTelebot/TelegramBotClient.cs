@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading;
+#pragma warning disable 1591
 
 namespace NetTelebot
 {
@@ -118,6 +119,7 @@ namespace NetTelebot
 
         /// <summary>
         /// Use this method to send text messages. On success, the sent Message is returned.
+        /// API <link href="https://core.telegram.org/bots/api#sendmessage"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="text">Text of the message to be sent</param>
@@ -147,7 +149,7 @@ namespace NetTelebot
                 request.AddParameter("reply_to_message_id", replyToMessageId.Value);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
-            var response = restClient.Execute(request);
+            IRestResponse response = restClient.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
             throw new Exception(response.StatusDescription);
@@ -155,18 +157,24 @@ namespace NetTelebot
 
         /// <summary>
         /// Use this method to forward messages of any kind. On success, the sent Message is returned.
+        /// API <link href="https://core.telegram.org/bots/api#forwardmessage"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="fromChatId">Unique identifier for the chat where the original message was sent — User or GroupChat id</param>
         /// <param name="messageId">Unique message identifier</param>
+        /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
         /// <returns></returns>
-        public SendMessageResult ForwardMessage(int chatId, int fromChatId, int messageId)
+        public SendMessageResult ForwardMessage(int chatId, int fromChatId, 
+            int messageId,
+            bool? disableNotification = null)
         {
-            var request = new RestRequest(string.Format(forwardMessageUri, Token), Method.POST);
+            RestRequest request = new RestRequest(string.Format(forwardMessageUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("from_chat_id", fromChatId);
             request.AddParameter("message_id", messageId);
-            var response = restClient.Execute(request);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+            IRestResponse response = restClient.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
             else
