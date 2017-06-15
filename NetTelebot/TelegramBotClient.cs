@@ -378,13 +378,24 @@ namespace NetTelebot
 
         /// <summary>
         /// Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
+        /// API <link href="https://core.telegram.org/bots/api#sendvideo"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="video">Video to send. You can either pass a file_id as String to resend a video that is already on the Telegram servers, or upload a new video file using multipart/form-data.</param>
+        /// <param name="duration">Optional. Duration of sent video in seconds</param>
+        /// <param name="width">Optional. Video width</param> 
+        /// <param name="height">Video height</param>
+        /// <param name="caption">Optional. Video caption (may also be used when resending videos by file_id), 0-200 characters</param>
+        /// <param name="disableNotification">Optional. Sends the message silently. Users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns></returns>
         public SendMessageResult SendVideo(int chatId, IFile video,
+            int? duration = null,
+            int? width = null,
+            int? height = null,
+            string caption = null,
+            bool? disableNotification = null,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
@@ -402,6 +413,17 @@ namespace NetTelebot
                 NewFile newFile = (NewFile)video;
                 request.AddFile("video", newFile.FileContent, newFile.FileName);
             }
+
+            if (duration != null)
+                request.AddParameter("duration", duration);
+            if (width != null)
+                request.AddParameter("width", width);
+            if (height != null)
+                request.AddParameter("height", height);
+            if (!string.IsNullOrEmpty(caption))
+                request.AddParameter("caption", caption);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
             if (replyToMessageId != null)
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
