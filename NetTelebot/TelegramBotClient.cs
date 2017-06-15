@@ -441,6 +441,7 @@ namespace NetTelebot
 
         /// <summary>
         /// Use this method to send point on the map. On success, the sent Message is returned.
+        /// API <link href="https://core.telegram.org/bots/api#sendlocation"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="latitude">Latitude of location</param>
@@ -472,6 +473,9 @@ namespace NetTelebot
             else
                 throw new Exception(response.StatusDescription);
         }
+
+        //todo sendVenue (https://core.telegram.org/bots/api#sendvenue)
+        //todo sendContact (https://core.telegram.org/bots/api#sendcontact)
 
         /// <summary>
         /// Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
