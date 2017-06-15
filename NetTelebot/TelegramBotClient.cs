@@ -436,16 +436,21 @@ namespace NetTelebot
                 throw new Exception(response.StatusDescription);
         }
 
+        //todo sendVoice (https://core.telegram.org/bots/api#sendvoice)
+        //todo sendVideonote (https://core.telegram.org/bots/api#sendvideonote)
+
         /// <summary>
         /// Use this method to send point on the map. On success, the sent Message is returned.
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="latitude">Latitude of location</param>
         /// <param name="longitude">Longitude of location</param>
+        /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns></returns>
         public SendMessageResult SendLocation(int chatId, float latitude, float longitude,
+            bool? disableNotification = null,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
@@ -454,6 +459,8 @@ namespace NetTelebot
             request.AddParameter("latitude", latitude);
             request.AddParameter("longitude", longitude);
 
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
             if (replyToMessageId != null)
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
