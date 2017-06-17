@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetTelebot
 {
@@ -76,7 +72,7 @@ namespace NetTelebot
                 GroupChatCreated = true;
         }
 
-        private IConversationSource ParseChat(JObject jsonObject)
+        private static IConversationSource ParseChat(JObject jsonObject)
         {
             if (jsonObject["title"] != null)
                 return new GroupChatInfo(jsonObject);

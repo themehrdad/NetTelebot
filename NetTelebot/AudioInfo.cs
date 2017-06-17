@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
 namespace NetTelebot
@@ -25,7 +20,7 @@ namespace NetTelebot
 
         private void Parse(string jsonText)
         {
-            var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
+            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
 
@@ -33,10 +28,15 @@ namespace NetTelebot
         {
             FileId = jsonObject["file_id"].Value<string>();
             Duration = jsonObject["duration"].Value<int>();
+            if (jsonObject["performer"] != null)
+                Performer = jsonObject["performer"].Value<string>();
+            if (jsonObject["title"] != null)
+                Performer = jsonObject["title"].Value<string>();
             if (jsonObject["mime_type"] != null)
                 MimeType = jsonObject["mime_type"].Value<string>();
             if (jsonObject["file_size"] != null)
                 FileSize = jsonObject["file_size"].Value<int>();
+            
         }
 
         /// <summary>
@@ -47,6 +47,14 @@ namespace NetTelebot
         /// Duration of the audio in seconds as defined by sender
         /// </summary>
         public int Duration { get; set; }
+        /// <summary>
+        /// Optional. Performer of the audio as defined by sender or by audio tags
+        /// </summary>
+        public string Performer { get; set; }
+        /// <summary>
+        /// Optional. Title of the audio as defined by sender or by audio tags
+        /// </summary>
+        public string Title { get; set; }
         /// <summary>
         /// Optional. MIME type of the file as defined by sender
         /// </summary>

@@ -1,10 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetTelebot
 {
@@ -23,7 +18,7 @@ namespace NetTelebot
         }
         private void Parse(string jsonText)
         {
-            var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
+            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
         private void Parse(JObject jsonObject)
@@ -37,8 +32,6 @@ namespace NetTelebot
                 MimeType = jsonObject["mime_type"].Value<string>();
             if (jsonObject["file_size"] != null)
                 FileSize = jsonObject["file_size"].Value<int>();
-            if (jsonObject["caption"] != null)
-                Caption = jsonObject["caption"].Value<string>();
         }
         /// <summary>
         /// Unique identifier for this file
@@ -68,9 +61,5 @@ namespace NetTelebot
         /// Optional. File size
         /// </summary>
         public int FileSize { get; set; }
-        /// <summary>
-        /// Optional. Text description of the video (usually empty)
-        /// </summary>
-        public string Caption { get; set; }
     }
 }

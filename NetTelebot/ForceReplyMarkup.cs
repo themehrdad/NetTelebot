@@ -1,9 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace NetTelebot
 {
@@ -27,7 +22,7 @@ namespace NetTelebot
 
         public string GetJson()
         {
-            var builder = new StringBuilder();
+            StringBuilder builder = new StringBuilder();
             builder.Append("{ \"force_reply\" : true ");
             if (Selective.HasValue)
             {

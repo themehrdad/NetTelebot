@@ -1,8 +1,14 @@
+<a href="https://teamcity.nesterov.tk/viewType.html?buildTypeId=NetTelebotGithubRepository_BuildTestDebug&guest=1">
+<img src="https://teamcity.nesterov.tk/app/rest/builds/buildType:(id:NetTelebotGithubRepository_BuildTestDebug)/statusIcon"/>
+</a>
+
 # NetTelebot
 Telegram bot API implementation on .NET framework
 
 # About
 Do you want to create a smart automated bot on Telegram App? If you plan to write the logic using .NET framework, this tool might help you.
+
+To support devices with Windows XP, the library version is developed under the .NET Framework 4
 
 # Usage
 After creating your own bot on [Telegram](https://core.telegram.org/bots/), you need to add a reference to "nettelebot" library.

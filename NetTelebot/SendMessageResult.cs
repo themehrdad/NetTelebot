@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+#pragma warning disable 1591
 
 namespace NetTelebot
 {
@@ -31,7 +27,7 @@ namespace NetTelebot
 
         private void Parse(string jsonText)
         {
-            var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
+            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
 
