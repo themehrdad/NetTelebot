@@ -233,7 +233,8 @@ namespace NetTelebot
         /// API <link href="https://core.telegram.org/bots/api#sendaudio"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
-        /// <param name="audio">Audio file to send. You can either pass a file_id as String to resend an audio that is already on the Telegram servers, or upload a new audio file using multipart/form-data.</param>
+        /// <param name="audio">Audio file to send. You can either pass a file_id as String to resend an audio that is already on the Telegram servers,
+        /// or upload a new audio file using multipart/form-data.</param>
         /// <param name="caption">Audio caption, 0-200 characters</param>
         /// <param name="duration">Duration of the audio in seconds</param> 
         /// <param name="performer">Duration of the audio in seconds</param>
@@ -379,7 +380,8 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
+        /// Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). 
+        /// On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
         /// API <link href="https://core.telegram.org/bots/api#sendvideo"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
