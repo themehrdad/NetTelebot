@@ -177,8 +177,8 @@ namespace NetTelebot
             IRestResponse response = restClient.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
-
-            throw new ArgumentNullException(response.StatusDescription);
+            else
+                throw new Exception(response.StatusDescription);
         }
 
         /// <summary>
