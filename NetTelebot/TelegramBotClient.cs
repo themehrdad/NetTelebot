@@ -38,7 +38,7 @@ namespace NetTelebot
 
         private readonly RestClient restClient = new RestClient("https://api.telegram.org");
         private Timer updateTimer;
-        private int lastUpdateId = 0;
+        private int lastUpdateId;
 
         public event UnhandledExceptionEventHandler GetUpdatesError;
         /// <summary>
