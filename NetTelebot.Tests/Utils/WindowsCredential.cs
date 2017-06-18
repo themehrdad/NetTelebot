@@ -48,7 +48,8 @@ namespace NetTelebot.Tests.Utils
         /// 2. Get the list of updates for your BOT:
         /// https://api.telegram.org/bot<YourBOTToken>/getUpdates
         /// 3. Look for the "chat" object:
-        /// {"update_id":8393,"message":{"message_id":3,"from":{"id":7474,"first_name":"AAA"},"chat":{"id":,"title":""},"date":25497,"new_chat_participant":{"id":71,"first_name":"NAME","username":"YOUR_BOT_NAME"}}}
+        /// {"update_id":8393,"message":{"message_id":3,"from":{"id":7474,"first_name":"AAA"},"chat":{"id":,"title":""},
+        /// "date":25497,"new_chat_participant":{"id":71,"first_name":"NAME","username":"YOUR_BOT_NAME"}}}
         /// This is a sample of the response when you add your BOT into a group. 
         /// 4. Use the "id" of the "chat" object to send your messages.
         /// </summary>

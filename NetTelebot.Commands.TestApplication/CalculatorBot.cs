@@ -11,7 +11,7 @@
 
             CommandInfo command2 = new CommandInfo("/newbrand") {StaticAcceptMessage = "New brand is saved."};
 
-            ParameterInfo parameter = new ParameterInfo()
+            ParameterInfo parameter = new ParameterInfo
             {
                 Name = "Name",
                 Type = ParameterTypes.Text,
@@ -24,7 +24,7 @@
 
             CommandInfo command3 = new CommandInfo("/getinfo") { StaticAcceptMessage = "New command."};
 
-            ParameterInfo parameter2 = new ParameterInfo()
+            ParameterInfo parameter2 = new ParameterInfo
             {
                 Name = "Name",
                 Type = ParameterTypes.Text,
