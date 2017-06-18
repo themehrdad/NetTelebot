@@ -186,7 +186,8 @@ namespace NetTelebot
         /// API <link href="https://core.telegram.org/bots/api#sendphoto"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
-        /// <param name="photo">Photo to send. You can either pass a file_id as String to resend a photo that is already on the Telegram servers (using ExistingFile class), or upload a new photo using multipart/form-data. (Using NewFile class)</param>
+        /// <param name="photo">Photo to send. You can either pass a file_id as String to resend a photo that is already on the Telegram servers (using ExistingFile class),
+        /// or upload a new photo using multipart/form-data. (Using NewFile class)</param>
         /// <param name="caption">Photo caption (may also be used when resending photos by file_id).</param>
         /// <param name="disableNotification">Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
@@ -227,7 +228,8 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
+        /// Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Document). 
+        /// On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
         /// API <link href="https://core.telegram.org/bots/api#sendaudio"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
@@ -479,7 +481,8 @@ namespace NetTelebot
 
         //todo add new chat action to <param name="action">
         /// <summary>
-        /// Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
+        /// Use this method when you need to tell the user that something is happening on the bot's side. 
+        /// The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
         /// API <link href="https://core.telegram.org/bots/api#sendchataction"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
