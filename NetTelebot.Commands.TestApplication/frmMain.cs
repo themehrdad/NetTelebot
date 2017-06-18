@@ -1,15 +1,22 @@
 ﻿using System;
 using System.Windows.Forms;
+using NetTelebot.Tests.Utils;
 
 namespace NetTelebot.Commands.TestApplication
 {
-    public partial class frmMain : Form
+    public partial class frmMain : Form, IWindowsCredential
     {
-        private readonly CalculatorBot bot = new CalculatorBot("");
+        private const string mBotName = "NetTelebotTest";
+
+        private readonly CalculatorBot mBot;
+
         public frmMain()
         {
+            var token = GetTelegramCredential(mBotName).Token;
+            mBot = new CalculatorBot(token);
+            mBot.MessageReceived += Bot_MessageReceived;
+
             InitializeComponent();
-            bot.MessageReceived += Bot_MessageReceived;
         }
 
         private void Bot_MessageReceived(object sender, MessageEventArgs e)
@@ -26,12 +33,17 @@ namespace NetTelebot.Commands.TestApplication
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            bot.Start();
+            mBot.Start();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            bot.Stop();
+            mBot.Stop();
+        }
+
+        public TelegramCredentials GetTelegramCredential(string botAlias)
+        {
+            return new WindowsCredential().GetTelegramCredential(botAlias);
         }
     }
 }
