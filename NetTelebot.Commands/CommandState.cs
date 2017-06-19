@@ -8,9 +8,9 @@ namespace NetTelebot.Commands
         {
             Parameters = new List<object>();
         }
-        public int chatId { get; set; }
-        public int userId { get; set; }
-        public string commandText { get; set; }
+        public int ChatId { get; set; }
+        public int UserId { get; set; }
+        public string CommandText { get; set; }
         public List<object> Parameters { get; private set; }
     }
 }
