@@ -228,7 +228,8 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Document). 
+        /// Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message.
+        /// For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Document). 
         /// On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
         /// API <link href="https://core.telegram.org/bots/api#sendaudio"></link>
         /// </summary>
@@ -294,7 +295,8 @@ namespace NetTelebot
         /// API <link href="https://core.telegram.org/bots/api#senddocument"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
-        /// <param name="document">File to send. You can either pass a file_id as String to resend a file that is already on the Telegram servers, or upload a new file using multipart/form-data.</param>
+        /// <param name="document">File to send. You can either pass a file_id as String to resend a file that is already on the Telegram servers,
+        /// or upload a new file using multipart/form-data.</param>
         /// <param name="caption">Document caption (may also be used when resending documents by file_id), 0-200 characters</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
@@ -341,7 +343,8 @@ namespace NetTelebot
         /// API <link href="https://core.telegram.org/bots/api#sendsticker"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
-        /// <param name="sticker">Sticker to send. You can either pass a file_id as String to resend a sticker that is already on the Telegram servers, or upload a new sticker using multipart/form-data.</param>
+        /// <param name="sticker">Sticker to send. You can either pass a file_id as String to resend a sticker that is 
+        /// already on the Telegram servers, or upload a new sticker using multipart/form-data.</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
@@ -385,7 +388,8 @@ namespace NetTelebot
         /// API <link href="https://core.telegram.org/bots/api#sendvideo"></link>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
-        /// <param name="video">Video to send. You can either pass a file_id as String to resend a video that is already on the Telegram servers, or upload a new video file using multipart/form-data.</param>
+        /// <param name="video">Video to send. You can either pass a file_id as String to resend a video that is already on the Telegram servers,
+        /// or upload a new video file using multipart/form-data.</param>
         /// <param name="duration">Optional. Duration of sent video in seconds</param>
         /// <param name="width">Optional. Video width</param> 
         /// <param name="height">Video height</param>
