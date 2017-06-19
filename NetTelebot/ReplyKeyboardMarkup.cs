@@ -13,7 +13,8 @@ namespace NetTelebot
         /// </summary>
         public string[][] Keyboard { get; set; }
         /// <summary>
-        /// Optional. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to false, in which case the custom keyboard is always of the same height as the app's standard keyboard.
+        /// Optional. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons).
+        /// Defaults to false, in which case the custom keyboard is always of the same height as the app's standard keyboard.
         /// </summary>
         public bool? ResizeKeyboard { get; set; }
         /// <summary>
@@ -21,7 +22,10 @@ namespace NetTelebot
         /// </summary>
         public bool? OneTimeKeyboard { get; set; }
         /// <summary>
-        /// Optional. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+        /// Optional. Use this parameter if you want to show the keyboard to specific users only.
+        /// Targets:
+        /// 1) users that are @mentioned in the text of the Message object;
+        /// 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
         /// </summary>
         public bool? Selective { get; set; }
 
@@ -43,9 +47,7 @@ namespace NetTelebot
         private string GetKeyboardJson()
         {
             return string.Join(",", Keyboard.Select(line =>
-                string.Format("[{0}]",
-                    string.Join(",",
-                        line.Select(item => string.Format("\"{0}\"", item)).ToArray()))).ToArray());
+                $"[{string.Join(",", line.Select(item => $"\"{item}\"").ToArray())}]").ToArray());
         }
     }
 }
