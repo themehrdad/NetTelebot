@@ -62,9 +62,9 @@ namespace NetTelebot.Commands
         private void ProcessParameter(MessageInfo message)
         {
             CommandState commandState = Data.GetCommandState(message.From.Id, message.Chat.Id);
-            if(commandState!=null)
-            {
-            }
+
+            if (commandState!=null)
+            { }
             else
             {
                 OnUnknownCommandReceived(message);

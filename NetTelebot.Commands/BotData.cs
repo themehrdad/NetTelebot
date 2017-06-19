@@ -15,12 +15,12 @@ namespace NetTelebot.Commands
         internal void SetCommand(int userId, int chatId, string command)
         {
             CommandState commandState = GetCommandState(userId, chatId) ?? new CommandState();
-            if (string.IsNullOrEmpty(commandState.commandText) ||
-                !commandState.commandText.Equals(command, StringComparison.InvariantCultureIgnoreCase))
+            if (string.IsNullOrEmpty(commandState.CommandText) ||
+                !commandState.CommandText.Equals(command, StringComparison.InvariantCultureIgnoreCase))
             {
-                commandState.commandText = command;
-                commandState.chatId = chatId;
-                commandState.userId = userId;
+                commandState.CommandText = command;
+                commandState.ChatId = chatId;
+                commandState.UserId = userId;
                 commandState.Parameters.Clear();
             }
             Store(commandState);
@@ -48,7 +48,7 @@ namespace NetTelebot.Commands
         internal CommandState GetCommandState(int userId, int chatId)
         {
             return GetOdb().Query<CommandState>().Execute<CommandState>()
-                .FirstOrDefault(cs => cs.chatId == chatId && cs.userId == userId);
+                .FirstOrDefault(cs => cs.ChatId == chatId && cs.UserId == userId);
         }
 
         private IOdb GetOdb()
