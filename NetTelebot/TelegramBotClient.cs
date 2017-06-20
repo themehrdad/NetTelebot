@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading;
+// ReSharper disable UnusedMember.Local
 #pragma warning disable 1591
 
 namespace NetTelebot
@@ -32,10 +33,23 @@ namespace NetTelebot
         private const string sendDocumentUri = "/bot{0}/sendDocument";
         private const string sendStickerUri = "/bot{0}/sendSticker";
         private const string sendVideoUri = "/bot{0}/sendVideo";
+        private const string sendVoiceUri = "/bot{0}/sendVoice";
+        private const string sendVideoNoteUri = "/bot{0}/sendVideoNote";
         private const string sendLocationUri = "/bot{0}/sendLocation";
+        private const string sendVenueUri = "/bot{0}/sendVenue";
+        private const string sendContactUri = "/bot{0}/sendContact";
         private const string sendChatActionUri = "/bot{0}/sendChatAction";
         private const string getUserProfilePhotosUri = "/bot{0}/getUserProfilePhotos";
-
+        private const string getFileUri = "/bot{0}/getFile";
+        private const string kickChatMemberUri = "/bot{0}/kickChatMember";
+        private const string unbanChatMemberUri = "/bot{0}/unbanChatMember";
+        private const string leaveChatUri = "/bot{0}/leaveChat";
+        private const string getChatUri = "/bot{0}/getChat";
+        private const string getChatAdministratorsUri = "/bot{0}/getChatAdministrators";
+        private const string getChatMembersCountUri = "/bot{0}/getChatMembersCount";
+        private const string getChatMemberUri = "/bot{0}/getChatMember";
+        private const string answerCallbackQueryUri = "/bot{0}/getChatMember";
+        
         private readonly RestClient restClient = new RestClient("https://api.telegram.org");
         private Timer updateTimer;
         private int lastUpdateId;
@@ -113,8 +127,7 @@ namespace NetTelebot
 
         protected virtual void OnGetUpdatesError(Exception exception)
         {
-            if (GetUpdatesError != null)
-                GetUpdatesError(this, new UnhandledExceptionEventArgs(exception, false));
+            GetUpdatesError?.Invoke(this, new UnhandledExceptionEventArgs(exception, false));
         }
 
         /// <summary>
