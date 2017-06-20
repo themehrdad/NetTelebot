@@ -12,15 +12,18 @@ namespace NetTelebot
         {
             Parse(jsonText);
         }
+
         internal ContactInfo(JObject jsonObject)
         {
             Parse(jsonObject);
         }
+
         private void Parse(string jsonText)
         {
             JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
+
         private void Parse(JObject jsonObject)
         {
             PhoneNumber = jsonObject["phone_number"].Value<string>();

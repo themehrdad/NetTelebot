@@ -1,5 +1,4 @@
-﻿using System;
-using NetTelebot.Tests.Utils;
+﻿using NetTelebot.Tests.Utils;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests
@@ -19,7 +18,7 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
-        /// Test the return value (SendMessageResult.Result.Text) and send a message (SendMessageResult.Ok)
+        /// Test the send and return value (SendMessageResult.Result.Text) and send a message (SendMessageResult.Ok)
         /// </summary>
         [Test]
         public void TestSendMessage()
@@ -27,14 +26,31 @@ namespace NetTelebot.Tests
             SendMessageResult sendMessage = TelegramBot().SendMessage(mChatId, "Test");
             Assert.AreEqual(sendMessage.Result.Text, "Test");
 
-            Console.WriteLine("Result " + sendMessage.Result);
             Assert.True(sendMessage.Ok);
         }
 
+
         /// <summary>
-        /// 
+        /// Test the send and return location point (SendMessageResult.Result.Location.Latitude, SendMessageResult.Result.Location.Longitude)
         /// </summary>
-        /// <returns></returns>
+        [Test]
+        public void TestSendSendLocation()
+        {
+            //todo check with real point
+            const float latitude = 37.0000114f;
+            const float longitude = 37.0000076f;
+            
+            SendMessageResult sendLocation = TelegramBot().SendLocation(mChatId, latitude, longitude);
+
+            Assert.AreEqual(sendLocation.Result.Location.Latitude, latitude);
+            Assert.AreEqual(sendLocation.Result.Location.Longitude, longitude);
+        }
+
+
+        /// <summary>
+        /// Create bot insatnce
+        /// </summary>
+        /// <returns>TelegramBotClient</returns>
         private TelegramBotClient TelegramBot()
         {
             TelegramBotClient telegramBotClient = new TelegramBotClient
