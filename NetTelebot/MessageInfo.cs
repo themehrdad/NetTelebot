@@ -65,11 +65,8 @@ namespace NetTelebot
             if (jsonObject["contact"] != null)
                 Contact = new ContactInfo(jsonObject["contact"].Value<JObject>());
             else
-            {
                 //todo Use this solution or find better
-                throw new ArgumentException("Contact is null", nameof(jsonObject));
-            }
-                
+                //throw new ArgumentException("Contact is null", nameof(jsonObject));     
             if (jsonObject["location"] != null)
                 Location = new LocationInfo(jsonObject["location"].Value<JObject>());
             if (jsonObject["new_chat_member"] != null)

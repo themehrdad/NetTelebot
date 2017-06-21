@@ -85,7 +85,7 @@ namespace NetTelebot.Tests
                 "\n result.Result.Sticker " + result.Result.Sticker +
                 "\n result.Result.Video " + result.Result.Video +
                 "\n result.Result.Caption " + result.Result.Caption +
-                "\n result.Result.Contact " + result.Result.Contact +
+                //"\n result.Result.Contact " + result.Result.Contact +
                 "\n result.Result.Location " + result.Result.Location +
                 "\n result.Result.NewChatMember " + result.Result.NewChatMember +
                 "\n result.Result.LeftChatMember " + result.Result.LeftChatMember +
