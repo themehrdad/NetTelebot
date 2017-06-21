@@ -8,8 +8,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.Tests", "NetTelebot.Tests\NetTelebot.Tests.csproj", "{A09E8951-00AF-4575-AD51-B6AE2E34B84C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.Commands", "NetTelebot.Commands\NetTelebot.Commands.csproj", "{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{49C7146E-4A6B-406F-8332-042B9BCA19EB} = {49C7146E-4A6B-406F-8332-042B9BCA19EB}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.Commands.TestApplication", "NetTelebot.Commands.TestApplication\NetTelebot.Commands.TestApplication.csproj", "{CF6021EF-9C18-4B53-AAC2-E75611F37263}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E} = {E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

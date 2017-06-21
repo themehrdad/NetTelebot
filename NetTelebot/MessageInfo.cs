@@ -64,12 +64,15 @@ namespace NetTelebot
                 Caption = jsonObject["caption"].Value<string>();
             if (jsonObject["contact"] != null)
                 Contact = new ContactInfo(jsonObject["contact"].Value<JObject>());
+            else
+                //todo Use this solution or find better
+                //throw new ArgumentException("Contact is null", nameof(jsonObject));     
             if (jsonObject["location"] != null)
                 Location = new LocationInfo(jsonObject["location"].Value<JObject>());
-            if (jsonObject["new_chat_participant"] != null)
-                NewChatParticipant = new UserInfo(jsonObject["new_chat_participant"].Value<JObject>());
-            if (jsonObject["left_chat_participant"] != null)
-                LeftChatParticipant = new UserInfo(jsonObject["left_chat_participant"].Value<JObject>());
+            if (jsonObject["new_chat_member"] != null)
+                NewChatMember = new UserInfo(jsonObject["new_chat_participant"].Value<JObject>());
+            if (jsonObject["left_chat_member"] != null)
+                LeftChatMember = new UserInfo(jsonObject["left_chat_participant"].Value<JObject>());
             if (jsonObject["new_chat_title"] != null)
                 NewChatTitle = jsonObject["new_chat_title"].Value<string>();
             if (jsonObject["new_chat_photo"] != null)
@@ -203,11 +206,11 @@ namespace NetTelebot
         /// <summary>
         /// Optional. A new member was added to the group, information about them (this member may be bot itself)
         /// </summary>
-        public UserInfo NewChatParticipant { get; private set; }
+        public UserInfo NewChatMember { get; private set; }
         /// <summary>
         /// Optional. A member was removed from the group, information about them (this member may be bot itself)
         /// </summary>
-        public UserInfo LeftChatParticipant { get; private set; }
+        public UserInfo LeftChatMember { get; private set; }
         /// <summary>
         /// Optional. A group title was changed to this value
         /// </summary>

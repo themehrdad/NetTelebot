@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading;
+// ReSharper disable UnusedMember.Local
 #pragma warning disable 1591
 
 namespace NetTelebot
@@ -32,10 +33,23 @@ namespace NetTelebot
         private const string sendDocumentUri = "/bot{0}/sendDocument";
         private const string sendStickerUri = "/bot{0}/sendSticker";
         private const string sendVideoUri = "/bot{0}/sendVideo";
+        private const string sendVoiceUri = "/bot{0}/sendVoice";
+        private const string sendVideoNoteUri = "/bot{0}/sendVideoNote";
         private const string sendLocationUri = "/bot{0}/sendLocation";
+        private const string sendVenueUri = "/bot{0}/sendVenue";
+        private const string sendContactUri = "/bot{0}/sendContact";
         private const string sendChatActionUri = "/bot{0}/sendChatAction";
         private const string getUserProfilePhotosUri = "/bot{0}/getUserProfilePhotos";
-
+        private const string getFileUri = "/bot{0}/getFile";
+        private const string kickChatMemberUri = "/bot{0}/kickChatMember";
+        private const string unbanChatMemberUri = "/bot{0}/unbanChatMember";
+        private const string leaveChatUri = "/bot{0}/leaveChat";
+        private const string getChatUri = "/bot{0}/getChat";
+        private const string getChatAdministratorsUri = "/bot{0}/getChatAdministrators";
+        private const string getChatMembersCountUri = "/bot{0}/getChatMembersCount";
+        private const string getChatMemberUri = "/bot{0}/getChatMember";
+        private const string answerCallbackQueryUri = "/bot{0}/getChatMember";
+        
         private readonly RestClient restClient = new RestClient("https://api.telegram.org");
         private Timer updateTimer;
         private int lastUpdateId;
@@ -104,17 +118,18 @@ namespace NetTelebot
                 request.AddQueryParameter("offset", offset.Value.ToString());
             if (limit.HasValue)
                 request.AddQueryParameter("limit", limit.Value.ToString());
+
             IRestResponse response = restClient.Execute(request);
+
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new GetUpdatesResult(response.Content);
-            else
-                throw new Exception(response.StatusDescription);
+
+            throw new Exception(response.StatusDescription);
         }
 
         protected virtual void OnGetUpdatesError(Exception exception)
         {
-            if (GetUpdatesError != null)
-                GetUpdatesError(this, new UnhandledExceptionEventArgs(exception, false));
+            GetUpdatesError?.Invoke(this, new UnhandledExceptionEventArgs(exception, false));
         }
 
         /// <summary>
@@ -149,9 +164,12 @@ namespace NetTelebot
                 request.AddParameter("reply_to_message_id", replyToMessageId.Value);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
+
             IRestResponse response = restClient.Execute(request);
+
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
+
             throw new Exception(response.StatusDescription);
         }
 
@@ -174,11 +192,13 @@ namespace NetTelebot
             request.AddParameter("message_id", messageId);
             if (disableNotification.HasValue)
                 request.AddParameter("disable_notification", disableNotification.Value);
+
             IRestResponse response = restClient.Execute(request);
+
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
-            else
-                throw new Exception(response.StatusDescription);
+
+            throw new Exception(response.StatusDescription);
         }
 
         /// <summary>
@@ -220,11 +240,13 @@ namespace NetTelebot
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
+
             IRestResponse response = restClient.Execute(request);
+
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
-            else
-                throw new Exception(response.StatusDescription);
+
+            throw new Exception(response.StatusDescription);
         }
 
         /// <summary>
@@ -283,11 +305,13 @@ namespace NetTelebot
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
+
             IRestResponse response = restClient.Execute(request);
+
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
-            else
-                throw new Exception(response.StatusDescription);
+
+            throw new Exception(response.StatusDescription);
         }
 
         /// <summary>
@@ -331,11 +355,13 @@ namespace NetTelebot
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
+
             IRestResponse response = restClient.Execute(request);
+
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
-            else
-                throw new Exception(response.StatusDescription);
+
+            throw new Exception(response.StatusDescription);
         }
 
         /// <summary>
@@ -375,11 +401,13 @@ namespace NetTelebot
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
+
             IRestResponse response = restClient.Execute(request);
+
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
-            else
-                throw new Exception(response.StatusDescription);
+
+            throw new Exception(response.StatusDescription);
         }
 
         /// <summary>
@@ -438,10 +466,11 @@ namespace NetTelebot
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
             IRestResponse response = restClient.Execute(request);
+
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
-            else
-                throw new Exception(response.StatusDescription);
+
+            throw new Exception(response.StatusDescription);
         }
 
         //todo sendVoice (https://core.telegram.org/bots/api#sendvoice)
@@ -476,10 +505,11 @@ namespace NetTelebot
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
             IRestResponse response = restClient.Execute(request);
+
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
-            else
-                throw new Exception(response.StatusDescription);
+
+            throw new Exception(response.StatusDescription);
         }
 
         //todo sendVenue (https://core.telegram.org/bots/api#sendvenue)
