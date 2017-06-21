@@ -5,17 +5,16 @@ using NUnit.Framework;
 namespace NetTelebot.Tests
 {
     [TestFixture]
-    internal class TelegramBotClientTest : IWindowsCredential
+    internal class TelegramBotClientTest
     {
-        private const string mBotName = "NetTelebotTest";
-        private string mToken;
+        private TelegramBotClient mTelegramBot;
         private int mChatId;
 
         [SetUp]
         public void OnTestStart()
         {
-            mToken = GetTelegramCredential(mBotName).Token;
-            mChatId = GetTelegramCredential(mBotName).ChatId;
+            mTelegramBot = new TelegramBot().GetBot();
+            mChatId = new TelegramBot().GetChatId();
         }
 
         /// <summary>
@@ -24,13 +23,12 @@ namespace NetTelebot.Tests
         [Test]
         public void TestSendMessage()
         {
-            SendMessageResult sendMessage = TelegramBot().SendMessage(mChatId, "Test");
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "Test");
             Assert.AreEqual(sendMessage.Result.Text, "Test");
 
             Assert.True(sendMessage.Ok);
             ParseSendMessageResult(sendMessage);
         }
-
 
         /// <summary>
         /// Test the send and return location point (SendMessageResult.Result.Location.Latitude, SendMessageResult.Result.Location.Longitude)
@@ -42,25 +40,10 @@ namespace NetTelebot.Tests
             const float latitude = 37.0000114f;
             const float longitude = 37.0000076f;
             
-            SendMessageResult sendLocation = TelegramBot().SendLocation(mChatId, latitude, longitude);
+            SendMessageResult sendLocation = mTelegramBot.SendLocation(mChatId, latitude, longitude);
 
             Assert.AreEqual(sendLocation.Result.Location.Latitude, latitude);
             Assert.AreEqual(sendLocation.Result.Location.Longitude, longitude);
-        }
-
-
-        /// <summary>
-        /// Create bot insatnce
-        /// </summary>
-        /// <returns>TelegramBotClient</returns>
-        private TelegramBotClient TelegramBot()
-        {
-            TelegramBotClient telegramBotClient = new TelegramBotClient
-            {
-                Token = mToken
-            };
-
-            return telegramBotClient;
         }
 
         private static void ParseSendMessageResult(SendMessageResult result)
@@ -85,7 +68,7 @@ namespace NetTelebot.Tests
                 "\n result.Result.Sticker " + result.Result.Sticker +
                 "\n result.Result.Video " + result.Result.Video +
                 "\n result.Result.Caption " + result.Result.Caption +
-                //"\n result.Result.Contact " + result.Result.Contact +
+                "\n result.Result.Contact.LastName " + result.Result.Contact.LastName +
                 "\n result.Result.Location " + result.Result.Location +
                 "\n result.Result.NewChatMember " + result.Result.NewChatMember +
                 "\n result.Result.LeftChatMember " + result.Result.LeftChatMember +
@@ -98,16 +81,6 @@ namespace NetTelebot.Tests
                 "\n result.Result.MigrateToChatId " + result.Result.MigrateToChatId +
                 "\n result.Result.MigrateFromChatId " + result.Result.MigrateFromChatId +
                 "\n result.Result.PinnedMessage " + result.Result.PinnedMessage );
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="botAlias"></param>
-        /// <returns></returns>
-        public TelegramCredentials GetTelegramCredential(string botAlias)
-        {
-            return new WindowsCredential().GetTelegramCredential(botAlias);
         }
     }
 }

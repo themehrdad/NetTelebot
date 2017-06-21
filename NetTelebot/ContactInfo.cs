@@ -8,6 +8,10 @@ namespace NetTelebot
     /// </summary>
     public class ContactInfo
     {
+        public ContactInfo()
+        {
+        }
+
         internal ContactInfo(string jsonText)
         {
             Parse(jsonText);
@@ -33,6 +37,7 @@ namespace NetTelebot
             if (jsonObject["user_id"] != null)
                 UserId = jsonObject["user_id"].Value<string>();
         }
+
         /// <summary>
         /// Contact's phone number
         /// </summary>
