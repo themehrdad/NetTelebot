@@ -59,9 +59,8 @@ namespace NetTelebot
                 Photo = PhotoSizeInfo.ParseArray(jsonObject["photo"].Value<JArray>());
             if (jsonObject["sticker"] != null)
                 Sticker = new StickerInfo(jsonObject["sticker"].Value<JObject>());
-            if (jsonObject["video"] != null)
-                Video = new VideoInfo(jsonObject["video"].Value<JObject>());
 
+            Video = jsonObject["video"] != null ? new VideoInfo(jsonObject["video"].Value<JObject>()) : new VideoInfo();
             Caption = jsonObject["caption"] != null ? jsonObject["caption"].Value<string>() : string.Empty;
             Contact = jsonObject["contact"] != null ? new ContactInfo(jsonObject["contact"].Value<JObject>()) : new ContactInfo();
 
@@ -76,6 +75,7 @@ namespace NetTelebot
 
             if (jsonObject["new_chat_photo"] != null)
                 NewChatPhoto = PhotoSizeInfo.ParseArray(jsonObject["new_chat_photo"].Value<JArray>());
+
             if (jsonObject["delete_chat_photo"] != null)
                 DeleteChatPhoto = true;
             if (jsonObject["group_chat_created"] != null)
@@ -88,6 +88,7 @@ namespace NetTelebot
                 MigrateToChatId = jsonObject["migrate_to_chat_id"].Value<int>();
             if (jsonObject["migrate_from_chat_id"] != null)
                 MigrateFromChatId = jsonObject["migrate_from_chat_id"].Value<int>();
+
             if (jsonObject["pinned_message"] != null)
                 PinnedMessage = new MessageInfo(jsonObject["pinned_message"].Value<JObject>());
         }
