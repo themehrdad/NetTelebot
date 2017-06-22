@@ -7,12 +7,12 @@
 
 Telegram bot API implementation on .NET framework
 
-# About
+## About
 Do you want to create a smart automated bot on Telegram App? If you plan to write the logic using .NET framework, this tool might help you.
 
 To support devices with Windows XP, the library version is developed under the .NET Framework 4
 
-# Usage
+## Usage
 After creating your own bot on [Telegram](https://core.telegram.org/bots/), you need to add a reference to "nettelebot" library.
 
 All you need to do is to create an instance of TelegramBotClient class.
@@ -42,6 +42,10 @@ private void botClient_UpdatesReceived(object sender, TelegramUpdateEventArgs e)
 }
 ```
 
-# Documentation
+## Documentation
 
 Look at the [Wiki](https://github.com/themehrdad/NetTelebot/wiki/Documentation)
+
+## To Do
+
+Look at the [Project page](https://github.com/vertigra/NetTelebot-2.0/projects/1)
