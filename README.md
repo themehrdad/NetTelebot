@@ -48,4 +48,4 @@ Look at the [Wiki](https://github.com/themehrdad/NetTelebot/wiki/Documentation)
 
 ## To Do
 
-Look at the [Project page](https://github.com/vertigra/NetTelebot-2.0/projects/1)
+Look at the [project page](https://github.com/vertigra/NetTelebot-2.0/projects/1)
