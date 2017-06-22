@@ -61,10 +61,8 @@ namespace NetTelebot
                 Sticker = new StickerInfo(jsonObject["sticker"].Value<JObject>());
             if (jsonObject["video"] != null)
                 Video = new VideoInfo(jsonObject["video"].Value<JObject>());
-            if (jsonObject["caption"] != null)
-                Caption = jsonObject["caption"].Value<string>();
-            
-            //Except NullReferenceException
+
+            Caption = jsonObject["caption"] != null ? jsonObject["caption"].Value<string>() : string.Empty;
             Contact = jsonObject["contact"] != null ? new ContactInfo(jsonObject["contact"].Value<JObject>()) : new ContactInfo();
 
             if (jsonObject["location"] != null)

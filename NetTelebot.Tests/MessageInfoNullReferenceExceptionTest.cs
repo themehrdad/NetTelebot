@@ -7,6 +7,7 @@ namespace NetTelebot.Tests
     /// <summary>
     /// Checking for NullReferenceException when accessing to null fields MessageInfo after use available methods TelegramBotClients
     /// </summary>
+    [TestFixture]
     internal class MessageInfoNullReferenceExceptionTest
     {
         private TelegramBotClient mTelegramBot;
@@ -20,12 +21,34 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields MessageInfo.Caption
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyCaption()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyCaption()");
+            Assert.AreEqual(sendMessage.Result.Text, "TestAppealToTheEmptyCaption()");
+            Assert.True(sendMessage.Ok);
+
+            var caption = sendMessage.Result.Caption;
+            var captionLength = sendMessage.Result.Caption.Length;
+
+            Console.WriteLine("TestAppealToTheEmptyCaption():"
+                + "\n sendMessage.Result.Caption: " + caption
+                + "\n sendMessage.Result.Caption.Length: " + captionLength);
+
+            Assert.IsEmpty(caption);
+            Assert.AreEqual(caption, string.Empty);
+            Assert.AreEqual(captionLength, 0);
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields MessageInfo.Contact
         /// </summary>
         [Test]
         public void TestAppealToTheEmptyContact()
         {
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyContact");
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyContact()");
             Assert.AreEqual(sendMessage.Result.Text, "TestAppealToTheEmptyContact");
             Assert.True(sendMessage.Ok);
 
@@ -34,7 +57,7 @@ namespace NetTelebot.Tests
             var firstName = sendMessage.Result.Contact.FirstName;
             var lastName = sendMessage.Result.Contact.LastName;
 
-            Console.WriteLine("AppealToTheEmptyContact:"
+            Console.WriteLine("AppealToTheEmptyContact():"
                 + "\n sendMessage.Result.Contact.UserId: " + userId
                 + "\n sendMessage.Result.Contact.PhoneNumber: " + phoneNumber
                 + "\n sendMessage.Result.Contact.FirstName: " + firstName
@@ -50,6 +73,11 @@ namespace NetTelebot.Tests
         public void TestAppealToTheNonEmptyContact()
         {
             //todo create test after add method SendContact
+        }
+
+        private SendMessageResult SendMessage()
+        {
+            
         }
     }
 }
