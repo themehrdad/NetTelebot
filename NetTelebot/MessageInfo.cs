@@ -71,8 +71,9 @@ namespace NetTelebot
                 NewChatMember = new UserInfo(jsonObject["new_chat_participant"].Value<JObject>());
             if (jsonObject["left_chat_member"] != null)
                 LeftChatMember = new UserInfo(jsonObject["left_chat_participant"].Value<JObject>());
-            if (jsonObject["new_chat_title"] != null)
-                NewChatTitle = jsonObject["new_chat_title"].Value<string>();
+
+            NewChatTitle = jsonObject["new_chat_title"] != null ? jsonObject["new_chat_title"].Value<string>() : string.Empty;
+
             if (jsonObject["new_chat_photo"] != null)
                 NewChatPhoto = PhotoSizeInfo.ParseArray(jsonObject["new_chat_photo"].Value<JArray>());
             if (jsonObject["delete_chat_photo"] != null)

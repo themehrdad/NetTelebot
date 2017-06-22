@@ -70,6 +70,26 @@ namespace NetTelebot.Tests
         }
 
         [Test]
+        public void TestAppealToTheEmptyNewChatTitle()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyNewChatTitle()");
+            Assert.AreEqual(sendMessage.Result.Text, "TestAppealToTheEmptyNewChatTitle()");
+            Assert.True(sendMessage.Ok);
+
+            var newChatTitle = sendMessage.Result.NewChatTitle;
+            var newChatTitleLenth = sendMessage.Result.NewChatTitle.Length;
+
+            Console.WriteLine("TestAppealToTheEmptyCaption():"
+                + "\n sendMessage.Result.Caption: " + newChatTitle
+                + "\n sendMessage.Result.Caption.Length: " + newChatTitleLenth);
+
+            Assert.IsEmpty(newChatTitle);
+            Assert.AreEqual(newChatTitle, string.Empty);
+            Assert.AreEqual(newChatTitleLenth, 0);
+
+        }
+
+        [Test]
         public void TestAppealToTheNonEmptyContact()
         {
             //todo create test after add method SendContact
