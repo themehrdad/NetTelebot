@@ -49,7 +49,7 @@ namespace NetTelebot.Tests
         public void TestAppealToTheEmptyContact()
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyContact()");
-            Assert.AreEqual(sendMessage.Result.Text, "TestAppealToTheEmptyContact");
+            Assert.AreEqual(sendMessage.Result.Text, "TestAppealToTheEmptyContact()");
             Assert.True(sendMessage.Ok);
 
             var userId = sendMessage.Result.Contact.UserId;
@@ -74,10 +74,6 @@ namespace NetTelebot.Tests
         {
             //todo create test after add method SendContact
         }
-
-        private SendMessageResult SendMessage()
-        {
-            
-        }
+        
     }
 }
