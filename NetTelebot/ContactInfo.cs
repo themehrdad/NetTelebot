@@ -8,6 +8,10 @@ namespace NetTelebot
     /// </summary>
     public class ContactInfo
     {
+        internal ContactInfo()
+        {
+        }
+
         internal ContactInfo(string jsonText)
         {
             Parse(jsonText);
@@ -33,21 +37,22 @@ namespace NetTelebot
             if (jsonObject["user_id"] != null)
                 UserId = jsonObject["user_id"].Value<string>();
         }
+
         /// <summary>
         /// Contact's phone number
         /// </summary>
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; private set; }
         /// <summary>
         /// Contact's first name
         /// </summary>
-        public string FirstName { get; set; }
+        public string FirstName { get; private set; }
         /// <summary>
         /// Optional. Contact's last name
         /// </summary>
-        public string LastName { get; set; }
+        public string LastName { get; private set; }
         /// <summary>
         /// Optional. Contact's user identifier in Telegram
         /// </summary>
-        public string UserId { get; set; }
+        public string UserId { get; private set; }
     }
 }

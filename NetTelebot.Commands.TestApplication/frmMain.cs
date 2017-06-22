@@ -13,6 +13,7 @@ namespace NetTelebot.Commands.TestApplication
         public frmMain()
         {
             var token = GetTelegramCredential(mBotName).Token;
+
             mBot = new CalculatorBot(token);
             mBot.MessageReceived += Bot_MessageReceived;
 

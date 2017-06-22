@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-#pragma warning disable 1591
 
 namespace NetTelebot
 {

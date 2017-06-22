@@ -19,6 +19,7 @@ namespace NetTelebot
         {
             Parse(jsonObject);
         }
+
         private void Parse(string jsonText)
         {
             JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
@@ -60,13 +61,10 @@ namespace NetTelebot
                 Sticker = new StickerInfo(jsonObject["sticker"].Value<JObject>());
             if (jsonObject["video"] != null)
                 Video = new VideoInfo(jsonObject["video"].Value<JObject>());
-            if (jsonObject["caption"] != null)
-                Caption = jsonObject["caption"].Value<string>();
-            if (jsonObject["contact"] != null)
-                Contact = new ContactInfo(jsonObject["contact"].Value<JObject>());
-            else
-                //todo Use this solution or find better
-                //throw new ArgumentException("Contact is null", nameof(jsonObject));     
+
+            Caption = jsonObject["caption"] != null ? jsonObject["caption"].Value<string>() : string.Empty;
+            Contact = jsonObject["contact"] != null ? new ContactInfo(jsonObject["contact"].Value<JObject>()) : new ContactInfo();
+
             if (jsonObject["location"] != null)
                 Location = new LocationInfo(jsonObject["location"].Value<JObject>());
             if (jsonObject["new_chat_member"] != null)
