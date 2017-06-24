@@ -8,11 +8,14 @@ namespace NetTelebot.Tests
     /// Checking for NullReferenceException when accessing to null fields MessageInfo after use available methods TelegramBotClients
     /// </summary>
     [TestFixture]
-    internal class MessageInfoNullReferenceExceptionTest
+    internal class MessageInfoNullRefExcTest
     {
         private TelegramBotClient mTelegramBot;
         private int mChatId;
 
+        /// <summary>
+        /// Called when [test start].
+        /// </summary>
         [SetUp]
         public void OnTestStart()
         {
@@ -21,7 +24,7 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields MessageInfo.Caption
+        /// Checking for NullReferenceException when accessing null fields  <see cref="MessageInfo.Caption"/>
         /// </summary>
         [Test]
         public void TestAppealToTheEmptyCaption()
@@ -36,13 +39,17 @@ namespace NetTelebot.Tests
                 + "\n sendMessage.Result.Caption: " + caption
                 + "\n sendMessage.Result.Caption.Length: " + captionLength);
 
+            //check instance MessageInfo.Caption
+            Assert.IsInstanceOf(typeof(string), caption);
+
+            //сhecks the return value
             Assert.IsEmpty(caption);
             Assert.AreEqual(caption, string.Empty);
             Assert.AreEqual(captionLength, 0);
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields MessageInfo.Video
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Video"/>
         /// </summary>
         [Test]
         public void TestAppealToTheEmptyVideo()
@@ -77,12 +84,10 @@ namespace NetTelebot.Tests
                 + "\n sendMessage.Result.Video.Thumb.FileId: " + thumbFileId
                 + "\n sendMessage.Result.Video.Thumb.FileSize: " + thumbFileSize);
 
-
-
             //check instance MessageInfo.Video
             Assert.IsInstanceOf(typeof(VideoInfo), video, video + " is instance of VideoInfo");
 
-            //Test MessageInfo.Video.field
+            //check MessageInfo.Video.field
             Assert.IsNull(fileId, fileId + " is null");
             Assert.AreEqual(duration, 0, duration + " are equal 0");
             Assert.AreEqual(width, 0, width + " are equal 0");
@@ -93,17 +98,15 @@ namespace NetTelebot.Tests
             //check instance MessageInfo.Video.Thumb
             Assert.IsInstanceOf(typeof(PhotoSizeInfo), thumb);
             
-            //Test MessageInfo.Video.Thumb.field
+            //check MessageInfo.Video.Thumb.field
             Assert.AreEqual(thumbWidth, 0);
             Assert.AreEqual(thumbHeight, 0);
             Assert.IsNull(thumbFileId);
             Assert.AreEqual(thumbFileSize, 0);
-
-
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields MessageInfo.Contact
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Contact"/>
         /// </summary>
         [Test]
         public void TestAppealToTheEmptyContact()
@@ -123,9 +126,11 @@ namespace NetTelebot.Tests
                 + "\n sendMessage.Result.Contact.PhoneNumber: " + phoneNumber
                 + "\n sendMessage.Result.Contact.FirstName: " + firstName
                 + "\n sendMessage.Result.Contact.LastName: " + lastName);
-            
+
+            //check instance MessageInfo.Contact
             Assert.IsInstanceOf(typeof(ContactInfo), contact);
 
+            //check MessageInfo.Contact.field
             Assert.IsNull(userId);
             Assert.IsNull(phoneNumber);
             Assert.IsNull(firstName);
@@ -133,7 +138,7 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields MessageInfo.NewChatTitle
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatTitle"/>
         /// </summary>
         [Test]
         public void TestAppealToTheEmptyNewChatTitle()
@@ -148,6 +153,10 @@ namespace NetTelebot.Tests
                 + "\n sendMessage.Result.Caption: " + newChatTitle
                 + "\n sendMessage.Result.Caption.Length: " + newChatTitleLenth);
 
+            //check instance MessageInfo.NewChatTitle
+            Assert.IsInstanceOf(typeof(string), newChatTitle);
+
+            //сhecks the return value
             Assert.IsEmpty(newChatTitle);
             Assert.AreEqual(newChatTitle, string.Empty);
             Assert.AreEqual(newChatTitleLenth, 0);
@@ -155,7 +164,7 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields MessageInfo.DeleteChatPhoto
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.DeleteChatPhoto"/>
         /// </summary>
         [Test]
         public void TestAppealToTheEmptyDeleteChatPhoto()
@@ -168,11 +177,15 @@ namespace NetTelebot.Tests
             Console.WriteLine("TestAppealToTheEmptyDeleteChatPhoto():"
                 + "\n sendMessage.Result.DeleteChatPhoto: " + deleteChatPhoto);
 
+            //check instance MessageInfo.DeleteChatPhoto
+            Assert.IsInstanceOf(typeof(bool), deleteChatPhoto);
+
+            //сhecks the return value
             Assert.IsFalse(deleteChatPhoto);
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields MessageInfo.GroupChatCreated
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.GroupChatCreated"/>
         /// </summary>
         [Test]
         public void TestAppealToTheGroupChatCreated()
@@ -185,11 +198,15 @@ namespace NetTelebot.Tests
             Console.WriteLine("TestAppealToTheGroupChatCreated():"
                 + "\n sendMessage.Result.GroupChatCreated: " + groupChatCreated);
 
+            //check instance MessageInfo.GroupChatCreated
+            Assert.IsInstanceOf(typeof(bool), groupChatCreated);
+
+            //сhecks the return value
             Assert.IsFalse(groupChatCreated);
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields MessageInfo.SuperGroupChatCreated
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.SuperGroupChatCreated"/>
         /// </summary>
         [Test]
         public void TestAppealToSuperGroupChatCreated()
@@ -206,7 +223,7 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields MessageInfo.ChannelChatCreated
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ChannelChatCreated"/>
         /// </summary>
         [Test]
         public void TestAppealToChannelChatCreated()
@@ -219,11 +236,15 @@ namespace NetTelebot.Tests
             Console.WriteLine("TestAppealToChannelChatCreated():"
                 + "\n sendMessage.Result.ChannelChatCreated: " + channelChatCreated);
 
+            //check instance MessageInfo.ChannelChatCreated
+            Assert.IsInstanceOf(typeof(bool), channelChatCreated);
+
+            //сhecks the return value
             Assert.IsFalse(channelChatCreated);
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields MessageInfo.MigrateToChatId
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.MigrateToChatId"/>
         /// </summary>
         [Test]
         public void TestAppealToMigrateToChatId()
@@ -236,11 +257,15 @@ namespace NetTelebot.Tests
             Console.WriteLine("TestAppealToMigrateToChatId():"
                 + "\n sendMessage.Result.MigrateToChatId: " + migrateToChatId);
 
+            //check instance MessageInfo.MigrateToChatId
+            Assert.IsInstanceOf(typeof(int), migrateToChatId);
+
+            //сhecks the return value
             Assert.AreEqual(migrateToChatId, 0);
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields MessageInfo.MigrateFromChatId
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.MigrateFromChatId"/>
         /// </summary>
         [Test]
         public void TestAppealToMigrateFromChatId()
@@ -252,7 +277,11 @@ namespace NetTelebot.Tests
 
             Console.WriteLine("TestAppealToMigrateFromChatId():"
                 + "\n sendMessage.Result.MigrateToChatId: " + migrateFromChatId);
+            
+            //check instance MessageInfo.MigrateFromChatId
+            Assert.IsInstanceOf(typeof(int), migrateFromChatId);
 
+            //сhecks the return value
             Assert.AreEqual(migrateFromChatId, 0);
         }
 
