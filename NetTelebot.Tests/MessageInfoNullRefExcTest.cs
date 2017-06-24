@@ -49,6 +49,65 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Document"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyDocument()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyDocument()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.Document
+            var document = sendMessage.Result.Document;
+
+            // field MessageInfo.Document
+            var fileId = sendMessage.Result.Document.FileId;
+            var fileName = sendMessage.Result.Document.FileName;
+            var mimeType = sendMessage.Result.Document.MimeType;
+            var fileSize = sendMessage.Result.Document.FileSize;
+
+            // typeof MessageInfo.Document.Thumb
+            var thumb = sendMessage.Result.Document.Thumb;
+
+            // field MessageInfo.Document.Thumb
+            var thumbWidth = sendMessage.Result.Document.Thumb.Width;
+            var thumbHeight = sendMessage.Result.Document.Thumb.Height;
+            var thumbFileId = sendMessage.Result.Document.Thumb.FileId;
+            var thumbFileSize = sendMessage.Result.Document.Thumb.FileSize;
+
+            Console.WriteLine("TestAppealToTheEmptyDocument():"
+                              + "\n sendMessage.Result.Document " + document
+                              + "\n sendMessage.Result.Document.FileId: " + fileId
+                              + "\n sendMessage.Result.Document.FileName;: " + fileName
+                              + "\n sendMessage.Result.Document.MimeType: " + mimeType
+                              + "\n sendMessage.Result.Document.FileSize: " + fileSize 
+                              + "\n sendMessage.Result.Document.Thumb: " + thumb
+                              + "\n sendMessage.Result.Document.Thumb.Width: " + thumbWidth
+                              + "\n sendMessage.Result.Document.Thumb.Height: " + thumbHeight
+                              + "\n sendMessage.Result.Document.Thumb.FileId: " + thumbFileId
+                              + "\n sendMessage.Result.Document.Thumb.FileSize: " + thumbFileSize);
+
+
+            //check instance MessageInfo.Document
+            Assert.IsInstanceOf(typeof(DocumentInfo), document);
+
+            //check MessageInfo.Document.field
+            Assert.IsNull(fileId);
+            Assert.IsNull(fileName);
+            Assert.IsNull(mimeType);
+            Assert.AreEqual(fileSize, 0);
+
+            //check instance MessageInfo.Document.Thumb
+            Assert.IsInstanceOf(typeof(PhotoSizeInfo), thumb);
+
+            //check MessageInfo.Document.field
+            Assert.AreEqual(thumbWidth, 0);
+            Assert.AreEqual(thumbHeight, 0);
+            Assert.IsNull(thumbFileId);
+            Assert.AreEqual(thumbFileSize, 0);
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Photo"/>
         /// </summary>
         [Test]

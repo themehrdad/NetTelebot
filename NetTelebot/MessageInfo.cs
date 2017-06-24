@@ -53,10 +53,8 @@ namespace NetTelebot
                 Text = jsonObject["text"].Value<string>();
             if (jsonObject["audio"] != null)
                 Audio = new AudioInfo(jsonObject["audio"].Value<JObject>());
-            if (jsonObject["document"] != null)
-                Document = new DocumentInfo(jsonObject["document"].Value<JObject>());
 
-           
+            Document = jsonObject["document"] != null ? new DocumentInfo(jsonObject["document"].Value<JObject>()) : new DocumentInfo { Thumb = new PhotoSizeInfo() };
             Photo = jsonObject["photo"] != null ? PhotoSizeInfo.ParseArray(jsonObject["photo"].Value<JArray>()) : new PhotoSizeInfo[0];
             Sticker = jsonObject["sticker"] != null ? new StickerInfo(jsonObject["sticker"].Value<JObject>()) : new StickerInfo { Thumb = new PhotoSizeInfo() };
             Video = jsonObject["video"] != null ? new VideoInfo(jsonObject["video"].Value<JObject>()) : new VideoInfo { Thumb = new PhotoSizeInfo() };

@@ -8,15 +8,20 @@ namespace NetTelebot
     /// </summary>
     public class DocumentInfo
     {
+        internal DocumentInfo()
+        {
+        }
+
         internal DocumentInfo(string jsonText)
         {
             Parse(jsonText);
         }
+
         internal DocumentInfo(JObject jsonObject)
         {
             Parse(jsonObject);
         }
-
+        
         private void Parse(string jsonText)
         {
             var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
@@ -35,12 +40,13 @@ namespace NetTelebot
             if (jsonObject["file_size"] != null)
                 FileSize = jsonObject["file_size"].Value<int>();
         }
+
         /// <summary>
         /// Unique file identifier
         /// </summary>
         public string FileId { get; set; }
         /// <summary>
-        /// Document thumbnail as defined by sender
+        /// Optional. Document thumbnail as defined by sender
         /// </summary>
         public PhotoSizeInfo Thumb { get; set; }
         /// <summary>
