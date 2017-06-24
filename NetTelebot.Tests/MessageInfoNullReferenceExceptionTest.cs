@@ -50,6 +50,7 @@ namespace NetTelebot.Tests
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyVideo()");
             Assert.True(sendMessage.Ok);
 
+            var video = sendMessage.Result.Video;
             var fileId = sendMessage.Result.Video.FileId;
             var duration = sendMessage.Result.Video.Duration;
             var fileSize = sendMessage.Result.Video.FileSize;
@@ -57,23 +58,48 @@ namespace NetTelebot.Tests
             var height = sendMessage.Result.Video.Height;
             var mimeType = sendMessage.Result.Video.MimeType;
             var thumb = sendMessage.Result.Video.Thumb;
+            var thumbWidth = sendMessage.Result.Video.Thumb.Width;
+            var thumbHeight = sendMessage.Result.Video.Thumb.Height;
+            var thumbFileId = sendMessage.Result.Video.Thumb.FileId;
+            var thumbFileSize = sendMessage.Result.Video.Thumb.FileSize;
 
             Console.WriteLine("TestAppealToTheEmptyVideo():"
+                + "\n sendMessage.Result.Video: " + video
                 + "\n sendMessage.Result.Video.FileId: " + fileId
                 + "\n sendMessage.Result.Video.Duration: " + duration
                 + "\n sendMessage.Result.Video.FileSize: " + fileSize
                 + "\n sendMessage.Result.Video.Width: " + width
                 + "\n sendMessage.Result.Video.Height: " + height
                 + "\n sendMessage.Result.Video.MimeType: " + mimeType
-                + "\n sendMessage.Result.Video.Thumb: " + thumb);
+                + "\n sendMessage.Result.Video.Thumb: " + thumb
+                + "\n sendMessage.Result.Video.Thumb.Width: " + thumbWidth
+                + "\n sendMessage.Result.Video.Thumb.Height: " + thumbHeight
+                + "\n sendMessage.Result.Video.Thumb.FileId: " + thumbFileId
+                + "\n sendMessage.Result.Video.Thumb.FileSize: " + thumbFileSize);
 
-            Assert.IsNull(fileId);
-            Assert.AreEqual(duration, 0);
-            Assert.AreEqual(width, 0);
-            Assert.AreEqual(height, 0);
-            Assert.AreEqual(fileSize, 0);
-            Assert.IsNull(mimeType);
-            Assert.IsNull(thumb);
+
+
+            //check instance MessageInfo.Video
+            Assert.IsInstanceOf(typeof(VideoInfo), video, video + " is instance of VideoInfo");
+
+            //Test MessageInfo.Video.field
+            Assert.IsNull(fileId, fileId + " is null");
+            Assert.AreEqual(duration, 0, duration + " are equal 0");
+            Assert.AreEqual(width, 0, width + " are equal 0");
+            Assert.AreEqual(height, 0, height + " are equal 0");
+            Assert.AreEqual(fileSize, 0, fileSize + " are equal 0");
+            Assert.IsNull(mimeType, mimeType + " is null");
+
+            //check instance MessageInfo.Video.Thumb
+            Assert.IsInstanceOf(typeof(PhotoSizeInfo), thumb);
+            
+            //Test MessageInfo.Video.Thumb.field
+            Assert.AreEqual(thumbWidth, 0);
+            Assert.AreEqual(thumbHeight, 0);
+            Assert.IsNull(thumbFileId);
+            Assert.AreEqual(thumbFileSize, 0);
+
+
         }
 
         /// <summary>
@@ -85,17 +111,21 @@ namespace NetTelebot.Tests
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyContact()");
             Assert.True(sendMessage.Ok);
 
+            var contact = sendMessage.Result.Contact;
             var userId = sendMessage.Result.Contact.UserId;
             var phoneNumber = sendMessage.Result.Contact.PhoneNumber;
             var firstName = sendMessage.Result.Contact.FirstName;
             var lastName = sendMessage.Result.Contact.LastName;
 
             Console.WriteLine("AppealToTheEmptyContact():"
+                + "\n sendMessage.Result.Contact: " + contact
                 + "\n sendMessage.Result.Contact.UserId: " + userId
                 + "\n sendMessage.Result.Contact.PhoneNumber: " + phoneNumber
                 + "\n sendMessage.Result.Contact.FirstName: " + firstName
                 + "\n sendMessage.Result.Contact.LastName: " + lastName);
             
+            Assert.IsInstanceOf(typeof(ContactInfo), contact);
+
             Assert.IsNull(userId);
             Assert.IsNull(phoneNumber);
             Assert.IsNull(firstName);

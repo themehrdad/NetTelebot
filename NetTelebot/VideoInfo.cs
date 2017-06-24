@@ -35,8 +35,8 @@ namespace NetTelebot
             Width = jsonObject["width"].Value<int>();
             Height = jsonObject["height"].Value<int>();
             Duration = jsonObject["duration"].Value<int>();
-            //todo Except null reference
-            Thumb = new PhotoSizeInfo(jsonObject["thumb"].Value<JObject>());
+            if (jsonObject["thumb"] != null)
+                Thumb = new PhotoSizeInfo(jsonObject["thumb"].Value<JObject>());
             if (jsonObject["mime_type"] != null)
                 MimeType = jsonObject["mime_type"].Value<string>();
             if (jsonObject["file_size"] != null)
@@ -60,7 +60,7 @@ namespace NetTelebot
         /// </summary>
         public int Duration { get; set; }
         /// <summary>
-        /// Video thumbnail
+        /// Optional. Video thumbnail
         /// </summary>
         public PhotoSizeInfo Thumb { get; set; }
         /// <summary>

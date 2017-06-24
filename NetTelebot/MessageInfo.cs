@@ -60,7 +60,7 @@ namespace NetTelebot
             if (jsonObject["sticker"] != null)
                 Sticker = new StickerInfo(jsonObject["sticker"].Value<JObject>());
 
-            Video = jsonObject["video"] != null ? new VideoInfo(jsonObject["video"].Value<JObject>()) : new VideoInfo();
+            Video = jsonObject["video"] != null ? new VideoInfo(jsonObject["video"].Value<JObject>()) : new VideoInfo { Thumb = new PhotoSizeInfo() };
             Caption = jsonObject["caption"] != null ? jsonObject["caption"].Value<string>() : string.Empty;
             Contact = jsonObject["contact"] != null ? new ContactInfo(jsonObject["contact"].Value<JObject>()) : new ContactInfo();
 
