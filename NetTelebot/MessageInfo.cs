@@ -82,8 +82,10 @@ namespace NetTelebot
                 ? new LocationInfo(jsonObject["location"].Value<JObject>())
                 : new LocationInfo();
 
-            if (jsonObject["new_chat_member"] != null)
-                NewChatMember = new UserInfo(jsonObject["new_chat_participant"].Value<JObject>());
+            NewChatMember = jsonObject["new_chat_member"] != null
+                ? new UserInfo(jsonObject["new_chat_participant"].Value<JObject>())
+                : new UserInfo();
+
             if (jsonObject["left_chat_member"] != null)
                 LeftChatMember = new UserInfo(jsonObject["left_chat_participant"].Value<JObject>());
 

@@ -298,7 +298,7 @@ namespace NetTelebot.Tests
         [Test]
         public void TestAppealToTheEmptyLocation()
         {
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyContact()");
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyLocation()");
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.Contact
@@ -319,6 +319,45 @@ namespace NetTelebot.Tests
             //check MessageInfo.Location.field
             Assert.AreEqual(latitude, 0);
             Assert.AreEqual(longitude, 0);
+        }
+
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatMember"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyNewChatMember()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyNewChatMember()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.NewChatMember
+            var newChatMember = sendMessage.Result.NewChatMember;
+
+            // field MessageInfo.NewChatMember
+            var id = sendMessage.Result.NewChatMember.Id;
+            var firstName = sendMessage.Result.NewChatMember.FirstName;
+            var lastName = sendMessage.Result.NewChatMember.LastName;
+            var userName = sendMessage.Result.NewChatMember.UserName;
+            var languageCode = sendMessage.Result.NewChatMember.LanguageCode;
+
+            Console.WriteLine("TestAppealToTheEmptyNewChatMember():"
+                              + "\n ssendMessage.Result.NewChatMember: " + newChatMember
+                              + "\n sendMessage.Result.NewChatMember.Id: " + id
+                              + "\n sendMessage.Result.NewChatMember.FirstName: " + firstName
+                              + "\n sendMessage.Result.NewChatMember.LastName: " + lastName
+                              + "\n sendMessage.Result.NewChatMember.UserName: " + userName
+                              + "\n sendMessage.Result.NewChatMember.LanguageCode: " + languageCode);
+
+            //check instance MessageInfo.NewChatMember
+            Assert.IsInstanceOf(typeof(UserInfo), newChatMember);
+
+            //check MessageInfo.NewChatMember.field
+            Assert.AreEqual(id, 0);
+            Assert.IsNull(firstName);
+            Assert.IsNull(lastName);
+            Assert.IsNull(userName);
+            Assert.IsNull(languageCode);
         }
 
         /// <summary>

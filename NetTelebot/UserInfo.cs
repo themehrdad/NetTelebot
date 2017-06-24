@@ -8,6 +8,10 @@ namespace NetTelebot
     /// </summary>
     public class UserInfo : IConversationSource
     {
+        internal UserInfo()
+        {
+        }
+
         internal UserInfo(string jsonText)
         {
             Parse(jsonText);
@@ -32,23 +36,34 @@ namespace NetTelebot
                 LastName = jsonObject["last_name"].Value<string>();
             if (jsonObject["user_name"] != null)
                 UserName = jsonObject["user_name"].Value<string>();
+            if (jsonObject["language_code"] != null)
+                UserName = jsonObject["language_code"].Value<string>();
         }
 
         /// <summary>
         /// Unique identifier for this user or bot
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// User‘s or bot’s first name
         /// </summary>
         public string FirstName { get; set; }
+
         /// <summary>
         /// Optional. User‘s or bot’s last name
         /// </summary>
         public string LastName { get; set; }
+
         /// <summary>
         /// Optional. User‘s or bot’s username
         /// </summary>
         public string UserName { get; set; }
+
+        /// <summary>
+        /// Optional. IETF language tag of the user's language
+        /// About <see href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language tag</see>
+        /// </summary>
+        public string LanguageCode { get; set; }
     }
 }
