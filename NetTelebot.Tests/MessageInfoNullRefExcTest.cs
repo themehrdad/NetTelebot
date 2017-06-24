@@ -49,6 +49,30 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Photo"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyPhoto()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyPhoto()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.Photo
+            var photo = sendMessage.Result.Photo;
+            var photoLength = sendMessage.Result.Photo.Length;
+
+            Console.WriteLine("TestAppealToTheEmptyPhoto():"
+                              + "\n sendMessage.Result.Photo: " + photo
+                              + "\n sendMessage.Result.photoLength: " + photoLength);
+
+            //check instance MessageInfo.Photo
+            Assert.IsInstanceOf(typeof(PhotoSizeInfo[]), photo);
+
+            //сhecks the return value
+            Assert.AreEqual(photoLength, 0);
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Sticker"/>
         /// </summary>
         [Test]

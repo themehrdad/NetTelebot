@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot", "NetTelebot\NetTelebot.csproj", "{49C7146E-4A6B-406F-8332-042B9BCA19EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.Tests", "NetTelebot.Tests\NetTelebot.Tests.csproj", "{A09E8951-00AF-4575-AD51-B6AE2E34B84C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{49C7146E-4A6B-406F-8332-042B9BCA19EB} = {49C7146E-4A6B-406F-8332-042B9BCA19EB}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.Commands", "NetTelebot.Commands\NetTelebot.Commands.csproj", "{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}"
 	ProjectSection(ProjectDependencies) = postProject
