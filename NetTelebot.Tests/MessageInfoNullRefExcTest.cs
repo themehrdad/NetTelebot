@@ -361,6 +361,44 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatMember"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyLeftChatMember()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyLeftChatMember()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.LeftChatMember
+            var leftChatMember = sendMessage.Result.LeftChatMember;
+
+            // field MessageInfo.LeftChatMember
+            var id = sendMessage.Result.LeftChatMember.Id;
+            var firstName = sendMessage.Result.LeftChatMember.FirstName;
+            var lastName = sendMessage.Result.LeftChatMember.LastName;
+            var userName = sendMessage.Result.LeftChatMember.UserName;
+            var languageCode = sendMessage.Result.LeftChatMember.LanguageCode;
+
+            Console.WriteLine("TestAppealToTheEmptyLeftChatMember():"
+                              + "\n sendMessage.Result.LeftChatMember: " + leftChatMember
+                              + "\n sendMessage.Result.LeftChatMember.Id: " + id
+                              + "\n sendMessage.Result.LeftChatMember.FirstName: " + firstName
+                              + "\n sendMessage.Result.LeftChatMember.LastName: " + lastName
+                              + "\n sendMessage.Result.LeftChatMember.UserName: " + userName
+                              + "\n sendMessage.Result.LeftChatMember.LanguageCode: " + languageCode);
+
+            //check instance MessageInfo.LeftChatMember
+            Assert.IsInstanceOf(typeof(UserInfo), leftChatMember);
+
+            //check MessageInfo.LeftChatMember.field
+            Assert.AreEqual(id, 0);
+            Assert.IsNull(firstName);
+            Assert.IsNull(lastName);
+            Assert.IsNull(userName);
+            Assert.IsNull(languageCode);
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatTitle"/>
         /// </summary>
         [Test]

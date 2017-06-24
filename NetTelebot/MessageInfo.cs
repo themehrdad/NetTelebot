@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Runtime.Remoting.Messaging;
 
 namespace NetTelebot
 {
@@ -83,11 +84,12 @@ namespace NetTelebot
                 : new LocationInfo();
 
             NewChatMember = jsonObject["new_chat_member"] != null
-                ? new UserInfo(jsonObject["new_chat_participant"].Value<JObject>())
+                ? new UserInfo(jsonObject["new_chat_member"].Value<JObject>())
                 : new UserInfo();
 
-            if (jsonObject["left_chat_member"] != null)
-                LeftChatMember = new UserInfo(jsonObject["left_chat_participant"].Value<JObject>());
+            LeftChatMember = jsonObject["left_chat_member"] != null
+                ? new UserInfo(jsonObject["left_chat_member"].Value<JObject>())
+                : new UserInfo();
 
             NewChatTitle = jsonObject["new_chat_title"] != null
                 ? jsonObject["new_chat_title"].Value<string>()
