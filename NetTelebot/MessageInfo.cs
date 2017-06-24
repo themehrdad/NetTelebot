@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Runtime.Remoting.Messaging;
 
 namespace NetTelebot
 {
@@ -53,25 +54,46 @@ namespace NetTelebot
                 Text = jsonObject["text"].Value<string>();
             if (jsonObject["audio"] != null)
                 Audio = new AudioInfo(jsonObject["audio"].Value<JObject>());
-            if (jsonObject["document"] != null)
-                Document = new DocumentInfo(jsonObject["document"].Value<JObject>());
-            if (jsonObject["photo"] != null)
-                Photo = PhotoSizeInfo.ParseArray(jsonObject["photo"].Value<JArray>());
-            if (jsonObject["sticker"] != null)
-                Sticker = new StickerInfo(jsonObject["sticker"].Value<JObject>());
 
-            Video = jsonObject["video"] != null ? new VideoInfo(jsonObject["video"].Value<JObject>()) : new VideoInfo();
-            Caption = jsonObject["caption"] != null ? jsonObject["caption"].Value<string>() : string.Empty;
-            Contact = jsonObject["contact"] != null ? new ContactInfo(jsonObject["contact"].Value<JObject>()) : new ContactInfo();
+            Document = jsonObject["document"] != null
+                ? new DocumentInfo(jsonObject["document"].Value<JObject>())
+                : new DocumentInfo {Thumb = new PhotoSizeInfo()};
 
-            if (jsonObject["location"] != null)
-                Location = new LocationInfo(jsonObject["location"].Value<JObject>());
-            if (jsonObject["new_chat_member"] != null)
-                NewChatMember = new UserInfo(jsonObject["new_chat_participant"].Value<JObject>());
-            if (jsonObject["left_chat_member"] != null)
-                LeftChatMember = new UserInfo(jsonObject["left_chat_participant"].Value<JObject>());
+            Photo = jsonObject["photo"] != null
+                ? PhotoSizeInfo.ParseArray(jsonObject["photo"].Value<JArray>())
+                : new PhotoSizeInfo[0];
 
-            NewChatTitle = jsonObject["new_chat_title"] != null ? jsonObject["new_chat_title"].Value<string>() : string.Empty;
+            Sticker = jsonObject["sticker"] != null
+                ? new StickerInfo(jsonObject["sticker"].Value<JObject>())
+                : new StickerInfo {Thumb = new PhotoSizeInfo()};
+
+            Video = jsonObject["video"] != null
+                ? new VideoInfo(jsonObject["video"].Value<JObject>())
+                : new VideoInfo {Thumb = new PhotoSizeInfo()};
+
+            Caption = jsonObject["caption"] != null 
+                ? jsonObject["caption"].Value<string>() 
+                : string.Empty;
+            
+            Contact = jsonObject["contact"] != null
+                ? new ContactInfo(jsonObject["contact"].Value<JObject>())
+                : new ContactInfo();
+
+            Location = jsonObject["location"] != null
+                ? new LocationInfo(jsonObject["location"].Value<JObject>())
+                : new LocationInfo();
+
+            NewChatMember = jsonObject["new_chat_member"] != null
+                ? new UserInfo(jsonObject["new_chat_member"].Value<JObject>())
+                : new UserInfo();
+
+            LeftChatMember = jsonObject["left_chat_member"] != null
+                ? new UserInfo(jsonObject["left_chat_member"].Value<JObject>())
+                : new UserInfo();
+
+            NewChatTitle = jsonObject["new_chat_title"] != null
+                ? jsonObject["new_chat_title"].Value<string>()
+                : string.Empty;
 
             if (jsonObject["new_chat_photo"] != null)
                 NewChatPhoto = PhotoSizeInfo.ParseArray(jsonObject["new_chat_photo"].Value<JArray>());

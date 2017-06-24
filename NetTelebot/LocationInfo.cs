@@ -8,10 +8,15 @@ namespace NetTelebot
     /// </summary>
     public class LocationInfo
     {
+        internal LocationInfo()
+        {
+        }
+
         internal LocationInfo(string jsonText)
         {
             Parse(jsonText);
         }
+
         internal LocationInfo(JObject jsonObject)
         {
             Parse(jsonObject);
@@ -28,6 +33,7 @@ namespace NetTelebot
             var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
+
         /// <summary>
         /// Longitude as defined by sender
         /// </summary>

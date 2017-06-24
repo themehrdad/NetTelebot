@@ -9,6 +9,10 @@ namespace NetTelebot
     /// </summary>
     public class PhotoSizeInfo
     {
+        internal PhotoSizeInfo()
+        {
+        }
+
         internal PhotoSizeInfo(string jsonText)
         {
             Parse(jsonText);
