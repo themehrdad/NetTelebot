@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace NetTelebot.Tests
 {
     /// <summary>
-    /// Checking for NullReferenceException when accessing to null fields MessageInfo after use available methods TelegramBotClients
+    /// Checking for NullReferenceException when accessing to null fields MessageInfo after use available methods TelegramBotClients.
     /// </summary>
     [TestFixture]
     internal class MessageInfoNullRefExcTest
@@ -24,7 +24,7 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields  <see cref="MessageInfo.Caption"/>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Caption"/>
         /// </summary>
         [Test]
         public void TestAppealToTheEmptyCaption()
@@ -49,6 +49,68 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Sticker"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptySticker()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptySticker()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.Sticker
+            var sticker = sendMessage.Result.Sticker;
+
+            // field MessageInfo.Sticker
+            var fileId = sendMessage.Result.Sticker.FileId;
+            var width = sendMessage.Result.Sticker.Width;
+            var height = sendMessage.Result.Sticker.Height;
+            var emoji = sendMessage.Result.Sticker.Emoji;
+            var fileSize = sendMessage.Result.Sticker.FileSize;
+
+            // typeof MessageInfo.Sticker.Thumb
+            var thumb = sendMessage.Result.Sticker.Thumb;
+
+            // field MessageInfo.Sticker.Thumb
+            var thumbWidth = sendMessage.Result.Sticker.Thumb.Width;
+            var thumbHeight = sendMessage.Result.Sticker.Thumb.Height;
+            var thumbFileId = sendMessage.Result.Sticker.Thumb.FileId;
+            var thumbFileSize = sendMessage.Result.Sticker.Thumb.FileSize;
+
+            Console.WriteLine("TestAppealToTheEmptySticker():"
+                              + "\n sendMessage.Result.Sticker: " + sticker
+                              + "\n sendMessage.Result.Sticker.FileId: " + fileId
+                              + "\n sendMessage.Result.Sticker.Width;: " + width
+                              + "\n sendMessage.Result.Sticker.Height: " + height
+                              + "\n sendMessage.Result.Sticker.Thumb: " + thumb
+                              + "\n sendMessage.Result.Sticker.Emoji: " + emoji
+                              + "\n sendMessage.Result.Sticker.FileSize: " + fileSize
+                              + "\n sendMessage.Result.Sticker.Thumb: " + thumb
+                              + "\n sendMessage.Result.Sticker.Thumb.Width: " + thumbWidth
+                              + "\n sendMessage.Result.Sticker.Thumb.Height: " + thumbHeight
+                              + "\n sendMessage.Result.Sticker.Thumb.FileId: " + thumbFileId
+                              + "\n sendMessage.Result.Sticker.Thumb.FileSize: " + thumbFileSize);
+
+            //check instance MessageInfo.Sticker
+            Assert.IsInstanceOf(typeof(StickerInfo), sticker);
+
+            //check MessageInfo.Sticker.field
+            Assert.IsNull(fileId);
+            Assert.AreEqual(width, 0);
+            Assert.AreEqual(height, 0);
+            Assert.IsNull(emoji);
+            Assert.AreEqual(fileSize, 0);
+
+            //check instance MessageInfo.Sticker.Thumb
+            Assert.IsInstanceOf(typeof(PhotoSizeInfo), thumb);
+
+            //check MessageInfo.Sticker.field
+            Assert.AreEqual(thumbWidth, 0);
+            Assert.AreEqual(thumbHeight, 0);
+            Assert.IsNull(thumbFileId);
+            Assert.AreEqual(thumbFileSize, 0);
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Video"/>
         /// </summary>
         [Test]
@@ -57,43 +119,50 @@ namespace NetTelebot.Tests
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyVideo()");
             Assert.True(sendMessage.Ok);
 
+            // typeof MessageInfo.Video
             var video = sendMessage.Result.Video;
+
+            // field MessageInfo.Video"
             var fileId = sendMessage.Result.Video.FileId;
             var duration = sendMessage.Result.Video.Duration;
             var fileSize = sendMessage.Result.Video.FileSize;
             var width = sendMessage.Result.Video.Width;
             var height = sendMessage.Result.Video.Height;
             var mimeType = sendMessage.Result.Video.MimeType;
+
+            // typeof MessageInfo.Video.Thumb
             var thumb = sendMessage.Result.Video.Thumb;
+
+            // field MessageInfo.Video.Thumb
             var thumbWidth = sendMessage.Result.Video.Thumb.Width;
             var thumbHeight = sendMessage.Result.Video.Thumb.Height;
             var thumbFileId = sendMessage.Result.Video.Thumb.FileId;
             var thumbFileSize = sendMessage.Result.Video.Thumb.FileSize;
 
             Console.WriteLine("TestAppealToTheEmptyVideo():"
-                + "\n sendMessage.Result.Video: " + video
-                + "\n sendMessage.Result.Video.FileId: " + fileId
-                + "\n sendMessage.Result.Video.Duration: " + duration
-                + "\n sendMessage.Result.Video.FileSize: " + fileSize
-                + "\n sendMessage.Result.Video.Width: " + width
-                + "\n sendMessage.Result.Video.Height: " + height
-                + "\n sendMessage.Result.Video.MimeType: " + mimeType
-                + "\n sendMessage.Result.Video.Thumb: " + thumb
-                + "\n sendMessage.Result.Video.Thumb.Width: " + thumbWidth
-                + "\n sendMessage.Result.Video.Thumb.Height: " + thumbHeight
-                + "\n sendMessage.Result.Video.Thumb.FileId: " + thumbFileId
-                + "\n sendMessage.Result.Video.Thumb.FileSize: " + thumbFileSize);
+                              + "\n sendMessage.Result.Video: " + video
+                              + "\n sendMessage.Result.Video.FileId: " + fileId
+                              + "\n sendMessage.Result.Video.Duration: " + duration
+                              + "\n sendMessage.Result.Video.FileSize: " + fileSize
+                              + "\n sendMessage.Result.Video.Width: " + width
+                              + "\n sendMessage.Result.Video.Height: " + height
+                              + "\n sendMessage.Result.Video.MimeType: " + mimeType
+                              + "\n sendMessage.Result.Video.Thumb: " + thumb
+                              + "\n sendMessage.Result.Video.Thumb.Width: " + thumbWidth
+                              + "\n sendMessage.Result.Video.Thumb.Height: " + thumbHeight
+                              + "\n sendMessage.Result.Video.Thumb.FileId: " + thumbFileId
+                              + "\n sendMessage.Result.Video.Thumb.FileSize: " + thumbFileSize);
 
             //check instance MessageInfo.Video
-            Assert.IsInstanceOf(typeof(VideoInfo), video, video + " is instance of VideoInfo");
+            Assert.IsInstanceOf(typeof(VideoInfo), video);
 
             //check MessageInfo.Video.field
-            Assert.IsNull(fileId, fileId + " is null");
-            Assert.AreEqual(duration, 0, duration + " are equal 0");
-            Assert.AreEqual(width, 0, width + " are equal 0");
-            Assert.AreEqual(height, 0, height + " are equal 0");
-            Assert.AreEqual(fileSize, 0, fileSize + " are equal 0");
-            Assert.IsNull(mimeType, mimeType + " is null");
+            Assert.IsNull(fileId);
+            Assert.AreEqual(duration, 0);
+            Assert.AreEqual(width, 0);
+            Assert.AreEqual(height, 0);
+            Assert.AreEqual(fileSize, 0);
+            Assert.IsNull(mimeType);
 
             //check instance MessageInfo.Video.Thumb
             Assert.IsInstanceOf(typeof(PhotoSizeInfo), thumb);

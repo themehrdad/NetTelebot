@@ -8,10 +8,15 @@ namespace NetTelebot
     /// </summary>
     public class StickerInfo
     {
+        internal StickerInfo()
+        {
+        }
+
         internal StickerInfo(string jsonText)
         {
             Parse(jsonText);
         }
+
         internal StickerInfo(JObject jsonObject)
         {
             Parse(jsonObject);
@@ -28,10 +33,14 @@ namespace NetTelebot
             FileId = jsonObject["file_id"].Value<string>();
             Width = jsonObject["width"].Value<int>();
             Height = jsonObject["height"].Value<int>();
-            Thumb = new PhotoSizeInfo(jsonObject["thumb"].Value<JObject>());
+            if (jsonObject["thumb"] != null)
+                Thumb = new PhotoSizeInfo(jsonObject["thumb"].Value<JObject>());
+            if (jsonObject["emoji"] != null)
+                Emoji = jsonObject["emoji"].Value<string>();
             if (jsonObject["file_size"] != null)
                 FileSize = jsonObject["file_size"].Value<int>();
         }
+
         /// <summary>
         /// Unique identifier for this file
         /// </summary>
@@ -45,9 +54,13 @@ namespace NetTelebot
         /// </summary>
         public int Height { get; set; }
         /// <summary>
-        /// Sticker thumbnail in .webp or .jpg format
+        /// Optional. Sticker thumbnail in .webp or .jpg format
         /// </summary>
         public PhotoSizeInfo Thumb { get; set; }
+        /// <summary>
+        /// Optional. Emoji associated with the sticker
+        /// </summary>
+        public string Emoji { get; set; }
         /// <summary>
         /// Optional. File size
         /// </summary>
