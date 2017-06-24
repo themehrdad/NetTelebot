@@ -54,21 +54,42 @@ namespace NetTelebot
             if (jsonObject["audio"] != null)
                 Audio = new AudioInfo(jsonObject["audio"].Value<JObject>());
 
-            Document = jsonObject["document"] != null ? new DocumentInfo(jsonObject["document"].Value<JObject>()) : new DocumentInfo { Thumb = new PhotoSizeInfo() };
-            Photo = jsonObject["photo"] != null ? PhotoSizeInfo.ParseArray(jsonObject["photo"].Value<JArray>()) : new PhotoSizeInfo[0];
-            Sticker = jsonObject["sticker"] != null ? new StickerInfo(jsonObject["sticker"].Value<JObject>()) : new StickerInfo { Thumb = new PhotoSizeInfo() };
-            Video = jsonObject["video"] != null ? new VideoInfo(jsonObject["video"].Value<JObject>()) : new VideoInfo { Thumb = new PhotoSizeInfo() };
-            Caption = jsonObject["caption"] != null ? jsonObject["caption"].Value<string>() : string.Empty;
-            Contact = jsonObject["contact"] != null ? new ContactInfo(jsonObject["contact"].Value<JObject>()) : new ContactInfo();
+            Document = jsonObject["document"] != null
+                ? new DocumentInfo(jsonObject["document"].Value<JObject>())
+                : new DocumentInfo {Thumb = new PhotoSizeInfo()};
 
-            if (jsonObject["location"] != null)
-                Location = new LocationInfo(jsonObject["location"].Value<JObject>());
+            Photo = jsonObject["photo"] != null
+                ? PhotoSizeInfo.ParseArray(jsonObject["photo"].Value<JArray>())
+                : new PhotoSizeInfo[0];
+
+            Sticker = jsonObject["sticker"] != null
+                ? new StickerInfo(jsonObject["sticker"].Value<JObject>())
+                : new StickerInfo {Thumb = new PhotoSizeInfo()};
+
+            Video = jsonObject["video"] != null
+                ? new VideoInfo(jsonObject["video"].Value<JObject>())
+                : new VideoInfo {Thumb = new PhotoSizeInfo()};
+
+            Caption = jsonObject["caption"] != null 
+                ? jsonObject["caption"].Value<string>() 
+                : string.Empty;
+            
+            Contact = jsonObject["contact"] != null
+                ? new ContactInfo(jsonObject["contact"].Value<JObject>())
+                : new ContactInfo();
+
+            Location = jsonObject["location"] != null
+                ? new LocationInfo(jsonObject["location"].Value<JObject>())
+                : new LocationInfo();
+
             if (jsonObject["new_chat_member"] != null)
                 NewChatMember = new UserInfo(jsonObject["new_chat_participant"].Value<JObject>());
             if (jsonObject["left_chat_member"] != null)
                 LeftChatMember = new UserInfo(jsonObject["left_chat_participant"].Value<JObject>());
 
-            NewChatTitle = jsonObject["new_chat_title"] != null ? jsonObject["new_chat_title"].Value<string>() : string.Empty;
+            NewChatTitle = jsonObject["new_chat_title"] != null
+                ? jsonObject["new_chat_title"].Value<string>()
+                : string.Empty;
 
             if (jsonObject["new_chat_photo"] != null)
                 NewChatPhoto = PhotoSizeInfo.ParseArray(jsonObject["new_chat_photo"].Value<JArray>());

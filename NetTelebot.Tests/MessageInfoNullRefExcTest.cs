@@ -205,7 +205,7 @@ namespace NetTelebot.Tests
             // typeof MessageInfo.Video
             var video = sendMessage.Result.Video;
 
-            // field MessageInfo.Video"
+            // field MessageInfo.Video
             var fileId = sendMessage.Result.Video.FileId;
             var duration = sendMessage.Result.Video.Duration;
             var fileSize = sendMessage.Result.Video.FileSize;
@@ -265,8 +265,11 @@ namespace NetTelebot.Tests
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyContact()");
             Assert.True(sendMessage.Ok);
-
+            
+            // typeof MessageInfo.Contact
             var contact = sendMessage.Result.Contact;
+
+            // field MessageInfo.Contact
             var userId = sendMessage.Result.Contact.UserId;
             var phoneNumber = sendMessage.Result.Contact.PhoneNumber;
             var firstName = sendMessage.Result.Contact.FirstName;
@@ -287,6 +290,35 @@ namespace NetTelebot.Tests
             Assert.IsNull(phoneNumber);
             Assert.IsNull(firstName);
             Assert.IsNull(lastName);
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Location"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyLocation()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyContact()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.Contact
+            var location = sendMessage.Result.Location;
+
+            // field MessageInfo.Contact
+            var latitude = sendMessage.Result.Location.Latitude;
+            var longitude = sendMessage.Result.Location.Longitude;
+
+            Console.WriteLine("TestAppealToTheEmptyLocation()"
+                              + "\n sendMessage.Result.Location: " + location
+                              + "\n sendMessage.Result.Location.Latitude: " + latitude
+                              + "\n sendMessage.Result.Location.Longitude: " + longitude);
+
+            //check instance MessageInfo.Location
+            Assert.IsInstanceOf(typeof(LocationInfo), location);
+
+            //check MessageInfo.Location.field
+            Assert.AreEqual(latitude, 0);
+            Assert.AreEqual(longitude, 0);
         }
 
         /// <summary>
