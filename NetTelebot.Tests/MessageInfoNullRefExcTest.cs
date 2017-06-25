@@ -24,28 +24,65 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Caption"/>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardFromMessageId"/>
         /// </summary>
         [Test]
-        public void TestAppealToTheEmptyCaption()
+        public void TestAppealToTheEmptyForwardFromMessageId()
         {
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyCaption()");
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyForwardFromMessageId()");
             Assert.True(sendMessage.Ok);
 
-            var caption = sendMessage.Result.Caption;
-            var captionLength = sendMessage.Result.Caption.Length;
+            var forwardFromMessageId = sendMessage.Result.ForwardFromMessageId;
 
-            Console.WriteLine("TestAppealToTheEmptyCaption():"
-                + "\n sendMessage.Result.Caption: " + caption
-                + "\n sendMessage.Result.Caption.Length: " + captionLength);
+            Console.WriteLine("TestAppealToTheEmptyForwardFromMessageId():"
+                              + "\n sendMessage.Result.ForwardFromMessageId: " + forwardFromMessageId);
 
-            //check instance MessageInfo.Caption
-            Assert.IsInstanceOf(typeof(string), caption);
+            //check instance MessageInfo.ForwardFromMessageId
+            Assert.IsInstanceOf(typeof(int), forwardFromMessageId);
 
             //сhecks the return value
-            Assert.IsEmpty(caption);
-            Assert.AreEqual(caption, string.Empty);
-            Assert.AreEqual(captionLength, 0);
+            Assert.AreEqual(forwardFromMessageId, 0);
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Audio"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyAudio()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyAudio()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.Audio
+            var audio = sendMessage.Result.Audio;
+
+            // field MessageInfo.Audio
+            var fileId = sendMessage.Result.Audio.FileId;
+            var duration = sendMessage.Result.Audio.Duration;
+            var performer = sendMessage.Result.Audio.Performer;
+            var title = sendMessage.Result.Audio.Title;
+            var mimeType = sendMessage.Result.Audio.MimeType;
+            var fileSize = sendMessage.Result.Audio.FileSize;
+
+            Console.WriteLine("TestAppealToTheEmptyAudio():"
+                              + "\n sendMessage.Result.Audio " + audio
+                              + "\n sendMessage.Result.Audio.FileId: " + fileId
+                              + "\n sendMessage.Result.Audio.Duration;: " + duration
+                              + "\n sendMessage.Result.Audio.Performer: " + performer
+                              + "\n sendMessage.Result.Audio.Title: " + title
+                              + "\n sendMessage.Result.Audio.MimeType: " + mimeType
+                              + "\n sendMessage.Result.Audio.FileSize: " + fileSize);
+
+            //check instance MessageInfo.Audio
+            Assert.IsInstanceOf(typeof(AudioInfo), audio);
+
+            //check MessageInfo.Audio.field
+            Assert.IsNull(fileId);
+            Assert.AreEqual(duration, 0);
+            Assert.IsNull(performer);
+            Assert.IsNull(title);
+            Assert.IsNull(mimeType);
+            Assert.AreEqual(fileSize, 0);
         }
 
         /// <summary>
@@ -258,6 +295,31 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Caption"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyCaption()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyCaption()");
+            Assert.True(sendMessage.Ok);
+
+            var caption = sendMessage.Result.Caption;
+            var captionLength = sendMessage.Result.Caption.Length;
+
+            Console.WriteLine("TestAppealToTheEmptyCaption():"
+                + "\n sendMessage.Result.Caption: " + caption
+                + "\n sendMessage.Result.Caption.Length: " + captionLength);
+
+            //check instance MessageInfo.Caption
+            Assert.IsInstanceOf(typeof(string), caption);
+
+            //сhecks the return value
+            Assert.IsEmpty(caption);
+            Assert.AreEqual(caption, string.Empty);
+            Assert.AreEqual(captionLength, 0);
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Contact"/>
         /// </summary>
         [Test]
@@ -407,7 +469,9 @@ namespace NetTelebot.Tests
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyNewChatTitle()");
             Assert.True(sendMessage.Ok);
 
+            // typeof MessageInfo.NewChatTitle
             var newChatTitle = sendMessage.Result.NewChatTitle;
+
             var newChatTitleLenth = sendMessage.Result.NewChatTitle.Length;
 
             Console.WriteLine("TestAppealToTheEmptyNewChatTitle():"
@@ -422,6 +486,31 @@ namespace NetTelebot.Tests
             Assert.AreEqual(newChatTitle, string.Empty);
             Assert.AreEqual(newChatTitleLenth, 0);
 
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatPhoto"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyNewChatPhoto()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyNewChatPhoto()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.NewChatPhoto
+            var newChatPhoto = sendMessage.Result.NewChatPhoto;
+
+            var newChatPhotoLength = sendMessage.Result.NewChatPhoto.Length;
+
+            Console.WriteLine("TestAppealToTheEmptyNewChatPhoto():"
+                              + "\n sendMessage.Result.Photo: " + newChatPhoto
+                              + "\n sendMessage.Result.photoLength: " + newChatPhotoLength);
+
+            //check instance  MessageInfo.NewChatPhoto
+            Assert.IsInstanceOf(typeof(PhotoSizeInfo[]), newChatPhoto);
+
+            //сhecks the return value
+            Assert.AreEqual(newChatPhotoLength, 0);
         }
 
         /// <summary>
@@ -545,6 +634,126 @@ namespace NetTelebot.Tests
             //сhecks the return value
             Assert.AreEqual(migrateFromChatId, 0);
         }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.PinnedMessage"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToMigrateFromPinnedMessage()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromPinnedMessage()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.PinnedMessage
+            var message = sendMessage.Result.PinnedMessage;
+
+            // field MessageInfo.PinnedMessage.field
+            var messageId = sendMessage.Result.PinnedMessage.MessageId;
+            var from = sendMessage.Result.PinnedMessage.From;
+            var date = sendMessage.Result.PinnedMessage.Date;
+            var chat = sendMessage.Result.PinnedMessage.Chat;
+            var forwardFrom = sendMessage.Result.PinnedMessage.ForwardFrom;
+            //todo forward_from_chat
+            var forwardFromMessageId = sendMessage.Result.PinnedMessage.ForwardFromMessageId;
+            var forwardDate = sendMessage.Result.PinnedMessage.ForwardDate;
+            var replyToMessage = sendMessage.Result.PinnedMessage.ReplyToMessage;
+            var editDate = sendMessage.Result.PinnedMessage.EditDate;
+            var text = sendMessage.Result.PinnedMessage.Text;
+            //todo entities
+            var audio = sendMessage.Result.PinnedMessage.Audio;
+            var document = sendMessage.Result.PinnedMessage.Document;
+            //todo game
+            var photo = sendMessage.Result.PinnedMessage.Photo;
+            var sticker = sendMessage.Result.PinnedMessage.Sticker;
+            var video = sendMessage.Result.PinnedMessage.Video;
+            //todo Voice
+            //todo VideoNote
+            //todo NewChatMembers;
+            var caption = sendMessage.Result.PinnedMessage.Caption;
+            var contact = sendMessage.Result.PinnedMessage.Contact;
+            var location = sendMessage.Result.PinnedMessage.Location;
+            //todo Venue
+            var newChatMember = sendMessage.Result.PinnedMessage.NewChatMember;
+            var leftChatMember = sendMessage.Result.PinnedMessage.LeftChatMember;
+            var newChatTitle = sendMessage.Result.PinnedMessage.NewChatTitle;
+            var newChatPhoto = sendMessage.Result.PinnedMessage.NewChatPhoto;
+            var deleteChatPhoto = sendMessage.Result.PinnedMessage.DeleteChatPhoto;
+            var groupChatCreated = sendMessage.Result.PinnedMessage.GroupChatCreated;
+            var superGroupChatCreated = sendMessage.Result.PinnedMessage.SuperGroupChatCreated;
+            var channelChatCreated = sendMessage.Result.PinnedMessage.ChannelChatCreated;
+            var migrateToChatId = sendMessage.Result.PinnedMessage.MigrateToChatId;
+            var migrateFromChatId = sendMessage.Result.PinnedMessage.MigrateFromChatId;
+            var pinnedMessage = sendMessage.Result.PinnedMessage.PinnedMessage;
+            //todo Invoice
+            //todo SuceffulPayment
+
+            Console.WriteLine("TestAppealToMigrateFromPinnedMessage():"
+                              + "\n sendMessage.Result.PinnedMessage: " + message
+                              + "\n sendMessage.Result.PinnedMessage.MessageId: " + messageId
+                              + "\n sendMessage.Result.PinnedMessage.From: " + from
+                              + "\n sendMessage.Result.PinnedMessage.Date: " + date
+                              + "\n sendMessage.Result.PinnedMessage.Chat: " + chat
+                              + "\n sendMessage.Result.PinnedMessage.ForwardFrom: " + forwardFrom
+                              + "\n sendMessage.Result.PinnedMessage.ForwardFromMessageId: " + forwardFromMessageId
+                              + "\n sendMessage.Result.PinnedMessage.ReplyToMessage: " + replyToMessage
+                              + "\n sendMessage.Result.PinnedMessage.EditDate: " + editDate
+                              + "\n sendMessage.Result.PinnedMessage.Text: " + text
+                              + "\n sendMessage.Result.PinnedMessage.Audio: " + audio
+                              + "\n sendMessage.Result.PinnedMessage.Document: " + document
+                              + "\n sendMessage.Result.PinnedMessage.Photo: " + photo
+                              + "\n sendMessage.Result.PinnedMessage.Sticker " + sticker
+                              + "\n sendMessage.Result.PinnedMessage.Video: " + video
+                              + "\n sendMessage.Result.PinnedMessage.Caption: " + caption
+                              + "\n sendMessage.Result.PinnedMessage.Contact: " + contact
+                              + "\n sendMessage.Result.PinnedMessage.Location: " + location
+                              + "\n sendMessage.Result.PinnedMessage.NewChatMember: " + newChatMember
+                              + "\n sendMessage.Result.PinnedMessage.LeftChatMember: " + leftChatMember
+                              + "\n sendMessage.Result.PinnedMessage.NewChatTitle: " + newChatTitle
+                              + "\n sendMessage.Result.PinnedMessage.NewChatPhoto: " + newChatPhoto
+                              + "\n sendMessage.Result.PinnedMessage.DeleteChatPhoto: " + deleteChatPhoto
+                              + "\n sendMessage.Result.PinnedMessage.GroupChatCreated: " + groupChatCreated
+                              + "\n sendMessage.Result.PinnedMessage.SuperGroupChatCreated: " + superGroupChatCreated
+                              + "\n sendMessage.Result.PinnedMessage.ChannelChatCreated: " + channelChatCreated
+                              + "\n sendMessage.Result.PinnedMessage.MigrateToChatId: " + migrateToChatId
+                              + "\n sendMessage.Result.PinnedMessage.MigrateFromChatId: " + migrateFromChatId
+                              + "\n sendMessage.Result.PinnedMessage.PinnedMessage: " + pinnedMessage);
+
+            //check instance MessageInfo.PinnedMesage
+            Assert.IsInstanceOf(typeof(MessageInfo), message);
+
+            //check MessageInfo.PinnedMesage.field
+            Assert.AreEqual(messageId, 0);
+            Assert.IsNull(from);
+            Assert.AreEqual(date, DateTime.MinValue);
+            Assert.IsNull(chat);
+            Assert.IsNull(forwardFrom);
+            Assert.AreEqual(forwardFromMessageId, 0);
+            Assert.AreEqual(forwardDate, DateTime.MinValue);
+            Assert.IsNull(replyToMessage);
+            Assert.AreEqual(editDate, DateTime.MinValue);
+            Assert.IsNull(text);
+            Assert.IsNull(audio);
+            Assert.IsNull(document);
+            Assert.IsNull(photo);
+            Assert.IsNull(sticker);
+            Assert.IsNull(video);
+            Assert.IsNull(caption);
+            Assert.IsNull(contact);
+            Assert.IsNull(location);
+            Assert.IsNull(newChatMember);
+            Assert.IsNull(leftChatMember);
+            Assert.IsNull(leftChatMember);
+            Assert.IsNull(newChatTitle);
+            Assert.IsNull(newChatPhoto);
+            Assert.IsFalse(deleteChatPhoto);
+            Assert.IsFalse(groupChatCreated);
+            Assert.IsFalse(superGroupChatCreated);
+            Assert.IsFalse(channelChatCreated);
+            Assert.AreEqual(migrateToChatId, 0);
+            Assert.AreEqual(migrateFromChatId, 0);
+            Assert.IsNull(pinnedMessage);
+        }
+
 
         [Test]
         public void TestAppealToTheNonEmptyContact()

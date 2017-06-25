@@ -5,6 +5,10 @@
     /// </summary>
     public interface IReplyMarkup
     {
+        /// <summary>
+        /// Gets the json.
+        /// </summary>
+        /// <returns></returns>
         string GetJson();
     }
 }

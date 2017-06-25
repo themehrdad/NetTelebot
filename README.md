@@ -46,7 +46,7 @@ private void botClient_UpdatesReceived(object sender, TelegramUpdateEventArgs e)
 
 ## Documentation
 
-Look at the [Wiki](https://github.com/themehrdad/NetTelebot/wiki/Documentation)
+Look at the [Wiki](https://github.com/themehrdad/NetTelebot/wiki)
 
 ## To Do
 

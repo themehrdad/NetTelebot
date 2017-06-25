@@ -2,8 +2,6 @@
 using System;
 using System.Linq;
 using System.Threading;
-// ReSharper disable UnusedMember.Local
-#pragma warning disable 1591
 
 namespace NetTelebot
 {
@@ -12,6 +10,9 @@ namespace NetTelebot
     /// </summary>
     public class TelegramBotClient
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TelegramBotClient"/> class.
+        /// </summary>
         public TelegramBotClient()
         {
             CheckInterval = 1000;
@@ -68,6 +69,7 @@ namespace NetTelebot
         {
             RestRequest request = new RestRequest(string.Format(getMeUri, Token), Method.GET);
             IRestResponse response = restClient.Execute(request);
+            //todo why MeInfo (in API UserInfo)?
             return new MeInfo(response.Content);
         }
 

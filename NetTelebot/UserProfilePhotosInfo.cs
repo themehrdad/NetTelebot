@@ -37,6 +37,7 @@ namespace NetTelebot
         /// Total number of profile pictures the target user has
         /// </summary>
         public int TotalCount { get; set; }
+
         /// <summary>
         /// Requested profile pictures (in up to 4 sizes each)
         /// </summary>

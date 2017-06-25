@@ -38,6 +38,7 @@ namespace NetTelebot
         /// Longitude as defined by sender
         /// </summary>
         public float Longitude { get; set; }
+
         /// <summary>
         /// Latitude as defined by sender
         /// </summary>

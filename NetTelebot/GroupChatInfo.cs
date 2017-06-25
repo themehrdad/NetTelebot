@@ -6,7 +6,7 @@ namespace NetTelebot
     /// <summary>
     /// This object represents a group chat.
     /// </summary>
-    public class GroupChatInfo :IConversationSource
+    public class GroupChatInfo : IConversationSource
     {
         internal GroupChatInfo(string jsonText)
         {
@@ -29,10 +29,12 @@ namespace NetTelebot
             JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
+
         /// <summary>
         /// Unique identifier for this group chat
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// Unique identifier for this group chat
         /// </summary>
