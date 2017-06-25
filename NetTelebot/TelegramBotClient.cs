@@ -10,6 +10,9 @@ namespace NetTelebot
     /// </summary>
     public class TelegramBotClient
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TelegramBotClient"/> class.
+        /// </summary>
         public TelegramBotClient()
         {
             CheckInterval = 1000;
