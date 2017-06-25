@@ -24,28 +24,44 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Caption"/>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Audio"/>
         /// </summary>
         [Test]
-        public void TestAppealToTheEmptyCaption()
+        public void TestAppealToTheEmptyAudio()
         {
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyCaption()");
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyAudio()");
             Assert.True(sendMessage.Ok);
 
-            var caption = sendMessage.Result.Caption;
-            var captionLength = sendMessage.Result.Caption.Length;
+            // typeof MessageInfo.Audio
+            var audio = sendMessage.Result.Audio;
 
-            Console.WriteLine("TestAppealToTheEmptyCaption():"
-                + "\n sendMessage.Result.Caption: " + caption
-                + "\n sendMessage.Result.Caption.Length: " + captionLength);
+            // field MessageInfo.Audio
+            var fileId = sendMessage.Result.Audio.FileId;
+            var duration = sendMessage.Result.Audio.Duration;
+            var performer = sendMessage.Result.Audio.Performer;
+            var title = sendMessage.Result.Audio.Title;
+            var mimeType = sendMessage.Result.Audio.MimeType;
+            var fileSize = sendMessage.Result.Audio.FileSize;
 
-            //check instance MessageInfo.Caption
-            Assert.IsInstanceOf(typeof(string), caption);
+            Console.WriteLine("TestAppealToTheEmptyAudio():"
+                              + "\n sendMessage.Result.Audio " + audio
+                              + "\n sendMessage.Result.Audio.FileId: " + fileId
+                              + "\n sendMessage.Result.Audio.Duration;: " + duration
+                              + "\n sendMessage.Result.Audio.Performer: " + performer
+                              + "\n sendMessage.Result.Audio.Title: " + title
+                              + "\n sendMessage.Result.Audio.MimeType: " + mimeType
+                              + "\n sendMessage.Result.Audio.FileSize: " + fileSize);
 
-            //сhecks the return value
-            Assert.IsEmpty(caption);
-            Assert.AreEqual(caption, string.Empty);
-            Assert.AreEqual(captionLength, 0);
+            //check instance MessageInfo.Audio
+            Assert.IsInstanceOf(typeof(AudioInfo), audio);
+
+            //check MessageInfo.Audio.field
+            Assert.IsNull(fileId);
+            Assert.AreEqual(duration, 0);
+            Assert.IsNull(performer);
+            Assert.IsNull(title);
+            Assert.IsNull(mimeType);
+            Assert.AreEqual(fileSize, 0);
         }
 
         /// <summary>
@@ -255,6 +271,31 @@ namespace NetTelebot.Tests
             Assert.AreEqual(thumbHeight, 0);
             Assert.IsNull(thumbFileId);
             Assert.AreEqual(thumbFileSize, 0);
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Caption"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyCaption()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyCaption()");
+            Assert.True(sendMessage.Ok);
+
+            var caption = sendMessage.Result.Caption;
+            var captionLength = sendMessage.Result.Caption.Length;
+
+            Console.WriteLine("TestAppealToTheEmptyCaption():"
+                + "\n sendMessage.Result.Caption: " + caption
+                + "\n sendMessage.Result.Caption.Length: " + captionLength);
+
+            //check instance MessageInfo.Caption
+            Assert.IsInstanceOf(typeof(string), caption);
+
+            //сhecks the return value
+            Assert.IsEmpty(caption);
+            Assert.AreEqual(caption, string.Empty);
+            Assert.AreEqual(captionLength, 0);
         }
 
         /// <summary>

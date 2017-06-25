@@ -52,6 +52,7 @@ namespace NetTelebot
             }
             if(jsonObject["reply_to_message"]!=null)
                 ReplyToMessage = new MessageInfo(jsonObject["reply_to_message"].Value<JObject>());
+
             if (jsonObject["edit_date"] != null)
             {
                 EditDateUnix = jsonObject["edit_date"].Value<int>();
@@ -59,8 +60,10 @@ namespace NetTelebot
             }
             if (jsonObject["text"] != null)
                 Text = jsonObject["text"].Value<string>();
-            if (jsonObject["audio"] != null)
-                Audio = new AudioInfo(jsonObject["audio"].Value<JObject>());
+
+            Audio = jsonObject["audio"] != null 
+                ? new AudioInfo(jsonObject["audio"].Value<JObject>()) 
+                : new AudioInfo();
 
             Document = jsonObject["document"] != null
                 ? new DocumentInfo(jsonObject["document"].Value<JObject>())
