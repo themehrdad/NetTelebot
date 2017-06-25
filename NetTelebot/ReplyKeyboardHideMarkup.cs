@@ -12,10 +12,12 @@ namespace NetTelebot
         {
             HideKeyboard = true;
         }
+
         /// <summary>
         /// Requests clients to hide the custom keyboard
         /// </summary>
         public bool HideKeyboard { get; private set; }
+
         /// <summary>
         /// Optional. Use this parameter if you want to hide keyboard for specific users only.
         /// Targets:

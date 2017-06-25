@@ -42,14 +42,17 @@ namespace NetTelebot
         /// Contact's phone number
         /// </summary>
         public string PhoneNumber { get; private set; }
+
         /// <summary>
         /// Contact's first name
         /// </summary>
         public string FirstName { get; private set; }
+
         /// <summary>
         /// Optional. Contact's last name
         /// </summary>
         public string LastName { get; private set; }
+
         /// <summary>
         /// Optional. Contact's user identifier in Telegram
         /// </summary>

@@ -24,6 +24,27 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardFromMessageId"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyForwardFromMessageId()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyForwardFromMessageId()");
+            Assert.True(sendMessage.Ok);
+
+            var forwardFromMessageId = sendMessage.Result.ForwardFromMessageId;
+
+            Console.WriteLine("TestAppealToTheEmptyForwardFromMessageId():"
+                              + "\n sendMessage.Result.ForwardFromMessageId: " + forwardFromMessageId);
+
+            //check instance MessageInfo.ForwardFromMessageId
+            Assert.IsInstanceOf(typeof(int), forwardFromMessageId);
+
+            //сhecks the return value
+            Assert.AreEqual(forwardFromMessageId, 0);
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Audio"/>
         /// </summary>
         [Test]

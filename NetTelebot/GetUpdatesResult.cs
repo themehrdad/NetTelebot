@@ -30,7 +30,20 @@ namespace NetTelebot
             Parse(jsonObject);
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="GetUpdatesResult"/> is ok.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if ok; otherwise, <c>false</c>.
+        /// </value>
         public bool Ok { get; private set; }
+
+        /// <summary>
+        /// Gets the result.
+        /// </summary>
+        /// <value>
+        /// The result is instance of the <see cref="UpdateInfo"/> class
+        /// </value>
         public UpdateInfo[] Result { get; private set; }
     }
 }

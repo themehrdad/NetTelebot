@@ -45,22 +45,27 @@ namespace NetTelebot
         /// Unique identifier for this file
         /// </summary>
         public string FileId { get; set; }
+
         /// <summary>
         /// Sticker width
         /// </summary>
         public int Width { get; set; }
+
         /// <summary>
         /// Sticker height
         /// </summary>
         public int Height { get; set; }
+
         /// <summary>
         /// Optional. Sticker thumbnail in .webp or .jpg format
         /// </summary>
         public PhotoSizeInfo Thumb { get; set; }
+
         /// <summary>
         /// Optional. Emoji associated with the sticker
         /// </summary>
         public string Emoji { get; set; }
+
         /// <summary>
         /// Optional. File size
         /// </summary>

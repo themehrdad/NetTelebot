@@ -37,18 +37,22 @@ namespace NetTelebot
             if (jsonObject["file_size"] != null)
                 FileSize = jsonObject["file_size"].Value<int>();
         }
+
         /// <summary>
         /// Unique identifier for this file
         /// </summary>
         public string FileId { get; set; }
+
         /// <summary>
         /// Photo width
         /// </summary>
         public int Width { get; set; }
+
         /// <summary>
         /// Photo height
         /// </summary>
         public int Height { get; set; }
+
         /// <summary>
         /// Optional. File size
         /// </summary>

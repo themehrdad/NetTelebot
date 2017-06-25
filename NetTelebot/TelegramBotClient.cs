@@ -2,8 +2,6 @@
 using System;
 using System.Linq;
 using System.Threading;
-// ReSharper disable UnusedMember.Local
-#pragma warning disable 1591
 
 namespace NetTelebot
 {
@@ -68,6 +66,7 @@ namespace NetTelebot
         {
             RestRequest request = new RestRequest(string.Format(getMeUri, Token), Method.GET);
             IRestResponse response = restClient.Execute(request);
+            //todo why MeInfo (in API UserInfo)?
             return new MeInfo(response.Content);
         }
 
