@@ -52,8 +52,11 @@ namespace NetTelebot
                 ForwardDateUnix = jsonObject["forward_date"].Value<int>();
                 ForwardDate = ForwardDateUnix.ToDateTime();
             }
-            if(jsonObject["reply_to_message"]!=null)
-                ReplyToMessage = new MessageInfo(jsonObject["reply_to_message"].Value<JObject>());
+            
+            ReplyToMessage = jsonObject["reply_to_message"] != null
+                ? new MessageInfo(jsonObject["reply_to_message"].Value<JObject>())
+                : new MessageInfo();
+
             if (jsonObject["edit_date"] != null)
             {
                 EditDateUnix = jsonObject["edit_date"].Value<int>();
