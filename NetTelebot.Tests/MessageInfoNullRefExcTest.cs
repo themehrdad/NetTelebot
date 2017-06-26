@@ -29,16 +29,16 @@ namespace NetTelebot.Tests
         [Test]
         public void TestAppealToMigrateFromForwardDateUnix()
         {
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromForwardDateUnix");
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromForwardDateUnix()");
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.ForwardDate
             var forwardDateUnix = sendMessage.Result.ForwardDateUnix;
             var forwardDateString = sendMessage.Result.ForwardDateUnix.ToString();
             
-            Console.WriteLine("TestAppealToMigrateFromForwardDateUnix:"
-                              + "\n sendMessage.Result.ReplyToMessage: " + forwardDateUnix
-                              + "\n sendMessage.Result.ReplyToMessage.MessageId: " + forwardDateString);
+            Console.WriteLine("TestAppealToMigrateFromForwardDateUnix():"
+                              + "\n sendMessage.Result.ForwardDateUnix: " + forwardDateUnix
+                              + "\n sendMessage.Result.ForwardDateUnix.ToString(): " + forwardDateString);
 
             //check instance MessageInfo.ForwardDate
             Assert.IsInstanceOf(typeof(int), forwardDateUnix);
@@ -57,18 +57,18 @@ namespace NetTelebot.Tests
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromForwardDate()");
             Assert.True(sendMessage.Ok);
 
-
             // typeof MessageInfo.ForwardDate
             var forwardDate = sendMessage.Result.ForwardDate;
+
             var forwardDateYear = sendMessage.Result.ForwardDate.Year;
             var forwardDateMonth = sendMessage.Result.ForwardDate.Month;
             var forwardDateDay = sendMessage.Result.ForwardDate.Day;
 
-            Console.WriteLine("TestAppealToMigrateFromReplyToMessage():"
-                              + "\n sendMessage.Result.ReplyToMessage: " + forwardDate
-                              + "\n sendMessage.Result.ReplyToMessage.MessageId: " + forwardDateYear
-                              + "\n sendMessage.Result.ReplyToMessage.From: " + forwardDateMonth
-                              + "\n sendMessage.Result.ReplyToMessage.Date: " + forwardDateDay);
+            Console.WriteLine("TestAppealToMigrateFromForwardDate():"
+                              + "\n sendMessage.Result.ForwardDate: " + forwardDate
+                              + "\n sendMessage.Result.ForwardDate.Year: " + forwardDateYear
+                              + "\n sendMessage.Result.ForwardDate.Month: " + forwardDateMonth
+                              + "\n sendMessage.Result.ForwardDate.Day: " + forwardDateDay);
 
             //check instance MessageInfo.ForwardDate
             Assert.IsInstanceOf(typeof(DateTime), forwardDate);
@@ -197,6 +197,63 @@ namespace NetTelebot.Tests
             Assert.AreEqual(migrateToChatId, 0);
             Assert.AreEqual(migrateFromChatId, 0);
             Assert.IsNull(pinnedMessage);
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.EditDateUnix"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToMigrateFromEditDateUnix()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromEditDateUnix()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.ForwardDate
+            var editDateUnix = sendMessage.Result.EditDateUnix;
+            var editDateString = sendMessage.Result.EditDateUnix.ToString();
+
+            Console.WriteLine("TestAppealToMigrateFromEditDateUnix():"
+                              + "\n sendMessage.Result.EditDateUnix: " + editDateUnix
+                              + "\n sendMessage.Result.EditDateUnix.ToString(): " + editDateString);
+
+            //check instance MessageInfo.ForwardDate
+            Assert.IsInstanceOf(typeof(int), editDateUnix);
+
+            //check value MessageInfo.ForwardDate
+            Assert.AreEqual(editDateUnix, 0);
+            Assert.AreEqual(editDateString, "0");
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.EditDate"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToMigrateFromEditDate()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromEditDate()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.ForwardDate
+            var editDate = sendMessage.Result.EditDate;
+
+            var editDateYear = sendMessage.Result.EditDate.Year;
+            var editDateMonth = sendMessage.Result.EditDate.Month;
+            var editDateDay = sendMessage.Result.EditDate.Day;
+
+            Console.WriteLine("TestAppealToMigrateFromEditDate():"
+                              + "\n sendMessage.Result.EditDate: " + editDate
+                              + "\n sendMessage.Result.EditDate.Year: " + editDateYear
+                              + "\n endMessage.Result.EditDate.Month: " +  editDateMonth
+                              + "\n sendMessage.Result.EditDate.Day: " +  editDateDay);
+
+            //check instance MessageInfo.ForwardDate
+            Assert.IsInstanceOf(typeof(DateTime), editDate);
+
+            //check value MessageInfo.ForwardDate
+            Assert.AreEqual(editDate, DateTime.MinValue);
+            Assert.AreEqual(editDateYear, 0001);
+            Assert.AreEqual(editDateMonth, 01);
+            Assert.AreEqual(editDateDay, 01);
         }
 
         /// <summary>
