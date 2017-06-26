@@ -41,8 +41,10 @@ namespace NetTelebot
             DateUnix = jsonObject["date"].Value<int>();
             Date = DateUnix.ToDateTime();
             Chat = ParseChat(jsonObject["chat"].Value<JObject>());
-            if (jsonObject["forward_from"] != null)
-                ForwardFrom = new UserInfo(jsonObject["forward_from"].Value<JObject>());
+
+            ForwardFrom = jsonObject["forward_from"] != null
+                ? new UserInfo(jsonObject["forward_from"].Value<JObject>())
+                : new UserInfo();
 
             if (jsonObject["forward_from_message_id"] != null)
                 ForwardFromMessageId = jsonObject["forward_from_message_id"].Value<int>();
@@ -62,6 +64,8 @@ namespace NetTelebot
                 EditDateUnix = jsonObject["edit_date"].Value<int>();
                 EditDate = EditDateUnix.ToDateTime();
             }
+
+            //todo need test
             if (jsonObject["text"] != null)
                 Text = jsonObject["text"].Value<string>();
 

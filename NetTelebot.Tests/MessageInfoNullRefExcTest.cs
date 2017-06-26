@@ -24,6 +24,44 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardFrom"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyForwardFrom()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyForwardFrom()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.ForwardFrom
+            var forwardFrom = sendMessage.Result.ForwardFrom;
+
+            // field MessageInfo.ForwardFrom
+            var id = sendMessage.Result.ForwardFrom.Id;
+            var firstName = sendMessage.Result.ForwardFrom.FirstName;
+            var lastName = sendMessage.Result.ForwardFrom.LastName;
+            var userName = sendMessage.Result.ForwardFrom.UserName;
+            var languageCode = sendMessage.Result.ForwardFrom.LanguageCode;
+
+            Console.WriteLine("TestAppealToTheEmptyForwardFrom():"
+                              + "\n sendMessage.Result.ForwardFrom: " + forwardFrom
+                              + "\n sendMessage.Result.ForwardFrom.Id: " + id
+                              + "\n sendMessage.Result.ForwardFrom.FirstName: " + firstName
+                              + "\n sendMessage.Result.ForwardFrom.LastName: " + lastName
+                              + "\n sendMessage.Result.ForwardFrom.UserName: " + userName
+                              + "\n sendMessage.Result.ForwardFrom.LanguageCode: " + languageCode);
+
+            //check instance MessageInfo.ForwardFrom
+            Assert.IsInstanceOf(typeof(UserInfo), forwardFrom);
+
+            //check MessageInfo.ForwardFrom.field
+            Assert.AreEqual(id, 0);
+            Assert.IsNull(firstName);
+            Assert.IsNull(lastName);
+            Assert.IsNull(userName);
+            Assert.IsNull(languageCode);
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardDateUnix"/>
         /// </summary>
         [Test]
@@ -656,7 +694,7 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatMember"/>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.LeftChatMember"/>
         /// </summary>
         [Test]
         public void TestAppealToTheEmptyLeftChatMember()
