@@ -295,6 +295,34 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Text"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyText()
+        {
+            const float latitude = 37.0000114f;
+            const float longitude = 37.0000076f;
+
+            SendMessageResult sendLocation = mTelegramBot.SendLocation(mChatId, latitude, longitude);
+
+            // typeof MessageInfo.Text
+            var text = sendLocation.Result.Text;
+
+            var textToUpper = sendLocation.Result.Text.ToUpper();
+
+            Console.WriteLine("TestAppealToTheEmptyText():"
+                              + "\n sendLocation.Result.Text: " + text
+                              + "\n sendLocation.Result.Text.ToUpper(): " + textToUpper);
+
+            //check instance MessageInfo.Text
+            Assert.IsInstanceOf(typeof(string), text);
+
+            //check value MessageInfo.Text
+            Assert.IsEmpty(text);
+            Assert.IsEmpty(textToUpper);
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardFromMessageId"/>
         /// </summary>
         [Test]
@@ -653,7 +681,6 @@ namespace NetTelebot.Tests
             Assert.AreEqual(latitude, 0);
             Assert.AreEqual(longitude, 0);
         }
-
 
         /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatMember"/>
@@ -1025,12 +1052,10 @@ namespace NetTelebot.Tests
             Assert.IsNull(pinnedMessage);
         }
 
-
         [Test]
         public void TestAppealToTheNonEmptyContact()
         {
             //todo create test after add method SendContact
-        }
-        
+        }        
     }
 }
