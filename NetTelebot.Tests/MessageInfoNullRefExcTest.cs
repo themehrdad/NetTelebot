@@ -24,6 +24,305 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardFrom"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyForwardFrom()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyForwardFrom()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.ForwardFrom
+            var forwardFrom = sendMessage.Result.ForwardFrom;
+
+            // field MessageInfo.ForwardFrom
+            var id = sendMessage.Result.ForwardFrom.Id;
+            var firstName = sendMessage.Result.ForwardFrom.FirstName;
+            var lastName = sendMessage.Result.ForwardFrom.LastName;
+            var userName = sendMessage.Result.ForwardFrom.UserName;
+            var languageCode = sendMessage.Result.ForwardFrom.LanguageCode;
+
+            Console.WriteLine("TestAppealToTheEmptyForwardFrom():"
+                              + "\n sendMessage.Result.ForwardFrom: " + forwardFrom
+                              + "\n sendMessage.Result.ForwardFrom.Id: " + id
+                              + "\n sendMessage.Result.ForwardFrom.FirstName: " + firstName
+                              + "\n sendMessage.Result.ForwardFrom.LastName: " + lastName
+                              + "\n sendMessage.Result.ForwardFrom.UserName: " + userName
+                              + "\n sendMessage.Result.ForwardFrom.LanguageCode: " + languageCode);
+
+            //check instance MessageInfo.ForwardFrom
+            Assert.IsInstanceOf(typeof(UserInfo), forwardFrom);
+
+            //check MessageInfo.ForwardFrom.field
+            Assert.AreEqual(id, 0);
+            Assert.IsNull(firstName);
+            Assert.IsNull(lastName);
+            Assert.IsNull(userName);
+            Assert.IsNull(languageCode);
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardDateUnix"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToMigrateFromForwardDateUnix()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromForwardDateUnix()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.ForwardDate
+            var forwardDateUnix = sendMessage.Result.ForwardDateUnix;
+            var forwardDateString = sendMessage.Result.ForwardDateUnix.ToString();
+            
+            Console.WriteLine("TestAppealToMigrateFromForwardDateUnix():"
+                              + "\n sendMessage.Result.ForwardDateUnix: " + forwardDateUnix
+                              + "\n sendMessage.Result.ForwardDateUnix.ToString(): " + forwardDateString);
+
+            //check instance MessageInfo.ForwardDate
+            Assert.IsInstanceOf(typeof(int), forwardDateUnix);
+
+            //check value MessageInfo.ForwardDate
+            Assert.AreEqual(forwardDateUnix, 0);
+            Assert.AreEqual(forwardDateString, "0");
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardDate"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToMigrateFromForwardDate()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromForwardDate()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.ForwardDate
+            var forwardDate = sendMessage.Result.ForwardDate;
+
+            var forwardDateYear = sendMessage.Result.ForwardDate.Year;
+            var forwardDateMonth = sendMessage.Result.ForwardDate.Month;
+            var forwardDateDay = sendMessage.Result.ForwardDate.Day;
+
+            Console.WriteLine("TestAppealToMigrateFromForwardDate():"
+                              + "\n sendMessage.Result.ForwardDate: " + forwardDate
+                              + "\n sendMessage.Result.ForwardDate.Year: " + forwardDateYear
+                              + "\n sendMessage.Result.ForwardDate.Month: " + forwardDateMonth
+                              + "\n sendMessage.Result.ForwardDate.Day: " + forwardDateDay);
+
+            //check instance MessageInfo.ForwardDate
+            Assert.IsInstanceOf(typeof(DateTime), forwardDate);
+
+            //check value MessageInfo.ForwardDate
+            Assert.AreEqual(forwardDate, DateTime.MinValue);
+            Assert.AreEqual(forwardDateYear, 0001);
+            Assert.AreEqual(forwardDateMonth, 01);
+            Assert.AreEqual(forwardDateDay, 01);
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ReplyToMessage"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToMigrateFromReplyToMessage()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromReplyToMessage()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.ReplyToMessage
+            var message = sendMessage.Result.ReplyToMessage;
+
+            // field MessageInfo.PinnedMessage.field
+            var messageId = sendMessage.Result.ReplyToMessage.MessageId;
+            var from = sendMessage.Result.ReplyToMessage.From;
+            var date = sendMessage.Result.ReplyToMessage.Date;
+            var chat = sendMessage.Result.ReplyToMessage.Chat;
+            var forwardFrom = sendMessage.Result.ReplyToMessage.ForwardFrom;
+            //todo forward_from_chat
+            var forwardFromMessageId = sendMessage.Result.ReplyToMessage.ForwardFromMessageId;
+            var forwardDate = sendMessage.Result.ReplyToMessage.ForwardDate;
+            var replyToMessage = sendMessage.Result.ReplyToMessage.ReplyToMessage;
+            var editDate = sendMessage.Result.ReplyToMessage.EditDate;
+            var text = sendMessage.Result.ReplyToMessage.Text;
+            //todo entities
+            var audio = sendMessage.Result.ReplyToMessage.Audio;
+            var document = sendMessage.Result.ReplyToMessage.Document;
+            //todo game
+            var photo = sendMessage.Result.ReplyToMessage.Photo;
+            var sticker = sendMessage.Result.ReplyToMessage.Sticker;
+            var video = sendMessage.Result.ReplyToMessage.Video;
+            //todo Voice
+            //todo VideoNote
+            //todo NewChatMembers;
+            var caption = sendMessage.Result.ReplyToMessage.Caption;
+            var contact = sendMessage.Result.ReplyToMessage.Contact;
+            var location = sendMessage.Result.ReplyToMessage.Location;
+            //todo Venue
+            var newChatMember = sendMessage.Result.ReplyToMessage.NewChatMember;
+            var leftChatMember = sendMessage.Result.ReplyToMessage.LeftChatMember;
+            var newChatTitle = sendMessage.Result.ReplyToMessage.NewChatTitle;
+            var newChatPhoto = sendMessage.Result.ReplyToMessage.NewChatPhoto;
+            var deleteChatPhoto = sendMessage.Result.ReplyToMessage.DeleteChatPhoto;
+            var groupChatCreated = sendMessage.Result.ReplyToMessage.GroupChatCreated;
+            var superGroupChatCreated = sendMessage.Result.ReplyToMessage.SuperGroupChatCreated;
+            var channelChatCreated = sendMessage.Result.ReplyToMessage.ChannelChatCreated;
+            var migrateToChatId = sendMessage.Result.ReplyToMessage.MigrateToChatId;
+            var migrateFromChatId = sendMessage.Result.ReplyToMessage.MigrateFromChatId;
+            var pinnedMessage = sendMessage.Result.ReplyToMessage.PinnedMessage;
+            //todo Invoice
+            //todo SuceffulPayment
+
+            Console.WriteLine("TestAppealToMigrateFromReplyToMessage():"
+                              + "\n sendMessage.Result.ReplyToMessage: " + message
+                              + "\n sendMessage.Result.ReplyToMessage.MessageId: " + messageId
+                              + "\n sendMessage.Result.ReplyToMessage.From: " + from
+                              + "\n sendMessage.Result.ReplyToMessage.Date: " + date
+                              + "\n sendMessage.Result.ReplyToMessage.Chat: " + chat
+                              + "\n sendMessage.Result.ReplyToMessage.ForwardFrom: " + forwardFrom
+                              + "\n sendMessage.Result.ReplyToMessage.ForwardFromMessageId: " + forwardFromMessageId
+                              + "\n sendMessage.Result.ReplyToMessage.ReplyToMessage: " + replyToMessage
+                              + "\n sendMessage.Result.ReplyToMessage.EditDate: " + editDate
+                              + "\n sendMessage.Result.ReplyToMessage.Text: " + text
+                              + "\n sendMessage.Result.ReplyToMessage.Audio: " + audio
+                              + "\n sendMessage.Result.ReplyToMessage.Document: " + document
+                              + "\n sendMessage.Result.ReplyToMessage.Photo: " + photo
+                              + "\n sendMessage.Result.ReplyToMessage.Sticker " + sticker
+                              + "\n sendMessage.Result.ReplyToMessage.Video: " + video
+                              + "\n sendMessage.Result.ReplyToMessage.Caption: " + caption
+                              + "\n sendMessage.Result.ReplyToMessage.Contact: " + contact
+                              + "\n sendMessage.Result.ReplyToMessage.Location: " + location
+                              + "\n sendMessage.Result.ReplyToMessage.NewChatMember: " + newChatMember
+                              + "\n sendMessage.Result.ReplyToMessage.LeftChatMember: " + leftChatMember
+                              + "\n sendMessage.Result.ReplyToMessage.NewChatTitle: " + newChatTitle
+                              + "\n sendMessage.Result.ReplyToMessage.NewChatPhoto: " + newChatPhoto
+                              + "\n sendMessage.Result.ReplyToMessage.DeleteChatPhoto: " + deleteChatPhoto
+                              + "\n sendMessage.Result.ReplyToMessage.GroupChatCreated: " + groupChatCreated
+                              + "\n sendMessage.Result.ReplyToMessage.SuperGroupChatCreated: " + superGroupChatCreated
+                              + "\n sendMessage.Result.ReplyToMessage.ChannelChatCreated: " + channelChatCreated
+                              + "\n sendMessage.Result.ReplyToMessage.MigrateToChatId: " + migrateToChatId
+                              + "\n sendMessage.Result.ReplyToMessage.MigrateFromChatId: " + migrateFromChatId
+                              + "\n sendMessage.Result.ReplyToMessage.PinnedMessage: " + pinnedMessage);
+
+            //check instance MessageInfo.PinnedMesage
+            Assert.IsInstanceOf(typeof(MessageInfo), message);
+
+            //check MessageInfo.PinnedMesage.field
+            Assert.AreEqual(messageId, 0);
+            Assert.IsNull(from);
+            Assert.AreEqual(date, DateTime.MinValue);
+            Assert.IsNull(chat);
+            Assert.IsNull(forwardFrom);
+            Assert.AreEqual(forwardFromMessageId, 0);
+            Assert.AreEqual(forwardDate, DateTime.MinValue);
+            Assert.IsNull(replyToMessage);
+            Assert.AreEqual(editDate, DateTime.MinValue);
+            Assert.IsNull(text);
+            Assert.IsNull(audio);
+            Assert.IsNull(document);
+            Assert.IsNull(photo);
+            Assert.IsNull(sticker);
+            Assert.IsNull(video);
+            Assert.IsNull(caption);
+            Assert.IsNull(contact);
+            Assert.IsNull(location);
+            Assert.IsNull(newChatMember);
+            Assert.IsNull(leftChatMember);
+            Assert.IsNull(leftChatMember);
+            Assert.IsNull(newChatTitle);
+            Assert.IsNull(newChatPhoto);
+            Assert.IsFalse(deleteChatPhoto);
+            Assert.IsFalse(groupChatCreated);
+            Assert.IsFalse(superGroupChatCreated);
+            Assert.IsFalse(channelChatCreated);
+            Assert.AreEqual(migrateToChatId, 0);
+            Assert.AreEqual(migrateFromChatId, 0);
+            Assert.IsNull(pinnedMessage);
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.EditDateUnix"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToMigrateFromEditDateUnix()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromEditDateUnix()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.ForwardDate
+            var editDateUnix = sendMessage.Result.EditDateUnix;
+            var editDateString = sendMessage.Result.EditDateUnix.ToString();
+
+            Console.WriteLine("TestAppealToMigrateFromEditDateUnix():"
+                              + "\n sendMessage.Result.EditDateUnix: " + editDateUnix
+                              + "\n sendMessage.Result.EditDateUnix.ToString(): " + editDateString);
+
+            //check instance MessageInfo.ForwardDate
+            Assert.IsInstanceOf(typeof(int), editDateUnix);
+
+            //check value MessageInfo.ForwardDate
+            Assert.AreEqual(editDateUnix, 0);
+            Assert.AreEqual(editDateString, "0");
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.EditDate"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToMigrateFromEditDate()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromEditDate()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.ForwardDate
+            var editDate = sendMessage.Result.EditDate;
+
+            var editDateYear = sendMessage.Result.EditDate.Year;
+            var editDateMonth = sendMessage.Result.EditDate.Month;
+            var editDateDay = sendMessage.Result.EditDate.Day;
+
+            Console.WriteLine("TestAppealToMigrateFromEditDate():"
+                              + "\n sendMessage.Result.EditDate: " + editDate
+                              + "\n sendMessage.Result.EditDate.Year: " + editDateYear
+                              + "\n endMessage.Result.EditDate.Month: " +  editDateMonth
+                              + "\n sendMessage.Result.EditDate.Day: " +  editDateDay);
+
+            //check instance MessageInfo.ForwardDate
+            Assert.IsInstanceOf(typeof(DateTime), editDate);
+
+            //check value MessageInfo.ForwardDate
+            Assert.AreEqual(editDate, DateTime.MinValue);
+            Assert.AreEqual(editDateYear, 0001);
+            Assert.AreEqual(editDateMonth, 01);
+            Assert.AreEqual(editDateDay, 01);
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Text"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyText()
+        {
+            const float latitude = 37.0000114f;
+            const float longitude = 37.0000076f;
+
+            SendMessageResult sendLocation = mTelegramBot.SendLocation(mChatId, latitude, longitude);
+
+            // typeof MessageInfo.Text
+            var text = sendLocation.Result.Text;
+
+            var textToUpper = sendLocation.Result.Text.ToUpper();
+
+            Console.WriteLine("TestAppealToTheEmptyText():"
+                              + "\n sendLocation.Result.Text: " + text
+                              + "\n sendLocation.Result.Text.ToUpper(): " + textToUpper);
+
+            //check instance MessageInfo.Text
+            Assert.IsInstanceOf(typeof(string), text);
+
+            //check value MessageInfo.Text
+            Assert.IsEmpty(text);
+            Assert.IsEmpty(textToUpper);
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardFromMessageId"/>
         /// </summary>
         [Test]
@@ -383,7 +682,6 @@ namespace NetTelebot.Tests
             Assert.AreEqual(longitude, 0);
         }
 
-
         /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatMember"/>
         /// </summary>
@@ -423,7 +721,7 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
-        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatMember"/>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.LeftChatMember"/>
         /// </summary>
         [Test]
         public void TestAppealToTheEmptyLeftChatMember()
@@ -754,12 +1052,10 @@ namespace NetTelebot.Tests
             Assert.IsNull(pinnedMessage);
         }
 
-
         [Test]
         public void TestAppealToTheNonEmptyContact()
         {
             //todo create test after add method SendContact
-        }
-        
+        }        
     }
 }

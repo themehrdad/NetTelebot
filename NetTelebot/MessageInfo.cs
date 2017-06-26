@@ -41,8 +41,10 @@ namespace NetTelebot
             DateUnix = jsonObject["date"].Value<int>();
             Date = DateUnix.ToDateTime();
             Chat = ParseChat(jsonObject["chat"].Value<JObject>());
-            if (jsonObject["forward_from"] != null)
-                ForwardFrom = new UserInfo(jsonObject["forward_from"].Value<JObject>());
+
+            ForwardFrom = jsonObject["forward_from"] != null
+                ? new UserInfo(jsonObject["forward_from"].Value<JObject>())
+                : new UserInfo();
 
             if (jsonObject["forward_from_message_id"] != null)
                 ForwardFromMessageId = jsonObject["forward_from_message_id"].Value<int>();
@@ -52,15 +54,20 @@ namespace NetTelebot
                 ForwardDateUnix = jsonObject["forward_date"].Value<int>();
                 ForwardDate = ForwardDateUnix.ToDateTime();
             }
-            if(jsonObject["reply_to_message"]!=null)
-                ReplyToMessage = new MessageInfo(jsonObject["reply_to_message"].Value<JObject>());
+            
+            ReplyToMessage = jsonObject["reply_to_message"] != null
+                ? new MessageInfo(jsonObject["reply_to_message"].Value<JObject>())
+                : new MessageInfo();
+
             if (jsonObject["edit_date"] != null)
             {
                 EditDateUnix = jsonObject["edit_date"].Value<int>();
                 EditDate = EditDateUnix.ToDateTime();
             }
-            if (jsonObject["text"] != null)
-                Text = jsonObject["text"].Value<string>();
+
+            Text = jsonObject["text"] != null 
+                ? jsonObject["text"].Value<string>() 
+                : string.Empty;
 
             Audio = jsonObject["audio"] != null 
                 ? new AudioInfo(jsonObject["audio"].Value<JObject>()) 
@@ -173,57 +180,67 @@ namespace NetTelebot
         public IConversationSource Chat { get; private set; }
 
         /// <summary>
-        /// Optional. For forwarded messages, sender of the original message
+        /// Optional. For forwarded messages, sender of the original message.
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyForwardFrom()</remarks>
         public UserInfo ForwardFrom { get; private set; }
 
         //todo add (IConversationSource) ForwardFromChat
 
         /// <summary>
-        /// Optional. For forwarded channel posts, identifier of the original message in the channel
+        /// Optional. For forwarded channel posts, identifier of the original message in the channel 
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyForwardFromMessageId()</remarks>
         public int ForwardFromMessageId { get; private set; }
 
         /// <summary>
         /// Optional. For forwarded messages, date the original message was sent in Unix time
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromForwardDateUnix()</remarks>
         public int ForwardDateUnix { get; private set; }
 
         /// <summary>
         /// Optional. For forwarded messages, date the original message was sent in Unix time
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromForwardDate()</remarks>
         public DateTime ForwardDate { get; private set; }
 
         /// <summary>
         /// Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromReplyToMessage()</remarks>
         public MessageInfo ReplyToMessage { get; private set; }
 
         /// <summary>
         /// Optional. Date the message was last edited in Unix time
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromEditDateUnix()</remarks>
         public int EditDateUnix { get; private set; }
 
         /// <summary>
-        /// Optional. Date the message was last edited
+        /// Optional. Date the message was last edited 
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromEditDate()</remarks>
         public DateTime EditDate { get; private set; }
 
         /// <summary>
-        /// Optional. For text messages, the actual UTF-8 text of the message
+        /// Optional. For text messages, the actual UTF-8 text of the message 
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyText()</remarks>
         public string Text { get; private set; }
 
         //todo add (MessageEntity) Entities
 
         /// <summary>
-        /// Optional. Message is an audio file, information about the file
+        /// Optional. Message is an audio file, information about the file TestAppealToTheEmptyAudio()
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyAudio()</remarks>
         public AudioInfo Audio { get; private set; }
 
         /// <summary>
-        /// Optional. Message is a general file, information about the file
+        /// Optional. Message is a general file, information about the file TestAppealToTheEmptyDocument()
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyDocument()</remarks>
         public DocumentInfo Document { get; private set; }
 
         //todo add (Game) Game
@@ -231,16 +248,19 @@ namespace NetTelebot
         /// <summary>
         /// Optional. Message is a photo, available sizes of the photo
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyPhoto()</remarks>
         public PhotoSizeInfo[] Photo { get; private set; }
 
         /// <summary>
-        /// Optional. Message is a sticker, information about the sticker
+        /// Optional. Message is a sticker, information about the sticker 
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptySticker()</remarks>
         public StickerInfo Sticker { get; private set; }
 
         /// <summary>
-        /// Optional. Message is a video, information about the video
+        /// Optional. Message is a video, information about the video 
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyVideo()</remarks>
         public VideoInfo Video { get; private set; }
 
         //todo add (Voice) Voice
@@ -249,83 +269,97 @@ namespace NetTelebot
 
 
         /// <summary>
-        /// Optional. Caption for the document, photo or video, 0-200 characters
+        /// Optional. Caption for the document, photo or video, 0-200 characters 
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyCaption()</remarks>
         public string Caption { get; private set; }
 
         /// <summary>
-        /// Optional. Message is a shared contact, information about the contact
+        /// Optional. Message is a shared contact, information about the contact TestAppealToTheEmptyContact()
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyContact()</remarks>
         public ContactInfo Contact { get; private set; }
 
         /// <summary>
-        /// Optional. Message is a shared location, information about the location
+        /// Optional. Message is a shared location, information about the location 
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyLocation()</remarks>
         public LocationInfo Location { get; private set; }
 
         //todo add (Venue) Venue
 
         /// <summary>
-        /// Optional. A new member was added to the group, information about them (this member may be bot itself)
+        /// Optional. A new member was added to the group, information about them (this member may be bot itself)  
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyNewChatMember()</remarks>
         public UserInfo NewChatMember { get; private set; }
 
         /// <summary>
-        /// Optional. A member was removed from the group, information about them (this member may be bot itself)
+        /// Optional. A member was removed from the group, information about them (this member may be bot itself) 
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyLeftChatMember()</remarks>
         public UserInfo LeftChatMember { get; private set; }
 
         /// <summary>
-        /// Optional. A group title was changed to this value
+        /// Optional. A group title was changed to this value 
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyNewChatTitle()</remarks>
         public string NewChatTitle { get; private set; }
 
         /// <summary>
-        /// Optional. A group photo was change to this value
+        /// Optional. A group photo was change to this value TestAppealToTheEmptyNewChatPhoto()
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyNewChatPhoto()</remarks>
         public PhotoSizeInfo[] NewChatPhoto { get; private set; }
 
         /// <summary>
-        /// Optional. Informs that the group photo was deleted
+        /// Optional. Informs that the group photo was deleted TestAppealToTheEmptyDeleteChatPhoto()
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyDeleteChatPhoto()</remarks>
         public bool DeleteChatPhoto { get; private set; }
 
         /// <summary>
-        /// Optional. Informs that the group has been created
+        /// Optional. Informs that the group has been created TestAppealToTheGroupChatCreated()
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheGroupChatCreated()</remarks>
         public bool GroupChatCreated { get; private set; }
 
         /// <summary>
         /// Optional. Service message: the supergroup has been created. This field can‘t be received in a message coming through updates,
         /// because bot can’t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very
-        /// first message in a directly created supergroup.
+        /// first message in a directly created supergroup. 
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToSuperGroupChatCreated()</remarks>
         public bool SuperGroupChatCreated { get; private set;  }
 
         /// <summary>
         /// Optional. Service message: the channel has been created. This field can‘t be received in a message coming through updates, 
         /// because bot can’t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very
-        /// first message in a channel.
+        /// first message in a channel. TestAppealToChannelChatCreated()
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToChannelChatCreated()</remarks>
         public bool ChannelChatCreated { get; private set; }
 
         /// <summary>
         /// Optional. The group has been migrated to a supergroup with the specified identifier. This number may be greater than 32 bits and some
         /// programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision
-        /// float type are safe for storing this identifier.
+        /// float type are safe for storing this identifier. 
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateToChatId()</remarks>
         public int MigrateToChatId { get; private set;  }
 
         /// <summary>
         /// Optional. The supergroup has been migrated from a group with the specified identifier. This number may be greater than 32 bits and some
         /// programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision
-        /// float type are safe for storing this identifier.
+        /// float type are safe for storing this identifier. 
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromChatId()</remarks>
         public int MigrateFromChatId { get; private set;  }
 
         /// <summary>
         /// Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
         /// </summary>
+        /// <remarks> Test NullReferenceException: NetTelebot.Tests.estAppealToMigrateFromPinnedMessage()</remarks>
         public MessageInfo PinnedMessage { get; private set; }
 
         //todo (Invoice) Invoice
