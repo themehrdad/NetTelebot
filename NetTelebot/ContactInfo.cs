@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 namespace NetTelebot
 {
     /// <summary>
-    /// This object represents a phone contact.
+    /// This object represents a phone contact. See <see href="https://core.telegram.org/bots/api#contact">API</see>
     /// </summary>
     public class ContactInfo
     {
@@ -32,6 +32,7 @@ namespace NetTelebot
         {
             PhoneNumber = jsonObject["phone_number"].Value<string>();
             FirstName = jsonObject["first_name"].Value<string>();
+
             if (jsonObject["last_name"] != null)
                 LastName = jsonObject["last_name"].Value<string>();
             if (jsonObject["user_id"] != null)

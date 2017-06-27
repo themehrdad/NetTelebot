@@ -55,7 +55,11 @@ namespace NetTelebot
         private Timer updateTimer;
         private int lastUpdateId;
 
+        /// <summary>
+        /// Occurs when [get updates error].
+        /// </summary>
         public event UnhandledExceptionEventHandler GetUpdatesError;
+        
         /// <summary>
         /// Whenever a message is sent to your bot, this event will be raised.
         /// </summary>
@@ -116,6 +120,7 @@ namespace NetTelebot
         private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit)
         {
             RestRequest request = new RestRequest(string.Format(getUpdatesUri, Token), Method.GET);
+
             if (offset.HasValue)
                 request.AddQueryParameter("offset", offset.Value.ToString());
             if (limit.HasValue)
@@ -129,14 +134,17 @@ namespace NetTelebot
             throw new Exception(response.StatusDescription);
         }
 
+        /// <summary>
+        /// Called when [get updates error].
+        /// </summary>
+        /// <param name="exception">The exception.</param>
         protected virtual void OnGetUpdatesError(Exception exception)
         {
             GetUpdatesError?.Invoke(this, new UnhandledExceptionEventArgs(exception, false));
         }
 
         /// <summary>
-        /// Use this method to send text messages. On success, the sent Message is returned.
-        /// API <link href="https://core.telegram.org/bots/api#sendmessage"></link>
+        /// Use this method to send text messages. See <see href="https://core.telegram.org/bots/api#sendmessage">API</see>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="text">Text of the message to be sent</param>
@@ -145,7 +153,7 @@ namespace NetTelebot
         /// <param name="disableNotification">Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
-        /// <returns></returns>
+        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         public SendMessageResult SendMessage(int chatId, string text,
             ParseMode? parseMode = null,
             bool? disableWebPagePreview = null,
@@ -176,14 +184,13 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// Use this method to forward messages of any kind. On success, the sent Message is returned.
-        /// API <link href="https://core.telegram.org/bots/api#forwardmessage"></link>
+        /// Use this method to forward messages of any kind. See <see href="https://core.telegram.org/bots/api#forwardmessage">API</see>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="fromChatId">Unique identifier for the chat where the original message was sent — User or GroupChat id</param>
         /// <param name="messageId">Unique message identifier</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
-        /// <returns></returns>
+        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         public SendMessageResult ForwardMessage(int chatId, int fromChatId, 
             int messageId,
             bool? disableNotification = null)
@@ -204,8 +211,7 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// Use this method to send photos. On success, the sent Message is returned.
-        /// API <link href="https://core.telegram.org/bots/api#sendphoto"></link>
+        /// Use this method to send photos. See <see href="https://core.telegram.org/bots/api#sendphoto">API</see>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="photo">Photo to send. You can either pass a file_id as String to resend a photo that is already on the Telegram servers (using ExistingFile class),
@@ -214,7 +220,7 @@ namespace NetTelebot
         /// <param name="disableNotification">Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
-        /// <returns></returns>
+        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         public SendMessageResult SendPhoto(int chatId, IFile photo,
             string caption = null,
             bool? disableNotification = null,
@@ -254,8 +260,8 @@ namespace NetTelebot
         /// <summary>
         /// Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message.
         /// For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Document). 
-        /// On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
-        /// API <link href="https://core.telegram.org/bots/api#sendaudio"></link>
+        /// Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
+        /// See <see href="https://core.telegram.org/bots/api#sendaudio">API</see>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="audio">Audio file to send. You can either pass a file_id as String to resend an audio that is already on the Telegram servers,
@@ -267,8 +273,7 @@ namespace NetTelebot
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
-
-        /// <returns></returns>
+        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         public SendMessageResult SendAudio(int chatId, IFile audio,
             string caption = null,
             int? duration = null,
@@ -318,7 +323,7 @@ namespace NetTelebot
 
         /// <summary>
         /// Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
-        /// API <link href="https://core.telegram.org/bots/api#senddocument"></link>
+        /// See <see href="https://core.telegram.org/bots/api#senddocument">API</see>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="document">File to send. You can either pass a file_id as String to resend a file that is already on the Telegram servers,
@@ -327,7 +332,7 @@ namespace NetTelebot
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
-        /// <returns></returns>
+        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         public SendMessageResult SendDocument(int chatId, IFile document,
             string caption = null,
             bool? disableNotification = null,
@@ -367,8 +372,7 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// Use this method to send .webp stickers. On success, the sent Message is returned.
-        /// API <link href="https://core.telegram.org/bots/api#sendsticker"></link>
+        /// Use this method to send .webp stickers. See <see href="https://core.telegram.org/bots/api#sendsticker">API</see>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="sticker">Sticker to send. You can either pass a file_id as String to resend a sticker that is 
@@ -376,7 +380,7 @@ namespace NetTelebot
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
-        /// <returns></returns>
+        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         public SendMessageResult SendSticker(int chatId, IFile sticker,
             bool? disableNotification = null,
             int? replyToMessageId = null,
@@ -386,6 +390,7 @@ namespace NetTelebot
             request.AddParameter("chat_id", chatId);
 
             ExistingFile file = sticker as ExistingFile;
+
             if (file != null)
             {
                 ExistingFile existingFile = file;
@@ -414,8 +419,7 @@ namespace NetTelebot
 
         /// <summary>
         /// Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). 
-        /// On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
-        /// API <link href="https://core.telegram.org/bots/api#sendvideo"></link>
+        /// Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future. See <see href="https://core.telegram.org/bots/api#sendvideo"></see>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="video">Video to send. You can either pass a file_id as String to resend a video that is already on the Telegram servers,
@@ -427,7 +431,7 @@ namespace NetTelebot
         /// <param name="disableNotification">Optional. Sends the message silently. Users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
-        /// <returns></returns>
+        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         public SendMessageResult SendVideo(int chatId, IFile video,
             int? duration = null,
             int? width = null,
@@ -441,6 +445,7 @@ namespace NetTelebot
             request.AddParameter("chat_id", chatId);
 
             ExistingFile file = video as ExistingFile;
+
             if (file != null)
             {
                 ExistingFile existingFile = file;
@@ -479,8 +484,8 @@ namespace NetTelebot
         //todo sendVideonote (https://core.telegram.org/bots/api#sendvideonote)
 
         /// <summary>
-        /// Use this method to send point on the map. On success, the sent Message is returned.
-        /// API <link href="https://core.telegram.org/bots/api#sendlocation"></link>
+        /// Use this method to send point on the map.
+        /// See <see href="https://core.telegram.org/bots/api#sendlocation">API</see>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="latitude">Latitude of location</param>
@@ -488,7 +493,7 @@ namespace NetTelebot
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
-        /// <returns></returns>
+        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         public SendMessageResult SendLocation(int chatId, float latitude, float longitude,
             bool? disableNotification = null,
             int? replyToMessageId = null,
@@ -515,13 +520,52 @@ namespace NetTelebot
         }
 
         //todo sendVenue (https://core.telegram.org/bots/api#sendvenue)
-        //todo sendContact (https://core.telegram.org/bots/api#sendcontact)
+
+        /// <summary>
+        /// Use this method to send phone contacts. See <see href="https://core.telegram.org/bots/api#sendcontact">API</see>
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
+        /// <param name="phoneNumber">Contact's phone number</param>
+        /// <param name="firstName">Contact's first name</param>
+        /// <param name="lastName">Contact's last name</param>
+        /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard,
+        /// instructions to remove keyboard or to force a reply from the user.</param>
+        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
+        public SendMessageResult SendContact(int chatId, string phoneNumber, string firstName,
+            string lastName = null,
+            bool? disableNotification = null,
+            int? replyToMessageId = null,
+            IReplyMarkup replyMarkup = null)
+        {
+            RestRequest request = new RestRequest(string.Format(sendContactUri, Token), Method.POST);
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("phone_number", phoneNumber);
+            request.AddParameter("first_name", firstName);
+
+            if (!string.IsNullOrEmpty(lastName))
+                request.AddParameter("last_name", lastName);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+            if (replyToMessageId != null)
+                request.AddParameter("reply_to_message_id", replyToMessageId);
+            if (replyMarkup != null)
+                request.AddParameter("reply_markup", replyMarkup.GetJson());
+
+            IRestResponse response = restClient.Execute(request);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                return new SendMessageResult(response.Content);
+
+            throw new Exception(response.StatusDescription);
+        }
 
         //todo add new chat action to <param name="action">
         /// <summary>
         /// Use this method when you need to tell the user that something is happening on the bot's side. 
         /// The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
-        /// API <link href="https://core.telegram.org/bots/api#sendchataction"></link>
+        /// See <see href="https://core.telegram.org/bots/api#sendchataction">API</see>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
         /// <param name="action">Type of action to broadcast. Choose one, depending on what the user is about to receive: 
@@ -538,13 +582,13 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
-        /// API <link href="https://core.telegram.org/bots/api#getuserprofilephotos"></link>
+        /// Use this method to get a list of profile pictures for a user.
+        /// See <see href="https://core.telegram.org/bots/api#getuserprofilephotos">API</see>
         /// </summary>
         /// <param name="userId">Unique identifier of the target user</param>
         /// <param name="offset">Sequential number of the first photo to be returned. By default, all photos are returned.</param>
         /// <param name="limit">Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.</param>
-        /// <returns></returns>
+        /// <returns><see cref="UserProfilePhotosInfo"/></returns>
         public GetUserProfilePhotosResult GetUserProfilePhotos(int userId, int? offset = null, byte? limit = null)
         {
             RestRequest request = new RestRequest(string.Format(getUserProfilePhotosUri, Token), Method.POST);
@@ -557,6 +601,7 @@ namespace NetTelebot
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new GetUserProfilePhotosResult(response.Content);
+
             throw new Exception(response.StatusDescription);
         }
 
@@ -599,6 +644,7 @@ namespace NetTelebot
         {
             GetUpdatesResult updates = null;
             bool getUpdatesSuccess = false;
+
             try
             {
                 updates = lastUpdateId == 0 ? GetUpdates() : GetUpdates(lastUpdateId + 1);
@@ -608,15 +654,22 @@ namespace NetTelebot
             {
                 OnGetUpdatesError(ex);
             }
+
             if (getUpdatesSuccess)
+
                 if (updates.Ok && updates.Result != null && updates.Result.Any())
                 {
                     lastUpdateId = updates.Result.Last().UpdateId;
                     OnUpdatesReceived(updates.Result);
                 }
+
             updateTimer.Change(CheckInterval, Timeout.Infinite);
         }
 
+        /// <summary>
+        /// Called when [updates received].
+        /// </summary>
+        /// <param name="updates">The updates.</param>
         protected virtual void OnUpdatesReceived(UpdateInfo[] updates)
         {
             TelegramUpdateEventArgs args = new TelegramUpdateEventArgs(updates);
