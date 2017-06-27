@@ -128,17 +128,15 @@ namespace NetTelebot
                 ? PhotoSizeInfo.ParseArray(jsonObject["new_chat_photo"].Value<JArray>())
                 : new PhotoSizeInfo[0];
 
+            DeleteChatPhoto = jsonObject["delete_chat_photo"] != null
+                ? DeleteChatPhoto = true
+                : DeleteChatPhoto = false;
+
+            GroupChatCreated = jsonObject["group_chat_created"] != null
+                ? GroupChatCreated = true
+                : GroupChatCreated = false;
+
             //todo For boolean value do this way
-            //DeleteChatPhoto = jsonObject["delete_chat_photo"] != null
-            //    ? DeleteChatPhoto = true
-            //    : DeleteChatPhoto = false;
-
-            if (jsonObject["delete_chat_photo"] != null)
-                DeleteChatPhoto = true;
-
-            if (jsonObject["group_chat_created"] != null)
-                GroupChatCreated = true;
-
             if (jsonObject["supergroup_chat_created"] != null)
                 SuperGroupChatCreated = true;
 

@@ -14,13 +14,31 @@ namespace NetTelebot.Tests
         {
             //check MessageInfo witout field [delete_chat_photo]
             dynamic DeleteChatPhoto = MinMessageInfoField();
-            MessageInfo messageInfo = new MessageInfo(DeleteChatPhoto);
+            var messageInfo = new MessageInfo(DeleteChatPhoto);
             Assert.False(messageInfo.DeleteChatPhoto);
             
             //check MessageInfo with field [delete_chat_photo: true] 
             DeleteChatPhoto.delete_chat_photo = true;
-            MessageInfo messageInfoTrue = new MessageInfo(DeleteChatPhoto);
-            Assert.True(messageInfoTrue.DeleteChatPhoto);
+            messageInfo = new MessageInfo(DeleteChatPhoto);
+            Assert.True(messageInfo.DeleteChatPhoto);
+
+            Console.WriteLine(DeleteChatPhoto);
+        }
+
+        [Test]
+        public void GroupChatCreatedParserTest()
+        {
+            //check MessageInfo witout field [group_chat_created]
+            dynamic GroupChatCreated = MinMessageInfoField();
+            var messageInfo = new MessageInfo(GroupChatCreated);
+            Assert.False(messageInfo.GroupChatCreated);
+
+            //check MessageInfo with field [group_chat_created: true] 
+            GroupChatCreated.group_chat_created = true;
+            messageInfo = new MessageInfo(GroupChatCreated);
+            Assert.True(messageInfo.GroupChatCreated);
+
+            Console.WriteLine(GroupChatCreated);
         }
 
         /// <summary>
