@@ -3,9 +3,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 
-//#if DEBUG
-//[assembly: InternalsVisibleTo("NetTelebot.Tests.MessageInfoParserTest")]
-//#endif
+#if DEBUG
+[assembly: InternalsVisibleTo("NetTelebot.Tests")]
+#endif
 
 namespace NetTelebot
 {
@@ -50,6 +50,7 @@ namespace NetTelebot
 
             DateUnix = jsonObject["date"].Value<int>();
             Date = DateUnix.ToDateTime();
+
             Chat = ParseChat(jsonObject["chat"].Value<JObject>());
 
             ForwardFrom = jsonObject["forward_from"] != null
