@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace NetTelebot
 {
     /// <summary>
-    /// This object represents an audio file (voice note).
+    /// This object represents an audio file (voice note). See <see href="https://core.telegram.org/bots/api#audio">API</see>
     /// </summary>
     public class AudioInfo
     {

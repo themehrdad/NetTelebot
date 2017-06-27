@@ -33,7 +33,7 @@ namespace NetTelebot.Tests
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.ForwardFrom
-            var forwardFrom = sendMessage.Result.ForwardFrom;
+            UserInfo forwardFrom = sendMessage.Result.ForwardFrom;
 
             // field MessageInfo.ForwardFrom
             var id = sendMessage.Result.ForwardFrom.Id;
@@ -96,7 +96,7 @@ namespace NetTelebot.Tests
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.ForwardDate
-            var forwardDate = sendMessage.Result.ForwardDate;
+            DateTime forwardDate = sendMessage.Result.ForwardDate;
 
             var forwardDateYear = sendMessage.Result.ForwardDate.Year;
             var forwardDateMonth = sendMessage.Result.ForwardDate.Month;
@@ -128,36 +128,44 @@ namespace NetTelebot.Tests
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.ReplyToMessage
-            var message = sendMessage.Result.ReplyToMessage;
+            MessageInfo message = sendMessage.Result.ReplyToMessage;
 
             // field MessageInfo.PinnedMessage.field
             var messageId = sendMessage.Result.ReplyToMessage.MessageId;
-            var from = sendMessage.Result.ReplyToMessage.From;
-            var date = sendMessage.Result.ReplyToMessage.Date;
-            var chat = sendMessage.Result.ReplyToMessage.Chat;
-            var forwardFrom = sendMessage.Result.ReplyToMessage.ForwardFrom;
+            UserInfo from = sendMessage.Result.ReplyToMessage.From;
+            DateTime date = sendMessage.Result.ReplyToMessage.Date;
+            IConversationSource chat = sendMessage.Result.ReplyToMessage.Chat;
+            UserInfo forwardFrom = sendMessage.Result.ReplyToMessage.ForwardFrom;
+            
             //todo forward_from_chat
             var forwardFromMessageId = sendMessage.Result.ReplyToMessage.ForwardFromMessageId;
-            var forwardDate = sendMessage.Result.ReplyToMessage.ForwardDate;
-            var replyToMessage = sendMessage.Result.ReplyToMessage.ReplyToMessage;
-            var editDate = sendMessage.Result.ReplyToMessage.EditDate;
+            DateTime forwardDate = sendMessage.Result.ReplyToMessage.ForwardDate;
+            MessageInfo replyToMessage = sendMessage.Result.ReplyToMessage.ReplyToMessage;
+            DateTime editDate = sendMessage.Result.ReplyToMessage.EditDate;
             var text = sendMessage.Result.ReplyToMessage.Text;
+            
             //todo entities
-            var audio = sendMessage.Result.ReplyToMessage.Audio;
-            var document = sendMessage.Result.ReplyToMessage.Document;
+            AudioInfo audio = sendMessage.Result.ReplyToMessage.Audio;
+            DocumentInfo document = sendMessage.Result.ReplyToMessage.Document;
+            
             //todo game
+
             var photo = sendMessage.Result.ReplyToMessage.Photo;
-            var sticker = sendMessage.Result.ReplyToMessage.Sticker;
-            var video = sendMessage.Result.ReplyToMessage.Video;
+            StickerInfo sticker = sendMessage.Result.ReplyToMessage.Sticker;
+            VideoInfo video = sendMessage.Result.ReplyToMessage.Video;
+            
             //todo Voice
             //todo VideoNote
             //todo NewChatMembers;
+
             var caption = sendMessage.Result.ReplyToMessage.Caption;
-            var contact = sendMessage.Result.ReplyToMessage.Contact;
-            var location = sendMessage.Result.ReplyToMessage.Location;
+            ContactInfo contact = sendMessage.Result.ReplyToMessage.Contact;
+            LocationInfo location = sendMessage.Result.ReplyToMessage.Location;
+
             //todo Venue
-            var newChatMember = sendMessage.Result.ReplyToMessage.NewChatMember;
-            var leftChatMember = sendMessage.Result.ReplyToMessage.LeftChatMember;
+
+            UserInfo newChatMember = sendMessage.Result.ReplyToMessage.NewChatMember;
+            UserInfo leftChatMember = sendMessage.Result.ReplyToMessage.LeftChatMember;
             var newChatTitle = sendMessage.Result.ReplyToMessage.NewChatTitle;
             var newChatPhoto = sendMessage.Result.ReplyToMessage.NewChatPhoto;
             var deleteChatPhoto = sendMessage.Result.ReplyToMessage.DeleteChatPhoto;
@@ -166,7 +174,7 @@ namespace NetTelebot.Tests
             var channelChatCreated = sendMessage.Result.ReplyToMessage.ChannelChatCreated;
             var migrateToChatId = sendMessage.Result.ReplyToMessage.MigrateToChatId;
             var migrateFromChatId = sendMessage.Result.ReplyToMessage.MigrateFromChatId;
-            var pinnedMessage = sendMessage.Result.ReplyToMessage.PinnedMessage;
+            MessageInfo pinnedMessage = sendMessage.Result.ReplyToMessage.PinnedMessage;
             //todo Invoice
             //todo SuceffulPayment
 
@@ -272,7 +280,7 @@ namespace NetTelebot.Tests
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.ForwardDate
-            var editDate = sendMessage.Result.EditDate;
+            DateTime editDate = sendMessage.Result.EditDate;
 
             var editDateYear = sendMessage.Result.EditDate.Year;
             var editDateMonth = sendMessage.Result.EditDate.Month;
@@ -353,7 +361,7 @@ namespace NetTelebot.Tests
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.Audio
-            var audio = sendMessage.Result.Audio;
+            AudioInfo audio = sendMessage.Result.Audio;
 
             // field MessageInfo.Audio
             var fileId = sendMessage.Result.Audio.FileId;
@@ -394,7 +402,7 @@ namespace NetTelebot.Tests
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.Document
-            var document = sendMessage.Result.Document;
+            DocumentInfo document = sendMessage.Result.Document;
 
             // field MessageInfo.Document
             var fileId = sendMessage.Result.Document.FileId;
@@ -403,7 +411,7 @@ namespace NetTelebot.Tests
             var fileSize = sendMessage.Result.Document.FileSize;
 
             // typeof MessageInfo.Document.Thumb
-            var thumb = sendMessage.Result.Document.Thumb;
+            PhotoSizeInfo thumb = sendMessage.Result.Document.Thumb;
 
             // field MessageInfo.Document.Thumb
             var thumbWidth = sendMessage.Result.Document.Thumb.Width;
@@ -477,7 +485,7 @@ namespace NetTelebot.Tests
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.Sticker
-            var sticker = sendMessage.Result.Sticker;
+            StickerInfo sticker = sendMessage.Result.Sticker;
 
             // field MessageInfo.Sticker
             var fileId = sendMessage.Result.Sticker.FileId;
@@ -539,7 +547,7 @@ namespace NetTelebot.Tests
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.Video
-            var video = sendMessage.Result.Video;
+            VideoInfo video = sendMessage.Result.Video;
 
             // field MessageInfo.Video
             var fileId = sendMessage.Result.Video.FileId;
@@ -628,7 +636,7 @@ namespace NetTelebot.Tests
             Assert.True(sendMessage.Ok);
             
             // typeof MessageInfo.Contact
-            var contact = sendMessage.Result.Contact;
+            ContactInfo contact = sendMessage.Result.Contact;
 
             // field MessageInfo.Contact
             var userId = sendMessage.Result.Contact.UserId;
@@ -663,7 +671,7 @@ namespace NetTelebot.Tests
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.Contact
-            var location = sendMessage.Result.Location;
+            LocationInfo location = sendMessage.Result.Location;
 
             // field MessageInfo.Contact
             var latitude = sendMessage.Result.Location.Latitude;
@@ -692,7 +700,7 @@ namespace NetTelebot.Tests
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.NewChatMember
-            var newChatMember = sendMessage.Result.NewChatMember;
+            UserInfo newChatMember = sendMessage.Result.NewChatMember;
 
             // field MessageInfo.NewChatMember
             var id = sendMessage.Result.NewChatMember.Id;
@@ -730,7 +738,7 @@ namespace NetTelebot.Tests
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.LeftChatMember
-            var leftChatMember = sendMessage.Result.LeftChatMember;
+            UserInfo leftChatMember = sendMessage.Result.LeftChatMember;
 
             // field MessageInfo.LeftChatMember
             var id = sendMessage.Result.LeftChatMember.Id;
@@ -943,36 +951,46 @@ namespace NetTelebot.Tests
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.PinnedMessage
-            var message = sendMessage.Result.PinnedMessage;
+            MessageInfo message = sendMessage.Result.PinnedMessage;
 
             // field MessageInfo.PinnedMessage.field
             var messageId = sendMessage.Result.PinnedMessage.MessageId;
-            var from = sendMessage.Result.PinnedMessage.From;
-            var date = sendMessage.Result.PinnedMessage.Date;
-            var chat = sendMessage.Result.PinnedMessage.Chat;
-            var forwardFrom = sendMessage.Result.PinnedMessage.ForwardFrom;
+            UserInfo from = sendMessage.Result.PinnedMessage.From;
+            DateTime date = sendMessage.Result.PinnedMessage.Date;
+            IConversationSource chat = sendMessage.Result.PinnedMessage.Chat;
+            UserInfo forwardFrom = sendMessage.Result.PinnedMessage.ForwardFrom;
+            
             //todo forward_from_chat
+
             var forwardFromMessageId = sendMessage.Result.PinnedMessage.ForwardFromMessageId;
-            var forwardDate = sendMessage.Result.PinnedMessage.ForwardDate;
-            var replyToMessage = sendMessage.Result.PinnedMessage.ReplyToMessage;
-            var editDate = sendMessage.Result.PinnedMessage.EditDate;
+            DateTime forwardDate = sendMessage.Result.PinnedMessage.ForwardDate;
+            MessageInfo replyToMessage = sendMessage.Result.PinnedMessage.ReplyToMessage;
+            DateTime editDate = sendMessage.Result.PinnedMessage.EditDate;
             var text = sendMessage.Result.PinnedMessage.Text;
+            
             //todo entities
-            var audio = sendMessage.Result.PinnedMessage.Audio;
-            var document = sendMessage.Result.PinnedMessage.Document;
+
+            AudioInfo audio = sendMessage.Result.PinnedMessage.Audio;
+            DocumentInfo document = sendMessage.Result.PinnedMessage.Document;
+            
             //todo game
+
             var photo = sendMessage.Result.PinnedMessage.Photo;
-            var sticker = sendMessage.Result.PinnedMessage.Sticker;
-            var video = sendMessage.Result.PinnedMessage.Video;
+            StickerInfo sticker = sendMessage.Result.PinnedMessage.Sticker;
+            VideoInfo video = sendMessage.Result.PinnedMessage.Video;
+            
             //todo Voice
             //todo VideoNote
             //todo NewChatMembers;
+
             var caption = sendMessage.Result.PinnedMessage.Caption;
-            var contact = sendMessage.Result.PinnedMessage.Contact;
-            var location = sendMessage.Result.PinnedMessage.Location;
+            ContactInfo contact = sendMessage.Result.PinnedMessage.Contact;
+            LocationInfo location = sendMessage.Result.PinnedMessage.Location;
+            
             //todo Venue
-            var newChatMember = sendMessage.Result.PinnedMessage.NewChatMember;
-            var leftChatMember = sendMessage.Result.PinnedMessage.LeftChatMember;
+
+            UserInfo newChatMember = sendMessage.Result.PinnedMessage.NewChatMember;
+            UserInfo leftChatMember = sendMessage.Result.PinnedMessage.LeftChatMember;
             var newChatTitle = sendMessage.Result.PinnedMessage.NewChatTitle;
             var newChatPhoto = sendMessage.Result.PinnedMessage.NewChatPhoto;
             var deleteChatPhoto = sendMessage.Result.PinnedMessage.DeleteChatPhoto;
@@ -981,7 +999,8 @@ namespace NetTelebot.Tests
             var channelChatCreated = sendMessage.Result.PinnedMessage.ChannelChatCreated;
             var migrateToChatId = sendMessage.Result.PinnedMessage.MigrateToChatId;
             var migrateFromChatId = sendMessage.Result.PinnedMessage.MigrateFromChatId;
-            var pinnedMessage = sendMessage.Result.PinnedMessage.PinnedMessage;
+            MessageInfo pinnedMessage = sendMessage.Result.PinnedMessage.PinnedMessage;
+            
             //todo Invoice
             //todo SuceffulPayment
 
@@ -1050,12 +1069,6 @@ namespace NetTelebot.Tests
             Assert.AreEqual(migrateToChatId, 0);
             Assert.AreEqual(migrateFromChatId, 0);
             Assert.IsNull(pinnedMessage);
-        }
-
-        [Test]
-        public void TestAppealToTheNonEmptyContact()
-        {
-            //todo create test after add method SendContact
-        }        
+        }  
     }
 }
