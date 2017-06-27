@@ -1,6 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+
+//#if DEBUG
+//[assembly: InternalsVisibleTo("NetTelebot.Tests.MessageInfoParserTest")]
+//#endif
 
 namespace NetTelebot
 {
@@ -8,6 +13,7 @@ namespace NetTelebot
     /// This object represents a message. 
     /// API <link href="https://core.telegram.org/bots/api#message"></link>
     /// </summary>
+
     public class MessageInfo
     {
         internal MessageInfo()
