@@ -5,7 +5,6 @@ using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests
 {
-    
     [TestFixture]
     internal class MessageInfoParserTest
     {
@@ -14,7 +13,7 @@ namespace NetTelebot.Tests
         {
             //check MessageInfo witout field [delete_chat_photo]
             dynamic DeleteChatPhoto = MinMessageInfoField();
-            var messageInfo = new MessageInfo(DeleteChatPhoto);
+            MessageInfo messageInfo = new MessageInfo(DeleteChatPhoto);
             Assert.False(messageInfo.DeleteChatPhoto);
             
             //check MessageInfo with field [delete_chat_photo: true] 
@@ -26,11 +25,11 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void GroupChatCreatedParserTest()
+        public static void GroupChatCreatedParserTest()
         {
             //check MessageInfo witout field [group_chat_created]
             dynamic GroupChatCreated = MinMessageInfoField();
-            var messageInfo = new MessageInfo(GroupChatCreated);
+            MessageInfo messageInfo = new MessageInfo(GroupChatCreated);
             Assert.False(messageInfo.GroupChatCreated);
 
             //check MessageInfo with field [group_chat_created: true] 
