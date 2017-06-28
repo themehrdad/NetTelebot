@@ -134,7 +134,6 @@ namespace NetTelebot
             if (jsonObject["group_chat_created"] != null)
                 GroupChatCreated = true;
 
-            //todo For boolean value do this way
             if (jsonObject["supergroup_chat_created"] != null)
                 SuperGroupChatCreated = true;
 
