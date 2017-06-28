@@ -9,7 +9,7 @@ namespace NetTelebot.Tests
     internal class MessageInfoParserTest
     {
         [Test]
-        public void DeleteChatPhotoParserTest()
+        public static void DeleteChatPhotoParserTest()
         {
             //check MessageInfo witout field [delete_chat_photo]
             dynamic DeleteChatPhoto = MinMessageInfoField();
@@ -25,7 +25,7 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void GroupChatCreatedParserTest()
+        public static void GroupChatCreatedParserTest()
         {
             //check MessageInfo witout field [group_chat_created]
             dynamic GroupChatCreated = MinMessageInfoField();
@@ -41,7 +41,7 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void SuperGroupChatCreatedParserTest()
+        public static void SuperGroupChatCreatedParserTest()
         {
             //check MessageInfo witout field [group_chat_created]
             dynamic SuperGroupChatCreated = MinMessageInfoField();
@@ -57,7 +57,7 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void ChannelChatCreatedParserTest()
+        public static void ChannelChatCreatedParserTest()
         {
             //check MessageInfo witout field [group_chat_created]
             dynamic ChannelChatCreated = MinMessageInfoField();
@@ -73,7 +73,7 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void MigrateToChatIdParserTest()
+        public static void MigrateToChatIdParserTest()
         {
             //check MessageInfo witout field [group_chat_created]
             dynamic MigrateToChatId = MinMessageInfoField();
@@ -89,7 +89,7 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void MigrateFromChatIdParserTest()
+        public static void MigrateFromChatIdParserTest()
         {
             //check MessageInfo witout field [group_chat_created]
             dynamic MigrateFromChatId = MinMessageInfoField();
@@ -105,7 +105,7 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void MinMessageInfoTest()
+        public static void MinMessageInfoTest()
         {
             dynamic minMessageInfoField = MinMessageInfoField();
 
@@ -149,10 +149,12 @@ namespace NetTelebot.Tests
             return messageInfo;
         }
 
+        /*
         private static int ConvertToUnixTimestamp()
         {
             return (int)(new DateTime(1980, 1, 1) - new DateTime(1970, 1, 1)).TotalSeconds;
         }
+        */
     }
     
 }
