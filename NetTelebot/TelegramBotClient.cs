@@ -643,7 +643,7 @@ namespace NetTelebot
         private void updateTimer_Callback(object state)
         {
             GetUpdatesResult updates = null;
-            bool getUpdatesSuccess = false;
+            var getUpdatesSuccess = false;
 
             try
             {

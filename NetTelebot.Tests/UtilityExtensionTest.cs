@@ -7,7 +7,7 @@ namespace NetTelebot.Tests
     public class UtilityExtensionTest
     {
         [Test]
-        public void ToDateTimeTest()
+        public static void ToDateTimeTest()
         {
             DateTime timeZoneOffset = new DateTime(1970, 1, 1, 0, 0, 0);
 
