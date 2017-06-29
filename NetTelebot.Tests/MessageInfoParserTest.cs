@@ -113,8 +113,7 @@ namespace NetTelebot.Tests
             
             Assert.AreEqual(messageInfo.MessageId, -1147483648);
             Assert.AreEqual(messageInfo.DateUnix, 0);
-            //todo check ToDateTime extension
-            //Assert.AreEqual(messageInfo.Date, new DateTime(1970, 1, 1));
+            Assert.AreEqual(messageInfo.Date, new DateTime(1970, 1, 1).ToLocalTime());
             Assert.AreEqual(messageInfo.Chat.Id, 1049413668);
 
             Console.WriteLine(minMessageInfoField);
@@ -148,13 +147,5 @@ namespace NetTelebot.Tests
 
             return messageInfo;
         }
-
-        /*
-        private static int ConvertToUnixTimestamp()
-        {
-            return (int)(new DateTime(1980, 1, 1) - new DateTime(1970, 1, 1)).TotalSeconds;
-        }
-        */
     }
-    
 }
