@@ -1,3 +1,5 @@
+<img src="Images/Logo/logo-100.png"  alt="logo" title="NetTelebot" align="right" height="60" />
+
 # NetTelebot
 
 Telegram bot API implementation on .NET framework
@@ -51,6 +53,10 @@ Look at the [Wiki](https://github.com/themehrdad/NetTelebot/wiki)
 ## To Do
 
 Look at the [project page](https://github.com/vertigra/NetTelebot-2.0/projects/1)
+
+## Thanks
+
+The logo is provided by the site [icons8.com](https://icons8.com/)
 
 ## License
 
