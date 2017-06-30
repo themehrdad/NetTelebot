@@ -1,4 +1,6 @@
-# NetTelebot ![](Images/Logo/logo-50.png")
+<img src="Images/Logo/logo-100.png"  alt="logo" title="NetTelebot" align="right" height="55" />
+
+# NetTelebot
 
 Telegram bot API implementation on .NET framework
 
