@@ -1,4 +1,4 @@
-<img src="Images/Logo/logo-100.png"  alt="logo" title="NetTelebot" align="right" height="55" />
+<img src="Images/Logo/logo-100.png"  alt="logo" title="NetTelebot" align="right" height="60" />
 
 # NetTelebot
 
