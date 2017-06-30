@@ -1,4 +1,6 @@
-# NetTelebot <img src="Images/Logo/logo-50.png" align="right" />
+<img src="Images/Logo/logo-100.png"  alt="logo" title="NetTelebot" align="right" height="60" />
+
+# NetTelebot
 
 Telegram bot API implementation on .NET framework
 
