@@ -1,4 +1,5 @@
 ﻿using System;
+using NetTelebot.Tests.TypeTestObject;
 using NUnit.Framework;
 using Newtonsoft.Json.Linq;
 
@@ -12,7 +13,7 @@ namespace NetTelebot.Tests
         public static void DeleteChatPhotoParserTest()
         {
             //check MessageInfo witout field [delete_chat_photo]
-            dynamic DeleteChatPhoto = MinMessageInfoField();
+            dynamic DeleteChatPhoto = MinimumMessageInfoField();
             MessageInfo messageInfo = new MessageInfo(DeleteChatPhoto);
             Assert.False(messageInfo.DeleteChatPhoto);
             
@@ -28,7 +29,7 @@ namespace NetTelebot.Tests
         public static void GroupChatCreatedParserTest()
         {
             //check MessageInfo witout field [group_chat_created]
-            dynamic GroupChatCreated = MinMessageInfoField();
+            dynamic GroupChatCreated = MinimumMessageInfoField();
             MessageInfo messageInfo = new MessageInfo(GroupChatCreated);
             Assert.False(messageInfo.GroupChatCreated);
 
@@ -44,7 +45,7 @@ namespace NetTelebot.Tests
         public static void SuperGroupChatCreatedParserTest()
         {
             //check MessageInfo witout field [group_chat_created]
-            dynamic SuperGroupChatCreated = MinMessageInfoField();
+            dynamic SuperGroupChatCreated = MinimumMessageInfoField();
             MessageInfo messageInfo = new MessageInfo(SuperGroupChatCreated);
             Assert.False(messageInfo.SuperGroupChatCreated);
 
@@ -60,7 +61,7 @@ namespace NetTelebot.Tests
         public static void ChannelChatCreatedParserTest()
         {
             //check MessageInfo witout field [group_chat_created]
-            dynamic ChannelChatCreated = MinMessageInfoField();
+            dynamic ChannelChatCreated = MinimumMessageInfoField();
             MessageInfo messageInfo = new MessageInfo(ChannelChatCreated);
             Assert.False(messageInfo.ChannelChatCreated);
 
@@ -76,7 +77,7 @@ namespace NetTelebot.Tests
         public static void MigrateToChatIdParserTest()
         {
             //check MessageInfo witout field [group_chat_created]
-            dynamic MigrateToChatId = MinMessageInfoField();
+            dynamic MigrateToChatId = MinimumMessageInfoField();
             MessageInfo messageInfo = new MessageInfo(MigrateToChatId);
             Assert.AreEqual(messageInfo.MigrateToChatId, 0);
 
@@ -92,7 +93,7 @@ namespace NetTelebot.Tests
         public static void MigrateFromChatIdParserTest()
         {
             //check MessageInfo witout field [group_chat_created]
-            dynamic MigrateFromChatId = MinMessageInfoField();
+            dynamic MigrateFromChatId = MinimumMessageInfoField();
             MessageInfo messageInfo = new MessageInfo(MigrateFromChatId);
             Assert.AreEqual(messageInfo.MigrateFromChatId, 0);
 
@@ -107,7 +108,7 @@ namespace NetTelebot.Tests
         [Test]
         public static void MinMessageInfoTest()
         {
-            dynamic minMessageInfoField = MinMessageInfoField();
+            dynamic minMessageInfoField = MinimumMessageInfoField();
 
             MessageInfo messageInfo = new MessageInfo(minMessageInfoField);
             
@@ -119,11 +120,49 @@ namespace NetTelebot.Tests
             Console.WriteLine(minMessageInfoField);
         }
 
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Sticker"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoStickerTest()
+        {
+            //todo Do similar tests for all fields MessageInfo
+            const string fileId = "100";
+            const int width = 100;
+            const int height = 100;
+            const string emoji = "emoji";
+            const int fileSize = 10;
+
+            dynamic MessageInfoSticker = MinimumMessageInfoField();
+
+            MessageInfoSticker.sticker = StickerInfoObject.GetObject(fileId, width, height, 
+                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), emoji, fileSize);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoSticker);
+
+            //test MessageInfo.Sticker
+            Assert.AreEqual(messageInfo.Sticker.FileId, fileId);
+            Assert.AreEqual(messageInfo.Sticker.Width, width);
+            Assert.AreEqual(messageInfo.Sticker.Height, height);
+            Assert.AreEqual(messageInfo.Sticker.Emoji, emoji);
+            Assert.AreEqual(messageInfo.Sticker.FileSize, fileSize);
+            
+            //test MessageInfo.Sticker.Thumb
+            Assert.AreEqual(messageInfo.Sticker.Thumb.FileId, fileId);
+            Assert.AreEqual(messageInfo.Sticker.Thumb.Width, width);
+            Assert.AreEqual(messageInfo.Sticker.Thumb.Height, height);
+            Assert.AreEqual(messageInfo.Sticker.Thumb.FileSize, fileSize);
+
+            Console.WriteLine(MessageInfoSticker);
+
+        }
+
         /// <summary>
         /// Minimum required object fields <see cref="MessageInfo.Chat"/>
         /// </summary>
         /// <returns>Minimum required object fields <see cref="UserInfo"/></returns>
-        private static JObject MinChatField()
+        private static JObject MinimumChatField()
         {
             dynamic chat = new JObject();
 
@@ -137,13 +176,13 @@ namespace NetTelebot.Tests
         /// Minimum required object fields <see cref="MessageInfo"/>
         /// </summary>
         /// <returns>Minimum required object fields <see cref="MessageInfo"/></returns>
-        private static JObject MinMessageInfoField()
+        private static JObject MinimumMessageInfoField()
         {
             dynamic messageInfo = new JObject();
 
             messageInfo.message_id = -1147483648;
             messageInfo.date = 0;
-            messageInfo.chat = MinChatField();
+            messageInfo.chat = MinimumChatField();
 
             return messageInfo;
         }

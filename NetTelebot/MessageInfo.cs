@@ -264,6 +264,7 @@ namespace NetTelebot
         /// Optional. Message is a sticker, information about the sticker 
         /// </summary>
         /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptySticker() </remarks>
+        /// <remarks> Parser test: NetTelebot.Tests.MessageInfoParserTest.MessageInfoStickerTest() </remarks>
         public StickerInfo Sticker { get; private set; }
 
         /// <summary>
