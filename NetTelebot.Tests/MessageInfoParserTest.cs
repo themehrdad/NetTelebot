@@ -9,6 +9,37 @@ namespace NetTelebot.Tests
     [TestFixture]
     internal class MessageInfoParserTest
     {
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Audio"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoAudioTest()
+        {
+            const string fileId = "100";
+            const int duration = 100;
+            const string performer = "performerTest";
+            const string title = "AudioInfo";
+            const string mimeType = "mimeTypeTest";
+            const int fileSize = 10;
+
+            dynamic MessageInfoAudio = MinimumMessageInfoField();
+
+            MessageInfoAudio.audio = AudioInfoObject.GetObject(fileId, duration, performer,
+                title, mimeType, fileSize);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoAudio);
+
+            //test MessageInfo.Audio
+            Assert.AreEqual(messageInfo.Audio.FileId, fileId);
+            Assert.AreEqual(messageInfo.Audio.Duration, duration);
+            Assert.AreEqual(messageInfo.Audio.Performer, performer);
+            Assert.AreEqual(messageInfo.Audio.Title, title);
+            Assert.AreEqual(messageInfo.Audio.MimeType, mimeType);
+            Assert.AreEqual(messageInfo.Audio.FileSize, fileSize);
+
+            Console.WriteLine(MessageInfoAudio);
+        }
+
         [Test]
         public static void DeleteChatPhotoParserTest()
         {
