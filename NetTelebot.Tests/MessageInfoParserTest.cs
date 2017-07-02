@@ -43,6 +43,33 @@ namespace NetTelebot.Tests
             Console.WriteLine(MessageInfoAudio);
         }
 
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Contact"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoContactTest()
+        {
+            const string phoneNumber = "8080808080";
+            const string firstName = "Test Name";
+            const string lastName = "Test Last Name";
+            const string userId = "0545006540";
+            
+            dynamic MessageInfoContact = mMinimumMessageInfoField;
+
+            MessageInfoContact.contact = ContactInfoObject.GetObject(phoneNumber, firstName, lastName,
+                userId);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoContact);
+
+            //test MessageInfo.Contact
+            Assert.AreEqual(messageInfo.Contact.PhoneNumber, phoneNumber);
+            Assert.AreEqual(messageInfo.Contact.FirstName, firstName);
+            Assert.AreEqual(messageInfo.Contact.LastName, lastName);
+            Assert.AreEqual(messageInfo.Contact.UserId, userId);
+            
+            Console.WriteLine(MessageInfoContact);
+        }
+
         [Test]
         public static void DeleteChatPhotoParserTest()
         {

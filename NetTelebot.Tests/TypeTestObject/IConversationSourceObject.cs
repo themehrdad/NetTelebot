@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    public class IConversationSourceObject
+    internal class IConversationSourceObject
     {
         protected IConversationSourceObject()
         {
