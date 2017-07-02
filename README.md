@@ -46,13 +46,19 @@ private void botClient_UpdatesReceived(object sender, TelegramUpdateEventArgs e)
 }
 ```
 
-## Documentation
+See more examples in the project [wiki](https://github.com/themehrdad/NetTelebot/wiki)
 
-Look at the [Wiki](https://github.com/themehrdad/NetTelebot/wiki)
+## Plans
 
-## To Do
+On the nearest release (1.09)
+* More tests (coverage > 80%)
+* Support chat types (and type chat “private”, “group”, “supergroup” or “channel”). 
+* Support for sending messages to @channelusername
 
-Look at the [project page](https://github.com/vertigra/NetTelebot-2.0/projects/1)
+On the project
+* Full support API Telegrams
+
+More details [here](https://github.com/vertigra/NetTelebot-2.0/projects/1)
 
 ## Thanks
 
