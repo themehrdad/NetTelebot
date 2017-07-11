@@ -66,4 +66,4 @@ The logo is provided by the site [icons8.com](https://icons8.com/)
 
 ## License
 
-Usage is provided under the [MIT License](http://http//opensource.org/licenses/mit-license.php). See LICENSE for the full details
+Usage is provided under the [MIT License](http://http//opensource.org/licenses/mit-license.php).
