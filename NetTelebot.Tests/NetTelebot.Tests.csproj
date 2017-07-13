@@ -75,6 +75,7 @@
     <Compile Include="TypeTestObject\MessageInfoObject.cs" />
     <Compile Include="TypeTestObject\PhotoSizeInfoObject.cs" />
     <Compile Include="TypeTestObject\StickerInfoObject.cs" />
+    <Compile Include="TypeTestObject\VideoInfoObject.cs" />
     <Compile Include="UtilityExtensionTest.cs" />
     <Compile Include="Utils\TelegramBot.cs" />
     <Compile Include="Utils\WindowsCredential.cs" />

@@ -18,7 +18,7 @@ namespace NetTelebot.Tests.TypeTestObject
         /// To simulate <see cref="PhotoSizeInfo"/> use <see cref="PhotoSizeInfoObject"/>. Json field [thumb].</param>
         /// <param name="emoji">Optional. Emoji associated with the sticker.</param>
         /// <param name="fileSize">Optional. File size.</param>
-        /// <returns></returns>
+        /// <returns><see cref="StickerInfo"/></returns>
         internal static JObject GetObject(string fileId, int width, int height, JObject photoSizeInfo, string emoji, int fileSize)
         {
             dynamic stickerInfo = new JObject();

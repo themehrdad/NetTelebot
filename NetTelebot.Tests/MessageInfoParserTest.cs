@@ -218,5 +218,42 @@ namespace NetTelebot.Tests
             Console.WriteLine(MessageInfoSticker);
 
         }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Video"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoVideoTest()
+        {
+            const string fileId = "100";
+            const int width = 1000;
+            const int height = 10000;
+            const int duration = 1000;
+            const string mimeType = "mimeType";
+            const int fileSize = 100;
+
+            dynamic MessageInfoVideo = mMinimumMessageInfoField;
+
+            MessageInfoVideo.video = VideoInfoObject.GetObject(fileId, width, height, duration,
+                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), mimeType, fileSize);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoVideo);
+
+            //test MessageInfo.Video
+            Assert.AreEqual(messageInfo.Video.FileId, fileId);
+            Assert.AreEqual(messageInfo.Video.Width, width);
+            Assert.AreEqual(messageInfo.Video.Height, height);
+            Assert.AreEqual(messageInfo.Video.Duration, duration);
+            Assert.AreEqual(messageInfo.Video.MimeType, mimeType);
+            Assert.AreEqual(messageInfo.Video.FileSize, fileSize);
+
+            //test MessageInfo.Video.Thumb
+            Assert.AreEqual(messageInfo.Video.Thumb.FileId, fileId);
+            Assert.AreEqual(messageInfo.Video.Thumb.Width, width);
+            Assert.AreEqual(messageInfo.Video.Thumb.Height, height);
+            Assert.AreEqual(messageInfo.Video.Thumb.FileSize, fileSize);
+
+            Console.WriteLine(MessageInfoVideo);
+        }
     }
 }
