@@ -561,7 +561,6 @@ namespace NetTelebot
             throw new Exception(response.StatusDescription);
         }
 
-        //todo add new chat action to <param name="action">
         /// <summary>
         /// Use this method when you need to tell the user that something is happening on the bot's side. 
         /// The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).

@@ -35,7 +35,7 @@ namespace NetTelebot
             if (jsonObject["performer"] != null)
                 Performer = jsonObject["performer"].Value<string>();
             if (jsonObject["title"] != null)
-                Performer = jsonObject["title"].Value<string>();
+                Title = jsonObject["title"].Value<string>();
             if (jsonObject["mime_type"] != null)
                 MimeType = jsonObject["mime_type"].Value<string>();
             if (jsonObject["file_size"] != null)
