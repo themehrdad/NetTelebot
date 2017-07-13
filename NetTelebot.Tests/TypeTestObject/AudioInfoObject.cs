@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    public class AudioInfoObject
+    internal class AudioInfoObject
     {
         protected AudioInfoObject()
         {
@@ -18,7 +18,7 @@ namespace NetTelebot.Tests.TypeTestObject
         /// <param name="title">Optional. Title of the audio as defined by sender or by audio tags</param>
         /// <param name="mimeTypes">Optional. MIME type of the file as defined by sender</param>
         /// <param name="fileSize">Optional. File size</param>
-        /// <returns></returns>
+        /// <returns><see cref="AudioInfo"/></returns>
         internal static JObject GetObject(string fileId, int duration, string performer,
             string title, string mimeTypes, int fileSize)
         {

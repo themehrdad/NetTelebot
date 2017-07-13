@@ -72,6 +72,7 @@
     <Compile Include="TypeTestObject\AudioInfoObject.cs" />
     <Compile Include="TypeTestObject\ContactInfoObject.cs" />
     <Compile Include="TypeTestObject\IConversationSourceObject.cs" />
+    <Compile Include="TypeTestObject\LocationInfoObject.cs" />
     <Compile Include="TypeTestObject\MessageInfoObject.cs" />
     <Compile Include="TypeTestObject\PhotoSizeInfoObject.cs" />
     <Compile Include="TypeTestObject\StickerInfoObject.cs" />

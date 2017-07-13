@@ -9,8 +9,9 @@ namespace NetTelebot.Tests
     [TestFixture]
     internal class MessageInfoParserTest
     {
-        private static readonly JObject mMinimumMessageInfoField = MessageInfoObject.GetMinimumMessageInfoField(-1147483648, 0,
-            1049413668, "Test");
+        private static readonly JObject mMinimumMessageInfoField =
+            MessageInfoObject.GetMinimumMessageInfoField(-1147483648, 0,
+                1049413668, "Test");
 
         /// <summary>
         /// Test for <see cref="MessageInfo.Audio"/> parse field.
@@ -53,7 +54,7 @@ namespace NetTelebot.Tests
             const string firstName = "Test Name";
             const string lastName = "Test Last Name";
             const string userId = "0545006540";
-            
+
             dynamic MessageInfoContact = mMinimumMessageInfoField;
 
             MessageInfoContact.contact = ContactInfoObject.GetObject(phoneNumber, firstName, lastName,
@@ -66,7 +67,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(messageInfo.Contact.FirstName, firstName);
             Assert.AreEqual(messageInfo.Contact.LastName, lastName);
             Assert.AreEqual(messageInfo.Contact.UserId, userId);
-            
+
             Console.WriteLine(MessageInfoContact);
         }
 
@@ -77,7 +78,7 @@ namespace NetTelebot.Tests
             dynamic DeleteChatPhoto = mMinimumMessageInfoField;
             MessageInfo messageInfo = new MessageInfo(DeleteChatPhoto);
             Assert.False(messageInfo.DeleteChatPhoto);
-            
+
             //check MessageInfo with field [delete_chat_photo: true] 
             DeleteChatPhoto.delete_chat_photo = true;
             messageInfo = new MessageInfo(DeleteChatPhoto);
@@ -172,7 +173,7 @@ namespace NetTelebot.Tests
             dynamic minMessageInfoField = mMinimumMessageInfoField;
 
             MessageInfo messageInfo = new MessageInfo(minMessageInfoField);
-            
+
             Assert.AreEqual(messageInfo.MessageId, -1147483648);
             Assert.AreEqual(messageInfo.DateUnix, 0);
             Assert.AreEqual(messageInfo.Date, new DateTime(1970, 1, 1).ToLocalTime());
@@ -197,7 +198,7 @@ namespace NetTelebot.Tests
 
             dynamic MessageInfoSticker = mMinimumMessageInfoField;
 
-            MessageInfoSticker.sticker = StickerInfoObject.GetObject(fileId, width, height, 
+            MessageInfoSticker.sticker = StickerInfoObject.GetObject(fileId, width, height,
                 PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), emoji, fileSize);
 
             MessageInfo messageInfo = new MessageInfo(MessageInfoSticker);
@@ -208,7 +209,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(messageInfo.Sticker.Height, height);
             Assert.AreEqual(messageInfo.Sticker.Emoji, emoji);
             Assert.AreEqual(messageInfo.Sticker.FileSize, fileSize);
-            
+
             //test MessageInfo.Sticker.Thumb
             Assert.AreEqual(messageInfo.Sticker.Thumb.FileId, fileId);
             Assert.AreEqual(messageInfo.Sticker.Thumb.Width, width);
@@ -254,6 +255,25 @@ namespace NetTelebot.Tests
             Assert.AreEqual(messageInfo.Video.Thumb.FileSize, fileSize);
 
             Console.WriteLine(MessageInfoVideo);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Location"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoLocationTest()
+        {
+            const float longitude = 1000;
+            const float latitude = 1000;
+
+            dynamic MessageInfoLocation = mMinimumMessageInfoField;
+
+            MessageInfoLocation.location = LocationInfoObject.GetObject(longitude, latitude);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoLocation);
+
+            Assert.AreEqual(messageInfo.Location.Latitude, latitude);
+            Assert.AreEqual(messageInfo.Location.Longitude, longitude);
         }
     }
 }
