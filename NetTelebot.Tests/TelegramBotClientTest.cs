@@ -34,7 +34,7 @@ namespace NetTelebot.Tests
         /// Test the send and return location point (SendMessageResult.Result.Location.Latitude, SendMessageResult.Result.Location.Longitude)
         /// </summary>
         [Test]
-        //[Ignore("Ignore because failed on app veyour")]
+        [Ignore("Ignore because failed on app veyour")]
         public void TestSendSendLocation()
         {
             //todo check with real point
