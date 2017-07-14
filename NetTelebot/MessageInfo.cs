@@ -82,9 +82,11 @@ namespace NetTelebot
                 ? jsonObject["text"].Value<string>() 
                 : string.Empty;
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoAudioTest()
             Audio = jsonObject["audio"] != null 
                 ? new AudioInfo(jsonObject["audio"].Value<JObject>()) 
                 : new AudioInfo();
+
 
             Document = jsonObject["document"] != null
                 ? new DocumentInfo(jsonObject["document"].Value<JObject>())

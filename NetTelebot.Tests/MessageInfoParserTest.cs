@@ -95,30 +95,40 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
-        /// Test for <see cref="MessageInfo.Contact"/> parse field.
+        /// Test for <see cref="MessageInfo.Document"/> parse field.
         /// </summary>
         [Test]
-        public static void MessageInfoContactTest()
+        public static void MessageInfoDocumentTest()
         {
-            const string phoneNumber = "8080808080";
-            const string firstName = "Test Name";
-            const string lastName = "Test Last Name";
-            const string userId = "0545006540";
+            const string fileId = "100";
+            const string mimeType = "mimeTypeTest";
+            const string fileName = "testFleName";
+            const int fileSize = 10;
 
-            dynamic MessageInfoContact = mMinimumMessageInfoField;
+            const int width = 100;
+            const int height = 100;
 
-            MessageInfoContact.contact = ContactInfoObject.GetObject(phoneNumber, firstName, lastName,
-                userId);
+            dynamic MessageInfoDocument = mMinimumMessageInfoField;
 
-            MessageInfo messageInfo = new MessageInfo(MessageInfoContact);
+            MessageInfoDocument.document = DocumentInfoObject.GetObject(fileId,
+                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), fileName, mimeType, fileSize);
 
-            //test MessageInfo.Contact
-            Assert.AreEqual(messageInfo.Contact.PhoneNumber, phoneNumber);
-            Assert.AreEqual(messageInfo.Contact.FirstName, firstName);
-            Assert.AreEqual(messageInfo.Contact.LastName, lastName);
-            Assert.AreEqual(messageInfo.Contact.UserId, userId);
+            MessageInfo messageInfo = new MessageInfo(MessageInfoDocument);
 
-            Console.WriteLine(MessageInfoContact);
+            //test MessageInfo.Document
+            Assert.AreEqual(messageInfo.Document.FileId, fileId);
+            Assert.AreEqual(messageInfo.Document.FileName, fileName);
+            Assert.AreEqual(messageInfo.Document.MimeType, mimeType);
+            Assert.AreEqual(messageInfo.Document.FileSize, fileSize);
+
+            //test MessageInfo.Document.Thumb
+            Assert.AreEqual(messageInfo.Document.Thumb.FileId, fileId);
+            Assert.AreEqual(messageInfo.Document.Thumb.Width, width);
+            Assert.AreEqual(messageInfo.Document.Thumb.Height, height);
+            Assert.AreEqual(messageInfo.Document.Thumb.FileSize, fileSize);
+
+
+            Console.WriteLine(MessageInfoDocument);
         }
 
         [Test]
@@ -305,6 +315,33 @@ namespace NetTelebot.Tests
             Assert.AreEqual(messageInfo.Video.Thumb.FileSize, fileSize);
 
             Console.WriteLine(MessageInfoVideo);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Contact"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoContactTest()
+        {
+            const string phoneNumber = "8080808080";
+            const string firstName = "Test Name";
+            const string lastName = "Test Last Name";
+            const string userId = "0545006540";
+
+            dynamic MessageInfoContact = mMinimumMessageInfoField;
+
+            MessageInfoContact.contact = ContactInfoObject.GetObject(phoneNumber, firstName, lastName,
+                userId);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoContact);
+
+            //test MessageInfo.Contact
+            Assert.AreEqual(messageInfo.Contact.PhoneNumber, phoneNumber);
+            Assert.AreEqual(messageInfo.Contact.FirstName, firstName);
+            Assert.AreEqual(messageInfo.Contact.LastName, lastName);
+            Assert.AreEqual(messageInfo.Contact.UserId, userId);
+
+            Console.WriteLine(MessageInfoContact);
         }
 
         /// <summary>
