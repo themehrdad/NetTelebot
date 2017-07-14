@@ -393,10 +393,13 @@ namespace NetTelebot.Tests
             Console.WriteLine(MessageInfoNewChatPhoto);
         }
 
+        /// <summary>
+        /// Test for <see cref="MessageInfo.DeleteChatPhoto"/> parse field.
+        /// </summary>
         [Test]
-        public static void DeleteChatPhotoParserTest()
+        public static void MessageInfoDeleteChatPhotoTest()
         {
-            //check MessageInfo witout field [delete_chat_photo]
+            //check MessageInfo without field [delete_chat_photo]
             dynamic DeleteChatPhoto = mMinimumMessageInfoField;
             MessageInfo messageInfo = new MessageInfo(DeleteChatPhoto);
             Assert.False(messageInfo.DeleteChatPhoto);
@@ -409,10 +412,13 @@ namespace NetTelebot.Tests
             Console.WriteLine(DeleteChatPhoto);
         }
 
+        /// <summary>
+        /// Test for <see cref="MessageInfo.GroupChatCreated"/> parse field.
+        /// </summary>
         [Test]
-        public static void GroupChatCreatedParserTest()
+        public static void MessageInfoGroupChatCreatedTest()
         {
-            //check MessageInfo witout field [group_chat_created]
+            //check MessageInfo without field [group_chat_created]
             dynamic GroupChatCreated = mMinimumMessageInfoField;
             MessageInfo messageInfo = new MessageInfo(GroupChatCreated);
             Assert.False(messageInfo.GroupChatCreated);
@@ -425,10 +431,13 @@ namespace NetTelebot.Tests
             Console.WriteLine(GroupChatCreated);
         }
 
+        /// <summary>
+        /// Test for <see cref="MessageInfo.SuperGroupChatCreated"/> parse field.
+        /// </summary>
         [Test]
-        public static void SuperGroupChatCreatedParserTest()
+        public static void MessageInfoSuperGroupChatCreatedTest()
         {
-            //check MessageInfo witout field [group_chat_created]
+            //check MessageInfo without field [group_chat_created]
             dynamic SuperGroupChatCreated = mMinimumMessageInfoField;
             MessageInfo messageInfo = new MessageInfo(SuperGroupChatCreated);
             Assert.False(messageInfo.SuperGroupChatCreated);
@@ -441,10 +450,13 @@ namespace NetTelebot.Tests
             Console.WriteLine(SuperGroupChatCreated);
         }
 
+        /// <summary>
+        /// Test for <see cref="MessageInfo.ChannelChatCreated"/> parse field.
+        /// </summary>
         [Test]
-        public static void ChannelChatCreatedParserTest()
+        public static void MessageInfoChannelChatCreatedTest()
         {
-            //check MessageInfo witout field [group_chat_created]
+            //check MessageInfo without field [group_chat_created]
             dynamic ChannelChatCreated = mMinimumMessageInfoField;
             MessageInfo messageInfo = new MessageInfo(ChannelChatCreated);
             Assert.False(messageInfo.ChannelChatCreated);
@@ -457,24 +469,30 @@ namespace NetTelebot.Tests
             Console.WriteLine(ChannelChatCreated);
         }
 
+        /// <summary>
+        /// Test for <see cref="MessageInfo.MigrateToChatId"/> parse field.
+        /// </summary>
         [Test]
-        public static void MigrateToChatIdParserTest()
+        public static void MessageInfoMigrateToChatIdTest()
         {
             //check MessageInfo witout field [group_chat_created]
-            dynamic MigrateToChatId = mMinimumMessageInfoField;
-            MessageInfo messageInfo = new MessageInfo(MigrateToChatId);
+            dynamic MessageInfoMigrateToChatId = mMinimumMessageInfoField;
+            MessageInfo messageInfo = new MessageInfo(MessageInfoMigrateToChatId);
             Assert.AreEqual(messageInfo.MigrateToChatId, 0);
 
             //check MessageInfo with field [group_chat_created: true] 
-            MigrateToChatId.migrate_to_chat_id = 14881488;
-            messageInfo = new MessageInfo(MigrateToChatId);
+            MessageInfoMigrateToChatId.migrate_to_chat_id = 14881488;
+            messageInfo = new MessageInfo(MessageInfoMigrateToChatId);
             Assert.AreEqual(messageInfo.MigrateToChatId, 14881488);
 
-            Console.WriteLine(MigrateToChatId);
+            Console.WriteLine(MessageInfoMigrateToChatId);
         }
 
+        /// <summary>
+        /// Test for <see cref="MessageInfo.MigrateFromChatId"/> parse field.
+        /// </summary>
         [Test]
-        public static void MigrateFromChatIdParserTest()
+        public static void MessageInfoMigrateFromChatIdTest()
         {
             //check MessageInfo witout field [group_chat_created]
             dynamic MigrateFromChatId = mMinimumMessageInfoField;
@@ -488,7 +506,7 @@ namespace NetTelebot.Tests
 
             Console.WriteLine(MigrateFromChatId);
         }
-
+        
         [Test]
         public static void MinMessageInfoTest()
         {

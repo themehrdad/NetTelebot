@@ -136,27 +136,33 @@ namespace NetTelebot
             NewChatTitle = jsonObject["new_chat_title"] != null
                 ? jsonObject["new_chat_title"].Value<string>()
                 : string.Empty;
-            
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoNewChatPhotoTest()
             NewChatPhoto = jsonObject["new_chat_photo"] != null
                 ? PhotoSizeInfo.ParseArray(jsonObject["new_chat_photo"].Value<JArray>())
                 : new PhotoSizeInfo[0];
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoDeleteChatPhotoTest()
             if (jsonObject["delete_chat_photo"] != null)
                 DeleteChatPhoto = true;
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoGroupChatPhotoTest()
             if (jsonObject["group_chat_created"] != null)
                 GroupChatCreated = true;
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoSuperGroupChatPhotoTest()
             if (jsonObject["supergroup_chat_created"] != null)
                 SuperGroupChatCreated = true;
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoChannelChatCreated()
             if (jsonObject["channel_chat_created"] != null)
                 ChannelChatCreated = true;
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoMigrateToChatId()
             if (jsonObject["migrate_to_chat_id"] != null)
                 MigrateToChatId = jsonObject["migrate_to_chat_id"].Value<int>();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoMigrateFromChatId()
             if (jsonObject["migrate_from_chat_id"] != null)
                 MigrateFromChatId = jsonObject["migrate_from_chat_id"].Value<int>();
 
