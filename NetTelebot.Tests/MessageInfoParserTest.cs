@@ -275,5 +275,30 @@ namespace NetTelebot.Tests
             Assert.AreEqual(messageInfo.Location.Latitude, latitude);
             Assert.AreEqual(messageInfo.Location.Longitude, longitude);
         }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.NewChatMember"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoNewChatMemberTest()
+        {
+            const int id = 1000;
+            const string firstName = "TestName";
+            const string lastName = "testLastName";
+            const string username = "testUsername";
+            const string languageCode = "testLanguageCode";
+
+            dynamic MessageInfoUser = mMinimumMessageInfoField;
+
+            MessageInfoUser.new_chat_member = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoUser);
+
+            Assert.AreEqual(messageInfo.NewChatMember.Id, id);
+            Assert.AreEqual(messageInfo.NewChatMember.FirstName, firstName);
+            Assert.AreEqual(messageInfo.NewChatMember.LastName, lastName);
+            Assert.AreEqual(messageInfo.NewChatMember.UserName, username);
+            Assert.AreEqual(messageInfo.NewChatMember.LanguageCode, languageCode);
+        }
     }
 }

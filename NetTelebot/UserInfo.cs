@@ -34,10 +34,10 @@ namespace NetTelebot
             FirstName = jsonObject["first_name"].Value<string>();
             if (jsonObject["last_name"] != null)
                 LastName = jsonObject["last_name"].Value<string>();
-            if (jsonObject["user_name"] != null)
-                UserName = jsonObject["user_name"].Value<string>();
+            if (jsonObject["username"] != null)
+                UserName = jsonObject["username"].Value<string>();
             if (jsonObject["language_code"] != null)
-                UserName = jsonObject["language_code"].Value<string>();
+                LanguageCode = jsonObject["language_code"].Value<string>();
         }
 
         /// <summary>
