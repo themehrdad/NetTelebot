@@ -131,6 +131,34 @@ namespace NetTelebot.Tests
             Console.WriteLine(MessageInfoDocument);
         }
 
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Photo"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoPhotoTest()
+        {
+            const string fileId = "100";
+            const int width = 100;
+            const int height = 100;
+            const int fileSize = 10;
+            
+            dynamic MessageInfoPhoto = mMinimumMessageInfoField;
+
+            JArray photoArray = new JArray(PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize));
+
+            MessageInfoPhoto.photo = photoArray;
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoPhoto);
+
+            //test MessageInfo.Photo
+            Assert.AreEqual(messageInfo.Photo[0].FileId, fileId);
+            Assert.AreEqual(messageInfo.Photo[0].Width, width);
+            Assert.AreEqual(messageInfo.Photo[0].Height, height);
+            Assert.AreEqual(messageInfo.Photo[0].FileSize, fileSize);
+
+            Console.WriteLine(MessageInfoPhoto);
+        }
+
         [Test]
         public static void DeleteChatPhotoParserTest()
         {

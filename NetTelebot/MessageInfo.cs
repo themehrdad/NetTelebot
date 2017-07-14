@@ -87,11 +87,12 @@ namespace NetTelebot
                 ? new AudioInfo(jsonObject["audio"].Value<JObject>()) 
                 : new AudioInfo();
 
-
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoDocumentTest()
             Document = jsonObject["document"] != null
                 ? new DocumentInfo(jsonObject["document"].Value<JObject>())
                 : new DocumentInfo {Thumb = new PhotoSizeInfo()};
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoPhotoTest()
             Photo = jsonObject["photo"] != null
                 ? PhotoSizeInfo.ParseArray(jsonObject["photo"].Value<JArray>())
                 : new PhotoSizeInfo[0];
