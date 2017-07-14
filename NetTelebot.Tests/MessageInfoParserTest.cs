@@ -3,7 +3,6 @@ using NetTelebot.Tests.TypeTestObject;
 using NUnit.Framework;
 using Newtonsoft.Json.Linq;
 
-
 namespace NetTelebot.Tests
 {
     [TestFixture]
@@ -19,6 +18,7 @@ namespace NetTelebot.Tests
         [Test]
         public static void MessageInfoFromTest()
         {
+            //todo Do similar tests for all fields MessageInfo
             const int id = 1000;
             const string firstName = "TestName";
             const string lastName = "testLastName";
@@ -159,6 +159,125 @@ namespace NetTelebot.Tests
             Console.WriteLine(MessageInfoPhoto);
         }
 
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Sticker"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoStickerTest()
+        {
+            const string fileId = "100";
+            const int width = 100;
+            const int height = 100;
+            const string emoji = "emoji";
+            const int fileSize = 10;
+
+            dynamic MessageInfoSticker = mMinimumMessageInfoField;
+
+            MessageInfoSticker.sticker = StickerInfoObject.GetObject(fileId, width, height,
+                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), emoji, fileSize);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoSticker);
+
+            //test MessageInfo.Sticker
+            Assert.AreEqual(messageInfo.Sticker.FileId, fileId);
+            Assert.AreEqual(messageInfo.Sticker.Width, width);
+            Assert.AreEqual(messageInfo.Sticker.Height, height);
+            Assert.AreEqual(messageInfo.Sticker.Emoji, emoji);
+            Assert.AreEqual(messageInfo.Sticker.FileSize, fileSize);
+
+            //test MessageInfo.Sticker.Thumb
+            Assert.AreEqual(messageInfo.Sticker.Thumb.FileId, fileId);
+            Assert.AreEqual(messageInfo.Sticker.Thumb.Width, width);
+            Assert.AreEqual(messageInfo.Sticker.Thumb.Height, height);
+            Assert.AreEqual(messageInfo.Sticker.Thumb.FileSize, fileSize);
+
+            Console.WriteLine(MessageInfoSticker);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Video"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoVideoTest()
+        {
+            const string fileId = "100";
+            const int width = 1000;
+            const int height = 10000;
+            const int duration = 1000;
+            const string mimeType = "mimeType";
+            const int fileSize = 100;
+
+            dynamic MessageInfoVideo = mMinimumMessageInfoField;
+
+            MessageInfoVideo.video = VideoInfoObject.GetObject(fileId, width, height, duration,
+                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), mimeType, fileSize);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoVideo);
+
+            //test MessageInfo.Video
+            Assert.AreEqual(messageInfo.Video.FileId, fileId);
+            Assert.AreEqual(messageInfo.Video.Width, width);
+            Assert.AreEqual(messageInfo.Video.Height, height);
+            Assert.AreEqual(messageInfo.Video.Duration, duration);
+            Assert.AreEqual(messageInfo.Video.MimeType, mimeType);
+            Assert.AreEqual(messageInfo.Video.FileSize, fileSize);
+
+            //test MessageInfo.Video.Thumb
+            Assert.AreEqual(messageInfo.Video.Thumb.FileId, fileId);
+            Assert.AreEqual(messageInfo.Video.Thumb.Width, width);
+            Assert.AreEqual(messageInfo.Video.Thumb.Height, height);
+            Assert.AreEqual(messageInfo.Video.Thumb.FileSize, fileSize);
+
+            Console.WriteLine(MessageInfoVideo);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Caption"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoCaptionTest()
+        {
+            //check MessageInfo witout field [caption]
+            dynamic MessageInfoCaption = mMinimumMessageInfoField;
+            MessageInfo messageInfo = new MessageInfo(MessageInfoCaption);
+            Assert.AreEqual(messageInfo.Caption, string.Empty);
+
+            //check MessageInfo with field [caption: TestCaption] 
+            MessageInfoCaption.caption = "TestCaption";
+            messageInfo = new MessageInfo(MessageInfoCaption);
+            Assert.AreEqual(messageInfo.Caption, "TestCaption");
+
+            Console.WriteLine(MessageInfoCaption);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Contact"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoContactTest()
+        {
+            const string phoneNumber = "8080808080";
+            const string firstName = "Test Name";
+            const string lastName = "Test Last Name";
+            const string userId = "0545006540";
+
+            dynamic MessageInfoContact = mMinimumMessageInfoField;
+
+            MessageInfoContact.contact = ContactInfoObject.GetObject(phoneNumber, firstName, lastName,
+                userId);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoContact);
+
+            //test MessageInfo.Contact
+            Assert.AreEqual(messageInfo.Contact.PhoneNumber, phoneNumber);
+            Assert.AreEqual(messageInfo.Contact.FirstName, firstName);
+            Assert.AreEqual(messageInfo.Contact.LastName, lastName);
+            Assert.AreEqual(messageInfo.Contact.UserId, userId);
+
+            Console.WriteLine(MessageInfoContact);
+        }
+
+
         [Test]
         public static void DeleteChatPhotoParserTest()
         {
@@ -268,108 +387,6 @@ namespace NetTelebot.Tests
             Assert.AreEqual(messageInfo.Chat.Id, 1049413668);
 
             Console.WriteLine(minMessageInfoField);
-        }
-
-
-        /// <summary>
-        /// Test for <see cref="MessageInfo.Sticker"/> parse field.
-        /// </summary>
-        [Test]
-        public static void MessageInfoStickerTest()
-        {
-            //todo Do similar tests for all fields MessageInfo
-            const string fileId = "100";
-            const int width = 100;
-            const int height = 100;
-            const string emoji = "emoji";
-            const int fileSize = 10;
-
-            dynamic MessageInfoSticker = mMinimumMessageInfoField;
-
-            MessageInfoSticker.sticker = StickerInfoObject.GetObject(fileId, width, height,
-                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), emoji, fileSize);
-
-            MessageInfo messageInfo = new MessageInfo(MessageInfoSticker);
-
-            //test MessageInfo.Sticker
-            Assert.AreEqual(messageInfo.Sticker.FileId, fileId);
-            Assert.AreEqual(messageInfo.Sticker.Width, width);
-            Assert.AreEqual(messageInfo.Sticker.Height, height);
-            Assert.AreEqual(messageInfo.Sticker.Emoji, emoji);
-            Assert.AreEqual(messageInfo.Sticker.FileSize, fileSize);
-
-            //test MessageInfo.Sticker.Thumb
-            Assert.AreEqual(messageInfo.Sticker.Thumb.FileId, fileId);
-            Assert.AreEqual(messageInfo.Sticker.Thumb.Width, width);
-            Assert.AreEqual(messageInfo.Sticker.Thumb.Height, height);
-            Assert.AreEqual(messageInfo.Sticker.Thumb.FileSize, fileSize);
-
-            Console.WriteLine(MessageInfoSticker);
-
-        }
-
-        /// <summary>
-        /// Test for <see cref="MessageInfo.Video"/> parse field.
-        /// </summary>
-        [Test]
-        public static void MessageInfoVideoTest()
-        {
-            const string fileId = "100";
-            const int width = 1000;
-            const int height = 10000;
-            const int duration = 1000;
-            const string mimeType = "mimeType";
-            const int fileSize = 100;
-
-            dynamic MessageInfoVideo = mMinimumMessageInfoField;
-
-            MessageInfoVideo.video = VideoInfoObject.GetObject(fileId, width, height, duration,
-                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), mimeType, fileSize);
-
-            MessageInfo messageInfo = new MessageInfo(MessageInfoVideo);
-
-            //test MessageInfo.Video
-            Assert.AreEqual(messageInfo.Video.FileId, fileId);
-            Assert.AreEqual(messageInfo.Video.Width, width);
-            Assert.AreEqual(messageInfo.Video.Height, height);
-            Assert.AreEqual(messageInfo.Video.Duration, duration);
-            Assert.AreEqual(messageInfo.Video.MimeType, mimeType);
-            Assert.AreEqual(messageInfo.Video.FileSize, fileSize);
-
-            //test MessageInfo.Video.Thumb
-            Assert.AreEqual(messageInfo.Video.Thumb.FileId, fileId);
-            Assert.AreEqual(messageInfo.Video.Thumb.Width, width);
-            Assert.AreEqual(messageInfo.Video.Thumb.Height, height);
-            Assert.AreEqual(messageInfo.Video.Thumb.FileSize, fileSize);
-
-            Console.WriteLine(MessageInfoVideo);
-        }
-
-        /// <summary>
-        /// Test for <see cref="MessageInfo.Contact"/> parse field.
-        /// </summary>
-        [Test]
-        public static void MessageInfoContactTest()
-        {
-            const string phoneNumber = "8080808080";
-            const string firstName = "Test Name";
-            const string lastName = "Test Last Name";
-            const string userId = "0545006540";
-
-            dynamic MessageInfoContact = mMinimumMessageInfoField;
-
-            MessageInfoContact.contact = ContactInfoObject.GetObject(phoneNumber, firstName, lastName,
-                userId);
-
-            MessageInfo messageInfo = new MessageInfo(MessageInfoContact);
-
-            //test MessageInfo.Contact
-            Assert.AreEqual(messageInfo.Contact.PhoneNumber, phoneNumber);
-            Assert.AreEqual(messageInfo.Contact.FirstName, firstName);
-            Assert.AreEqual(messageInfo.Contact.LastName, lastName);
-            Assert.AreEqual(messageInfo.Contact.UserId, userId);
-
-            Console.WriteLine(MessageInfoContact);
         }
 
         /// <summary>

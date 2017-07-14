@@ -97,18 +97,22 @@ namespace NetTelebot
                 ? PhotoSizeInfo.ParseArray(jsonObject["photo"].Value<JArray>())
                 : new PhotoSizeInfo[0];
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoStickerTest()
             Sticker = jsonObject["sticker"] != null
                 ? new StickerInfo(jsonObject["sticker"].Value<JObject>())
                 : new StickerInfo {Thumb = new PhotoSizeInfo()};
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoVideoTest()
             Video = jsonObject["video"] != null
                 ? new VideoInfo(jsonObject["video"].Value<JObject>())
                 : new VideoInfo {Thumb = new PhotoSizeInfo()};
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoCaptionTest()
             Caption = jsonObject["caption"] != null 
                 ? jsonObject["caption"].Value<string>() 
                 : string.Empty;
-            
+
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoContactTest()
             Contact = jsonObject["contact"] != null
                 ? new ContactInfo(jsonObject["contact"].Value<JObject>())
                 : new ContactInfo();
