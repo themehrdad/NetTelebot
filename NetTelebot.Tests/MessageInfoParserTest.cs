@@ -300,5 +300,30 @@ namespace NetTelebot.Tests
             Assert.AreEqual(messageInfo.NewChatMember.UserName, username);
             Assert.AreEqual(messageInfo.NewChatMember.LanguageCode, languageCode);
         }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.LeftChatMember"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoLeftChatMemberTest()
+        {
+            const int id = 1000;
+            const string firstName = "TestName";
+            const string lastName = "testLastName";
+            const string username = "testUsername";
+            const string languageCode = "testLanguageCode";
+
+            dynamic MessageInfoUser = mMinimumMessageInfoField;
+
+            MessageInfoUser.left_chat_member = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoUser);
+
+            Assert.AreEqual(messageInfo.LeftChatMember.Id, id);
+            Assert.AreEqual(messageInfo.LeftChatMember.FirstName, firstName);
+            Assert.AreEqual(messageInfo.LeftChatMember.LastName, lastName);
+            Assert.AreEqual(messageInfo.LeftChatMember.UserName, username);
+            Assert.AreEqual(messageInfo.LeftChatMember.LanguageCode, languageCode);
+        }
     }
 }
