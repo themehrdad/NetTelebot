@@ -237,7 +237,7 @@ namespace NetTelebot.Tests
         [Test]
         public static void MessageInfoCaptionTest()
         {
-            //check MessageInfo witout field [caption]
+            //check MessageInfo without field [caption]
             dynamic MessageInfoCaption = mMinimumMessageInfoField;
             MessageInfo messageInfo = new MessageInfo(MessageInfoCaption);
             Assert.AreEqual(messageInfo.Caption, string.Empty);
@@ -277,6 +277,121 @@ namespace NetTelebot.Tests
             Console.WriteLine(MessageInfoContact);
         }
 
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Location"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoLocationTest()
+        {
+            const float longitude = 1000;
+            const float latitude = 1000;
+
+            dynamic MessageInfoLocation = mMinimumMessageInfoField;
+
+            MessageInfoLocation.location = LocationInfoObject.GetObject(longitude, latitude);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoLocation);
+
+            Assert.AreEqual(messageInfo.Location.Latitude, latitude);
+            Assert.AreEqual(messageInfo.Location.Longitude, longitude);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.NewChatMember"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoNewChatMemberTest()
+        {
+            const int id = 1000;
+            const string firstName = "TestName";
+            const string lastName = "testLastName";
+            const string username = "testUsername";
+            const string languageCode = "testLanguageCode";
+
+            dynamic MessageInfoUser = mMinimumMessageInfoField;
+
+            MessageInfoUser.new_chat_member = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoUser);
+
+            Assert.AreEqual(messageInfo.NewChatMember.Id, id);
+            Assert.AreEqual(messageInfo.NewChatMember.FirstName, firstName);
+            Assert.AreEqual(messageInfo.NewChatMember.LastName, lastName);
+            Assert.AreEqual(messageInfo.NewChatMember.UserName, username);
+            Assert.AreEqual(messageInfo.NewChatMember.LanguageCode, languageCode);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.LeftChatMember"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoLeftChatMemberTest()
+        {
+            const int id = 1000;
+            const string firstName = "TestName";
+            const string lastName = "testLastName";
+            const string username = "testUsername";
+            const string languageCode = "testLanguageCode";
+
+            dynamic MessageInfoUser = mMinimumMessageInfoField;
+
+            MessageInfoUser.left_chat_member = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoUser);
+
+            Assert.AreEqual(messageInfo.LeftChatMember.Id, id);
+            Assert.AreEqual(messageInfo.LeftChatMember.FirstName, firstName);
+            Assert.AreEqual(messageInfo.LeftChatMember.LastName, lastName);
+            Assert.AreEqual(messageInfo.LeftChatMember.UserName, username);
+            Assert.AreEqual(messageInfo.LeftChatMember.LanguageCode, languageCode);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.NewChatTitle"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoNewChatTitleTest()
+        {
+            //check MessageInfo without field [new_chat_title]
+            dynamic MessageInfoNewChatTitle = mMinimumMessageInfoField;
+            MessageInfo messageInfo = new MessageInfo(MessageInfoNewChatTitle);
+            Assert.AreEqual(messageInfo.NewChatTitle, string.Empty);
+
+            //check MessageInfo with field [new_chat_title: TestTitle] 
+            MessageInfoNewChatTitle.new_chat_title = "TestTitle";
+            messageInfo = new MessageInfo(MessageInfoNewChatTitle);
+            Assert.AreEqual(messageInfo.NewChatTitle, "TestTitle");
+
+            Console.WriteLine(MessageInfoNewChatTitle);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.NewChatPhoto"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoNewChatPhotoTest()
+        {
+            const string fileId = "100";
+            const int width = 100;
+            const int height = 100;
+            const int fileSize = 10;
+
+            dynamic MessageInfoNewChatPhoto = mMinimumMessageInfoField;
+
+            JArray photoArray = new JArray(PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize));
+
+            MessageInfoNewChatPhoto.new_chat_photo = photoArray;
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoNewChatPhoto);
+
+            //test MessageInfo.NewChatPhoto
+            Assert.AreEqual(messageInfo.NewChatPhoto[0].FileId, fileId);
+            Assert.AreEqual(messageInfo.NewChatPhoto[0].Width, width);
+            Assert.AreEqual(messageInfo.NewChatPhoto[0].Height, height);
+            Assert.AreEqual(messageInfo.NewChatPhoto[0].FileSize, fileSize);
+
+            Console.WriteLine(MessageInfoNewChatPhoto);
+        }
 
         [Test]
         public static void DeleteChatPhotoParserTest()
@@ -387,75 +502,6 @@ namespace NetTelebot.Tests
             Assert.AreEqual(messageInfo.Chat.Id, 1049413668);
 
             Console.WriteLine(minMessageInfoField);
-        }
-
-        /// <summary>
-        /// Test for <see cref="MessageInfo.Location"/> parse field.
-        /// </summary>
-        [Test]
-        public static void MessageInfoLocationTest()
-        {
-            const float longitude = 1000;
-            const float latitude = 1000;
-
-            dynamic MessageInfoLocation = mMinimumMessageInfoField;
-
-            MessageInfoLocation.location = LocationInfoObject.GetObject(longitude, latitude);
-
-            MessageInfo messageInfo = new MessageInfo(MessageInfoLocation);
-
-            Assert.AreEqual(messageInfo.Location.Latitude, latitude);
-            Assert.AreEqual(messageInfo.Location.Longitude, longitude);
-        }
-
-        /// <summary>
-        /// Test for <see cref="MessageInfo.NewChatMember"/> parse field.
-        /// </summary>
-        [Test]
-        public static void MessageInfoNewChatMemberTest()
-        {
-            const int id = 1000;
-            const string firstName = "TestName";
-            const string lastName = "testLastName";
-            const string username = "testUsername";
-            const string languageCode = "testLanguageCode";
-
-            dynamic MessageInfoUser = mMinimumMessageInfoField;
-
-            MessageInfoUser.new_chat_member = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
-
-            MessageInfo messageInfo = new MessageInfo(MessageInfoUser);
-
-            Assert.AreEqual(messageInfo.NewChatMember.Id, id);
-            Assert.AreEqual(messageInfo.NewChatMember.FirstName, firstName);
-            Assert.AreEqual(messageInfo.NewChatMember.LastName, lastName);
-            Assert.AreEqual(messageInfo.NewChatMember.UserName, username);
-            Assert.AreEqual(messageInfo.NewChatMember.LanguageCode, languageCode);
-        }
-
-        /// <summary>
-        /// Test for <see cref="MessageInfo.LeftChatMember"/> parse field.
-        /// </summary>
-        [Test]
-        public static void MessageInfoLeftChatMemberTest()
-        {
-            const int id = 1000;
-            const string firstName = "TestName";
-            const string lastName = "testLastName";
-            const string username = "testUsername";
-            const string languageCode = "testLanguageCode";
-
-            dynamic MessageInfoUser = mMinimumMessageInfoField;
-
-            MessageInfoUser.left_chat_member = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
-
-            MessageInfo messageInfo = new MessageInfo(MessageInfoUser);
-
-            Assert.AreEqual(messageInfo.LeftChatMember.Id, id);
-            Assert.AreEqual(messageInfo.LeftChatMember.FirstName, firstName);
-            Assert.AreEqual(messageInfo.LeftChatMember.LastName, lastName);
-            Assert.AreEqual(messageInfo.LeftChatMember.UserName, username);
-            Assert.AreEqual(messageInfo.LeftChatMember.LanguageCode, languageCode);
         }
     }
 }

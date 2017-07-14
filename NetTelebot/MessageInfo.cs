@@ -117,22 +117,27 @@ namespace NetTelebot
                 ? new ContactInfo(jsonObject["contact"].Value<JObject>())
                 : new ContactInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoLocationTest()
             Location = jsonObject["location"] != null
                 ? new LocationInfo(jsonObject["location"].Value<JObject>())
                 : new LocationInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoNewChatMemberTest()
             NewChatMember = jsonObject["new_chat_member"] != null
                 ? new UserInfo(jsonObject["new_chat_member"].Value<JObject>())
                 : new UserInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoLeftChatMemberTest()
             LeftChatMember = jsonObject["left_chat_member"] != null
                 ? new UserInfo(jsonObject["left_chat_member"].Value<JObject>())
                 : new UserInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoNewChatTitleTest()
             NewChatTitle = jsonObject["new_chat_title"] != null
                 ? jsonObject["new_chat_title"].Value<string>()
                 : string.Empty;
             
+
             NewChatPhoto = jsonObject["new_chat_photo"] != null
                 ? PhotoSizeInfo.ParseArray(jsonObject["new_chat_photo"].Value<JArray>())
                 : new PhotoSizeInfo[0];
