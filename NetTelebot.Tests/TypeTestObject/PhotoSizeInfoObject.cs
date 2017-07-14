@@ -15,6 +15,7 @@ namespace NetTelebot.Tests.TypeTestObject
         /// <param name="width">Photo width</param>
         /// <param name="height">Photo height</param>
         /// <param name="fileSize">Optional. File size</param>
+        /// <returns><see cref="PhotoSizeInfo"/></returns>
         internal static JObject GetObject(string fileId, int width, int height, int fileSize)
         {
             dynamic photoSizeInfo = new JObject();

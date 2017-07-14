@@ -15,6 +15,7 @@ namespace NetTelebot.Tests.TypeTestObject
         /// <param name="firstName">Contact's first name</param>
         /// <param name="lastName">Optional. Contact's last name</param>
         /// <param name="userId">Optional. Contact's user identifier in Telegram.</param>
+        /// <returns><see cref="ContactInfo"/></returns>
         internal static JObject GetObject(string phoneNumber, string firstName, string lastName, string userId)
         {
             dynamic contactInfo = new JObject();

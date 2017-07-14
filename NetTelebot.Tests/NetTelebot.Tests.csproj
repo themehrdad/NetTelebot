@@ -71,10 +71,14 @@
     <Compile Include="TelegramBotClientTest.cs" />
     <Compile Include="TypeTestObject\AudioInfoObject.cs" />
     <Compile Include="TypeTestObject\ContactInfoObject.cs" />
+    <Compile Include="TypeTestObject\DocumentInfoObject.cs" />
     <Compile Include="TypeTestObject\IConversationSourceObject.cs" />
+    <Compile Include="TypeTestObject\LocationInfoObject.cs" />
     <Compile Include="TypeTestObject\MessageInfoObject.cs" />
     <Compile Include="TypeTestObject\PhotoSizeInfoObject.cs" />
     <Compile Include="TypeTestObject\StickerInfoObject.cs" />
+    <Compile Include="TypeTestObject\UserInfoObject.cs" />
+    <Compile Include="TypeTestObject\VideoInfoObject.cs" />
     <Compile Include="UtilityExtensionTest.cs" />
     <Compile Include="Utils\TelegramBot.cs" />
     <Compile Include="Utils\WindowsCredential.cs" />

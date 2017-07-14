@@ -9,8 +9,59 @@ namespace NetTelebot.Tests
     [TestFixture]
     internal class MessageInfoParserTest
     {
-        private static readonly JObject mMinimumMessageInfoField = MessageInfoObject.GetMinimumMessageInfoField(-1147483648, 0,
-            1049413668, "Test");
+        private static readonly JObject mMinimumMessageInfoField =
+            MessageInfoObject.GetMinimumMessageInfoField(-1147483648, 0,
+                1049413668, "Test");
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.From"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoFromTest()
+        {
+            const int id = 1000;
+            const string firstName = "TestName";
+            const string lastName = "testLastName";
+            const string username = "testUsername";
+            const string languageCode = "testLanguageCode";
+
+            dynamic MessageInfoUser = mMinimumMessageInfoField;
+
+            MessageInfoUser.from = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoUser);
+
+            Assert.AreEqual(messageInfo.From.Id, id);
+            Assert.AreEqual(messageInfo.From.FirstName, firstName);
+            Assert.AreEqual(messageInfo.From.LastName, lastName);
+            Assert.AreEqual(messageInfo.From.UserName, username);
+            Assert.AreEqual(messageInfo.From.LanguageCode, languageCode);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.ForwardFrom"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoForwardFromTest()
+        {
+            const int id = 1000;
+            const string firstName = "TestName";
+            const string lastName = "testLastName";
+            const string username = "testUsername";
+            const string languageCode = "testLanguageCode";
+
+            dynamic MessageInfoUser = mMinimumMessageInfoField;
+
+            MessageInfoUser.forward_from = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoUser);
+
+            Assert.AreEqual(messageInfo.ForwardFrom.Id, id);
+            Assert.AreEqual(messageInfo.ForwardFrom.FirstName, firstName);
+            Assert.AreEqual(messageInfo.ForwardFrom.LastName, lastName);
+            Assert.AreEqual(messageInfo.ForwardFrom.UserName, username);
+            Assert.AreEqual(messageInfo.ForwardFrom.LanguageCode, languageCode);
+        }
 
         /// <summary>
         /// Test for <see cref="MessageInfo.Audio"/> parse field.
@@ -44,30 +95,40 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
-        /// Test for <see cref="MessageInfo.Contact"/> parse field.
+        /// Test for <see cref="MessageInfo.Document"/> parse field.
         /// </summary>
         [Test]
-        public static void MessageInfoContactTest()
+        public static void MessageInfoDocumentTest()
         {
-            const string phoneNumber = "8080808080";
-            const string firstName = "Test Name";
-            const string lastName = "Test Last Name";
-            const string userId = "0545006540";
-            
-            dynamic MessageInfoContact = mMinimumMessageInfoField;
+            const string fileId = "100";
+            const string mimeType = "mimeTypeTest";
+            const string fileName = "testFleName";
+            const int fileSize = 10;
 
-            MessageInfoContact.contact = ContactInfoObject.GetObject(phoneNumber, firstName, lastName,
-                userId);
+            const int width = 100;
+            const int height = 100;
 
-            MessageInfo messageInfo = new MessageInfo(MessageInfoContact);
+            dynamic MessageInfoDocument = mMinimumMessageInfoField;
 
-            //test MessageInfo.Contact
-            Assert.AreEqual(messageInfo.Contact.PhoneNumber, phoneNumber);
-            Assert.AreEqual(messageInfo.Contact.FirstName, firstName);
-            Assert.AreEqual(messageInfo.Contact.LastName, lastName);
-            Assert.AreEqual(messageInfo.Contact.UserId, userId);
-            
-            Console.WriteLine(MessageInfoContact);
+            MessageInfoDocument.document = DocumentInfoObject.GetObject(fileId,
+                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), fileName, mimeType, fileSize);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoDocument);
+
+            //test MessageInfo.Document
+            Assert.AreEqual(messageInfo.Document.FileId, fileId);
+            Assert.AreEqual(messageInfo.Document.FileName, fileName);
+            Assert.AreEqual(messageInfo.Document.MimeType, mimeType);
+            Assert.AreEqual(messageInfo.Document.FileSize, fileSize);
+
+            //test MessageInfo.Document.Thumb
+            Assert.AreEqual(messageInfo.Document.Thumb.FileId, fileId);
+            Assert.AreEqual(messageInfo.Document.Thumb.Width, width);
+            Assert.AreEqual(messageInfo.Document.Thumb.Height, height);
+            Assert.AreEqual(messageInfo.Document.Thumb.FileSize, fileSize);
+
+
+            Console.WriteLine(MessageInfoDocument);
         }
 
         [Test]
@@ -77,7 +138,7 @@ namespace NetTelebot.Tests
             dynamic DeleteChatPhoto = mMinimumMessageInfoField;
             MessageInfo messageInfo = new MessageInfo(DeleteChatPhoto);
             Assert.False(messageInfo.DeleteChatPhoto);
-            
+
             //check MessageInfo with field [delete_chat_photo: true] 
             DeleteChatPhoto.delete_chat_photo = true;
             messageInfo = new MessageInfo(DeleteChatPhoto);
@@ -172,7 +233,7 @@ namespace NetTelebot.Tests
             dynamic minMessageInfoField = mMinimumMessageInfoField;
 
             MessageInfo messageInfo = new MessageInfo(minMessageInfoField);
-            
+
             Assert.AreEqual(messageInfo.MessageId, -1147483648);
             Assert.AreEqual(messageInfo.DateUnix, 0);
             Assert.AreEqual(messageInfo.Date, new DateTime(1970, 1, 1).ToLocalTime());
@@ -197,7 +258,7 @@ namespace NetTelebot.Tests
 
             dynamic MessageInfoSticker = mMinimumMessageInfoField;
 
-            MessageInfoSticker.sticker = StickerInfoObject.GetObject(fileId, width, height, 
+            MessageInfoSticker.sticker = StickerInfoObject.GetObject(fileId, width, height,
                 PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), emoji, fileSize);
 
             MessageInfo messageInfo = new MessageInfo(MessageInfoSticker);
@@ -208,7 +269,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(messageInfo.Sticker.Height, height);
             Assert.AreEqual(messageInfo.Sticker.Emoji, emoji);
             Assert.AreEqual(messageInfo.Sticker.FileSize, fileSize);
-            
+
             //test MessageInfo.Sticker.Thumb
             Assert.AreEqual(messageInfo.Sticker.Thumb.FileId, fileId);
             Assert.AreEqual(messageInfo.Sticker.Thumb.Width, width);
@@ -217,6 +278,139 @@ namespace NetTelebot.Tests
 
             Console.WriteLine(MessageInfoSticker);
 
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Video"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoVideoTest()
+        {
+            const string fileId = "100";
+            const int width = 1000;
+            const int height = 10000;
+            const int duration = 1000;
+            const string mimeType = "mimeType";
+            const int fileSize = 100;
+
+            dynamic MessageInfoVideo = mMinimumMessageInfoField;
+
+            MessageInfoVideo.video = VideoInfoObject.GetObject(fileId, width, height, duration,
+                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), mimeType, fileSize);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoVideo);
+
+            //test MessageInfo.Video
+            Assert.AreEqual(messageInfo.Video.FileId, fileId);
+            Assert.AreEqual(messageInfo.Video.Width, width);
+            Assert.AreEqual(messageInfo.Video.Height, height);
+            Assert.AreEqual(messageInfo.Video.Duration, duration);
+            Assert.AreEqual(messageInfo.Video.MimeType, mimeType);
+            Assert.AreEqual(messageInfo.Video.FileSize, fileSize);
+
+            //test MessageInfo.Video.Thumb
+            Assert.AreEqual(messageInfo.Video.Thumb.FileId, fileId);
+            Assert.AreEqual(messageInfo.Video.Thumb.Width, width);
+            Assert.AreEqual(messageInfo.Video.Thumb.Height, height);
+            Assert.AreEqual(messageInfo.Video.Thumb.FileSize, fileSize);
+
+            Console.WriteLine(MessageInfoVideo);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Contact"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoContactTest()
+        {
+            const string phoneNumber = "8080808080";
+            const string firstName = "Test Name";
+            const string lastName = "Test Last Name";
+            const string userId = "0545006540";
+
+            dynamic MessageInfoContact = mMinimumMessageInfoField;
+
+            MessageInfoContact.contact = ContactInfoObject.GetObject(phoneNumber, firstName, lastName,
+                userId);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoContact);
+
+            //test MessageInfo.Contact
+            Assert.AreEqual(messageInfo.Contact.PhoneNumber, phoneNumber);
+            Assert.AreEqual(messageInfo.Contact.FirstName, firstName);
+            Assert.AreEqual(messageInfo.Contact.LastName, lastName);
+            Assert.AreEqual(messageInfo.Contact.UserId, userId);
+
+            Console.WriteLine(MessageInfoContact);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Location"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoLocationTest()
+        {
+            const float longitude = 1000;
+            const float latitude = 1000;
+
+            dynamic MessageInfoLocation = mMinimumMessageInfoField;
+
+            MessageInfoLocation.location = LocationInfoObject.GetObject(longitude, latitude);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoLocation);
+
+            Assert.AreEqual(messageInfo.Location.Latitude, latitude);
+            Assert.AreEqual(messageInfo.Location.Longitude, longitude);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.NewChatMember"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoNewChatMemberTest()
+        {
+            const int id = 1000;
+            const string firstName = "TestName";
+            const string lastName = "testLastName";
+            const string username = "testUsername";
+            const string languageCode = "testLanguageCode";
+
+            dynamic MessageInfoUser = mMinimumMessageInfoField;
+
+            MessageInfoUser.new_chat_member = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoUser);
+
+            Assert.AreEqual(messageInfo.NewChatMember.Id, id);
+            Assert.AreEqual(messageInfo.NewChatMember.FirstName, firstName);
+            Assert.AreEqual(messageInfo.NewChatMember.LastName, lastName);
+            Assert.AreEqual(messageInfo.NewChatMember.UserName, username);
+            Assert.AreEqual(messageInfo.NewChatMember.LanguageCode, languageCode);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.LeftChatMember"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoLeftChatMemberTest()
+        {
+            const int id = 1000;
+            const string firstName = "TestName";
+            const string lastName = "testLastName";
+            const string username = "testUsername";
+            const string languageCode = "testLanguageCode";
+
+            dynamic MessageInfoUser = mMinimumMessageInfoField;
+
+            MessageInfoUser.left_chat_member = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoUser);
+
+            Assert.AreEqual(messageInfo.LeftChatMember.Id, id);
+            Assert.AreEqual(messageInfo.LeftChatMember.FirstName, firstName);
+            Assert.AreEqual(messageInfo.LeftChatMember.LastName, lastName);
+            Assert.AreEqual(messageInfo.LeftChatMember.UserName, username);
+            Assert.AreEqual(messageInfo.LeftChatMember.LanguageCode, languageCode);
         }
     }
 }
