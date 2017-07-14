@@ -14,6 +14,56 @@ namespace NetTelebot.Tests
                 1049413668, "Test");
 
         /// <summary>
+        /// Test for <see cref="MessageInfo.From"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoFromTest()
+        {
+            const int id = 1000;
+            const string firstName = "TestName";
+            const string lastName = "testLastName";
+            const string username = "testUsername";
+            const string languageCode = "testLanguageCode";
+
+            dynamic MessageInfoUser = mMinimumMessageInfoField;
+
+            MessageInfoUser.from = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoUser);
+
+            Assert.AreEqual(messageInfo.From.Id, id);
+            Assert.AreEqual(messageInfo.From.FirstName, firstName);
+            Assert.AreEqual(messageInfo.From.LastName, lastName);
+            Assert.AreEqual(messageInfo.From.UserName, username);
+            Assert.AreEqual(messageInfo.From.LanguageCode, languageCode);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.ForwardFrom"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoForwardFromTest()
+        {
+            const int id = 1000;
+            const string firstName = "TestName";
+            const string lastName = "testLastName";
+            const string username = "testUsername";
+            const string languageCode = "testLanguageCode";
+
+            dynamic MessageInfoUser = mMinimumMessageInfoField;
+
+            MessageInfoUser.forward_from = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoUser);
+
+            Assert.AreEqual(messageInfo.ForwardFrom.Id, id);
+            Assert.AreEqual(messageInfo.ForwardFrom.FirstName, firstName);
+            Assert.AreEqual(messageInfo.ForwardFrom.LastName, lastName);
+            Assert.AreEqual(messageInfo.ForwardFrom.UserName, username);
+            Assert.AreEqual(messageInfo.ForwardFrom.LanguageCode, languageCode);
+        }
+
+        /// <summary>
         /// Test for <see cref="MessageInfo.Audio"/> parse field.
         /// </summary>
         [Test]

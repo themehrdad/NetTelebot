@@ -44,6 +44,7 @@ namespace NetTelebot
         {
             MessageId = jsonObject["message_id"].Value<int>();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoFromTest()
             From = jsonObject["from"] != null
                 ? new UserInfo(jsonObject["from"].Value<JObject>())
                 : new UserInfo();
@@ -53,6 +54,7 @@ namespace NetTelebot
 
             Chat = ParseChat(jsonObject["chat"].Value<JObject>());
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromTest()
             ForwardFrom = jsonObject["forward_from"] != null
                 ? new UserInfo(jsonObject["forward_from"].Value<JObject>())
                 : new UserInfo();
@@ -166,7 +168,7 @@ namespace NetTelebot
 
         //todo need test with sent to @channels
         /// <summary>
-        /// Optional. Sender, can be empty for messages sent to channels
+        /// Optional. Sender, can be empty for messages sent to channel
         /// </summary>
         public UserInfo From { get; private set; }
 
