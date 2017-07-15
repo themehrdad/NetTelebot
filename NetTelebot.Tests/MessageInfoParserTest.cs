@@ -83,6 +83,50 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Test for <see cref="MessageInfo.ForwardDateUnix"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoForwardDateUnixTest()
+        {
+            //check MessageInfo without field [forward_date]
+            dynamic MessageInfoForwardDateUnix = mMandatoryFieldsMessageInfo;
+            MessageInfo messageInfo = new MessageInfo(MessageInfoForwardDateUnix);
+            Assert.AreEqual(messageInfo.ForwardDateUnix, 0);
+            Assert.AreEqual(messageInfo.ForwardDate, DateTime.MinValue);
+
+            //check MessageInfo with field [forward_date: 0] 
+            MessageInfoForwardDateUnix.forward_date = 0;
+            Assert.AreEqual(messageInfo.DateUnix, 0);
+            Assert.AreEqual(messageInfo.Date, new DateTime(1970, 1, 1).ToLocalTime());
+
+            Console.WriteLine(MessageInfoForwardDateUnix);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.ReplyToMessage"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoReplyToMessageTest()
+        {
+            const int messageId = 1000;
+            const int date = 0;
+            const int chatId = 125421;
+            const string chatFirstName = "TestFirstName";
+
+            dynamic MessageInfoReplyToMessage = mMandatoryFieldsMessageInfo;
+
+            MessageInfoReplyToMessage.reply_to_message = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatFirstName);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoReplyToMessage);
+
+            Assert.AreEqual(messageInfo.ReplyToMessage.MessageId, messageId);
+            Assert.AreEqual(messageInfo.ReplyToMessage.DateUnix, date);
+            Assert.AreEqual(messageInfo.ReplyToMessage.Chat.Id, chatId);
+
+            Console.WriteLine(MessageInfoReplyToMessage);
+        }
+
+        /// <summary>
         /// Test for <see cref="MessageInfo.Audio"/> parse field.
         /// </summary>
         [Test]

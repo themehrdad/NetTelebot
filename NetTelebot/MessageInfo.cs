@@ -68,13 +68,14 @@ namespace NetTelebot
             if (jsonObject["forward_from_message_id"] != null)
                 ForwardFromMessageId = jsonObject["forward_from_message_id"].Value<int>();
 
-
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardDateUnixTest()
             if (jsonObject["forward_date"]!=null)
             {
                 ForwardDateUnix = jsonObject["forward_date"].Value<int>();
                 ForwardDate = ForwardDateUnix.ToDateTime();
             }
-            
+
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoReplyToMessageTest()
             ReplyToMessage = jsonObject["reply_to_message"] != null
                 ? new MessageInfo(jsonObject["reply_to_message"].Value<JObject>())
                 : new MessageInfo();
