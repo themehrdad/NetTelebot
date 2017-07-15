@@ -8,8 +8,8 @@ namespace NetTelebot.Tests
     [TestFixture]
     internal class MessageInfoParserTest
     {
-        private static readonly JObject mMinimumMessageInfoField =
-            MessageInfoObject.GetMinimumMessageInfoField(-1147483648, 0,
+        private static readonly JObject mMandatoryFieldsMessageInfo =
+            MessageInfoObject.GetMandatoryFieldsMessageInfo(-1147483648, 0,
                 1049413668, "Test");
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace NetTelebot.Tests
             const string username = "testUsername";
             const string languageCode = "testLanguageCode";
 
-            dynamic MessageInfoUser = mMinimumMessageInfoField;
+            dynamic MessageInfoUser = mMandatoryFieldsMessageInfo;
 
             MessageInfoUser.from = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
 
@@ -50,7 +50,7 @@ namespace NetTelebot.Tests
             const string username = "testUsername";
             const string languageCode = "testLanguageCode";
 
-            dynamic MessageInfoUser = mMinimumMessageInfoField;
+            dynamic MessageInfoUser = mMandatoryFieldsMessageInfo;
 
             MessageInfoUser.forward_from = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
 
@@ -61,6 +61,25 @@ namespace NetTelebot.Tests
             Assert.AreEqual(messageInfo.ForwardFrom.LastName, lastName);
             Assert.AreEqual(messageInfo.ForwardFrom.UserName, username);
             Assert.AreEqual(messageInfo.ForwardFrom.LanguageCode, languageCode);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.ForwardFromMessageId"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoForwardFromMessageIdTest()
+        {
+            //check MessageInfo witout field [forward_from_message_id]
+            dynamic MessageInfoForwardFromMessageId = mMandatoryFieldsMessageInfo;
+            MessageInfo messageInfo = new MessageInfo(MessageInfoForwardFromMessageId);
+            Assert.AreEqual(messageInfo.ForwardFromMessageId, 0);
+
+            //check MessageInfo with field [forward_from_message_id: 14881488] 
+            MessageInfoForwardFromMessageId.forward_from_message_id = 14881488;
+            messageInfo = new MessageInfo(MessageInfoForwardFromMessageId);
+            Assert.AreEqual(messageInfo.ForwardFromMessageId, 14881488);
+
+            Console.WriteLine(MessageInfoForwardFromMessageId);
         }
 
         /// <summary>
@@ -76,7 +95,7 @@ namespace NetTelebot.Tests
             const string mimeType = "mimeTypeTest";
             const int fileSize = 10;
 
-            dynamic MessageInfoAudio = mMinimumMessageInfoField;
+            dynamic MessageInfoAudio = mMandatoryFieldsMessageInfo;
 
             MessageInfoAudio.audio = AudioInfoObject.GetObject(fileId, duration, performer,
                 title, mimeType, fileSize);
@@ -108,7 +127,7 @@ namespace NetTelebot.Tests
             const int width = 100;
             const int height = 100;
 
-            dynamic MessageInfoDocument = mMinimumMessageInfoField;
+            dynamic MessageInfoDocument = mMandatoryFieldsMessageInfo;
 
             MessageInfoDocument.document = DocumentInfoObject.GetObject(fileId,
                 PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), fileName, mimeType, fileSize);
@@ -142,7 +161,7 @@ namespace NetTelebot.Tests
             const int height = 100;
             const int fileSize = 10;
             
-            dynamic MessageInfoPhoto = mMinimumMessageInfoField;
+            dynamic MessageInfoPhoto = mMandatoryFieldsMessageInfo;
 
             JArray photoArray = new JArray(PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize));
 
@@ -171,7 +190,7 @@ namespace NetTelebot.Tests
             const string emoji = "emoji";
             const int fileSize = 10;
 
-            dynamic MessageInfoSticker = mMinimumMessageInfoField;
+            dynamic MessageInfoSticker = mMandatoryFieldsMessageInfo;
 
             MessageInfoSticker.sticker = StickerInfoObject.GetObject(fileId, width, height,
                 PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), emoji, fileSize);
@@ -207,7 +226,7 @@ namespace NetTelebot.Tests
             const string mimeType = "mimeType";
             const int fileSize = 100;
 
-            dynamic MessageInfoVideo = mMinimumMessageInfoField;
+            dynamic MessageInfoVideo = mMandatoryFieldsMessageInfo;
 
             MessageInfoVideo.video = VideoInfoObject.GetObject(fileId, width, height, duration,
                 PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), mimeType, fileSize);
@@ -238,7 +257,7 @@ namespace NetTelebot.Tests
         public static void MessageInfoCaptionTest()
         {
             //check MessageInfo without field [caption]
-            dynamic MessageInfoCaption = mMinimumMessageInfoField;
+            dynamic MessageInfoCaption = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(MessageInfoCaption);
             Assert.AreEqual(messageInfo.Caption, string.Empty);
 
@@ -261,7 +280,7 @@ namespace NetTelebot.Tests
             const string lastName = "Test Last Name";
             const string userId = "0545006540";
 
-            dynamic MessageInfoContact = mMinimumMessageInfoField;
+            dynamic MessageInfoContact = mMandatoryFieldsMessageInfo;
 
             MessageInfoContact.contact = ContactInfoObject.GetObject(phoneNumber, firstName, lastName,
                 userId);
@@ -286,7 +305,7 @@ namespace NetTelebot.Tests
             const float longitude = 1000;
             const float latitude = 1000;
 
-            dynamic MessageInfoLocation = mMinimumMessageInfoField;
+            dynamic MessageInfoLocation = mMandatoryFieldsMessageInfo;
 
             MessageInfoLocation.location = LocationInfoObject.GetObject(longitude, latitude);
 
@@ -308,7 +327,7 @@ namespace NetTelebot.Tests
             const string username = "testUsername";
             const string languageCode = "testLanguageCode";
 
-            dynamic MessageInfoUser = mMinimumMessageInfoField;
+            dynamic MessageInfoUser = mMandatoryFieldsMessageInfo;
 
             MessageInfoUser.new_chat_member = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
 
@@ -333,7 +352,7 @@ namespace NetTelebot.Tests
             const string username = "testUsername";
             const string languageCode = "testLanguageCode";
 
-            dynamic MessageInfoUser = mMinimumMessageInfoField;
+            dynamic MessageInfoUser = mMandatoryFieldsMessageInfo;
 
             MessageInfoUser.left_chat_member = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
 
@@ -353,7 +372,7 @@ namespace NetTelebot.Tests
         public static void MessageInfoNewChatTitleTest()
         {
             //check MessageInfo without field [new_chat_title]
-            dynamic MessageInfoNewChatTitle = mMinimumMessageInfoField;
+            dynamic MessageInfoNewChatTitle = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(MessageInfoNewChatTitle);
             Assert.AreEqual(messageInfo.NewChatTitle, string.Empty);
 
@@ -376,7 +395,7 @@ namespace NetTelebot.Tests
             const int height = 100;
             const int fileSize = 10;
 
-            dynamic MessageInfoNewChatPhoto = mMinimumMessageInfoField;
+            dynamic MessageInfoNewChatPhoto = mMandatoryFieldsMessageInfo;
 
             JArray photoArray = new JArray(PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize));
 
@@ -400,7 +419,7 @@ namespace NetTelebot.Tests
         public static void MessageInfoDeleteChatPhotoTest()
         {
             //check MessageInfo without field [delete_chat_photo]
-            dynamic DeleteChatPhoto = mMinimumMessageInfoField;
+            dynamic DeleteChatPhoto = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(DeleteChatPhoto);
             Assert.False(messageInfo.DeleteChatPhoto);
 
@@ -419,7 +438,7 @@ namespace NetTelebot.Tests
         public static void MessageInfoGroupChatCreatedTest()
         {
             //check MessageInfo without field [group_chat_created]
-            dynamic GroupChatCreated = mMinimumMessageInfoField;
+            dynamic GroupChatCreated = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(GroupChatCreated);
             Assert.False(messageInfo.GroupChatCreated);
 
@@ -438,7 +457,7 @@ namespace NetTelebot.Tests
         public static void MessageInfoSuperGroupChatCreatedTest()
         {
             //check MessageInfo without field [group_chat_created]
-            dynamic SuperGroupChatCreated = mMinimumMessageInfoField;
+            dynamic SuperGroupChatCreated = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(SuperGroupChatCreated);
             Assert.False(messageInfo.SuperGroupChatCreated);
 
@@ -457,7 +476,7 @@ namespace NetTelebot.Tests
         public static void MessageInfoChannelChatCreatedTest()
         {
             //check MessageInfo without field [group_chat_created]
-            dynamic ChannelChatCreated = mMinimumMessageInfoField;
+            dynamic ChannelChatCreated = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(ChannelChatCreated);
             Assert.False(messageInfo.ChannelChatCreated);
 
@@ -476,7 +495,7 @@ namespace NetTelebot.Tests
         public static void MessageInfoMigrateToChatIdTest()
         {
             //check MessageInfo witout field [group_chat_created]
-            dynamic MessageInfoMigrateToChatId = mMinimumMessageInfoField;
+            dynamic MessageInfoMigrateToChatId = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(MessageInfoMigrateToChatId);
             Assert.AreEqual(messageInfo.MigrateToChatId, 0);
 
@@ -495,7 +514,7 @@ namespace NetTelebot.Tests
         public static void MessageInfoMigrateFromChatIdTest()
         {
             //check MessageInfo witout field [group_chat_created]
-            dynamic MigrateFromChatId = mMinimumMessageInfoField;
+            dynamic MigrateFromChatId = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(MigrateFromChatId);
             Assert.AreEqual(messageInfo.MigrateFromChatId, 0);
 
@@ -508,18 +527,18 @@ namespace NetTelebot.Tests
         }
         
         [Test]
-        public static void MinMessageInfoTest()
+        public static void MandatoryFieldsMessageInfoTest()
         {
-            dynamic minMessageInfoField = mMinimumMessageInfoField;
+            dynamic mandatoryMessageInfoFields = mMandatoryFieldsMessageInfo;
 
-            MessageInfo messageInfo = new MessageInfo(minMessageInfoField);
+            MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
             Assert.AreEqual(messageInfo.MessageId, -1147483648);
             Assert.AreEqual(messageInfo.DateUnix, 0);
             Assert.AreEqual(messageInfo.Date, new DateTime(1970, 1, 1).ToLocalTime());
             Assert.AreEqual(messageInfo.Chat.Id, 1049413668);
 
-            Console.WriteLine(minMessageInfoField);
+            Console.WriteLine(mandatoryMessageInfoFields);
         }
     }
 }

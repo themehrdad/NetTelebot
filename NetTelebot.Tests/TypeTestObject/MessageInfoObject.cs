@@ -16,9 +16,9 @@ namespace NetTelebot.Tests.TypeTestObject
         /// <param name="chatId">The chat identifier.</param>
         /// <param name="chatFirstName">First name of the chat.</param>
         /// <returns>
-        /// Minimum required object fields <see cref="MessageInfo" />
+        /// Mandatory required object fields <see cref="MessageInfo" />
         /// </returns>
-        internal static JObject GetMinimumMessageInfoField(int messageId, int date, int chatId, string chatFirstName)
+        internal static JObject GetMandatoryFieldsMessageInfo(int messageId, int date, int chatId, string chatFirstName)
         {
             dynamic messageInfo = new JObject();
 
@@ -28,5 +28,6 @@ namespace NetTelebot.Tests.TypeTestObject
 
             return messageInfo;
         }
+
     }
 }

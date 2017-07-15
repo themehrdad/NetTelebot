@@ -42,6 +42,7 @@ namespace NetTelebot
         /// <param name="jsonObject">The json object.</param>
         private void Parse(JObject jsonObject)
         {
+            // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             MessageId = jsonObject["message_id"].Value<int>();
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoFromTest()
@@ -49,9 +50,13 @@ namespace NetTelebot
                 ? new UserInfo(jsonObject["from"].Value<JObject>())
                 : new UserInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             DateUnix = jsonObject["date"].Value<int>();
+
+            // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             Date = DateUnix.ToDateTime();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             Chat = ParseChat(jsonObject["chat"].Value<JObject>());
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromTest()
@@ -59,8 +64,10 @@ namespace NetTelebot
                 ? new UserInfo(jsonObject["forward_from"].Value<JObject>())
                 : new UserInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromMessageIdTest()
             if (jsonObject["forward_from_message_id"] != null)
                 ForwardFromMessageId = jsonObject["forward_from_message_id"].Value<int>();
+
 
             if (jsonObject["forward_date"]!=null)
             {
