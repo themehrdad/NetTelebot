@@ -80,11 +80,13 @@ namespace NetTelebot
                 ? new MessageInfo(jsonObject["reply_to_message"].Value<JObject>())
                 : new MessageInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoEditDateTest()
             if (jsonObject["edit_date"] != null)
             {
                 EditDateUnix = jsonObject["edit_date"].Value<int>();
                 EditDate = EditDateUnix.ToDateTime();
             }
+
 
             Text = jsonObject["text"] != null 
                 ? jsonObject["text"].Value<string>() 

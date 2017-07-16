@@ -127,6 +127,46 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Test for <see cref="MessageInfo.EditDate"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoEditDateTest()
+        {
+            //check MessageInfo without field [edit_date]
+            dynamic MessageInfoEditDate = mMandatoryFieldsMessageInfo;
+            MessageInfo messageInfo = new MessageInfo(MessageInfoEditDate);
+            Assert.AreEqual(messageInfo.EditDateUnix, 0);
+            Assert.AreEqual(messageInfo.EditDate, DateTime.MinValue);
+
+            //check MessageInfo with field [edit_date: 0] 
+            MessageInfoEditDate.edit_date = 0;
+            messageInfo = new MessageInfo(MessageInfoEditDate);
+            Assert.AreEqual(messageInfo.EditDateUnix, 0);
+            Assert.AreEqual(messageInfo.EditDate, new DateTime(1970, 1, 1).ToLocalTime());
+
+            Console.WriteLine(MessageInfoEditDate);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Text"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoTextTest()
+        {
+            //check MessageInfo without field [text]
+            dynamic MessageInfoText = mMandatoryFieldsMessageInfo;
+            MessageInfo messageInfo = new MessageInfo(MessageInfoText);
+            Assert.AreEqual(messageInfo.Text, string.Empty);
+
+            //check MessageInfo with field [text: TestText] 
+            MessageInfoText.text = "TestText";
+            messageInfo = new MessageInfo(MessageInfoText);
+            Assert.AreEqual(messageInfo.Text, "TestText");
+
+            Console.WriteLine(MessageInfoText);
+        }
+
+        /// <summary>
         /// Test for <see cref="MessageInfo.Audio"/> parse field.
         /// </summary>
         [Test]
