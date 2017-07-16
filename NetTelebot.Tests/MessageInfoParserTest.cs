@@ -18,7 +18,6 @@ namespace NetTelebot.Tests
         [Test]
         public static void MessageInfoFromTest()
         {
-            //todo Do similar tests for all fields MessageInfo
             const int id = 1000;
             const string firstName = "TestName";
             const string lastName = "testLastName";
@@ -623,6 +622,30 @@ namespace NetTelebot.Tests
             Assert.AreEqual(messageInfo.Chat.Id, 1049413668);
 
             Console.WriteLine(mandatoryMessageInfoFields);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.PinnedMessage"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoPinnedMessageTest()
+        {
+            const int messageId = 1000;
+            const int date = 0;
+            const int chatId = 125421;
+            const string chatFirstName = "TestFirstName";
+
+            dynamic MessageInfoPinnedMessage = mMandatoryFieldsMessageInfo;
+
+            MessageInfoPinnedMessage.pinned_message = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatFirstName);
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoPinnedMessage);
+
+            Assert.AreEqual(messageInfo.PinnedMessage.MessageId, messageId);
+            Assert.AreEqual(messageInfo.PinnedMessage.DateUnix, date);
+            Assert.AreEqual(messageInfo.PinnedMessage.Chat.Id, chatId);
+
+            Console.WriteLine(MessageInfoPinnedMessage);
         }
     }
 }

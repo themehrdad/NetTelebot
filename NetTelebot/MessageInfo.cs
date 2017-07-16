@@ -87,7 +87,7 @@ namespace NetTelebot
                 EditDate = EditDateUnix.ToDateTime();
             }
 
-
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoTextTest()
             Text = jsonObject["text"] != null 
                 ? jsonObject["text"].Value<string>() 
                 : string.Empty;
@@ -164,18 +164,19 @@ namespace NetTelebot
             if (jsonObject["supergroup_chat_created"] != null)
                 SuperGroupChatCreated = true;
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoChannelChatCreated()
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoChannelChatCreatedTest()
             if (jsonObject["channel_chat_created"] != null)
                 ChannelChatCreated = true;
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoMigrateToChatId()
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoMigrateToChatIdTest()
             if (jsonObject["migrate_to_chat_id"] != null)
                 MigrateToChatId = jsonObject["migrate_to_chat_id"].Value<int>();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoMigrateFromChatId()
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoMigrateFromChatIdTest()
             if (jsonObject["migrate_from_chat_id"] != null)
                 MigrateFromChatId = jsonObject["migrate_from_chat_id"].Value<int>();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoPinnedMessageTest()
             PinnedMessage = jsonObject["pinned_message"] != null
                 ? new MessageInfo(jsonObject["pinned_message"].Value<JObject>())
                 : new MessageInfo();
