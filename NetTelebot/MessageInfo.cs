@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.ComponentModel;
+using System.Linq;
 
 #if DEBUG
 [assembly: InternalsVisibleTo("NetTelebot.Tests")]
@@ -59,10 +60,11 @@ namespace NetTelebot
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             // To support the old version of the library, the chat object is equal to the old value
-            if (jsonObject["chat"] is JObject)
-                Chat = ParseChat(jsonObject["chat"].Value<JObject>());
-            else
+            if (jsonObject["chat"].Contains("type"))
                 Chats = jsonObject["chat"].Value<ChatInfo>();
+            else
+                Chat = ParseChat(jsonObject["chat"].Value<JObject>());
+            
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromTest()
             ForwardFrom = jsonObject["forward_from"] != null
@@ -222,7 +224,7 @@ namespace NetTelebot
         /// Conversation the message belongs to — user in case of a private message, GroupChat in case of a group.
         /// To support the old version of the library, the chat object is equal to the old value.
         /// </summary>
-        [Obsolete("Please use Chats. In new versions of the library, chat will not be supported")]
+        [Obsolete]
         public IConversationSource Chat { get; private set; }
 
         /// <summary>

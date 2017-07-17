@@ -632,18 +632,17 @@ namespace NetTelebot.Tests
 
             mandatoryMessageInfoFields.message_id = -1147483648;
             mandatoryMessageInfoFields.date = 0;
-            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(1049413668, ChatType.@private,
+            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(1049413668, ChatType.channel,
                 "TestTitle", "TestUsername", "TestFirstName", "TestLastName", false,
                 ChatPhotoInfoObject.GetObject("sdf", "sdf"), "", "");
 
             MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
-            Assert.AreEqual(messageInfo.MessageId, -1147483648);
-            Assert.AreEqual(messageInfo.DateUnix, 0);
-            Assert.AreEqual(messageInfo.Date, new DateTime(1970, 1, 1).ToLocalTime());
-            //todo finish here
-            //Assert.AreEqual(messageInfo.Chats.Id, 1049413668);
+            Assert.AreEqual(messageInfo.Chats.Id, 1049413668);
+            Assert.AreEqual(messageInfo.Chats.Type, ChatType.@private);
 
+
+            
             Console.WriteLine(mandatoryMessageInfoFields);
         }
 

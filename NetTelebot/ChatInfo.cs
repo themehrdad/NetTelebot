@@ -1,14 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace NetTelebot
-{
-    //todo need test 
-
+namespace NetTelebot 
+{ 
     /// <summary>
     /// This object represents a chat. See <see href="https://core.telegram.org/bots/api#chat">API</see>
     /// </summary>
-    public class ChatInfo 
+    public class ChatInfo : IConversationSource 
     {
         internal ChatInfo()
         {
@@ -58,7 +56,7 @@ namespace NetTelebot
         /// difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision
         /// float type are safe for storing this identifier.
         /// </summary>
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Type of chat, can be either “private”, “group”, “supergroup” or “channel”
