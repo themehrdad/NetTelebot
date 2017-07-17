@@ -4,8 +4,8 @@ namespace NetTelebot.Tests.TypeTestObject
 {
     internal sealed class ChatInfoObject
     {
-        internal static JObject GetObject(int id, string type, string title, string username,
-            string firstName, string lastName, bool allMembersAreAdministrators, ChatPhotoInfoObject photo,
+        internal static JObject GetObject(int id, ChatType type, string title, string username,
+            string firstName, string lastName, bool allMembersAreAdministrators, JObject photo,
             string description, string inviteLink)
         {
             dynamic chat = new JObject();

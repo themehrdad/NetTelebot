@@ -609,7 +609,7 @@ namespace NetTelebot.Tests
             Console.WriteLine(MigrateFromChatId);
         }
         
-        [Test]
+        [Test, Obsolete]
         public static void MandatoryFieldsMessageInfoTest()
         {
             dynamic mandatoryMessageInfoFields = mMandatoryFieldsMessageInfo;
@@ -620,6 +620,29 @@ namespace NetTelebot.Tests
             Assert.AreEqual(messageInfo.DateUnix, 0);
             Assert.AreEqual(messageInfo.Date, new DateTime(1970, 1, 1).ToLocalTime());
             Assert.AreEqual(messageInfo.Chat.Id, 1049413668);
+            
+
+            Console.WriteLine(mandatoryMessageInfoFields);
+        }
+
+        [Test]
+        public static void MandatoryFieldsNewMessageInfoTest()
+        {
+            dynamic mandatoryMessageInfoFields = new JObject();
+
+            mandatoryMessageInfoFields.message_id = -1147483648;
+            mandatoryMessageInfoFields.date = 0;
+            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(1049413668, ChatType.@private,
+                "TestTitle", "TestUsername", "TestFirstName", "TestLastName", false,
+                ChatPhotoInfoObject.GetObject("sdf", "sdf"), "", "");
+
+            MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
+
+            Assert.AreEqual(messageInfo.MessageId, -1147483648);
+            Assert.AreEqual(messageInfo.DateUnix, 0);
+            Assert.AreEqual(messageInfo.Date, new DateTime(1970, 1, 1).ToLocalTime());
+            //todo finish here
+            //Assert.AreEqual(messageInfo.Chats.Id, 1049413668);
 
             Console.WriteLine(mandatoryMessageInfoFields);
         }
