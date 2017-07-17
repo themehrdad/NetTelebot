@@ -134,7 +134,7 @@ namespace NetTelebot.Tests
             var messageId = sendMessage.Result.ReplyToMessage.MessageId;
             UserInfo from = sendMessage.Result.ReplyToMessage.From;
             DateTime date = sendMessage.Result.ReplyToMessage.Date;
-            ChatInfo chat = sendMessage.Result.ReplyToMessage.Chat;
+            IConversationSource chat = sendMessage.Result.ReplyToMessage.Chat;
             UserInfo forwardFrom = sendMessage.Result.ReplyToMessage.ForwardFrom;
             
             //todo forward_from_chat
@@ -957,7 +957,7 @@ namespace NetTelebot.Tests
             var messageId = sendMessage.Result.PinnedMessage.MessageId;
             UserInfo from = sendMessage.Result.PinnedMessage.From;
             DateTime date = sendMessage.Result.PinnedMessage.Date;
-            ChatInfo chat = sendMessage.Result.PinnedMessage.Chat;
+            IConversationSource chat = sendMessage.Result.PinnedMessage.Chat;
             UserInfo forwardFrom = sendMessage.Result.PinnedMessage.ForwardFrom;
             
             //todo forward_from_chat
