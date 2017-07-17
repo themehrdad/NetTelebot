@@ -2,11 +2,8 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal class PhotoSizeInfoObject
+    internal static class PhotoSizeInfoObject
     {
-        protected PhotoSizeInfoObject()
-        {
-        }
 
         /// <summary>
         /// This object represents one size of a photo or a file / sticker thumbnail. See <see href="https://core.telegram.org/bots/api#photosize"/>

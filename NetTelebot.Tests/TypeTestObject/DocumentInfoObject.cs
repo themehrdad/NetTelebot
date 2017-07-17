@@ -2,12 +2,8 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal class DocumentInfoObject
+    internal static class DocumentInfoObject
     {
-        protected DocumentInfoObject()
-        {
-        }
-
         /// <summary>
         /// This object represents a general file (as opposed to photos, voice messages and audio files).
         /// See <see href="https://core.telegram.org/bots/api#document">API</see>

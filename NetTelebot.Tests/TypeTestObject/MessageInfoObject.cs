@@ -2,12 +2,8 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal class MessageInfoObject
+    internal static class MessageInfoObject
     {
-        protected MessageInfoObject()
-        {
-        }
-
         /// <summary>
         /// Minimum required object fields <see cref="MessageInfo" />
         /// </summary>

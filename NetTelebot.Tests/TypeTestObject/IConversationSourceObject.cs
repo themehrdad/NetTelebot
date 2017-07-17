@@ -2,12 +2,8 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal class IConversationSourceObject
+    internal static class IConversationSourceObject
     {
-        protected IConversationSourceObject()
-        {
-        }
-
         /// <summary>
         /// This object represents objects with an implementation interface <see cref="IConversationSource" />.
         /// </summary>
