@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal static class AudioInfoObject
+    internal sealed class AudioInfoObject
     {
     
         /// <summary>

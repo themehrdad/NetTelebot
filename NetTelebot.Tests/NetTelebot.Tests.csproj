@@ -71,6 +71,8 @@
     <Compile Include="TelegramBotClientTest.cs" />
     <Compile Include="TelegramRealBotClientTest.cs" />
     <Compile Include="TypeTestObject\AudioInfoObject.cs" />
+    <Compile Include="TypeTestObject\ChatInfoObject.cs" />
+    <Compile Include="TypeTestObject\ChatPhotoInfoObject.cs" />
     <Compile Include="TypeTestObject\ContactInfoObject.cs" />
     <Compile Include="TypeTestObject\DocumentInfoObject.cs" />
     <Compile Include="TypeTestObject\IConversationSourceObject.cs" />

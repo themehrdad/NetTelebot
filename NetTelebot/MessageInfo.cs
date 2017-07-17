@@ -57,7 +57,8 @@ namespace NetTelebot
             Date = DateUnix.ToDateTime();
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
-            Chat = ParseChat(jsonObject["chat"].Value<JObject>());
+            //Chat = ParseChat(jsonObject["chat"].Value<JObject>());
+            Chat = jsonObject["chat"].Value<ChatInfo>();
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromTest()
             ForwardFrom = jsonObject["forward_from"] != null
@@ -182,6 +183,7 @@ namespace NetTelebot
                 : new MessageInfo();
         }
 
+        [Obsolete]
         private static IConversationSource ParseChat(JObject jsonObject)
         {
             if (jsonObject["title"] != null)
@@ -215,7 +217,7 @@ namespace NetTelebot
         /// <summary>
         /// Conversation the message belongs to — user in case of a private message, GroupChat in case of a group
         /// </summary>
-        public IConversationSource Chat { get; private set; }
+        public ChatInfo Chat { get; private set; }
 
         /// <summary>
         /// Optional. For forwarded messages, sender of the original message.

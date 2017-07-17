@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal static class PhotoSizeInfoObject
+    internal sealed class PhotoSizeInfoObject
     {
 
         /// <summary>

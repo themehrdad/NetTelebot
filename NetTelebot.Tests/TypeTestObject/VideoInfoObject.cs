@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal class VideoInfoObject
+    internal sealed class VideoInfoObject
     {
         /// <summary>
         /// This object represents a video file. See <see href="https://core.telegram.org/bots/api#video">API</see>

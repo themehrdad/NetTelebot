@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot
@@ -6,6 +7,7 @@ namespace NetTelebot
     /// <summary>
     /// This object represents a group chat.
     /// </summary>
+    [Obsolete]
     public class GroupChatInfo : IConversationSource
     {
         internal GroupChatInfo(string jsonText)
