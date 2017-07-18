@@ -66,8 +66,7 @@ namespace NetTelebot
                 if(jsonObject["chat"]["type"] != null)
                     Chats = new ChatInfo(jsonObject["chat"].Value<JObject>());
                 
-                Chat = ParseChat(jsonObject["chat"].Value<JObject>());
-                
+                Chat = ParseChat(jsonObject["chat"].Value<JObject>());   
             }
 
 
@@ -229,7 +228,7 @@ namespace NetTelebot
         /// Conversation the message belongs to — user in case of a private message, GroupChat in case of a group.
         /// To support the old version of the library, the chat object is equal to the old value.
         /// </summary>
-        [Obsolete]
+        [Obsolete("Please use chats")]
         public IConversationSource Chat { get; private set; }
 
         /// <summary>

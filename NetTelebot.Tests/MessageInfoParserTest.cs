@@ -101,6 +101,86 @@ namespace NetTelebot.Tests
             Console.WriteLine(MessageInfoForwardDateUnix);
         }
 
+        [Test]
+        public static void MessageInfoChatsTest()
+        {
+            const int id = 1049413668;
+            const string type = "channel";
+            const string title = "TestTitle";
+            const string username = "TestUsername";
+            const string firstName = "TestFirstName";
+            const string lastName = "TestLastName";
+            const bool allMembersAreAdministrators = false;
+            JObject photo = ChatPhotoInfoObject.GetObject("123456", "654321");
+            const string description = "TestDescription";
+            const string inviteLink = "TestLink";
+
+            dynamic mandatoryMessageInfoFields = new JObject();
+
+            mandatoryMessageInfoFields.message_id = -1147483648;
+            mandatoryMessageInfoFields.date = 0;
+
+            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id, type,
+                title, username, firstName, lastName, allMembersAreAdministrators, 
+                photo, description, inviteLink);
+
+            MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
+
+            Assert.AreEqual(messageInfo.Chats.Id, id);
+            Assert.AreEqual(messageInfo.Chats.Type, ChatType.channel);
+            Assert.AreEqual(messageInfo.Chats.Title, title);
+            Assert.AreEqual(messageInfo.Chats.Username, username);
+            Assert.AreEqual(messageInfo.Chats.FirstName, firstName);
+            Assert.AreEqual(messageInfo.Chats.LastName, lastName);
+            Assert.AreEqual(messageInfo.Chats.AllMembersAreAdministrators, allMembersAreAdministrators);
+            Assert.AreEqual(messageInfo.Chats.Photo.SmallFileId, "123456");
+            Assert.AreEqual(messageInfo.Chats.Photo.BigFileId, "654321");
+            Assert.AreEqual(messageInfo.Chats.Description, description);
+            Assert.AreEqual(messageInfo.Chats.InviteLink, inviteLink);
+
+            Console.WriteLine(mandatoryMessageInfoFields);
+        }
+
+
+        [Test]
+        public static void MessageInfoChatsTypeParserTest()
+        {
+            const int id = 1049413668;
+            dynamic mandatoryMessageInfoFields = new JObject();
+
+            mandatoryMessageInfoFields.message_id = -1147483648;
+            mandatoryMessageInfoFields.date = 0;
+
+            //private
+            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id, "private");
+
+            MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
+
+            Assert.AreEqual(messageInfo.Chats.Id, id);
+            Assert.AreEqual(messageInfo.Chats.Type, ChatType.@private);
+
+            //channel
+            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id, "channel");
+            messageInfo = new MessageInfo(mandatoryMessageInfoFields);
+
+            Assert.AreEqual(messageInfo.Chats.Id, id);
+            Assert.AreEqual(messageInfo.Chats.Type, ChatType.channel);
+
+            //group
+            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id, "group");
+            messageInfo = new MessageInfo(mandatoryMessageInfoFields);
+
+            Assert.AreEqual(messageInfo.Chats.Id, id);
+            Assert.AreEqual(messageInfo.Chats.Type, ChatType.@group);
+
+            //supergroup
+            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id, "supergroup");
+            messageInfo = new MessageInfo(mandatoryMessageInfoFields);
+
+            Assert.AreEqual(messageInfo.Chats.Id, id);
+            Assert.AreEqual(messageInfo.Chats.Type, ChatType.supergroup);
+        }
+
         /// <summary>
         /// Test for <see cref="MessageInfo.ReplyToMessage"/> parse field.
         /// </summary>
@@ -622,28 +702,6 @@ namespace NetTelebot.Tests
             Assert.AreEqual(messageInfo.Chat.Id, 1049413668);
             
 
-            Console.WriteLine(mandatoryMessageInfoFields);
-        }
-
-        [Test]
-        public static void MessageInfoChatsTest()
-        {
-            dynamic mandatoryMessageInfoFields = new JObject();
-
-            mandatoryMessageInfoFields.message_id = -1147483648;
-            mandatoryMessageInfoFields.date = 0;
-
-            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(1049413668, ChatType.channel,
-                "TestTitle", "TestUsername", "TestFirstName", "TestLastName", false,
-                ChatPhotoInfoObject.GetObject("123456", "654321"), "Test", "Test");
-            
-            MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
-
-            Assert.AreEqual(messageInfo.Chats.Id, 1049413668);
-            Assert.AreEqual(messageInfo.Chats.Type, ChatType.channel);
-
-
-            
             Console.WriteLine(mandatoryMessageInfoFields);
         }
 

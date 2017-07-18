@@ -30,8 +30,10 @@ namespace NetTelebot
 
         private void Parse(JObject jsonObject)
         {
-            SmallFileId = jsonObject["small_file_id"].Value<string>();
-            BigFileId = jsonObject["big_file_id"].Value<string>();
+            if (jsonObject["small_file_id"] != null)
+                SmallFileId = jsonObject["small_file_id"].Value<string>();
+            if (jsonObject["big_file_id"] != null)
+                BigFileId = jsonObject["big_file_id"].Value<string>();
         }
 
         /// <summary>

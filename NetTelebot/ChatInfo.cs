@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot 
@@ -42,7 +43,7 @@ namespace NetTelebot
             if (jsonObject["last_name"] != null)
                 LastName = jsonObject["last_name"].Value<string>();
             if (jsonObject["all_members_are_administrators"] != null)
-                AllMembersAreAdministrators = jsonObject["all_members_are_administrators"].Value<bool>();
+                AllMembersAreAdministrators =  jsonObject["all_members_are_administrators"].Value<bool>();
             if (jsonObject["photo"] != null)
                 Photo = new ChatPhotoInfo(jsonObject["photo"].Value<JObject>());
             if (jsonObject["description"] != null)
