@@ -21,17 +21,19 @@ namespace NetTelebot.Tests
         /// Test the send and return value (SendMessageResult.Result.Text) and send a message (SendMessageResult.Ok)
         /// </summary>
         [Test]
-        public void TestSendMessage()
+        public void TestSendMessageToChat()
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "Test");
             Assert.AreEqual(sendMessage.Result.Text, "Test");
 
+
             Assert.True(sendMessage.Ok);
+            Assert.AreEqual(sendMessage.Result.Chat.Id, mChatId);
             ParseSendMessageResult(sendMessage);
         }
 
         [Test]
-        public void TestSendMessageToChatsCheckGroup()
+        public void TestSendMessageToChats()
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "Test");
 
@@ -48,6 +50,7 @@ namespace NetTelebot.Tests
                 "\n invite link" + sendMessage.Result.Chats.InviteLink
                 );
 
+            Assert.AreEqual(sendMessage.Result.Chats.Id, mChatId);
             Assert.AreEqual(sendMessage.Result.Chats.Type, ChatType.@group);
         }
 
@@ -55,12 +58,12 @@ namespace NetTelebot.Tests
         /// Test the send and return location point (SendMessageResult.Result.Location.Latitude, SendMessageResult.Result.Location.Longitude)
         /// </summary>
         [Test]
-        [Ignore("Ignore because failed on app veyour")]
+        //[Ignore("Ignore because failed on app veyour")]
         public void TestSendSendLocation()
         {
             //todo check with real point
-            const float latitude = 37.0000114f;
-            const float longitude = 37.0000076f;
+            const float latitude = 1.00000095f;
+            const float longitude = 1.00000203f;
             
             SendMessageResult sendLocation = mTelegramBot.SendLocation(mChatId, latitude, longitude);
 
