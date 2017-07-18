@@ -31,7 +31,7 @@ namespace NetTelebot
         private void Parse(JObject jsonObject)
         {
             Id = jsonObject["id"].Value<int>();
-            Type = jsonObject["type"].Value<ChatType>();
+            Type = ParseChatType(jsonObject["type"].Value<string>());
 
             if (jsonObject["title"] != null)
                 Title = jsonObject["title"].Value<string>();
@@ -44,11 +44,23 @@ namespace NetTelebot
             if (jsonObject["all_members_are_administrators"] != null)
                 AllMembersAreAdministrators = jsonObject["all_members_are_administrators"].Value<bool>();
             if (jsonObject["photo"] != null)
-                Photo = jsonObject["photo"].Value<ChatPhotoInfo>();
+                Photo = new ChatPhotoInfo(jsonObject["photo"].Value<JObject>());
             if (jsonObject["description"] != null)
                 Description = jsonObject["description"].Value<string>();
             if (jsonObject["invite_link"] != null)
                 InviteLink = jsonObject["invite_link"].Value<string>();
+        }
+
+        private static ChatType ParseChatType(string type)
+        {
+            if (type.Equals("private"))
+                return ChatType.@private;
+            if (type.Equals("group"))
+                return ChatType.group;
+            if (type.Equals("supergroup"))
+                return ChatType.supergroup;
+            
+            return ChatType.channel;
         }
 
         /// <summary>

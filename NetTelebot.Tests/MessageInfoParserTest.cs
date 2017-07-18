@@ -626,20 +626,21 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public static void MandatoryFieldsNewMessageInfoTest()
+        public static void MessageInfoChatsTest()
         {
             dynamic mandatoryMessageInfoFields = new JObject();
 
             mandatoryMessageInfoFields.message_id = -1147483648;
             mandatoryMessageInfoFields.date = 0;
+
             mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(1049413668, ChatType.channel,
                 "TestTitle", "TestUsername", "TestFirstName", "TestLastName", false,
-                ChatPhotoInfoObject.GetObject("sdf", "sdf"), "", "");
-
+                ChatPhotoInfoObject.GetObject("123456", "654321"), "Test", "Test");
+            
             MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
             Assert.AreEqual(messageInfo.Chats.Id, 1049413668);
-            Assert.AreEqual(messageInfo.Chats.Type, ChatType.@private);
+            Assert.AreEqual(messageInfo.Chats.Type, ChatType.channel);
 
 
             

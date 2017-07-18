@@ -60,11 +60,16 @@ namespace NetTelebot
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             // To support the old version of the library, the chat object is equal to the old value
-            if (jsonObject["chat"].Contains("type"))
-                Chats = jsonObject["chat"].Value<ChatInfo>();
-            else
+            // todo check choice
+            if (jsonObject["chat"] != null)
+            {
+                if(jsonObject["chat"]["type"] != null)
+                    Chats = new ChatInfo(jsonObject["chat"].Value<JObject>());
+                
                 Chat = ParseChat(jsonObject["chat"].Value<JObject>());
-            
+                
+            }
+
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromTest()
             ForwardFrom = jsonObject["forward_from"] != null
@@ -194,7 +199,7 @@ namespace NetTelebot
         {
             if (jsonObject["title"] != null)
                 return new GroupChatInfo(jsonObject);
-
+            
             return new UserInfo(jsonObject);
         }
 

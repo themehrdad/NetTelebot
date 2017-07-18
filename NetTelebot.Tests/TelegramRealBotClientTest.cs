@@ -30,6 +30,27 @@ namespace NetTelebot.Tests
             ParseSendMessageResult(sendMessage);
         }
 
+        [Test]
+        public void TestSendMessageToChatsCheckGroup()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "Test");
+
+            Console.WriteLine(
+                "\n id " + sendMessage.Result.Chats.Id + 
+                "\n type " + sendMessage.Result.Chats.Type + 
+                "\n title " + sendMessage.Result.Chats.Title +
+                "\n username " + sendMessage.Result.Chats.Username +
+                "\n firstname " + sendMessage.Result.Chats.FirstName +
+                "\n lastaname " + sendMessage.Result.Chats.LastName +
+                "\n All members are administrator " + sendMessage.Result.Chats.AllMembersAreAdministrators +
+                "\n Photo " + sendMessage.Result.Chats.Photo +
+                "\n description " + sendMessage.Result.Chats.Description +
+                "\n invite link" + sendMessage.Result.Chats.InviteLink
+                );
+
+            Assert.AreEqual(sendMessage.Result.Chats.Type, ChatType.@group);
+        }
+
         /// <summary>
         /// Test the send and return location point (SendMessageResult.Result.Location.Latitude, SendMessageResult.Result.Location.Longitude)
         /// </summary>
