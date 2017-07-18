@@ -6,6 +6,8 @@ environment:
     secure: dBJuwzehA/7jrIvLkWNvjwl7Xa1J8d4Dwn5dWo1Mc84ITLKke0QDcqioFCzw+7sM
   COVERALLS_REPO_TOKEN:
     secure: aSQZhP2AUcJbTR2jPreYfDVCAmIJl9TWvzhLKINjg81779XWPYnSOaCcIRs9Z7SI
+hosts:
+  api.nuget.org: 93.184.221.200
 install:
 - cmd: 
 before_build:

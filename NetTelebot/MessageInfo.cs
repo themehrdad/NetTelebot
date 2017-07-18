@@ -42,6 +42,7 @@ namespace NetTelebot
         /// <param name="jsonObject">The json object.</param>
         private void Parse(JObject jsonObject)
         {
+            // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             MessageId = jsonObject["message_id"].Value<int>();
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoFromTest()
@@ -49,35 +50,52 @@ namespace NetTelebot
                 ? new UserInfo(jsonObject["from"].Value<JObject>())
                 : new UserInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             DateUnix = jsonObject["date"].Value<int>();
+
+            // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             Date = DateUnix.ToDateTime();
 
-            Chat = ParseChat(jsonObject["chat"].Value<JObject>());
+            // To support the old version of the library, the chat object is equal to the old value
+            if (jsonObject["chat"] != null)
+            {
+                if(jsonObject["chat"]["type"] != null)
+                    // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoChatsTest()
+                    Chats = new ChatInfo(jsonObject["chat"].Value<JObject>());
+
+                // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
+                Chat = ParseChat(jsonObject["chat"].Value<JObject>());   
+            }
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromTest()
             ForwardFrom = jsonObject["forward_from"] != null
                 ? new UserInfo(jsonObject["forward_from"].Value<JObject>())
                 : new UserInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromMessageIdTest()
             if (jsonObject["forward_from_message_id"] != null)
                 ForwardFromMessageId = jsonObject["forward_from_message_id"].Value<int>();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardDateUnixTest()
             if (jsonObject["forward_date"]!=null)
             {
                 ForwardDateUnix = jsonObject["forward_date"].Value<int>();
                 ForwardDate = ForwardDateUnix.ToDateTime();
             }
-            
+
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoReplyToMessageTest()
             ReplyToMessage = jsonObject["reply_to_message"] != null
                 ? new MessageInfo(jsonObject["reply_to_message"].Value<JObject>())
                 : new MessageInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoEditDateTest()
             if (jsonObject["edit_date"] != null)
             {
                 EditDateUnix = jsonObject["edit_date"].Value<int>();
                 EditDate = EditDateUnix.ToDateTime();
             }
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoTextTest()
             Text = jsonObject["text"] != null 
                 ? jsonObject["text"].Value<string>() 
                 : string.Empty;
@@ -87,79 +105,97 @@ namespace NetTelebot
                 ? new AudioInfo(jsonObject["audio"].Value<JObject>()) 
                 : new AudioInfo();
 
-
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoDocumentTest()
             Document = jsonObject["document"] != null
                 ? new DocumentInfo(jsonObject["document"].Value<JObject>())
                 : new DocumentInfo {Thumb = new PhotoSizeInfo()};
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoPhotoTest()
             Photo = jsonObject["photo"] != null
                 ? PhotoSizeInfo.ParseArray(jsonObject["photo"].Value<JArray>())
                 : new PhotoSizeInfo[0];
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoStickerTest()
             Sticker = jsonObject["sticker"] != null
                 ? new StickerInfo(jsonObject["sticker"].Value<JObject>())
                 : new StickerInfo {Thumb = new PhotoSizeInfo()};
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoVideoTest()
             Video = jsonObject["video"] != null
                 ? new VideoInfo(jsonObject["video"].Value<JObject>())
                 : new VideoInfo {Thumb = new PhotoSizeInfo()};
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoCaptionTest()
             Caption = jsonObject["caption"] != null 
                 ? jsonObject["caption"].Value<string>() 
                 : string.Empty;
-            
+
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoContactTest()
             Contact = jsonObject["contact"] != null
                 ? new ContactInfo(jsonObject["contact"].Value<JObject>())
                 : new ContactInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoLocationTest()
             Location = jsonObject["location"] != null
                 ? new LocationInfo(jsonObject["location"].Value<JObject>())
                 : new LocationInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoNewChatMemberTest()
             NewChatMember = jsonObject["new_chat_member"] != null
                 ? new UserInfo(jsonObject["new_chat_member"].Value<JObject>())
                 : new UserInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoLeftChatMemberTest()
             LeftChatMember = jsonObject["left_chat_member"] != null
                 ? new UserInfo(jsonObject["left_chat_member"].Value<JObject>())
                 : new UserInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoNewChatTitleTest()
             NewChatTitle = jsonObject["new_chat_title"] != null
                 ? jsonObject["new_chat_title"].Value<string>()
                 : string.Empty;
-            
+
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoNewChatPhotoTest()
             NewChatPhoto = jsonObject["new_chat_photo"] != null
                 ? PhotoSizeInfo.ParseArray(jsonObject["new_chat_photo"].Value<JArray>())
                 : new PhotoSizeInfo[0];
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoDeleteChatPhotoTest()
             if (jsonObject["delete_chat_photo"] != null)
                 DeleteChatPhoto = true;
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoGroupChatPhotoTest()
             if (jsonObject["group_chat_created"] != null)
                 GroupChatCreated = true;
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoSuperGroupChatPhotoTest()
             if (jsonObject["supergroup_chat_created"] != null)
                 SuperGroupChatCreated = true;
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoChannelChatCreatedTest()
             if (jsonObject["channel_chat_created"] != null)
                 ChannelChatCreated = true;
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoMigrateToChatIdTest()
             if (jsonObject["migrate_to_chat_id"] != null)
                 MigrateToChatId = jsonObject["migrate_to_chat_id"].Value<int>();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoMigrateFromChatIdTest()
             if (jsonObject["migrate_from_chat_id"] != null)
                 MigrateFromChatId = jsonObject["migrate_from_chat_id"].Value<int>();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoPinnedMessageTest()
             PinnedMessage = jsonObject["pinned_message"] != null
                 ? new MessageInfo(jsonObject["pinned_message"].Value<JObject>())
                 : new MessageInfo();
         }
 
+        [Obsolete]
         private static IConversationSource ParseChat(JObject jsonObject)
         {
             if (jsonObject["title"] != null)
                 return new GroupChatInfo(jsonObject);
-
+            
             return new UserInfo(jsonObject);
         }
 
@@ -186,9 +222,16 @@ namespace NetTelebot
         public DateTime Date { get; private set; }
 
         /// <summary>
+        /// Conversation the message belongs to — user in case of a private message, GroupChat in case of a group.
+        /// To support the old version of the library, the chat object is equal to the old value.
+        /// </summary>
+        [Obsolete("Please use chats")]
+        public IConversationSource Chat { get; private set; }
+
+        /// <summary>
         /// Conversation the message belongs to — user in case of a private message, GroupChat in case of a group
         /// </summary>
-        public IConversationSource Chat { get; private set; }
+        public ChatInfo Chats { get; private set; }
 
         /// <summary>
         /// Optional. For forwarded messages, sender of the original message.

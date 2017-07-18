@@ -2,12 +2,9 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal class AudioInfoObject
+    internal sealed class AudioInfoObject
     {
-        protected AudioInfoObject()
-        {
-        }
-
+    
         /// <summary>
         /// This object represents an audio file to be treated as music by the Telegram clients. 
         /// See <see href="https://core.telegram.org/bots/api#audio">API</see>

@@ -2,12 +2,8 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal class DocumentInfoObject
+    internal sealed class DocumentInfoObject
     {
-        protected DocumentInfoObject()
-        {
-        }
-
         /// <summary>
         /// This object represents a general file (as opposed to photos, voice messages and audio files).
         /// See <see href="https://core.telegram.org/bots/api#document">API</see>
@@ -17,7 +13,7 @@ namespace NetTelebot.Tests.TypeTestObject
         /// <param name="fileName">Optional. Original filename as defined by sender</param>
         /// <param name="mimeTypes">Optional. MIME type of the file as defined by sender</param>
         /// <param name="fileSize">Optional. File size</param>
-        /// <returns></returns>
+        /// <returns><see cref="MessageInfo.Document"/></returns>
         internal static JObject GetObject(string fileId, JObject photoSizeInfo, 
             string fileName, string mimeTypes, int fileSize)
         {

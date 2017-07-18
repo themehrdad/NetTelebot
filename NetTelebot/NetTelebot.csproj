@@ -47,6 +47,9 @@
   <ItemGroup>
     <Compile Include="AudioInfo.cs" />
     <Compile Include="ChatActions.cs" />
+    <Compile Include="ChatInfo.cs" />
+    <Compile Include="ChatPhotoInfo.cs" />
+    <Compile Include="ChatType.cs" />
     <Compile Include="ContactInfo.cs" />
     <Compile Include="DocumentInfo.cs" />
     <Compile Include="ExistingFile.cs" />
