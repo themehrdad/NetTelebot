@@ -2,8 +2,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.ComponentModel;
-using System.Linq;
 
 #if DEBUG
 [assembly: InternalsVisibleTo("NetTelebot.Tests")]
@@ -58,17 +56,16 @@ namespace NetTelebot
             // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             Date = DateUnix.ToDateTime();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             // To support the old version of the library, the chat object is equal to the old value
-            // todo check choice
             if (jsonObject["chat"] != null)
             {
                 if(jsonObject["chat"]["type"] != null)
+                    // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoChatsTest()
                     Chats = new ChatInfo(jsonObject["chat"].Value<JObject>());
-                
+
+                // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
                 Chat = ParseChat(jsonObject["chat"].Value<JObject>());   
             }
-
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromTest()
             ForwardFrom = jsonObject["forward_from"] != null

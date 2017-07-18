@@ -101,6 +101,9 @@ namespace NetTelebot.Tests
             Console.WriteLine(MessageInfoForwardDateUnix);
         }
 
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Chats"/> parse field.
+        /// </summary>
         [Test]
         public static void MessageInfoChatsTest()
         {
@@ -141,7 +144,9 @@ namespace NetTelebot.Tests
             Console.WriteLine(mandatoryMessageInfoFields);
         }
 
-
+        /// <summary>
+        /// Test for parse <see cref="ChatType"/> in <see cref="MessageInfo.Chats"/> 
+        /// </summary>
         [Test]
         public static void MessageInfoChatsTypeParserTest()
         {

@@ -13,7 +13,7 @@ namespace NetTelebot.Tests.TypeTestObject
         /// <param name="fileName">Optional. Original filename as defined by sender</param>
         /// <param name="mimeTypes">Optional. MIME type of the file as defined by sender</param>
         /// <param name="fileSize">Optional. File size</param>
-        /// <returns></returns>
+        /// <returns><see cref="MessageInfo.Document"/></returns>
         internal static JObject GetObject(string fileId, JObject photoSizeInfo, 
             string fileName, string mimeTypes, int fileSize)
         {

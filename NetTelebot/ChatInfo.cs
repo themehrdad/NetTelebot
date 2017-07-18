@@ -58,10 +58,7 @@ namespace NetTelebot
                 return ChatType.@private;
             if (type.Equals("group"))
                 return ChatType.group;
-            if (type.Equals("supergroup"))
-                return ChatType.supergroup;
-            
-            return ChatType.channel;
+            return type.Equals("supergroup") ? ChatType.supergroup : ChatType.channel;
         }
 
         /// <summary>
