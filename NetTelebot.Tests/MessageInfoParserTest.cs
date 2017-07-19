@@ -10,7 +10,7 @@ namespace NetTelebot.Tests
     {
         private static readonly JObject mMandatoryFieldsMessageInfo =
             MessageInfoObject.GetMandatoryFieldsMessageInfo(-1147483648, 0,
-                1049413668, "Test");
+                1049413668, ChatType.@group);
 
         /// <summary>
         /// Test for <see cref="MessageInfo.From"/> parse field.
@@ -129,17 +129,17 @@ namespace NetTelebot.Tests
 
             MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
-            Assert.AreEqual(messageInfo.Chats.Id, id);
-            Assert.AreEqual(messageInfo.Chats.Type, ChatType.channel);
-            Assert.AreEqual(messageInfo.Chats.Title, title);
-            Assert.AreEqual(messageInfo.Chats.Username, username);
-            Assert.AreEqual(messageInfo.Chats.FirstName, firstName);
-            Assert.AreEqual(messageInfo.Chats.LastName, lastName);
-            Assert.AreEqual(messageInfo.Chats.AllMembersAreAdministrators, allMembersAreAdministrators);
-            Assert.AreEqual(messageInfo.Chats.Photo.SmallFileId, "123456");
-            Assert.AreEqual(messageInfo.Chats.Photo.BigFileId, "654321");
-            Assert.AreEqual(messageInfo.Chats.Description, description);
-            Assert.AreEqual(messageInfo.Chats.InviteLink, inviteLink);
+            Assert.AreEqual(messageInfo.Chat.Id, id);
+            Assert.AreEqual(messageInfo.Chat.Type, ChatType.channel);
+            Assert.AreEqual(messageInfo.Chat.Title, title);
+            Assert.AreEqual(messageInfo.Chat.Username, username);
+            Assert.AreEqual(messageInfo.Chat.FirstName, firstName);
+            Assert.AreEqual(messageInfo.Chat.LastName, lastName);
+            Assert.AreEqual(messageInfo.Chat.AllMembersAreAdministrators, allMembersAreAdministrators);
+            Assert.AreEqual(messageInfo.Chat.Photo.SmallFileId, "123456");
+            Assert.AreEqual(messageInfo.Chat.Photo.BigFileId, "654321");
+            Assert.AreEqual(messageInfo.Chat.Description, description);
+            Assert.AreEqual(messageInfo.Chat.InviteLink, inviteLink);
 
             Console.WriteLine(mandatoryMessageInfoFields);
         }
@@ -161,29 +161,29 @@ namespace NetTelebot.Tests
 
             MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
-            Assert.AreEqual(messageInfo.Chats.Id, id);
-            Assert.AreEqual(messageInfo.Chats.Type, ChatType.@private);
+            Assert.AreEqual(messageInfo.Chat.Id, id);
+            Assert.AreEqual(messageInfo.Chat.Type, ChatType.@private);
 
             //channel
             mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id, "channel");
             messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
-            Assert.AreEqual(messageInfo.Chats.Id, id);
-            Assert.AreEqual(messageInfo.Chats.Type, ChatType.channel);
+            Assert.AreEqual(messageInfo.Chat.Id, id);
+            Assert.AreEqual(messageInfo.Chat.Type, ChatType.channel);
 
             //group
             mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id, "group");
             messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
-            Assert.AreEqual(messageInfo.Chats.Id, id);
-            Assert.AreEqual(messageInfo.Chats.Type, ChatType.@group);
+            Assert.AreEqual(messageInfo.Chat.Id, id);
+            Assert.AreEqual(messageInfo.Chat.Type, ChatType.@group);
 
             //supergroup
             mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id, "supergroup");
             messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
-            Assert.AreEqual(messageInfo.Chats.Id, id);
-            Assert.AreEqual(messageInfo.Chats.Type, ChatType.supergroup);
+            Assert.AreEqual(messageInfo.Chat.Id, id);
+            Assert.AreEqual(messageInfo.Chat.Type, ChatType.supergroup);
         }
 
         /// <summary>
@@ -195,11 +195,11 @@ namespace NetTelebot.Tests
             const int messageId = 1000;
             const int date = 0;
             const int chatId = 125421;
-            const string chatFirstName = "TestFirstName";
+            //const string chatFirstName = "TestFirstName";
 
             dynamic MessageInfoReplyToMessage = mMandatoryFieldsMessageInfo;
 
-            MessageInfoReplyToMessage.reply_to_message = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatFirstName);
+            MessageInfoReplyToMessage.reply_to_message = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, ChatType.channel);
 
             MessageInfo messageInfo = new MessageInfo(MessageInfoReplyToMessage);
 
@@ -624,12 +624,12 @@ namespace NetTelebot.Tests
         [Test]
         public static void MessageInfoSuperGroupChatCreatedTest()
         {
-            //check MessageInfo without field [group_chat_created]
+            //check MessageInfo without field [supergroup_chat_created]
             dynamic SuperGroupChatCreated = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(SuperGroupChatCreated);
             Assert.False(messageInfo.SuperGroupChatCreated);
 
-            //check MessageInfo with field [group_chat_created: true] 
+            //check MessageInfo with field [supergroup_chat_created: true] 
             SuperGroupChatCreated.supergroup_chat_created = true;
             messageInfo = new MessageInfo(SuperGroupChatCreated);
             Assert.True(messageInfo.SuperGroupChatCreated);
@@ -719,11 +719,12 @@ namespace NetTelebot.Tests
             const int messageId = 1000;
             const int date = 0;
             const int chatId = 125421;
-            const string chatFirstName = "TestFirstName";
+            //const string chatFirstName = "TestFirstName";
 
             dynamic MessageInfoPinnedMessage = mMandatoryFieldsMessageInfo;
 
-            MessageInfoPinnedMessage.pinned_message = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatFirstName);
+            //MessageInfoPinnedMessage.pinned_message = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatFirstName);
+            MessageInfoPinnedMessage.pinned_message = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, ChatType.@group);
 
             MessageInfo messageInfo = new MessageInfo(MessageInfoPinnedMessage);
 

@@ -4,6 +4,26 @@ namespace NetTelebot.Tests.TypeTestObject
 {
     internal sealed class ChatInfoObject
     {
+
+        /// <summary>
+        /// This object represents a chat. Used to test the parser.
+        /// </summary>
+        /// <param name="id">Unique identifier for this chat. This number may be greater than 32 bits and some programming languages may have 
+        /// difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float 
+        /// type are safe for storing this identifier</param>
+        /// <param name="type">Type of chat, can be either “private”, “group”, “supergroup” or “channel”</param>
+        /// <returns><see cref="ChatInfo"/></returns>
+        internal static JObject GetMinimalMandatoryObject(int id, ChatType type)
+        {
+            dynamic chat = new JObject();
+
+            chat.id = id;
+            chat.type = type;
+
+            return chat;
+  
+        }
+
         /// <summary>
         /// This object represents a chat. Used to test the parser.
         /// </summary>
