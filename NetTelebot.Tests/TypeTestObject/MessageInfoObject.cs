@@ -25,5 +25,16 @@ namespace NetTelebot.Tests.TypeTestObject
             return messageInfo;
         }
 
+        internal static JObject GetMandatoryFieldsMessageInfo(int messageId, int date, int chatId, ChatType type)
+        {
+            dynamic messageInfo = new JObject();
+
+            messageInfo.message_id = messageId;
+            messageInfo.date = date;
+            messageInfo.chat = ChatInfoObject.GetMinimalMandatoryObject(chatId, type);
+
+            return messageInfo;
+        }
+
     }
 }

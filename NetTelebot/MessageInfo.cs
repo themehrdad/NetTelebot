@@ -56,16 +56,8 @@ namespace NetTelebot
             // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             Date = DateUnix.ToDateTime();
 
-            // To support the old version of the library, the chat object is equal to the old value
-            if (jsonObject["chat"] != null)
-            {
-                if(jsonObject["chat"]["type"] != null)
-                    // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoChatsTest()
-                    Chats = new ChatInfo(jsonObject["chat"].Value<JObject>());
-
-                // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
-                Chat = ParseChat(jsonObject["chat"].Value<JObject>());   
-            }
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoChatTest()
+            Chat = new ChatInfo(jsonObject["chat"].Value<JObject>());
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromTest()
             ForwardFrom = jsonObject["forward_from"] != null
@@ -190,15 +182,6 @@ namespace NetTelebot
                 : new MessageInfo();
         }
 
-        [Obsolete]
-        private static IConversationSource ParseChat(JObject jsonObject)
-        {
-            if (jsonObject["title"] != null)
-                return new GroupChatInfo(jsonObject);
-            
-            return new UserInfo(jsonObject);
-        }
-
         /// <summary>
         /// Unique message identifier inside this chat
         /// </summary>
@@ -225,13 +208,7 @@ namespace NetTelebot
         /// Conversation the message belongs to — user in case of a private message, GroupChat in case of a group.
         /// To support the old version of the library, the chat object is equal to the old value.
         /// </summary>
-        [Obsolete("Please use chats")]
-        public IConversationSource Chat { get; private set; }
-
-        /// <summary>
-        /// Conversation the message belongs to — user in case of a private message, GroupChat in case of a group
-        /// </summary>
-        public ChatInfo Chats { get; private set; }
+        public ChatInfo Chat { get; private set; }
 
         /// <summary>
         /// Optional. For forwarded messages, sender of the original message.

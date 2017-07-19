@@ -136,10 +136,7 @@ namespace NetTelebot.Tests
             DateTime date = sendMessage.Result.ReplyToMessage.Date;
 
             // to obsolete fields chat
-            IConversationSource chat = sendMessage.Result.ReplyToMessage.Chat;
-
-            // to new field chats
-            ChatInfo chats = sendMessage.Result.ReplyToMessage.Chats;
+            ChatInfo chat = sendMessage.Result.ReplyToMessage.Chat;
 
             UserInfo forwardFrom = sendMessage.Result.ReplyToMessage.ForwardFrom;
             
@@ -190,7 +187,6 @@ namespace NetTelebot.Tests
                               + "\n sendMessage.Result.ReplyToMessage.From: " + from
                               + "\n sendMessage.Result.ReplyToMessage.Date: " + date
                               + "\n sendMessage.Result.ReplyToMessage.Chat: " + chat
-                              + "\n sendMessage.Result.ReplyToMessage.Chats: " + chats
                               + "\n sendMessage.Result.ReplyToMessage.ForwardFrom: " + forwardFrom
                               + "\n sendMessage.Result.ReplyToMessage.ForwardFromMessageId: " + forwardFromMessageId
                               + "\n sendMessage.Result.ReplyToMessage.ReplyToMessage: " + replyToMessage
@@ -226,7 +222,6 @@ namespace NetTelebot.Tests
             
             //chat && chats
             Assert.IsNull(chat);
-            Assert.IsNull(chats);
             Assert.IsNull(forwardFrom);
             Assert.AreEqual(forwardFromMessageId, 0);
             Assert.AreEqual(forwardDate, DateTime.MinValue);
