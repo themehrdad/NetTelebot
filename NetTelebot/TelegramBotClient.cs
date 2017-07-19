@@ -17,10 +17,12 @@ namespace NetTelebot
         {
             CheckInterval = 1000;
         }
+
         /// <summary>
         /// Your bot token
         /// </summary>
         public string Token { get; set; }
+
         /// <summary>
         /// Interval time in milliseconds to get latest messages sent to your bot.
         /// </summary>
