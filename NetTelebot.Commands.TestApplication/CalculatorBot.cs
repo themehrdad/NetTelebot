@@ -34,9 +34,6 @@
 
             command3.Parameters.Add(parameter2);
             Configuration.Commands.Add(command3);
-
-
-
         }
     }
 }
