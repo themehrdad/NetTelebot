@@ -2,44 +2,69 @@
 //todo Blank for mock tests
 
 using System;
-using System.IO;
-using System.Net;
 using Funq;
 using NUnit.Framework;
 using ServiceStack;
 
+
 namespace NetTelebot.Tests
 {
-    [TestFixture]
+    
+    [TestFixture, Ignore("Not work")]
     public class TelegramBotClientTest
-    {/*
-        [Test]
-        public void TestResponse()
+    {
+        private const string BaseUri = "http://localhost:2000/";
+
+        private ServiceStackHost appHost;
+
+        [OneTimeSetUp]
+        public void TestFixtureSetUp()
         {
-            var client = new JsonServiceClient("http://localhost:8080");
+            //Start your AppHost on TestFixture SetUp
+            appHost = new AppHost()
+                .Init()
+                .Start(BaseUri);
+        }
 
-            var webAddr = "http://localhost:8080";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
-            httpWebRequest.ContentType = "application/json; charset=utf-8";
-            httpWebRequest.Method = "POST";
+        [OneTimeTearDown]
+        public void TestFixtureTearDown()
+        {
+            //Dispose it on TearDown
+            appHost.Dispose();
+        }
 
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                var json = new TelegramBotClient { Token = "token"} .SendMessage(123, "123");
+        [Test]
+        public void Run_Customer_REST_Example()
+        {
+            var client = new JsonServiceClient(BaseUri);
+            Console.WriteLine(client);
 
-                streamWriter.Write(json);
-                streamWriter.Flush();
-            }
+            var sendMessage = client.Post(new TelegramBotClient {Token = "Token"}.SendMessage(123, "123"));
+            Console.WriteLine(sendMessage.ResponseUri);
+        }
 
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+    }
 
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-                Console.WriteLine(result);
-            }
+    public class AppHost : AppSelfHostBase
+    {
+        public AppHost() : base("ServiceStack Examples", typeof(TelegramBotClientService).Assembly) { }
 
+        public override void Configure(Container container)
+        {
+        }
+    }
 
-        }   */
+    [Route("/botToken/sendMessage", "POST")]
+    public class GetTelegramBotClientResult : IReturn<SendMessageResult>
+    {
+        public SendMessageResult SendMessageResult { get; set; }
+    }
+
+    public class TelegramBotClientService : Service
+    {
+        public object Post(GetTelegramBotClientResult telegramBotClientResult)
+        {
+            return telegramBotClientResult.SendMessageResult;
+        }
     }
 }
