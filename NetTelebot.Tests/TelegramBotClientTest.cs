@@ -2,15 +2,25 @@
 //todo Blank for mock tests
 
 using System;
+using System.ComponentModel.Design;
+using System.IO;
+using System.Net;
+using System.Runtime.Serialization.Json;
 using Funq;
+using NetTelebot.Tests.TypeTestObject;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using ServiceStack;
+using ServiceStack.Host.AspNet;
+using ServiceStack.Text;
+using ServiceStack.Web;
 
 
 namespace NetTelebot.Tests
 {
     
-    [TestFixture, Ignore("Not work")]
+    [TestFixture]
     public class TelegramBotClientTest
     {
         private const string BaseUri = "http://localhost:2000/";
@@ -20,7 +30,6 @@ namespace NetTelebot.Tests
         [OneTimeSetUp]
         public void TestFixtureSetUp()
         {
-            //Start your AppHost on TestFixture SetUp
             appHost = new AppHost()
                 .Init()
                 .Start(BaseUri);
@@ -29,20 +38,23 @@ namespace NetTelebot.Tests
         [OneTimeTearDown]
         public void TestFixtureTearDown()
         {
-            //Dispose it on TearDown
             appHost.Dispose();
         }
 
         [Test]
-        public void Run_Customer_REST_Example()
+        public void RunCustomerRESTExample()
         {
             var client = new JsonServiceClient(BaseUri);
-            Console.WriteLine(client);
 
-            var sendMessage = client.Post(new TelegramBotClient {Token = "Token"}.SendMessage(123, "123"));
-            Console.WriteLine(sendMessage.ResponseUri);
+            client.Post(new TelegramBotClient {Token = "Token"}.SendMessage(123123456, "123"));
+            
+            /*
+            string response = client.Get(new SendMessageString { 
+                Text = new TelegramBotClient { Token = "Token" }.SendMessage(123123456, "123").ToString() } );
+            Console.WriteLine(response);
+            */
+          
         }
-
     }
 
     public class AppHost : AppSelfHostBase
@@ -55,16 +67,32 @@ namespace NetTelebot.Tests
     }
 
     [Route("/botToken/sendMessage", "POST")]
-    public class GetTelegramBotClientResult : IReturn<SendMessageResult>
+    public class SendMessage : IReturn<SendMessageResults>
+    {
+        public TelegramBotClient Text { get; set; }
+        
+    }
+
+    public class SendMessageResults
     {
         public SendMessageResult SendMessageResult { get; set; }
     }
 
     public class TelegramBotClientService : Service
     {
-        public object Post(GetTelegramBotClientResult telegramBotClientResult)
+        
+        public object Post(SendMessage request)
         {
-            return telegramBotClientResult.SendMessageResult;
+      
+            return new HttpResult(new { ok = true, result = 
+                new { message_id = 123, date = 0, chat = 
+                new { id = 123, type="chanell"}} });
+            
         }
+
+        //public object Any(SendMessageString request)
+        //{
+         //   return request.Text;
+        //}
     }
 }
