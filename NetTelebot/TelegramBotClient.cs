@@ -16,6 +16,7 @@ namespace NetTelebot
         public TelegramBotClient()
         {
             CheckInterval = 1000;
+            RestClient = new RestClient("https://api.telegram.org");
         }
 
         /// <summary>
@@ -24,9 +25,15 @@ namespace NetTelebot
         public string Token { get; set; }
 
         /// <summary>
+        /// Gets or sets the REST client. Used in integartion test.
+        /// </summary>
+        internal RestClient RestClient { private get; set; }
+
+        /// <summary>
         /// Interval time in milliseconds to get latest messages sent to your bot.
         /// </summary>
         public int CheckInterval { get; set; }
+
         private const string getMeUri = "/bot{0}/getMe";
         private const string getUpdatesUri = "/bot{0}/getUpdates";
         private const string sendMessageUri = "/bot{0}/sendMessage";
@@ -52,8 +59,7 @@ namespace NetTelebot
         private const string getChatMembersCountUri = "/bot{0}/getChatMembersCount";
         private const string getChatMemberUri = "/bot{0}/getChatMember";
         private const string answerCallbackQueryUri = "/bot{0}/getChatMember";
-        
-        private readonly RestClient restClient = new RestClient("https://api.telegram.org");
+
         private Timer updateTimer;
         private int lastUpdateId;
 
@@ -74,7 +80,7 @@ namespace NetTelebot
         public MeInfo GetMe()
         {
             RestRequest request = new RestRequest(string.Format(getMeUri, Token), Method.GET);
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
             //todo why MeInfo (in API UserInfo)?
             return new MeInfo(response.Content);
         }
@@ -128,7 +134,7 @@ namespace NetTelebot
             if (limit.HasValue)
                 request.AddQueryParameter("limit", limit.Value.ToString());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new GetUpdatesResult(response.Content);
@@ -177,7 +183,7 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
@@ -204,7 +210,7 @@ namespace NetTelebot
             if (disableNotification.HasValue)
                 request.AddParameter("disable_notification", disableNotification.Value);
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
@@ -251,7 +257,7 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
@@ -315,7 +321,7 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
@@ -365,7 +371,7 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
@@ -411,7 +417,7 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
@@ -474,7 +480,7 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
@@ -513,7 +519,7 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
@@ -555,7 +561,7 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
@@ -577,7 +583,7 @@ namespace NetTelebot
             RestRequest request = new RestRequest(string.Format(sendChatActionUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("action", action.ToString().ToLower());
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 throw new Exception(response.StatusDescription);
         }
@@ -598,7 +604,7 @@ namespace NetTelebot
                 request.AddParameter("offset", offset.Value);
             if (limit.HasValue)
                 request.AddParameter("limit", limit.Value);
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new GetUserProfilePhotosResult(response.Content);

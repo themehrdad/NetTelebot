@@ -9,7 +9,7 @@ namespace NetTelebot.Commands
         {
             Configuration = new BotConfiguration();
             Token = token;
-            Client = new TelegramBotClient { Token = token };
+            Client = new TelegramBotClient { Token = token};
             Data = new BotData(this);
             Name = name;
         }
