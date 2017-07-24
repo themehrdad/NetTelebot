@@ -180,6 +180,33 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendSticker");
         }
 
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.SendVideo"/>.
+        /// </summary>
+        [Test]
+        public void SendVideoTest()
+        {
+            mBot.SendVideo(123, new ExistingFile {FileId = "123"}, 123, 123, 123, "caption", true, 123,
+                new ForceReplyMarkup());
+
+            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendVideo").UsingPost());
+
+            PrintResult(request);
+
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "video=123&" +
+                "duration=123&" +
+                "width=123&" +
+                "height=123&" +
+                "caption=caption&" +
+                "disable_notification=True&" +
+                "reply_to_message_id=123&" +
+                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
+
+            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendVideo");
+        }
+
         private static void PrintResult(IEnumerable<Request> request)
         {
             Console.WriteLine(request.FirstOrDefault()?.Body);

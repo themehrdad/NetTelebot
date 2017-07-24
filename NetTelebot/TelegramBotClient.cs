@@ -399,7 +399,7 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        /// /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendStickerTest()</remarks>
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendStickerTest()</remarks>
         public SendMessageResult SendSticker(int chatId, IFile sticker,
             bool? disableNotification = null,
             int? replyToMessageId = null,
@@ -451,6 +451,7 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendVideoTest()</remarks>
         public SendMessageResult SendVideo(int chatId, IFile video,
             int? duration = null,
             int? width = null,
