@@ -230,6 +230,30 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendLocation");
         }
 
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.SendContact"/>.
+        /// </summary>
+        [Test]
+        public void SendContactTest()
+        {
+            mBot.SendContact(123, "123", "firstName", "lastName", true, 123, new ForceReplyMarkup());
+
+            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendContact").UsingPost());
+
+            PrintResult(request);
+
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "phone_number=123&" +
+                "first_name=firstName&" +
+                "last_name=lastName&" +
+                "disable_notification=True&" +
+                "reply_to_message_id=123&" +
+                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
+
+            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendContact");
+        }
+
         private static void PrintResult(IEnumerable<Request> request)
         {
             Console.WriteLine(request.FirstOrDefault()?.Body);

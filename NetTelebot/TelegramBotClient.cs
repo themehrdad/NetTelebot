@@ -514,6 +514,7 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendLocationTest()</remarks>
         public SendMessageResult SendLocation(int chatId, float latitude, float longitude,
             bool? disableNotification = null,
             int? replyToMessageId = null,
@@ -553,6 +554,7 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard,
         /// instructions to remove keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendContactTest()</remarks>
         public SendMessageResult SendContact(int chatId, string phoneNumber, string firstName,
             string lastName = null,
             bool? disableNotification = null,
