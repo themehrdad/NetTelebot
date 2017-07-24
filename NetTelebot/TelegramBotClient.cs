@@ -1,7 +1,12 @@
 ﻿using RestSharp;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
+
+#if DEBUG
+[assembly: InternalsVisibleTo("NetTelebot.Tests")]
+#endif
 
 namespace NetTelebot
 {
@@ -162,6 +167,7 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendMessageTest()</remarks>
         public SendMessageResult SendMessage(int chatId, string text,
             ParseMode? parseMode = null,
             bool? disableWebPagePreview = null,
@@ -199,6 +205,7 @@ namespace NetTelebot
         /// <param name="messageId">Unique message identifier</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.ForwardMessageTest()</remarks>
         public SendMessageResult ForwardMessage(int chatId, int fromChatId, 
             int messageId,
             bool? disableNotification = null)
@@ -206,9 +213,9 @@ namespace NetTelebot
             RestRequest request = new RestRequest(string.Format(forwardMessageUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("from_chat_id", fromChatId);
-            request.AddParameter("message_id", messageId);
             if (disableNotification.HasValue)
                 request.AddParameter("disable_notification", disableNotification.Value);
+            request.AddParameter("message_id", messageId);
 
             IRestResponse response = RestClient.Execute(request);
 
