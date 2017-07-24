@@ -135,6 +135,29 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendAudio");
         }
 
+        /// <summary>
+        /// Sends the document test method <see cref="TelegramBotClient.SendDocument"/>.
+        /// </summary>
+        [Test]
+        public void SendDocumentTest()
+        {
+            mBot.SendDocument(123, new ExistingFile { FileId = "123"}, "caption", true, 123, new ForceReplyMarkup());
+
+            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendDocument").UsingPost());
+
+            PrintResult(request);
+            
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "document=123&" +
+                "caption=caption&" +
+                "disable_notification=True&" +
+                "reply_to_message_id=123&" +
+                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
+
+            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendDocument");
+        }
+
         private static void PrintResult(IEnumerable<Request> request)
         {
             Console.WriteLine(request.FirstOrDefault()?.Body);
