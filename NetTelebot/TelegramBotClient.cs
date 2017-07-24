@@ -621,6 +621,7 @@ namespace NetTelebot
                 request.AddParameter("offset", offset.Value);
             if (limit.HasValue)
                 request.AddParameter("limit", limit.Value);
+
             IRestResponse response = RestClient.Execute(request);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)

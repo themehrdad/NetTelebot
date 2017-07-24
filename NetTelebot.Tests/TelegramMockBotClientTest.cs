@@ -351,6 +351,31 @@ namespace NetTelebot.Tests
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendChatAction");
         }
+        /*
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.GetUserProfilePhotos"/>.
+        /// </summary>
+        [Test]
+        public void GetUserProfilePhotosTest()
+        {
+            mBot.GetUserProfilePhotos(123, 123, 10);
+
+            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/getUserProfilePhotos").UsingPost());
+
+            PrintResult(request);
+
+            
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "phone_number=123&" +
+                "first_name=firstName&" +
+                "last_name=lastName&" +
+                "disable_notification=True&" +
+                "reply_to_message_id=123&" +
+                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
+
+            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendContact");
+        }*/
 
         private static void PrintResult(IEnumerable<Request> request)
         {
