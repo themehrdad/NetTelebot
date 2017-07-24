@@ -108,6 +108,33 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendPhoto");
         }
 
+        /// <summary>
+        /// Sends the audio test method <see cref="TelegramBotClient.SendAudio"/>.
+        /// </summary>
+        [Test]
+        public void SendAudioTest()
+        {
+            mBot.SendAudio(123, new ExistingFile { FileId = "123" }, "caption", 123, "performer", 
+                "title", true, 123, new ForceReplyMarkup());
+
+            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendAudio").UsingPost());
+
+            PrintResult(request);
+
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "audio=123&" +
+                "caption=caption&" +
+                "duration=123&" +
+                "performer=performer&" +
+                "title=title&" +
+                "disable_notification=True&" +
+                "reply_to_message_id=123&" +
+                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
+
+            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendAudio");
+        }
+
         private static void PrintResult(IEnumerable<Request> request)
         {
             Console.WriteLine(request.FirstOrDefault()?.Body);
