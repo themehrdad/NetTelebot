@@ -50,7 +50,7 @@
         /// <summary>
         /// User is about to receive video notes
         /// </summary>
-        Record_video_none,
+        Record_video_note,
         /// <summary>
         /// User is about to receive video notes
         /// </summary>

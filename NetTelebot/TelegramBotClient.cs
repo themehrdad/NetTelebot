@@ -592,12 +592,15 @@ namespace NetTelebot
         /// <param name="action">Type of action to broadcast. Choose one, depending on what the user is about to receive: 
         /// typing for text messages, upload_photo for photos, record_video or upload_video for videos, 
         /// record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.</param>
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendChatActionTest()</remarks>
         public void SendChatAction(int chatId, ChatActions action)
         {
             RestRequest request = new RestRequest(string.Format(sendChatActionUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("action", action.ToString().ToLower());
+
             IRestResponse response = RestClient.Execute(request);
+
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 throw new Exception(response.StatusDescription);
         }

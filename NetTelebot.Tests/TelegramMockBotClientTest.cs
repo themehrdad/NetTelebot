@@ -254,6 +254,104 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendContact");
         }
 
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.SendChatAction"/>.
+        /// </summary>
+        [Test]
+        public void SendChatActionTest()
+        {
+            //typing
+            mBot.SendChatAction(123, ChatActions.Typing);
+            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            PrintResult(request);
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "action=typing");
+            server.ResetRequestLogs();
+
+            //upload_photo
+            mBot.SendChatAction(123, ChatActions.Upload_photo);
+            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            PrintResult(request);
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "action=upload_photo");
+            server.ResetRequestLogs();
+
+            //record_video
+            mBot.SendChatAction(123, ChatActions.Record_video);
+            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            PrintResult(request);
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "action=record_video");
+            server.ResetRequestLogs();
+
+            //upload_video
+            mBot.SendChatAction(123, ChatActions.Upload_video);
+            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            PrintResult(request);
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "action=upload_video");
+            server.ResetRequestLogs();
+
+            //record_audio
+            mBot.SendChatAction(123, ChatActions.Record_audio);
+            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            PrintResult(request);
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "action=record_audio");
+            server.ResetRequestLogs();
+
+            //upload_audio
+            mBot.SendChatAction(123, ChatActions.Upload_audio);
+            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            PrintResult(request);
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "action=upload_audio");
+            server.ResetRequestLogs();
+
+            //upload_document
+            mBot.SendChatAction(123, ChatActions.Upload_document);
+            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            PrintResult(request);
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "action=upload_document");
+            server.ResetRequestLogs();
+
+            //find_location
+            mBot.SendChatAction(123, ChatActions.Find_location);
+            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            PrintResult(request);
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "action=find_location");
+            server.ResetRequestLogs();
+
+            //record_video_note
+            mBot.SendChatAction(123, ChatActions.Record_video_note);
+            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            PrintResult(request);
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "action=record_video_note");
+            server.ResetRequestLogs();
+
+            //upload_video_note
+            mBot.SendChatAction(123, ChatActions.Upload_video_note);
+            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            PrintResult(request);
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "action=upload_video_note");
+
+            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendChatAction");
+        }
+
         private static void PrintResult(IEnumerable<Request> request)
         {
             Console.WriteLine(request.FirstOrDefault()?.Body);
