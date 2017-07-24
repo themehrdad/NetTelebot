@@ -19,6 +19,9 @@ namespace NetTelebot.Tests
         private const string expectedBodyForGetUserProfilePhotos =
             @"{ ok: ""true"", result: { total_count: 1, photos: [[ { file_id: ""123"", width: 123, height: 123 }, { file_id: ""456"", width: 456, height: 456 } ]] }}";
 
+        private const string expectedBodyForGetMe =
+            @"{ ok: ""true"", result: { id: ""123"", first_name: ""FirstName"", username: ""username"" }}";
+
         private readonly TelegramBotClient mBot = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:8090") };
 
         [OneTimeSetUp]
@@ -55,12 +58,37 @@ namespace NetTelebot.Tests
                         .WithStatusCode(200)
                         .WithBody(expectedBodyForGetUserProfilePhotos)
                 );
+
+            server
+                .Given(
+                    Requests.WithUrl("/botToken/getMe").UsingPost()
+                )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(expectedBodyForGetMe)
+                );
         }
 
         [OneTimeTearDown]
         public void OnStop()
         {
             server.Stop();
+        }
+
+        /// <summary>
+        /// Sends the message test method <see cref="TelegramBotClient.GetMe"/>.
+        /// </summary>
+        [Test]
+        public void GetMeTest()
+        {
+            mBot.GetMe();
+
+            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/getMe").UsingPost());
+
+            PrintResult(request);
+
+            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/getMe");
         }
 
         /// <summary>
@@ -72,7 +100,9 @@ namespace NetTelebot.Tests
             mBot.SendMessage(123, "123", ParseMode.HTML, false, false, 123, new ForceReplyMarkup());
 
             var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
-            
+
+            PrintResult(request);
+
             Assert.AreEqual(request.FirstOrDefault()?.Body, 
                 "chat_id=123&" +
                 "text=123&" +
@@ -83,8 +113,6 @@ namespace NetTelebot.Tests
                 "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendMessage");
-            
-            PrintResult(request);
         }
 
         /// <summary>

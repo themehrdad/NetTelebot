@@ -79,18 +79,6 @@ namespace NetTelebot
         public event EventHandler<TelegramUpdateEventArgs> UpdatesReceived;
 
         /// <summary>
-        /// Gets information about your bot. You can call this method as a ping
-        /// </summary>
-        /// <returns></returns>
-        public MeInfo GetMe()
-        {
-            RestRequest request = new RestRequest(string.Format(getMeUri, Token), Method.GET);
-            IRestResponse response = RestClient.Execute(request);
-            //todo why MeInfo (in API UserInfo)?
-            return new MeInfo(response.Content);
-        }
-
-        /// <summary>
         /// Gets first 100 messages sent to your bot.
         /// </summary>
         /// <returns>Returns a class containing messages sent to your bot</returns>
@@ -154,6 +142,23 @@ namespace NetTelebot
         protected virtual void OnGetUpdatesError(Exception exception)
         {
             GetUpdatesError?.Invoke(this, new UnhandledExceptionEventArgs(exception, false));
+        }
+
+        /// <summary>
+        /// Gets information about your bot. You can call this method as a ping
+        /// </summary>
+        /// <returns></returns>
+        public MeInfo GetMe()
+        {
+            RestRequest request = new RestRequest(string.Format(getMeUri, Token), Method.POST);
+
+            IRestResponse response = RestClient.Execute(request);
+
+            //todo why MeInfo (in API UserInfo)?
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                return new MeInfo(response.Content);
+
+            throw new Exception(response.StatusDescription);
         }
 
         /// <summary>
