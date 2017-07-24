@@ -54,5 +54,15 @@ namespace NetTelebot.Tests
             Assert.AreEqual(sendLocation.Result.Location.Latitude, latitude);
             Assert.AreEqual(sendLocation.Result.Location.Longitude, longitude);
         }
+
+        /// <summary>
+        /// Gets me test for method <see cref="TelegramBotClient.GetMe"/>.
+        /// </summary>
+        [Test]
+        public void GetMeTest()
+        {
+            MeInfo getMe = mTelegramBot.GetMe();
+            Assert.AreEqual(getMe.FirstName, "NetTelebotTestedBot");
+        }
     }
 }

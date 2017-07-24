@@ -147,7 +147,8 @@ namespace NetTelebot
         /// <summary>
         /// Gets information about your bot. You can call this method as a ping
         /// </summary>
-        /// <returns></returns>
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.GetMeTest()</remarks>
+        /// <remarks>Test NetTelebot.Tests.TelegramRealBotClientTest.GetMeTest()</remarks>
         public MeInfo GetMe()
         {
             RestRequest request = new RestRequest(string.Format(getMeUri, Token), Method.POST);
