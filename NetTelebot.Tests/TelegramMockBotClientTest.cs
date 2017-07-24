@@ -13,8 +13,11 @@ namespace NetTelebot.Tests
     {
         private FluentMockServer server;
 
-        private const string expectedBody =
+        private const string expectedBodyForSendMessage =
             @"{ ok: ""true"", result: { message_id: 123, date: 0, chat: { id: 123, type: ""private"" }}}";
+
+        private const string expectedBodyForGetUserProfilePhotos =
+            @"{ ok: ""true"", result: { total_count: 1, photos: [[ { file_id: ""123"", width: 123, height: 123 }, { file_id: ""456"", width: 456, height: 456 } ]] }}";
 
         private readonly TelegramBotClient mBot = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:8090") };
 
@@ -24,14 +27,34 @@ namespace NetTelebot.Tests
             server = FluentMockServer.Start(8090);
 
             server
-             .Given(
-               Requests.WithUrl("/*").UsingPost()
-             )
-             .RespondWith(
-               Responses
-                 .WithStatusCode(200)
-                 .WithBody(expectedBody)
-             );
+                .Given(
+                    Requests.WithUrl("/botToken/send*").UsingPost()
+                )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(expectedBodyForSendMessage)
+                );
+
+            server
+                .Given(
+                    Requests.WithUrl("/botToken/forwardMessage").UsingPost()
+                )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(expectedBodyForSendMessage)
+                );
+
+            server
+                .Given(
+                    Requests.WithUrl("/botToken/getUserProfilePhotos").UsingPost()
+                )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(expectedBodyForGetUserProfilePhotos)
+                );
         }
 
         [OneTimeTearDown]
@@ -351,7 +374,7 @@ namespace NetTelebot.Tests
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendChatAction");
         }
-        /*
+        
         /// <summary>
         /// Sends the sticker test method <see cref="TelegramBotClient.GetUserProfilePhotos"/>.
         /// </summary>
@@ -366,16 +389,12 @@ namespace NetTelebot.Tests
 
             
             Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "phone_number=123&" +
-                "first_name=firstName&" +
-                "last_name=lastName&" +
-                "disable_notification=True&" +
-                "reply_to_message_id=123&" +
-                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
+                "user_id=123&" +
+                "offset=123&" +
+                "limit=10");
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendContact");
-        }*/
+            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/getUserProfilePhotos");
+        }
 
         private static void PrintResult(IEnumerable<Request> request)
         {

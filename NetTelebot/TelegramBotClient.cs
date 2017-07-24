@@ -613,9 +613,11 @@ namespace NetTelebot
         /// <param name="offset">Sequential number of the first photo to be returned. By default, all photos are returned.</param>
         /// <param name="limit">Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.</param>
         /// <returns><see cref="UserProfilePhotosInfo"/></returns>
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.GetUserProfilePhotosTest()</remarks>
         public GetUserProfilePhotosResult GetUserProfilePhotos(int userId, int? offset = null, byte? limit = null)
         {
             RestRequest request = new RestRequest(string.Format(getUserProfilePhotosUri, Token), Method.POST);
+
             request.AddParameter("user_id", userId);
             if (offset.HasValue)
                 request.AddParameter("offset", offset.Value);
