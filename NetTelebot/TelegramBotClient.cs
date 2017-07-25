@@ -155,7 +155,6 @@ namespace NetTelebot
 
             IRestResponse response = RestClient.Execute(request);
 
-            //todo why MeInfo (in API UserInfo)?
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return new MeInfo(response.Content);
 
