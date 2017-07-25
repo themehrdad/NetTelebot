@@ -11,7 +11,8 @@ namespace NetTelebot.Tests
     [TestFixture]
     public class TelegramMockBotClientTest
     {
-        private FluentMockServer server;
+        private FluentMockServer mServerOkResponse;
+        private FluentMockServer mServerBadResponse;
 
         private const string expectedBodyForSendMessage =
             @"{ ok: ""true"", result: { message_id: 123, date: 0, chat: { id: 123, type: ""private"" }}}";
@@ -22,14 +23,20 @@ namespace NetTelebot.Tests
         private const string expectedBodyForGetMe =
             @"{ ok: ""true"", result: { id: ""123"", first_name: ""FirstName"", username: ""username"" }}";
 
-        private readonly TelegramBotClient mBot = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:8090") };
+        private const string expectedBodyForBadResponse =
+            @"{ ok: ""false"", error_code: 401, description: ""Unauthorized"")";
+
+
+        private readonly TelegramBotClient mBotOkResponse = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:8090") };
+        private readonly TelegramBotClient mBotBadResponse = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:8092") };
 
         [OneTimeSetUp]
         public void OnStart()
         {
-            server = FluentMockServer.Start(8090);
+            mServerOkResponse = FluentMockServer.Start(8090);
+            mServerBadResponse = FluentMockServer.Start(8092);
 
-            server
+            mServerOkResponse
                 .Given(
                     Requests.WithUrl("/botToken/send*").UsingPost()
                 )
@@ -39,7 +46,7 @@ namespace NetTelebot.Tests
                         .WithBody(expectedBodyForSendMessage)
                 );
 
-            server
+            mServerOkResponse
                 .Given(
                     Requests.WithUrl("/botToken/forwardMessage").UsingPost()
                 )
@@ -49,7 +56,7 @@ namespace NetTelebot.Tests
                         .WithBody(expectedBodyForSendMessage)
                 );
 
-            server
+            mServerOkResponse
                 .Given(
                     Requests.WithUrl("/botToken/getUserProfilePhotos").UsingPost()
                 )
@@ -59,7 +66,7 @@ namespace NetTelebot.Tests
                         .WithBody(expectedBodyForGetUserProfilePhotos)
                 );
 
-            server
+            mServerOkResponse
                 .Given(
                     Requests.WithUrl("/botToken/getMe").UsingPost()
                 )
@@ -68,12 +75,23 @@ namespace NetTelebot.Tests
                         .WithStatusCode(200)
                         .WithBody(expectedBodyForGetMe)
                 );
+
+            mServerBadResponse
+                .Given(
+                    Requests.WithUrl("/*").UsingPost()
+                )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(401)
+                        .WithBody(expectedBodyForBadResponse)
+                );
         }
 
         [OneTimeTearDown]
         public void OnStop()
         {
-            server.Stop();
+            mServerOkResponse.Stop();
+            mServerBadResponse.Stop();
         }
 
         /// <summary>
@@ -82,13 +100,13 @@ namespace NetTelebot.Tests
         [Test]
         public void GetMeTest()
         {
-            mBot.GetMe();
-
-            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/getMe").UsingPost());
-
+            mBotOkResponse.GetMe();
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getMe").UsingPost());
+          
             PrintResult(request);
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/getMe");
+            Assert.Throws<Exception> (() => mBotBadResponse.GetMe());
         }
 
         /// <summary>
@@ -97,9 +115,9 @@ namespace NetTelebot.Tests
         [Test]
         public void SendMessageTest()
         {
-            mBot.SendMessage(123, "123", ParseMode.HTML, false, false, 123, new ForceReplyMarkup());
+            mBotOkResponse.SendMessage(123, "123", ParseMode.HTML, false, false, 123, new ForceReplyMarkup());
 
-            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
 
             PrintResult(request);
 
@@ -113,6 +131,7 @@ namespace NetTelebot.Tests
                 "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendMessage");
+            Assert.Throws<Exception>(() => mBotBadResponse.SendMessage(123, "123", ParseMode.HTML, false, false, 123, new ForceReplyMarkup()));
         }
 
         /// <summary>
@@ -121,9 +140,9 @@ namespace NetTelebot.Tests
         [Test]
         public void ForwardMessageTest()
         {
-            mBot.ForwardMessage(123, 123 ,123, true);
+            mBotOkResponse.ForwardMessage(123, 123 ,123, true);
 
-            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/forwardMessage").UsingPost());
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/forwardMessage").UsingPost());
 
             PrintResult(request);
 
@@ -133,7 +152,8 @@ namespace NetTelebot.Tests
                 "disable_notification=True&" +
                 "message_id=123");
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/forwardMessage"); 
+            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/forwardMessage");
+            Assert.Throws<Exception>(() => mBotBadResponse.ForwardMessage(123, 123, 123, true));
         }
 
         /// <summary>
@@ -142,9 +162,9 @@ namespace NetTelebot.Tests
         [Test]
         public void SendPhotoTest()
         {
-            mBot.SendPhoto(123, new ExistingFile { FileId = "123" }, "caption", false, 123, new ForceReplyMarkup());
+            mBotOkResponse.SendPhoto(123, new ExistingFile { FileId = "123" }, "caption", false, 123, new ForceReplyMarkup());
 
-            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendPhoto").UsingPost());
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendPhoto").UsingPost());
 
             PrintResult(request);
 
@@ -157,6 +177,8 @@ namespace NetTelebot.Tests
                 "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendPhoto");
+            Assert.Throws<Exception>(() => mBotBadResponse.SendPhoto(123, new ExistingFile { FileId = "123" },
+                "caption", false, 123, new ForceReplyMarkup()));
         }
 
         /// <summary>
@@ -165,10 +187,10 @@ namespace NetTelebot.Tests
         [Test]
         public void SendAudioTest()
         {
-            mBot.SendAudio(123, new ExistingFile { FileId = "123" }, "caption", 123, "performer", 
+            mBotOkResponse.SendAudio(123, new ExistingFile { FileId = "123" }, "caption", 123, "performer", 
                 "title", true, 123, new ForceReplyMarkup());
 
-            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendAudio").UsingPost());
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendAudio").UsingPost());
 
             PrintResult(request);
 
@@ -184,6 +206,8 @@ namespace NetTelebot.Tests
                 "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendAudio");
+            Assert.Throws<Exception>(() => mBotBadResponse.SendAudio(123, new ExistingFile { FileId = "123" }, "caption", 123, "performer",
+                "title", true, 123, new ForceReplyMarkup()));
         }
 
         /// <summary>
@@ -192,9 +216,9 @@ namespace NetTelebot.Tests
         [Test]
         public void SendDocumentTest()
         {
-            mBot.SendDocument(123, new ExistingFile { FileId = "123"}, "caption", true, 123, new ForceReplyMarkup());
+            mBotOkResponse.SendDocument(123, new ExistingFile { FileId = "123"}, "caption", true, 123, new ForceReplyMarkup());
 
-            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendDocument").UsingPost());
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendDocument").UsingPost());
 
             PrintResult(request);
             
@@ -207,6 +231,8 @@ namespace NetTelebot.Tests
                 "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendDocument");
+            Assert.Throws<Exception>(() => mBotBadResponse.SendDocument(123, new ExistingFile { FileId = "123" },
+                "caption", true, 123, new ForceReplyMarkup()));
         }
 
         /// <summary>
@@ -215,9 +241,9 @@ namespace NetTelebot.Tests
         [Test]
         public void SendStickerTest()
         {
-            mBot.SendSticker(123, new ExistingFile {FileId = "123"}, true, 123, new ForceReplyMarkup());
+            mBotOkResponse.SendSticker(123, new ExistingFile {FileId = "123"}, true, 123, new ForceReplyMarkup());
 
-            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendSticker").UsingPost());
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendSticker").UsingPost());
 
             PrintResult(request);
             
@@ -229,6 +255,8 @@ namespace NetTelebot.Tests
                 "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendSticker");
+            Assert.Throws<Exception>(() => mBotBadResponse.SendSticker(123, new ExistingFile { FileId = "123" },
+                true, 123, new ForceReplyMarkup()));
         }
 
         /// <summary>
@@ -237,10 +265,10 @@ namespace NetTelebot.Tests
         [Test]
         public void SendVideoTest()
         {
-            mBot.SendVideo(123, new ExistingFile {FileId = "123"}, 123, 123, 123, "caption", true, 123,
+            mBotOkResponse.SendVideo(123, new ExistingFile {FileId = "123"}, 123, 123, 123, "caption", true, 123,
                 new ForceReplyMarkup());
 
-            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendVideo").UsingPost());
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendVideo").UsingPost());
 
             PrintResult(request);
 
@@ -256,6 +284,8 @@ namespace NetTelebot.Tests
                 "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendVideo");
+            Assert.Throws<Exception>(() => mBotBadResponse.SendVideo(123, new ExistingFile { FileId = "123" },
+                123, 123, 123, "caption", true, 123, new ForceReplyMarkup()));
         }
 
         /// <summary>
@@ -264,9 +294,9 @@ namespace NetTelebot.Tests
         [Test]
         public void SendLocationTest()
         {
-            mBot.SendLocation(123, 1.0f, 1.0f, true, 123, new ForceReplyMarkup());
+            mBotOkResponse.SendLocation(123, 1.0f, 1.0f, true, 123, new ForceReplyMarkup());
 
-            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendLocation").UsingPost());
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendLocation").UsingPost());
 
             PrintResult(request);
             
@@ -279,6 +309,7 @@ namespace NetTelebot.Tests
                 "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendLocation");
+            Assert.Throws<Exception>(() => mBotBadResponse.SendLocation(123, 1.0f, 1.0f, true, 123, new ForceReplyMarkup()));
         }
 
         /// <summary>
@@ -287,9 +318,9 @@ namespace NetTelebot.Tests
         [Test]
         public void SendContactTest()
         {
-            mBot.SendContact(123, "123", "firstName", "lastName", true, 123, new ForceReplyMarkup());
+            mBotOkResponse.SendContact(123, "123", "firstName", "lastName", true, 123, new ForceReplyMarkup());
 
-            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendContact").UsingPost());
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendContact").UsingPost());
 
             PrintResult(request);
 
@@ -303,6 +334,7 @@ namespace NetTelebot.Tests
                 "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendContact");
+            Assert.Throws<Exception>(() => mBotBadResponse.SendContact(123, "123", "firstName", "lastName", true, 123, new ForceReplyMarkup()));
         }
 
         /// <summary>
@@ -312,95 +344,96 @@ namespace NetTelebot.Tests
         public void SendChatActionTest()
         {
             //typing
-            mBot.SendChatAction(123, ChatActions.Typing);
-            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            mBotOkResponse.SendChatAction(123, ChatActions.Typing);
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=typing");
-            server.ResetRequestLogs();
+            mServerOkResponse.ResetRequestLogs();
 
             //upload_photo
-            mBot.SendChatAction(123, ChatActions.Upload_photo);
-            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            mBotOkResponse.SendChatAction(123, ChatActions.Upload_photo);
+            request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_photo");
-            server.ResetRequestLogs();
+            mServerOkResponse.ResetRequestLogs();
 
             //record_video
-            mBot.SendChatAction(123, ChatActions.Record_video);
-            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            mBotOkResponse.SendChatAction(123, ChatActions.Record_video);
+            request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=record_video");
-            server.ResetRequestLogs();
+            mServerOkResponse.ResetRequestLogs();
 
             //upload_video
-            mBot.SendChatAction(123, ChatActions.Upload_video);
-            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            mBotOkResponse.SendChatAction(123, ChatActions.Upload_video);
+            request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_video");
-            server.ResetRequestLogs();
+            mServerOkResponse.ResetRequestLogs();
 
             //record_audio
-            mBot.SendChatAction(123, ChatActions.Record_audio);
-            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            mBotOkResponse.SendChatAction(123, ChatActions.Record_audio);
+            request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=record_audio");
-            server.ResetRequestLogs();
+            mServerOkResponse.ResetRequestLogs();
 
             //upload_audio
-            mBot.SendChatAction(123, ChatActions.Upload_audio);
-            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            mBotOkResponse.SendChatAction(123, ChatActions.Upload_audio);
+            request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_audio");
-            server.ResetRequestLogs();
+            mServerOkResponse.ResetRequestLogs();
 
             //upload_document
-            mBot.SendChatAction(123, ChatActions.Upload_document);
-            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            mBotOkResponse.SendChatAction(123, ChatActions.Upload_document);
+            request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_document");
-            server.ResetRequestLogs();
+            mServerOkResponse.ResetRequestLogs();
 
             //find_location
-            mBot.SendChatAction(123, ChatActions.Find_location);
-            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            mBotOkResponse.SendChatAction(123, ChatActions.Find_location);
+            request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=find_location");
-            server.ResetRequestLogs();
+            mServerOkResponse.ResetRequestLogs();
 
             //record_video_note
-            mBot.SendChatAction(123, ChatActions.Record_video_note);
-            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            mBotOkResponse.SendChatAction(123, ChatActions.Record_video_note);
+            request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=record_video_note");
-            server.ResetRequestLogs();
+            mServerOkResponse.ResetRequestLogs();
 
             //upload_video_note
-            mBot.SendChatAction(123, ChatActions.Upload_video_note);
-            request = server.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            mBotOkResponse.SendChatAction(123, ChatActions.Upload_video_note);
+            request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_video_note");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendChatAction");
+            Assert.Throws<Exception>(() => mBotBadResponse.SendChatAction(123, ChatActions.Upload_video_note));
         }
         
         /// <summary>
@@ -409,19 +442,19 @@ namespace NetTelebot.Tests
         [Test]
         public void GetUserProfilePhotosTest()
         {
-            mBot.GetUserProfilePhotos(123, 123, 10);
+            mBotOkResponse.GetUserProfilePhotos(123, 123, 10);
 
-            var request = server.SearchLogsFor(Requests.WithUrl("/botToken/getUserProfilePhotos").UsingPost());
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUserProfilePhotos").UsingPost());
 
             PrintResult(request);
 
-            
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "user_id=123&" +
                 "offset=123&" +
                 "limit=10");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/getUserProfilePhotos");
+            Assert.Throws<Exception>(() => mBotBadResponse.GetUserProfilePhotos(123, 123, 10));
         }
 
         private static void PrintResult(IEnumerable<Request> request)
