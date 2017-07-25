@@ -75,6 +75,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="MeInfoParserTest.cs" />
     <Compile Include="MessageInfoNullRefExcTest.cs" />
     <Compile Include="MessageInfoParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="TypeTestObject\ContactInfoObject.cs" />
     <Compile Include="TypeTestObject\DocumentInfoObject.cs" />
     <Compile Include="TypeTestObject\LocationInfoObject.cs" />
+    <Compile Include="TypeTestObject\MeInfoObject.cs" />
     <Compile Include="TypeTestObject\MessageInfoObject.cs" />
     <Compile Include="TypeTestObject\PhotoSizeInfoObject.cs" />
     <Compile Include="TypeTestObject\StickerInfoObject.cs" />

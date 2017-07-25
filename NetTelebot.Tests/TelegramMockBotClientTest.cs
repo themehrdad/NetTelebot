@@ -26,7 +26,6 @@ namespace NetTelebot.Tests
         private const string expectedBodyForBadResponse =
             @"{ ok: ""false"", error_code: 401, description: ""Unauthorized"")";
 
-
         private readonly TelegramBotClient mBotOkResponse = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:8090") };
         private readonly TelegramBotClient mBotBadResponse = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:8092") };
 
