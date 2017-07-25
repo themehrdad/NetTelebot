@@ -17,6 +17,26 @@ namespace NetTelebot.Tests
             mChatId = new TelegramBot().GetChatId();
         }
 
+
+        /// <summary>
+        /// Gets me test for method <see cref="TelegramBotClient.GetMe"/>.
+        /// </summary>
+        [Test]
+        public void GetMeTest()
+        {
+            MeInfo getMe = mTelegramBot.GetMe();
+
+            Console.WriteLine(
+                "\nid: " + getMe.Id +
+                "\nFirstName: " + getMe.FirstName +
+                "\nLastName: " + getMe.LastName +
+                "\nUserName: " + getMe.UserName +
+                "\nLanguageCode: " + getMe.LanguageCode +
+                "\nOk: " + getMe.Ok);
+
+            Assert.AreEqual(getMe.FirstName, "NetTelebotTestedBot");
+        }
+
         [Test]
         public void TestSendMessageToChat()
         {

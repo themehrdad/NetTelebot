@@ -10,21 +10,10 @@ namespace NetTelebot.Tests.TypeTestObject
         /// <param name="messageId">The message identifier.</param>
         /// <param name="date">The UNIX date.</param>
         /// <param name="chatId">The chat identifier.</param>
-        /// <param name="chatFirstName">First name of the chat.</param>
+        /// <param name="type">Type of chat. <see cref="ChatType"/></param>
         /// <returns>
         /// Mandatory required object fields <see cref="MessageInfo" />
         /// </returns>
-        internal static JObject GetMandatoryFieldsMessageInfo(int messageId, int date, int chatId, string chatFirstName)
-        {
-            dynamic messageInfo = new JObject();
-
-            messageInfo.message_id = messageId;
-            messageInfo.date = date;
-            messageInfo.chat = IConversationSourceObject.GetObject(chatId, chatFirstName);
-
-            return messageInfo;
-        }
-
         internal static JObject GetMandatoryFieldsMessageInfo(int messageId, int date, int chatId, ChatType type)
         {
             dynamic messageInfo = new JObject();

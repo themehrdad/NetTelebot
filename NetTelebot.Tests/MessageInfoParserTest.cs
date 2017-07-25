@@ -195,7 +195,6 @@ namespace NetTelebot.Tests
             const int messageId = 1000;
             const int date = 0;
             const int chatId = 125421;
-            //const string chatFirstName = "TestFirstName";
 
             dynamic MessageInfoReplyToMessage = mMandatoryFieldsMessageInfo;
 
@@ -719,11 +718,9 @@ namespace NetTelebot.Tests
             const int messageId = 1000;
             const int date = 0;
             const int chatId = 125421;
-            //const string chatFirstName = "TestFirstName";
 
             dynamic MessageInfoPinnedMessage = mMandatoryFieldsMessageInfo;
-
-            //MessageInfoPinnedMessage.pinned_message = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatFirstName);
+            
             MessageInfoPinnedMessage.pinned_message = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, ChatType.@group);
 
             MessageInfo messageInfo = new MessageInfo(MessageInfoPinnedMessage);

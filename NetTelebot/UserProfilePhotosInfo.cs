@@ -23,7 +23,7 @@ namespace NetTelebot
         {
             TotalCount = jsonObject["total_count"].Value<int>();
             JArray arrayOfArrays = jsonObject["photos"].Value<JArray>();
-            Photos = arrayOfArrays.Cast<JArray>().Select(array => PhotoSizeInfo.ParseArray(array)).ToArray();
+            Photos = arrayOfArrays.Cast<JArray>().Select(PhotoSizeInfo.ParseArray).ToArray();
         }
 
         private void Parse(string jsonText)

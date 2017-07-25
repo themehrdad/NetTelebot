@@ -5,20 +5,20 @@ using System;
 namespace NetTelebot
 {
     /// <summary>
-    /// When caling GetMe method on TelegramBotClient class, this object will be returned.
+    /// When caling <see cref="TelegramBotClient.GetMe"/>, method must return <see cref="UserInfo"/>. 
+    /// See in <see href="https://core.telegram.org/bots/api#getme">API</see>>
+    /// This class is a copy of the UserInfo class, but with access to the ok field.
     /// </summary>
-    public class MeInfo
+    public class MeInfo : IConversationSource
     {
         internal MeInfo(string jsonText)
         {
-            try
-            {
-                Parse(jsonText);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("JSON parse error", ex);
-            }
+            Parse(jsonText);
+        }
+
+        internal MeInfo(JObject jsonObject)
+        {
+            Parse(jsonObject);
         }
 
         private void Parse(string jsonText)
@@ -30,41 +30,46 @@ namespace NetTelebot
         private void Parse(JObject jsonObject)
         {
             Ok = jsonObject["ok"].Value<bool>();
-            Id = jsonObject["result"]["id"].Value<string>();
+            Id = jsonObject["result"]["id"].Value<int>();
             FirstName = jsonObject["result"]["first_name"].Value<string>();
-            UserName = jsonObject["result"]["username"].Value<string>();
+
+            if (jsonObject["result"]["last_name"] != null)
+                LastName = jsonObject["result"]["last_name"].Value<string>();
+            if (jsonObject["result"]["username"] != null)
+                UserName = jsonObject["result"]["username"].Value<string>();
+            if (jsonObject["result"]["language_code"] != null)
+                LanguageCode = jsonObject["result"]["language_code"].Value<string>();
         }
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="MeInfo"/> is ok.
+        /// Gets a value "ok" in response.
         /// </summary>
-        /// <value>
-        ///   <c>true</c> if ok; otherwise, <c>false</c>.
-        /// </value>
+        /// <returns> <c>true</c> if ok; otherwise, <c>false</c>. </returns>
         public bool Ok { get; private set; }
 
         /// <summary>
-        /// Gets the identifier.
+        /// Unique identifier for this user or bot
         /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public string Id { get; private set; }
+        public int Id { get; set; }
 
         /// <summary>
-        /// Gets the first name.
+        /// User‘s or bot’s first name
         /// </summary>
-        /// <value>
-        /// The first name.
-        /// </value>
         public string FirstName { get; private set; }
 
         /// <summary>
-        /// Gets the name of the user.
+        /// Optional. User‘s or bot’s last name
         /// </summary>
-        /// <value>
-        /// The name of the user.
-        /// </value>
+        public string LastName { get; private set; }
+
+        /// <summary>
+        /// Optional. User‘s or bot’s username
+        /// </summary>
         public string UserName { get; private set; }
+
+        /// <summary>
+        /// Optional. <see href="https://en.wikipedia.org/wiki/IETF_language_tag"> IETF language tag  </see>of the user's language
+        /// </summary>
+        public string LanguageCode { get; private set; }
     }
 }
