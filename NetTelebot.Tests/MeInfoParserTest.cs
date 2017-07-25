@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace NetTelebot.Tests
 {
     [TestFixture]
-    internal class MeInfoParserTest
+    internal static class MeInfoParserTest
     {
         /// <summary>
         /// Test for <see cref="MeInfo"/> parse field.
