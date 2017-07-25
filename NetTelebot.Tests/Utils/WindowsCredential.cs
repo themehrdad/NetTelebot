@@ -36,12 +36,13 @@ namespace NetTelebot.Tests.Utils
         }
     }
 
-    public struct TelegramCredentials
+    public struct TelegramCredentials : IEquatable<TelegramCredentials>
     {
         /// <summary>
         /// You can learn your token from BotFather (@BotFather) 
         /// </summary>
         public string Token { get; set; }
+
         /// <summary>
         /// In order to get the group chat id, do as follows:
         /// 1. Add the Telegram BOT to the group.
@@ -54,5 +55,10 @@ namespace NetTelebot.Tests.Utils
         /// 4. Use the "id" of the "chat" object to send your messages.
         /// </summary>
         public int ChatId { get; set; }
+
+        public bool Equals(TelegramCredentials credentials)
+        {
+            return (Token == credentials.Token) && (ChatId == credentials.ChatId);
+        }
     }
 }

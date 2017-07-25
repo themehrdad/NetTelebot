@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace NetTelebot.Tests
 {
     [TestFixture]
-    public class UtilityExtensionTest
+    internal static class UtilityExtensionTest
     {
         [Test]
         public static void ToDateTimeTest()

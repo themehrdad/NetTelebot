@@ -9,7 +9,7 @@ using RestSharp;
 namespace NetTelebot.Tests
 {
     [TestFixture]
-    public class TelegramMockBotClientTest
+    internal class TelegramMockBotClientTest
     {
         private FluentMockServer mServerOkResponse;
         private FluentMockServer mServerBadResponse;
