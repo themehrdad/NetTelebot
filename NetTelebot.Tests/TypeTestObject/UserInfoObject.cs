@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal sealed class UserInfoObject
+    internal static class UserInfoObject
     {
         /// <summary>
         /// This object represents a Telegram user or bot. See <see href="https://core.telegram.org/bots/api#user">API</see>

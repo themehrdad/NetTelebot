@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal sealed class LocationInfoObject
+    internal static class LocationInfoObject
     {
         /// <summary>
         /// This object represents a point on the map. See <see href="https://core.telegram.org/bots/api#location">API</see>

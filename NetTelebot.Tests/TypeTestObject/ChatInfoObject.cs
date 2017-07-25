@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal sealed class ChatInfoObject
+    internal static class ChatInfoObject
     {
 
         /// <summary>

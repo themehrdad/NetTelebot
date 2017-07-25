@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal sealed class DocumentInfoObject
+    internal static class DocumentInfoObject
     {
         /// <summary>
         /// This object represents a general file (as opposed to photos, voice messages and audio files).

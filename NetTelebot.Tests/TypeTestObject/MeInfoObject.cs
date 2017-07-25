@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal sealed class MeInfoObject
+    internal static class MeInfoObject
     {
         /// <summary>
         /// When caling <see cref="TelegramBotClient.GetMe"/>, method must return <see cref="UserInfo"/>. 

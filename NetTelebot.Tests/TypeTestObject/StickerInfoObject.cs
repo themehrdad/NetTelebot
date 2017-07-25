@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal sealed class StickerInfoObject
+    internal static class StickerInfoObject
     {
         /// <summary>
         /// This object represents a sticker for test. See <see href="https://core.telegram.org/bots/api#sticker">API</see>

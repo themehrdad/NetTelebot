@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal sealed class ContactInfoObject
+    internal static class ContactInfoObject
     {
         /// <summary>
         /// This object represents a phone contact. See <see href="https://core.telegram.org/bots/api#contact">API</see>

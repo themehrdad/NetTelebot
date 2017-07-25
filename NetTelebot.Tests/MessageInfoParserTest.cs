@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 namespace NetTelebot.Tests
 {
     [TestFixture]
-    internal class MessageInfoParserTest
+    internal static class MessageInfoParserTest
     {
         private static readonly JObject mMandatoryFieldsMessageInfo =
             MessageInfoObject.GetMandatoryFieldsMessageInfo(-1147483648, 0,
