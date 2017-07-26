@@ -31,7 +31,7 @@ namespace NetTelebot
         private void Parse(JObject jsonObject)
         {
             Id = jsonObject["id"].Value<int>();
-            Type = ParseChatType(jsonObject["type"].Value<string>()); ;
+            Type = ParseChatType(jsonObject["type"].Value<string>());
             
             if (jsonObject["title"] != null)
                 Title = jsonObject["title"].Value<string>();

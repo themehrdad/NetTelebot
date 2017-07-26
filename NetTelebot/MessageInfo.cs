@@ -183,7 +183,7 @@ namespace NetTelebot
                 MigrateFromChatId = jsonObject["migrate_from_chat_id"].Value<int>();
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoPinnedMessageTest()
-            // todo added field = new Field() in { } if  reply_to_message == null
+            // todo added field = new Field() in { } if  pinned_message == null
             PinnedMessage = jsonObject["pinned_message"] != null
                 ? new MessageInfo(jsonObject["pinned_message"].Value<JObject>())
                 : new MessageInfo { ForwardFromChat = new ChatInfo() };
