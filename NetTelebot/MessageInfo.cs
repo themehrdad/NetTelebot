@@ -13,7 +13,6 @@ namespace NetTelebot
     /// This object represents a message. 
     /// API <link href="https://core.telegram.org/bots/api#message"></link>
     /// </summary>
-
     public class MessageInfo
     {
         internal MessageInfo()
@@ -59,7 +58,7 @@ namespace NetTelebot
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoChatTest()
             Chat = new ChatInfo(jsonObject["chat"].Value<JObject>());
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromTest()
+            // Test NetTelebot.Tests.MesageInfoParserTest.MessageInfoForwardFromTest()
             ForwardFrom = jsonObject["forward_from"] != null
                 ? new UserInfo(jsonObject["forward_from"].Value<JObject>())
                 : new UserInfo();
@@ -81,10 +80,9 @@ namespace NetTelebot
             }
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoReplyToMessageTest()
-            // todo added field = new Field() in { } if  reply_to_message == null
             ReplyToMessage = jsonObject["reply_to_message"] != null
                 ? new MessageInfo(jsonObject["reply_to_message"].Value<JObject>())
-                : new MessageInfo{ ForwardFromChat = new ChatInfo() };
+                : MessageInfoWithNullField();
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoEditDateTest()
             if (jsonObject["edit_date"] != null)
@@ -183,10 +181,71 @@ namespace NetTelebot
                 MigrateFromChatId = jsonObject["migrate_from_chat_id"].Value<int>();
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoPinnedMessageTest()
-            // todo added field = new Field() in { } if  pinned_message == null
             PinnedMessage = jsonObject["pinned_message"] != null
                 ? new MessageInfo(jsonObject["pinned_message"].Value<JObject>())
-                : new MessageInfo { ForwardFromChat = new ChatInfo() };
+                : MessageInfoWithNullField();
+        }
+
+        private static MessageInfo MessageInfoWithNullField()
+        {
+            return new MessageInfo
+            {
+                From = new UserInfo(),
+                Chat = new ChatInfo(),
+                ForwardFrom = new UserInfo(),
+                ForwardFromChat = new ChatInfo(),
+
+                ReplyToMessage = new MessageInfo
+                {
+                    From = new UserInfo(),
+                    Chat = new ChatInfo(),
+                    ForwardFrom = new UserInfo(),
+                    ForwardFromChat = new ChatInfo(),
+                    ReplyToMessage = new MessageInfo(),
+                    Audio = new AudioInfo(),
+                    Document = new DocumentInfo(),
+                    Photo = new PhotoSizeInfo[0],
+                    Sticker = new StickerInfo(),
+                    Video = new VideoInfo(),
+                    Contact = new ContactInfo(),
+                    Location = new LocationInfo(),
+                    NewChatMember = new UserInfo(),
+                    LeftChatMember = new UserInfo(),
+                    NewChatPhoto = new PhotoSizeInfo[0],
+                    PinnedMessage = new MessageInfo()
+                },
+
+                Audio = new AudioInfo(),
+                Document = new DocumentInfo(),
+                Photo = new PhotoSizeInfo[0],
+                Sticker = new StickerInfo(),
+                Video = new VideoInfo(),
+                Contact = new ContactInfo(),
+                Location = new LocationInfo(),
+                NewChatMember = new UserInfo(),
+                LeftChatMember = new UserInfo(),
+                NewChatPhoto = new PhotoSizeInfo[0],
+
+                PinnedMessage = new MessageInfo
+                {
+                    From = new UserInfo(),
+                    Chat = new ChatInfo(),
+                    ForwardFrom = new UserInfo(),
+                    ForwardFromChat = new ChatInfo(),
+                    ReplyToMessage = new MessageInfo(),
+                    Audio = new AudioInfo(),
+                    Document = new DocumentInfo(),
+                    Photo = new PhotoSizeInfo[0],
+                    Sticker = new StickerInfo(),
+                    Video = new VideoInfo(),
+                    Contact = new ContactInfo(),
+                    Location = new LocationInfo(),
+                    NewChatMember = new UserInfo(),
+                    LeftChatMember = new UserInfo(),
+                    NewChatPhoto = new PhotoSizeInfo[0],
+                    PinnedMessage = new MessageInfo()
+                }
+            };
         }
 
         /// <summary>
