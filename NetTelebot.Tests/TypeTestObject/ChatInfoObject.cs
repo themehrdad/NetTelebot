@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using NetTelebot.BotEnum;
+using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.TypeTestObject
 {
@@ -12,7 +13,7 @@ namespace NetTelebot.Tests.TypeTestObject
         /// difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float 
         /// type are safe for storing this identifier</param>
         /// <param name="type">Type of chat, can be either “private”, “group”, “supergroup” or “channel”</param>
-        /// <returns><see cref="ChatInfo"/></returns>
+        /// <returns><see cref="Type.ChatInfo"/></returns>
         internal static JObject GetMinimalMandatoryObject(int id, ChatType type)
         {
             dynamic chat = new JObject();
@@ -39,7 +40,7 @@ namespace NetTelebot.Tests.TypeTestObject
         /// <param name="photo">Optional. Chat photo. Returned only in getChat.</param>
         /// <param name="description">Optional. Description, for supergroups and channel chats. Returned only in getChat.</param>
         /// <param name="inviteLink">Optional. Chat invite link, for supergroups and channel chats. Returned only in getChat.</param>
-        /// <returns><see cref="ChatInfo"/></returns>
+        /// <returns><see cref="Type.ChatInfo"/></returns>
         internal static JObject GetObject(int id, string type, 
             string title = null, 
             string username = null,

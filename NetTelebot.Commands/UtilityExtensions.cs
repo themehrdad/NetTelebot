@@ -1,4 +1,6 @@
-﻿namespace NetTelebot.Commands
+﻿using NetTelebot.Type;
+
+namespace NetTelebot.Commands
 {
     public static class UtilityExtensions
     {

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using NetTelebot.Type;
+using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.TypeTestObject
 {

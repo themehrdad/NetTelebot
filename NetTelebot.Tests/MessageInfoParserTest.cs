@@ -1,5 +1,7 @@
 ﻿using System;
+using NetTelebot.BotEnum;
 using NetTelebot.Tests.TypeTestObject;
+using NetTelebot.Type;
 using NUnit.Framework;
 using Newtonsoft.Json.Linq;
 

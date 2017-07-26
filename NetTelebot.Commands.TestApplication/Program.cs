@@ -13,7 +13,7 @@ namespace NetTelebot.Commands.TestApplication
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
+            Application.Run(new FormMain());
         }
     }
 }

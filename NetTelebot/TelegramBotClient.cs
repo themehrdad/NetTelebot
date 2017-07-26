@@ -4,6 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using NetTelebot.BotEnum;
+using NetTelebot.Interface;
+using NetTelebot.Result;
+using NetTelebot.Type;
 
 #if DEBUG
 [assembly: InternalsVisibleTo("NetTelebot.Tests")]

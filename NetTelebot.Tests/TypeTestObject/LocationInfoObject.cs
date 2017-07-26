@@ -9,7 +9,7 @@ namespace NetTelebot.Tests.TypeTestObject
         /// </summary>
         /// <param name="longitude">Longitude as defined by sender</param>
         /// <param name="latitude">Latitude as defined by sender</param>
-        /// <returns><see cref="LocationInfo"/></returns>
+        /// <returns><see cref="Type.LocationInfo"/></returns>
         internal static JObject GetObject(float longitude, float latitude)
         {
             dynamic locationInfo = new JObject();

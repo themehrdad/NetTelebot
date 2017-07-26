@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mock4Net.Core;
+using NetTelebot.BotEnum;
+using NetTelebot.Type;
 using NUnit.Framework;
 using RestSharp;
 
@@ -366,103 +368,103 @@ namespace NetTelebot.Tests
         public void SendChatActionTest()
         {
             //typing
-            var bot = mBotOkResponse.SendChatAction(123, ChatActions.Typing);
+            mBotOkResponse.SendChatAction(123, ChatActions.Typing);
             var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=typing");
-            Assert.True(bot.Result);
+
             mServerOkResponse.ResetRequestLogs();
 
             //upload_photo
-            bot = mBotOkResponse.SendChatAction(123, ChatActions.Upload_photo);
+            mBotOkResponse.SendChatAction(123, ChatActions.Upload_photo);
             request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_photo");
-            Assert.True(bot.Result);
+
             mServerOkResponse.ResetRequestLogs();
 
             //record_video
-            bot = mBotOkResponse.SendChatAction(123, ChatActions.Record_video);
+            mBotOkResponse.SendChatAction(123, ChatActions.Record_video);
             request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=record_video");
-            Assert.True(bot.Result);
+
             mServerOkResponse.ResetRequestLogs();
 
             //upload_video
-            bot = mBotOkResponse.SendChatAction(123, ChatActions.Upload_video);
+            mBotOkResponse.SendChatAction(123, ChatActions.Upload_video);
             request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_video");
-            Assert.True(bot.Result);
+
             mServerOkResponse.ResetRequestLogs();
 
             //record_audio
-            bot = mBotOkResponse.SendChatAction(123, ChatActions.Record_audio);
+            mBotOkResponse.SendChatAction(123, ChatActions.Record_audio);
             request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=record_audio");
-            Assert.True(bot.Result);
+
             mServerOkResponse.ResetRequestLogs();
 
             //upload_audio
-            bot = mBotOkResponse.SendChatAction(123, ChatActions.Upload_audio);
+            mBotOkResponse.SendChatAction(123, ChatActions.Upload_audio);
             request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_audio");
-            Assert.True(bot.Result);
+
             mServerOkResponse.ResetRequestLogs();
 
             //upload_document
-            bot = mBotOkResponse.SendChatAction(123, ChatActions.Upload_document);
+            mBotOkResponse.SendChatAction(123, ChatActions.Upload_document);
             request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_document");
-            Assert.True(bot.Result);
+
             mServerOkResponse.ResetRequestLogs();
 
             //find_location
-            bot = mBotOkResponse.SendChatAction(123, ChatActions.Find_location);
+            mBotOkResponse.SendChatAction(123, ChatActions.Find_location);
             request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=find_location");
-            Assert.True(bot.Result);
+
             mServerOkResponse.ResetRequestLogs();
 
             //record_video_note
-            bot = mBotOkResponse.SendChatAction(123, ChatActions.Record_video_note);
+            mBotOkResponse.SendChatAction(123, ChatActions.Record_video_note);
             request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=record_video_note");
-            Assert.True(bot.Result);
+
             mServerOkResponse.ResetRequestLogs();
 
             //upload_video_note
-            bot = mBotOkResponse.SendChatAction(123, ChatActions.Upload_video_note);
+            mBotOkResponse.SendChatAction(123, ChatActions.Upload_video_note);
             request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_video_note");
-            Assert.True(bot.Result);
+
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendChatAction");
             Assert.Throws<Exception>(() => mBotBadResponse.SendChatAction(123, ChatActions.Upload_video_note));

@@ -1,5 +1,7 @@
 ﻿using System;
+using NetTelebot.Result;
 using NetTelebot.Tests.Utils;
+using NetTelebot.Type;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests

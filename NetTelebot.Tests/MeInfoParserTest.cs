@@ -1,4 +1,5 @@
 ﻿using NetTelebot.Tests.TypeTestObject;
+using NetTelebot.Type;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests
