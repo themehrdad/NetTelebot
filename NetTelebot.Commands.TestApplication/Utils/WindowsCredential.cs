@@ -40,7 +40,7 @@ namespace NetTelebot.Commands.TestApplication.Utils
         }
     }
 
-    public struct TelegramCredentials
+    public struct TelegramCredentials : IEquatable<TelegramCredentials>
     {
         /// <summary>
         /// You can learn your token from BotFather (@BotFather) 
@@ -59,5 +59,10 @@ namespace NetTelebot.Commands.TestApplication.Utils
         /// 4. Use the "id" of the "chat" object to send your messages.
         /// </summary>
         public int ChatId { get; set; }
+
+        public bool Equals(TelegramCredentials credentials)
+        {
+            return (Token == credentials.Token) && (ChatId == credentials.ChatId);
+        }
     }
 }

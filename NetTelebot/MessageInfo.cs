@@ -64,6 +64,11 @@ namespace NetTelebot
                 ? new UserInfo(jsonObject["forward_from"].Value<JObject>())
                 : new UserInfo();
 
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromChatTest()
+            ForwardFromChat = jsonObject["forward_from_chat"] != null
+                ? new ChatInfo(jsonObject["forward_from_chat"].Value<JObject>())
+                : new ChatInfo { Photo = new ChatPhotoInfo() };
+
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromMessageIdTest()
             if (jsonObject["forward_from_message_id"] != null)
                 ForwardFromMessageId = jsonObject["forward_from_message_id"].Value<int>();
@@ -76,9 +81,10 @@ namespace NetTelebot
             }
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoReplyToMessageTest()
+            // todo added field = new Field() in { } if  reply_to_message == null
             ReplyToMessage = jsonObject["reply_to_message"] != null
                 ? new MessageInfo(jsonObject["reply_to_message"].Value<JObject>())
-                : new MessageInfo();
+                : new MessageInfo{ ForwardFromChat = new ChatInfo() };
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoEditDateTest()
             if (jsonObject["edit_date"] != null)
@@ -177,9 +183,10 @@ namespace NetTelebot
                 MigrateFromChatId = jsonObject["migrate_from_chat_id"].Value<int>();
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoPinnedMessageTest()
+            // todo added field = new Field() in { } if  reply_to_message == null
             PinnedMessage = jsonObject["pinned_message"] != null
                 ? new MessageInfo(jsonObject["pinned_message"].Value<JObject>())
-                : new MessageInfo();
+                : new MessageInfo { ForwardFromChat = new ChatInfo() };
         }
 
         /// <summary>
@@ -216,7 +223,10 @@ namespace NetTelebot
         /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyForwardFrom() </remarks>
         public UserInfo ForwardFrom { get; private set; }
 
-        //todo add (IConversationSource) ForwardFromChat
+        /// <summary>
+        /// Optional. For messages forwarded from a channel, information about the original channel
+        /// </summary>
+        public ChatInfo ForwardFromChat { get; private set; }
 
         /// <summary>
         /// Optional. For forwarded channel posts, identifier of the original message in the channel 

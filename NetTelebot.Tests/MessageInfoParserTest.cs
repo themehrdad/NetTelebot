@@ -63,6 +63,52 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Test for <see cref="MessageInfo.ForwardFromChat"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoForwardFromChatTest()
+        {
+            const int id = 1049413668;
+            const string type = "channel";
+            const string title = "TestTitle";
+            const string username = "TestUsername";
+            const string firstName = "TestFirstName";
+            const string lastName = "TestLastName";
+            const bool allMembersAreAdministrators = false;
+            JObject photo = ChatPhotoInfoObject.GetObject("123456", "654321");
+            const string description = "TestDescription";
+            const string inviteLink = "TestLink";
+
+            dynamic mandatoryMessageInfoFields = new JObject();
+
+            mandatoryMessageInfoFields.message_id = -1147483648;
+            mandatoryMessageInfoFields.date = 0;
+
+            mandatoryMessageInfoFields.chat = ChatInfoObject.GetMinimalMandatoryObject(id, ChatType.channel);
+
+            mandatoryMessageInfoFields.forward_from_chat = ChatInfoObject.GetObject(id, type,
+                title, username, firstName, lastName, allMembersAreAdministrators,
+                photo, description, inviteLink);
+
+            MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
+
+            Assert.AreEqual(messageInfo.ForwardFromChat.Id, id);
+            Assert.AreEqual(messageInfo.ForwardFromChat.Type, ChatType.channel);
+            Assert.AreEqual(messageInfo.ForwardFromChat.Title, title);
+            Assert.AreEqual(messageInfo.ForwardFromChat.Username, username);
+            Assert.AreEqual(messageInfo.ForwardFromChat.FirstName, firstName);
+            Assert.AreEqual(messageInfo.ForwardFromChat.LastName, lastName);
+            Assert.AreEqual(messageInfo.ForwardFromChat.AllMembersAreAdministrators, allMembersAreAdministrators);
+            Assert.AreEqual(messageInfo.ForwardFromChat.Photo.SmallFileId, "123456");
+            Assert.AreEqual(messageInfo.ForwardFromChat.Photo.BigFileId, "654321");
+            Assert.AreEqual(messageInfo.ForwardFromChat.Description, description);
+            Assert.AreEqual(messageInfo.ForwardFromChat.InviteLink, inviteLink);
+
+            Console.WriteLine(mandatoryMessageInfoFields);
+
+        }
+
+        /// <summary>
         /// Test for <see cref="MessageInfo.ForwardFromMessageId"/> parse field.
         /// </summary>
         [Test]
@@ -102,7 +148,7 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
-        /// Test for <see cref="MessageInfo.Chats"/> parse field.
+        /// Test for <see cref="MessageInfo.Chat"/> parse field.
         /// </summary>
         [Test]
         public static void MessageInfoChatsTest()
@@ -145,7 +191,7 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
-        /// Test for parse <see cref="ChatType"/> in <see cref="MessageInfo.Chats"/> 
+        /// Test for parse <see cref="ChatType"/> in <see cref="MessageInfo.Chat"/> 
         /// </summary>
         [Test]
         public static void MessageInfoChatsTypeParserTest()
@@ -158,7 +204,6 @@ namespace NetTelebot.Tests
 
             //private
             mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id, "private");
-
             MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
             Assert.AreEqual(messageInfo.Chat.Id, id);
@@ -184,6 +229,13 @@ namespace NetTelebot.Tests
 
             Assert.AreEqual(messageInfo.Chat.Id, id);
             Assert.AreEqual(messageInfo.Chat.Type, ChatType.supergroup);
+
+            //null
+            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id, "grou");
+            MessageInfo messageInfo2 = new MessageInfo(mandatoryMessageInfoFields);
+
+            Assert.AreEqual(messageInfo2.Chat.Id, id);
+            Assert.AreEqual(messageInfo2.Chat.Type, null);
         }
 
         /// <summary>

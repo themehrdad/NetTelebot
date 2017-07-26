@@ -62,6 +62,62 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardFromChat"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyForwardFromChat()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyForwardFrom()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.ForwardFromChat
+            ChatInfo forwardFromChat = sendMessage.Result.ForwardFromChat;
+
+            // field MessageInfo.ForwardFromChat
+            var id = sendMessage.Result.ForwardFromChat.Id;
+            var type = sendMessage.Result.ForwardFromChat.Type;
+            var title = sendMessage.Result.ForwardFromChat.Title;
+            var userName = sendMessage.Result.ForwardFromChat.Username;
+            var firstName = sendMessage.Result.ForwardFromChat.FirstName;
+            var lastName = sendMessage.Result.ForwardFromChat.LastName;
+            var allMembersAreAdministrators = sendMessage.Result.ForwardFromChat.AllMembersAreAdministrators;
+            var description = sendMessage.Result.ForwardFromChat.Description;
+            var inviteLink = sendMessage.Result.ForwardFromChat.InviteLink;
+
+            var photoBigFlleId = sendMessage.Result.ForwardFromChat.Photo.BigFileId;
+            var photoSmallFileId = sendMessage.Result.ForwardFromChat.Photo.SmallFileId;
+
+            Console.WriteLine("TestAppealToTheEmptyForwardFrom():" +
+                "\n sendMessage.Result.ForwardFromChat.Id: " + id +
+                "\n sendMessage.Result.ForwardFromChat.Type: " + type +
+                "\n sendMessage.Result.ForwardFromChat.Title: " + title +
+                "\n sendMessage.Result.ForwardFromChat.Username: " + userName +
+                "\n sendMessage.Result.ForwardFromChat.FirstName: " + firstName +
+                "\n sendMessage.Result.ForwardFromChat.LastName: " + lastName +
+                "\n sendMessage.Result.ForwardFromChat.AllMembersAreAdministrators: " + allMembersAreAdministrators +
+                "\n sendMessage.Result.ForwardFromChat.Photo.BigFileId: " + photoBigFlleId +
+                "\n sendMessage.Result.ForwardFromChat.Photo.SmallFileId: " + photoSmallFileId +
+                "\n description = sendMessage.Result.ForwardFromChat.Description: " + description +
+                "\n sendMessage.Result.ForwardFromChat.Description: " + inviteLink);
+
+            //check instance MessageInfo.ForwardFromChat
+            Assert.IsInstanceOf(typeof(ChatInfo), forwardFromChat);
+
+            //check MessageInfo.ForwardFromChat.field
+            Assert.AreEqual(id, 0);
+            Assert.IsNull(type);
+            Assert.IsNull(title);
+            Assert.IsNull(userName);
+            Assert.IsNull(firstName);
+            Assert.IsNull(lastName);
+            Assert.IsFalse(allMembersAreAdministrators);
+            Assert.IsNull(photoBigFlleId);
+            Assert.IsNull(photoSmallFileId);
+            Assert.IsNull(description);
+            Assert.IsNull(inviteLink);
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardDateUnix"/>
         /// </summary>
         [Test]
@@ -134,14 +190,14 @@ namespace NetTelebot.Tests
             var messageId = sendMessage.Result.ReplyToMessage.MessageId;
             UserInfo from = sendMessage.Result.ReplyToMessage.From;
             DateTime date = sendMessage.Result.ReplyToMessage.Date;
-
-            // to obsolete fields chat
             ChatInfo chat = sendMessage.Result.ReplyToMessage.Chat;
 
             UserInfo forwardFrom = sendMessage.Result.ReplyToMessage.ForwardFrom;
-            
-            //todo forward_from_chat
             var forwardFromMessageId = sendMessage.Result.ReplyToMessage.ForwardFromMessageId;
+
+            ChatInfo forwardFromChat = sendMessage.Result.ReplyToMessage.ForwardFromChat;
+            var forwardFromChatId = sendMessage.Result.ReplyToMessage.ForwardFromChat.Id;
+
             DateTime forwardDate = sendMessage.Result.ReplyToMessage.ForwardDate;
             MessageInfo replyToMessage = sendMessage.Result.ReplyToMessage.ReplyToMessage;
             DateTime editDate = sendMessage.Result.ReplyToMessage.EditDate;
@@ -189,6 +245,8 @@ namespace NetTelebot.Tests
                               + "\n sendMessage.Result.ReplyToMessage.Chat: " + chat
                               + "\n sendMessage.Result.ReplyToMessage.ForwardFrom: " + forwardFrom
                               + "\n sendMessage.Result.ReplyToMessage.ForwardFromMessageId: " + forwardFromMessageId
+                              + "\n sendMessage.Result.ReplyToMessage.ForwardFromChat: " + forwardFromChat
+                              + "\n sendMessage.Result.ReplyToMessage.ForwardFromChatId: " + forwardFromChatId
                               + "\n sendMessage.Result.ReplyToMessage.ReplyToMessage: " + replyToMessage
                               + "\n sendMessage.Result.ReplyToMessage.EditDate: " + editDate
                               + "\n sendMessage.Result.ReplyToMessage.Text: " + text
@@ -219,11 +277,11 @@ namespace NetTelebot.Tests
             Assert.AreEqual(messageId, 0);
             Assert.IsNull(from);
             Assert.AreEqual(date, DateTime.MinValue);
-            
-            //chat && chats
             Assert.IsNull(chat);
             Assert.IsNull(forwardFrom);
             Assert.AreEqual(forwardFromMessageId, 0);
+            Assert.IsInstanceOf<ChatInfo> (forwardFromChat);
+            Assert.AreEqual(forwardFromChatId, 0);
             Assert.AreEqual(forwardDate, DateTime.MinValue);
             Assert.IsNull(replyToMessage);
             Assert.AreEqual(editDate, DateTime.MinValue);
@@ -962,12 +1020,14 @@ namespace NetTelebot.Tests
             var messageId = sendMessage.Result.PinnedMessage.MessageId;
             UserInfo from = sendMessage.Result.PinnedMessage.From;
             DateTime date = sendMessage.Result.PinnedMessage.Date;
-            IConversationSource chat = sendMessage.Result.PinnedMessage.Chat;
-            UserInfo forwardFrom = sendMessage.Result.PinnedMessage.ForwardFrom;
-            
-            //todo forward_from_chat
+            ChatInfo chat = sendMessage.Result.PinnedMessage.Chat;
 
+            UserInfo forwardFrom = sendMessage.Result.PinnedMessage.ForwardFrom;
             var forwardFromMessageId = sendMessage.Result.PinnedMessage.ForwardFromMessageId;
+
+            ChatInfo forwardFromChat = sendMessage.Result.PinnedMessage.ForwardFromChat;
+            var forwardFromChatId = sendMessage.Result.PinnedMessage.ForwardFromChat.Id;
+
             DateTime forwardDate = sendMessage.Result.PinnedMessage.ForwardDate;
             MessageInfo replyToMessage = sendMessage.Result.PinnedMessage.ReplyToMessage;
             DateTime editDate = sendMessage.Result.PinnedMessage.EditDate;
@@ -1017,6 +1077,8 @@ namespace NetTelebot.Tests
                               + "\n sendMessage.Result.PinnedMessage.Chat: " + chat
                               + "\n sendMessage.Result.PinnedMessage.ForwardFrom: " + forwardFrom
                               + "\n sendMessage.Result.PinnedMessage.ForwardFromMessageId: " + forwardFromMessageId
+                              + "\n sendMessage.Result.PinnedMessage.ForwardFromChat: " + forwardFromChat
+                              + "\n sendMessage.Result.PinnedMessage.ForwardFromChatId: " + forwardFromChatId
                               + "\n sendMessage.Result.PinnedMessage.ReplyToMessage: " + replyToMessage
                               + "\n sendMessage.Result.PinnedMessage.EditDate: " + editDate
                               + "\n sendMessage.Result.PinnedMessage.Text: " + text
@@ -1049,6 +1111,9 @@ namespace NetTelebot.Tests
             Assert.AreEqual(date, DateTime.MinValue);
             Assert.IsNull(chat);
             Assert.IsNull(forwardFrom);
+            Assert.AreEqual(forwardFromMessageId, 0);
+            Assert.IsInstanceOf<ChatInfo>(forwardFromChat);
+            Assert.AreEqual(forwardFromChatId, 0);
             Assert.AreEqual(forwardFromMessageId, 0);
             Assert.AreEqual(forwardDate, DateTime.MinValue);
             Assert.IsNull(replyToMessage);

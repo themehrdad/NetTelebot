@@ -5,6 +5,7 @@ namespace NetTelebot
 {
     /// <summary>
     /// This object represents a chat photo.
+    /// See <see href="https://core.telegram.org/bots/api#chatphoto">API</see>
     /// </summary>
     public class ChatPhotoInfo
     {
@@ -32,6 +33,7 @@ namespace NetTelebot
         {
             if (jsonObject["small_file_id"] != null)
                 SmallFileId = jsonObject["small_file_id"].Value<string>();
+
             if (jsonObject["big_file_id"] != null)
                 BigFileId = jsonObject["big_file_id"].Value<string>();
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot 
@@ -32,8 +31,8 @@ namespace NetTelebot
         private void Parse(JObject jsonObject)
         {
             Id = jsonObject["id"].Value<int>();
-            Type = ParseChatType(jsonObject["type"].Value<string>());
-
+            Type = ParseChatType(jsonObject["type"].Value<string>()); ;
+            
             if (jsonObject["title"] != null)
                 Title = jsonObject["title"].Value<string>();
             if (jsonObject["username"] != null)
@@ -52,13 +51,18 @@ namespace NetTelebot
                 InviteLink = jsonObject["invite_link"].Value<string>();
         }
 
-        private static ChatType ParseChatType(string type)
+        private static ChatType? ParseChatType(string type)
         {
             if (type.Equals("private"))
                 return ChatType.@private;
             if (type.Equals("group"))
                 return ChatType.group;
-            return type.Equals("supergroup") ? ChatType.supergroup : ChatType.channel;
+            if (type.Equals("supergroup"))
+                return ChatType.supergroup;
+            if (type.Equals("channel"))
+                return ChatType.channel;
+
+            return null;
         }
 
         /// <summary>
@@ -71,7 +75,7 @@ namespace NetTelebot
         /// <summary>
         /// Type of chat, can be either “private”, “group”, “supergroup” or “channel”
         /// </summary>
-        public ChatType Type { get; private set; }
+        public ChatType? Type { get; private set; }
 
         /// <summary>
         /// Optional. Title, for supergroups, channels and group chats
@@ -101,7 +105,7 @@ namespace NetTelebot
         /// <summary>
         /// Optional. Chat photo. Returned only in getChat.
         /// </summary>
-        public ChatPhotoInfo Photo { get; private set; }
+        public ChatPhotoInfo Photo { get; set; }
 
         /// <summary>
         /// Optional. Description, for supergroups and channel chats. Returned only in getChat.
