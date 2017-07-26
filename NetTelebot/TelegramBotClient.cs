@@ -1,6 +1,7 @@
 ﻿using RestSharp;
 using System;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
@@ -129,7 +130,7 @@ namespace NetTelebot
 
             IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new GetUpdatesResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -155,7 +156,7 @@ namespace NetTelebot
 
             IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new MeInfo(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -196,7 +197,7 @@ namespace NetTelebot
 
             IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -224,7 +225,7 @@ namespace NetTelebot
 
             IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -272,7 +273,7 @@ namespace NetTelebot
 
             IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -337,7 +338,7 @@ namespace NetTelebot
 
             IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -388,7 +389,7 @@ namespace NetTelebot
 
             IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -435,7 +436,7 @@ namespace NetTelebot
 
             IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -499,7 +500,7 @@ namespace NetTelebot
 
             IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -539,7 +540,7 @@ namespace NetTelebot
 
             IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -582,7 +583,7 @@ namespace NetTelebot
 
             IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -598,7 +599,7 @@ namespace NetTelebot
         /// typing for text messages, upload_photo for photos, record_video or upload_video for videos, 
         /// record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.</param>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendChatActionTest()</remarks>
-        public void SendChatAction(int chatId, ChatActions action)
+        public BooleanResult SendChatAction(int chatId, ChatActions action)
         {
             RestRequest request = new RestRequest(string.Format(sendChatActionUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
@@ -606,8 +607,10 @@ namespace NetTelebot
 
             IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-                throw new Exception(response.StatusDescription);
+            if (response.StatusCode == HttpStatusCode.OK)
+                return new BooleanResult(response.Content);
+
+            throw new Exception(response.StatusDescription);
         }
 
         /// <summary>
@@ -631,7 +634,7 @@ namespace NetTelebot
 
             IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new GetUserProfilePhotosResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -640,7 +643,27 @@ namespace NetTelebot
         //todo getFile (https://core.telegram.org/bots/api#getfile)
         //todo kickChatMember (https://core.telegram.org/bots/api#kickchatmember)
         //todo unbanChatMember (https://core.telegram.org/bots/api#unbanchatmember)
-        //todo leaveChat (https://core.telegram.org/bots/api#leavechat)
+
+        /// <summary>
+        /// Use this method for your bot to leave a group, supergroup or channel.
+        /// See <see cref="https://core.telegram.org/bots/api#leavechat">API</see> 
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat</param>
+        /// <returns>Returns True on success, false otherwise</returns>
+        public BooleanResult LeaveChat(int chatId)
+        {
+            RestRequest request = new RestRequest(string.Format(leaveChatUri, Token), Method.POST);
+
+            request.AddParameter("chat_id", chatId);
+
+            IRestResponse response = RestClient.Execute(request);
+
+            if(response.StatusCode == HttpStatusCode.OK)
+                return new BooleanResult(response.Content);
+
+            throw new Exception(response.StatusDescription);
+        }
+
         //todo getChat (https://core.telegram.org/bots/api#getchat)
         //todo getChatAdministrators (https://core.telegram.org/bots/api#getchatadministrators)
         //todo getChatMembersCount (https://core.telegram.org/bots/api#getchatmemberscount)

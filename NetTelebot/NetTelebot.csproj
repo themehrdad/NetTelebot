@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioInfo.cs" />
+    <Compile Include="BooleanResult.cs" />
     <Compile Include="ChatActions.cs" />
     <Compile Include="ChatInfo.cs" />
     <Compile Include="ChatPhotoInfo.cs" />
