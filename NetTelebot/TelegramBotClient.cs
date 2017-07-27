@@ -179,7 +179,7 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendMessageTest()</remarks>
-        public SendMessageResult SendMessage(int chatId, string text,
+        public SendMessageResult SendMessage(long chatId, string text,
             ParseMode? parseMode = null,
             bool? disableWebPagePreview = null,
             bool? disableNotification = null,
@@ -217,7 +217,7 @@ namespace NetTelebot
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.ForwardMessageTest()</remarks>
-        public SendMessageResult ForwardMessage(int chatId, int fromChatId, 
+        public SendMessageResult ForwardMessage(long chatId, int fromChatId, 
             int messageId,
             bool? disableNotification = null)
         {
@@ -248,7 +248,7 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendPhotoTest()</remarks>
-        public SendMessageResult SendPhoto(int chatId, IFile photo,
+        public SendMessageResult SendPhoto(long chatId, IFile photo,
             string caption = null,
             bool? disableNotification = null,
             int? replyToMessageId = null,
@@ -302,7 +302,7 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendAudioTest()</remarks>
-        public SendMessageResult SendAudio(int chatId, IFile audio,
+        public SendMessageResult SendAudio(long chatId, IFile audio,
             string caption = null,
             int? duration = null,
             string performer = null,
@@ -362,7 +362,7 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendDocumentTest()</remarks>
-        public SendMessageResult SendDocument(int chatId, IFile document,
+        public SendMessageResult SendDocument(long chatId, IFile document,
             string caption = null,
             bool? disableNotification = null,
             int? replyToMessageId = null,
@@ -411,7 +411,7 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendStickerTest()</remarks>
-        public SendMessageResult SendSticker(int chatId, IFile sticker,
+        public SendMessageResult SendSticker(long chatId, IFile sticker,
             bool? disableNotification = null,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
@@ -463,7 +463,7 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendVideoTest()</remarks>
-        public SendMessageResult SendVideo(int chatId, IFile video,
+        public SendMessageResult SendVideo(long chatId, IFile video,
             int? duration = null,
             int? width = null,
             int? height = null,
@@ -526,7 +526,7 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendLocationTest()</remarks>
-        public SendMessageResult SendLocation(int chatId, float latitude, float longitude,
+        public SendMessageResult SendLocation(long chatId, float latitude, float longitude,
             bool? disableNotification = null,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
@@ -566,7 +566,7 @@ namespace NetTelebot
         /// instructions to remove keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendContactTest()</remarks>
-        public SendMessageResult SendContact(int chatId, string phoneNumber, string firstName,
+        public SendMessageResult SendContact(long chatId, string phoneNumber, string firstName,
             string lastName = null,
             bool? disableNotification = null,
             int? replyToMessageId = null,
@@ -604,7 +604,7 @@ namespace NetTelebot
         /// typing for text messages, upload_photo for photos, record_video or upload_video for videos, 
         /// record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.</param>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendChatActionTest()</remarks>
-        public BooleanResult SendChatAction(int chatId, ChatActions action)
+        public BooleanResult SendChatAction(long chatId, ChatActions action)
         {
             RestRequest request = new RestRequest(string.Format(sendChatActionUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
@@ -658,7 +658,7 @@ namespace NetTelebot
         /// <param name="untilDate">Date when the user will be unbanned. 
         /// If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever</param>
         /// <returns>Returns True on success, false otherwise</returns>
-        public BooleanResult KickChatMember(int chatId, int userId, DateTime untilDate)
+        public BooleanResult KickChatMember(long chatId, int userId, DateTime untilDate)
         {
             
             RestRequest request = new RestRequest(string.Format(kickChatMemberUri, Token), Method.POST);
@@ -684,7 +684,7 @@ namespace NetTelebot
         /// <param name="chatId">Unique identifier for the target group or username of the target supergroup or channel</param>
         /// <param name="userId">Unique identifier of the target user</param>
         /// <returns>Returns True on success, false otherwise</returns>
-        public BooleanResult UnbanChatMember(int chatId, int userId)
+        public BooleanResult UnbanChatMember(long chatId, int userId)
         {
 
             RestRequest request = new RestRequest(string.Format(unbanChatMemberUri, Token), Method.POST);
@@ -706,7 +706,7 @@ namespace NetTelebot
         /// </summary>
         /// <param name="chatId">Unique identifier for the target chat</param>
         /// <returns>Returns True on success, false otherwise</returns>
-        public BooleanResult LeaveChat(int chatId)
+        public BooleanResult LeaveChat(long chatId)
         {
             RestRequest request = new RestRequest(string.Format(leaveChatUri, Token), Method.POST);
 

@@ -23,7 +23,7 @@ namespace NetTelebot.Type
 
         private void Parse(JObject jsonObject)
         {
-            Id = jsonObject["id"].Value<int>();
+            Id = jsonObject["id"].Value<long>();
             Title = jsonObject["title"].Value<string>();
         }
 
@@ -36,7 +36,7 @@ namespace NetTelebot.Type
         /// <summary>
         /// Unique identifier for this group chat
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Unique identifier for this group chat

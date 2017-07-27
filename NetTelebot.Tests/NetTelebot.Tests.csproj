@@ -96,7 +96,8 @@
     <Compile Include="TypeTestObject\UserInfoObject.cs" />
     <Compile Include="TypeTestObject\VideoInfoObject.cs" />
     <Compile Include="UtilityExtensionTest.cs" />
-    <Compile Include="Utils\TelegramBot.cs" />
+    <Compile Include="Utils\TelegramBotGroupChat.cs" />
+    <Compile Include="Utils\TelegramBotSuperGroupChat.cs" />
     <Compile Include="Utils\WindowsCredential.cs" />
   </ItemGroup>
   <ItemGroup>

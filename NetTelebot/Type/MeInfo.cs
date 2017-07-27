@@ -30,7 +30,7 @@ namespace NetTelebot.Type
         private void Parse(JObject jsonObject)
         {
             Ok = jsonObject["ok"].Value<bool>();
-            Id = jsonObject["result"]["id"].Value<int>();
+            Id = jsonObject["result"]["id"].Value<long>();
             FirstName = jsonObject["result"]["first_name"].Value<string>();
 
             if (jsonObject["result"]["last_name"] != null)
@@ -50,7 +50,7 @@ namespace NetTelebot.Type
         /// <summary>
         /// Unique identifier for this user or bot
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// User‘s or bot’s first name

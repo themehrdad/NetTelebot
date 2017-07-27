@@ -32,7 +32,7 @@ namespace NetTelebot.Type
 
         private void Parse(JObject jsonObject)
         {
-            Id = jsonObject["id"].Value<int>();
+            Id = jsonObject["id"].Value<long>();
             Type = ParseChatType(jsonObject["type"].Value<string>());
             
             if (jsonObject["title"] != null)
@@ -72,7 +72,7 @@ namespace NetTelebot.Type
         /// difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision
         /// float type are safe for storing this identifier.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Type of chat, can be either “private”, “group”, “supergroup” or “channel”
