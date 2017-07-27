@@ -651,7 +651,7 @@ namespace NetTelebot
         /// Use this method to kick a user from a group, a supergroup or a channel. 
         /// In the case of supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., 
         /// unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. 
-        /// Returns 
+        /// See <see href="https://core.telegram.org/bots/api#kickchatmember">API</see> 
         /// </summary>
         /// <param name="chatId">Unique identifier for the target group or username of the target supergroup or channel</param>
         /// <param name="userId">Unique identifier of the target user</param>
@@ -675,13 +675,34 @@ namespace NetTelebot
             throw new Exception(response.StatusDescription);
         }
 
+        /// <summary>
+        /// Use this method to unban a previously kicked user in a supergroup or channel. 
+        /// The user will not return to the group or channel automatically, but will be able to join via link, etc. 
+        /// The bot must be an administrator for this to work.
+        /// See <see href="https://core.telegram.org/bots/api#unbanchatmember">API</see> 
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target group or username of the target supergroup or channel</param>
+        /// <param name="userId">Unique identifier of the target user</param>
+        /// <returns>Returns True on success, false otherwise</returns>
+        public BooleanResult UnbanChatMember(int chatId, int userId)
+        {
 
+            RestRequest request = new RestRequest(string.Format(unbanChatMemberUri, Token), Method.POST);
 
-        //todo unbanChatMember (https://core.telegram.org/bots/api#unbanchatmember)
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("user_id", userId);
+
+            IRestResponse response = RestClient.Execute(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+                return new BooleanResult(response.Content);
+
+            throw new Exception(response.StatusDescription);
+        }
 
         /// <summary>
         /// Use this method for your bot to leave a group, supergroup or channel.
-        /// See <see cref="https://core.telegram.org/bots/api#leavechat">API</see> 
+        /// See <see href="https://core.telegram.org/bots/api#leavechat">API</see> 
         /// </summary>
         /// <param name="chatId">Unique identifier for the target chat</param>
         /// <returns>Returns True on success, false otherwise</returns>

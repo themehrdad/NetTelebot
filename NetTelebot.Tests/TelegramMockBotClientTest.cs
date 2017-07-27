@@ -91,6 +91,16 @@ namespace NetTelebot.Tests
 
             mServerOkResponse
                 .Given(
+                    Requests.WithUrl("/botToken/unbanChatMember").UsingPost()
+                )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(expectedBodyForBooleanResult)
+                );
+
+            mServerOkResponse
+                .Given(
                     Requests.WithUrl("/botToken/getMe").UsingPost()
                 )
                 .RespondWith(
@@ -519,6 +529,26 @@ namespace NetTelebot.Tests
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/kickChatMember");
             Assert.Throws<Exception>(() => mBotBadResponse.KickChatMember(123, 123, new DateTime(2027, 07, 27)));
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.UnbanChatMember"/>.
+        /// </summary>
+        [Test]
+        public void UnbanChatMemberTest()
+        {
+            mBotOkResponse.UnbanChatMember(123, 123);
+
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/unbanChatMember").UsingPost());
+
+            PrintResult(request);
+
+            Assert.AreEqual(request.FirstOrDefault()?.Body, 
+                "chat_id=123&" +
+                "user_id=123");
+
+            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/unbanChatMember");
+            Assert.Throws<Exception>(() => mBotBadResponse.UnbanChatMember(123, 123));
         }
 
         /// <summary>
