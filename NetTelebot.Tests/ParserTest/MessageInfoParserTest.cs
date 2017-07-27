@@ -2,10 +2,10 @@
 using NetTelebot.BotEnum;
 using NetTelebot.Tests.TypeTestObject;
 using NetTelebot.Type;
-using NUnit.Framework;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 
-namespace NetTelebot.Tests
+namespace NetTelebot.Tests.ParserTest
 {
     [TestFixture]
     internal static class MessageInfoParserTest

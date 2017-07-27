@@ -2,7 +2,7 @@
 using NetTelebot.Type;
 using NUnit.Framework;
 
-namespace NetTelebot.Tests
+namespace NetTelebot.Tests.ParserTest
 {
     [TestFixture]
     internal static class MeInfoParserTest
