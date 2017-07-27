@@ -42,12 +42,22 @@ namespace NetTelebot.Type
         /// </summary>
         public MessageInfo Message { get; private set; }
 
+        /// <summary>
+        /// Parses the array.
+        /// </summary>
+        /// <param name="jsonText">The json text.</param>
+        /// <returns></returns>
         public static UpdateInfo[] ParseArray(string jsonText)
         {
             JArray jsonArray = (JArray)JsonConvert.DeserializeObject(jsonText);
             return ParseArray(jsonArray);
         }
 
+        /// <summary>
+        /// Parses the array.
+        /// </summary>
+        /// <param name="jsonArray">The json array.</param>
+        /// <returns></returns>
         public static UpdateInfo[] ParseArray(JArray jsonArray)
         {
             return jsonArray.Cast<JObject>().Select(jobject => new UpdateInfo(jobject)).ToArray();
