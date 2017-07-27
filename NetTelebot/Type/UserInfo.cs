@@ -1,5 +1,4 @@
-﻿using NetTelebot.Interface;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
@@ -7,7 +6,7 @@ namespace NetTelebot.Type
     /// <summary>
     /// This object represents a Telegram user or bot.
     /// </summary>
-    public class UserInfo : IConversationSource
+    public class UserInfo
     {
         internal UserInfo()
         {
@@ -31,7 +30,7 @@ namespace NetTelebot.Type
 
         private void Parse(JObject jsonObject)
         {
-            Id = jsonObject["id"].Value<long>();
+            Id = jsonObject["id"].Value<int>();
             FirstName = jsonObject["first_name"].Value<string>();
             if (jsonObject["last_name"] != null)
                 LastName = jsonObject["last_name"].Value<string>();
@@ -44,7 +43,7 @@ namespace NetTelebot.Type
         /// <summary>
         /// Unique identifier for this user or bot
         /// </summary>
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// User‘s or bot’s first name
