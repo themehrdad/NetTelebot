@@ -14,9 +14,19 @@ namespace NetTelebot.Extension
         /// </summary>
         /// <param name="unixDate">The unix date</param>
         /// <returns>Convert DateTime</returns>
-        public static DateTime ToDateTime(this int unixDate)
+        public static DateTime ToDateTime(this long unixDate)
         {
             return baseDate.AddSeconds(unixDate).ToLocalTime();
+        }
+
+        /// <summary>
+        /// Convert a date time object to Unix time representation.
+        /// </summary>
+        /// <param name="dateTime">The datetime object to convert to Unix time stamp.</param>
+        /// <returns>Returns a numerical representation (Unix time) of the DateTime object.</returns>
+        public static long ToUnixTime(this DateTime dateTime)
+        {
+            return (long)(dateTime - baseDate).TotalSeconds;
         }
     }
 }

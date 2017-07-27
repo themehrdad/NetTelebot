@@ -137,7 +137,7 @@ namespace NetTelebot.Tests
                               + "\n sendMessage.Result.ForwardDateUnix.ToString(): " + forwardDateString);
 
             //check instance MessageInfo.ForwardDate
-            Assert.IsInstanceOf(typeof(int), forwardDateUnix);
+            Assert.IsInstanceOf(typeof(long), forwardDateUnix);
 
             //check value MessageInfo.ForwardDate
             Assert.AreEqual(forwardDateUnix, 0);
@@ -412,7 +412,7 @@ namespace NetTelebot.Tests
                               + "\n sendMessage.Result.EditDateUnix.ToString(): " + editDateString);
 
             //check instance MessageInfo.ForwardDate
-            Assert.IsInstanceOf(typeof(int), editDateUnix);
+            Assert.IsInstanceOf(typeof(long), editDateUnix);
 
             //check value MessageInfo.ForwardDate
             Assert.AreEqual(editDateUnix, 0);

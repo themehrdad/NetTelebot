@@ -263,7 +263,7 @@ namespace NetTelebot.Type
         /// <summary>
         /// Date the message was sent in Unix time
         /// </summary>
-        public int DateUnix { get; private set; }
+        public long DateUnix { get; private set; }
 
         /// <summary>
         /// Date the message was sent in <see cref="DateTime"/>
@@ -298,7 +298,7 @@ namespace NetTelebot.Type
         /// Optional. For forwarded messages, date the original message was sent in Unix time
         /// </summary>
         /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromForwardDateUnix() </remarks>
-        public int ForwardDateUnix { get; private set; }
+        public long ForwardDateUnix { get; private set; }
 
         /// <summary>
         /// Optional. For forwarded messages, date the original message was sent in <see cref="DateTime"/>
@@ -317,7 +317,7 @@ namespace NetTelebot.Type
         /// Optional. Date the message was last edited in Unix time
         /// </summary>
         /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromEditDateUnix() </remarks>
-        public int EditDateUnix { get; private set; }
+        public long EditDateUnix { get; private set; }
 
         /// <summary>
         /// Optional. Date the message was last edited 

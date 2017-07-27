@@ -8,6 +8,7 @@ using NetTelebot.BotEnum;
 using NetTelebot.Interface;
 using NetTelebot.Result;
 using NetTelebot.Type;
+using NetTelebot.Extension;
 
 #if DEBUG
 [assembly: InternalsVisibleTo("NetTelebot.Tests")]
@@ -645,7 +646,37 @@ namespace NetTelebot
         }
 
         //todo getFile (https://core.telegram.org/bots/api#getfile)
-        //todo kickChatMember (https://core.telegram.org/bots/api#kickchatmember)
+
+        /// <summary>
+        /// Use this method to kick a user from a group, a supergroup or a channel. 
+        /// In the case of supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., 
+        /// unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. 
+        /// Returns 
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target group or username of the target supergroup or channel</param>
+        /// <param name="userId">Unique identifier of the target user</param>
+        /// <param name="untilDate">Date when the user will be unbanned. 
+        /// If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever</param>
+        /// <returns>Returns True on success, false otherwise</returns>
+        public BooleanResult KickChatMember(int chatId, int userId, DateTime untilDate)
+        {
+            
+            RestRequest request = new RestRequest(string.Format(kickChatMemberUri, Token), Method.POST);
+
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("user_id", userId);
+            request.AddParameter("until_date", untilDate.ToUnixTime());
+
+            IRestResponse response = RestClient.Execute(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+                return new BooleanResult(response.Content);
+
+            throw new Exception(response.StatusDescription);
+        }
+
+
+
         //todo unbanChatMember (https://core.telegram.org/bots/api#unbanchatmember)
 
         /// <summary>

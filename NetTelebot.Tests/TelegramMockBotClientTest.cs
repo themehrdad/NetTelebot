@@ -7,7 +7,6 @@ using NetTelebot.Type;
 using NUnit.Framework;
 using RestSharp;
 
-
 namespace NetTelebot.Tests
 {
     [TestFixture]
@@ -78,6 +77,16 @@ namespace NetTelebot.Tests
                     Responses
                         .WithStatusCode(200)
                         .WithBody(expectedBodyForGetUserProfilePhotos)
+                );
+
+            mServerOkResponse
+                .Given(
+                    Requests.WithUrl("/botToken/kickChatMember").UsingPost()
+                )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(expectedBodyForBooleanResult)
                 );
 
             mServerOkResponse
@@ -489,6 +498,27 @@ namespace NetTelebot.Tests
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/getUserProfilePhotos");
             Assert.Throws<Exception>(() => mBotBadResponse.GetUserProfilePhotos(123, 123, 10));
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.KickChatMember"/>.
+        /// </summary>
+        [Test]
+        public void KickChatMemberTest()
+        {
+            mBotOkResponse.KickChatMember(123, 123, new DateTime(2027, 07, 27));
+
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/kickChatMember").UsingPost());
+
+            PrintResult(request);
+
+            Assert.AreEqual(request.FirstOrDefault()?.Body, 
+                "chat_id=123&" +
+                "user_id=123&" +
+                "until_date=1816646400");
+
+            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/kickChatMember");
+            Assert.Throws<Exception>(() => mBotBadResponse.KickChatMember(123, 123, new DateTime(2027, 07, 27)));
         }
 
         /// <summary>
