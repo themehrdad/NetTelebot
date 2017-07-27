@@ -1,7 +1,7 @@
 version: 1.0.{build}
 environment:
   user_supergroup:
-    secure: hhvo8h8Czp+liIxxZ7Gg6A==
+    secure: PUKA+dlhFl2Zgo0wJr1i7kpSpp2xy2tghDq4FvKkWzM=
   user:
     secure: erTAPS0qeMOBV0z7QZjudA==
   token:
