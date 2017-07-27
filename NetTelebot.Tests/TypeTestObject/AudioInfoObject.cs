@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using NetTelebot.Type;
+using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal sealed class AudioInfoObject
+    internal static class AudioInfoObject
     {
     
         /// <summary>

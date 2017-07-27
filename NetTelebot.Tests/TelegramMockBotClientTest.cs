@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mock4Net.Core;
+using NetTelebot.BotEnum;
+using NetTelebot.Type;
 using NUnit.Framework;
 using RestSharp;
-
 
 namespace NetTelebot.Tests
 {
     [TestFixture]
-    public class TelegramMockBotClientTest
+    internal class TelegramMockBotClientTest
     {
         private FluentMockServer mServerOkResponse;
         private FluentMockServer mServerBadResponse;
 
-        private const string expectedBodyForSendMessage =
+        private const string expectedBodyForSendMessageResult =
             @"{ ok: ""true"", result: { message_id: 123, date: 0, chat: { id: 123, type: ""private"" }}}";
 
         private const string expectedBodyForGetUserProfilePhotos =
@@ -22,6 +23,9 @@ namespace NetTelebot.Tests
 
         private const string expectedBodyForGetMe =
             @"{ ok: ""true"", result: { id: ""123"", first_name: ""FirstName"", username: ""username"" }}";
+
+        private const string expectedBodyForBooleanResult =
+            @"{ ok: ""true"", result: ""true"" }";
 
         private const string expectedBodyForBadResponse =
             @"{ ok: ""false"", error_code: 401, description: ""Unauthorized"")";
@@ -37,12 +41,22 @@ namespace NetTelebot.Tests
 
             mServerOkResponse
                 .Given(
+                    Requests.WithUrl("/botToken/sendChatAction").UsingPost()
+                )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(expectedBodyForBooleanResult)
+                );
+
+            mServerOkResponse
+                .Given(
                     Requests.WithUrl("/botToken/send*").UsingPost()
                 )
                 .RespondWith(
                     Responses
                         .WithStatusCode(200)
-                        .WithBody(expectedBodyForSendMessage)
+                        .WithBody(expectedBodyForSendMessageResult)
                 );
 
             mServerOkResponse
@@ -52,7 +66,7 @@ namespace NetTelebot.Tests
                 .RespondWith(
                     Responses
                         .WithStatusCode(200)
-                        .WithBody(expectedBodyForSendMessage)
+                        .WithBody(expectedBodyForSendMessageResult)
                 );
 
             mServerOkResponse
@@ -67,12 +81,42 @@ namespace NetTelebot.Tests
 
             mServerOkResponse
                 .Given(
+                    Requests.WithUrl("/botToken/kickChatMember").UsingPost()
+                )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(expectedBodyForBooleanResult)
+                );
+
+            mServerOkResponse
+                .Given(
+                    Requests.WithUrl("/botToken/unbanChatMember").UsingPost()
+                )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(expectedBodyForBooleanResult)
+                );
+
+            mServerOkResponse
+                .Given(
                     Requests.WithUrl("/botToken/getMe").UsingPost()
                 )
                 .RespondWith(
                     Responses
                         .WithStatusCode(200)
                         .WithBody(expectedBodyForGetMe)
+                );
+
+            mServerOkResponse
+                .Given(
+                    Requests.WithUrl("/botToken/leaveChat").UsingPost()
+                )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(expectedBodyForBooleanResult)
                 );
 
             mServerBadResponse
@@ -349,6 +393,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=typing");
+
             mServerOkResponse.ResetRequestLogs();
 
             //upload_photo
@@ -358,6 +403,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_photo");
+
             mServerOkResponse.ResetRequestLogs();
 
             //record_video
@@ -367,6 +413,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=record_video");
+
             mServerOkResponse.ResetRequestLogs();
 
             //upload_video
@@ -376,6 +423,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_video");
+
             mServerOkResponse.ResetRequestLogs();
 
             //record_audio
@@ -385,6 +433,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=record_audio");
+
             mServerOkResponse.ResetRequestLogs();
 
             //upload_audio
@@ -394,6 +443,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_audio");
+
             mServerOkResponse.ResetRequestLogs();
 
             //upload_document
@@ -403,6 +453,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_document");
+
             mServerOkResponse.ResetRequestLogs();
 
             //find_location
@@ -412,6 +463,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=find_location");
+
             mServerOkResponse.ResetRequestLogs();
 
             //record_video_note
@@ -421,6 +473,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=record_video_note");
+
             mServerOkResponse.ResetRequestLogs();
 
             //upload_video_note
@@ -430,6 +483,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_video_note");
+
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendChatAction");
             Assert.Throws<Exception>(() => mBotBadResponse.SendChatAction(123, ChatActions.Upload_video_note));
@@ -454,6 +508,65 @@ namespace NetTelebot.Tests
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/getUserProfilePhotos");
             Assert.Throws<Exception>(() => mBotBadResponse.GetUserProfilePhotos(123, 123, 10));
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.KickChatMember"/>.
+        /// </summary>
+        [Test]
+        public void KickChatMemberTest()
+        {
+            mBotOkResponse.KickChatMember(123, 123, new DateTime(2027, 07, 27));
+
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/kickChatMember").UsingPost());
+
+            PrintResult(request);
+
+            Assert.AreEqual(request.FirstOrDefault()?.Body, 
+                "chat_id=123&" +
+                "user_id=123&" +
+                "until_date=1816646400");
+
+            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/kickChatMember");
+            Assert.Throws<Exception>(() => mBotBadResponse.KickChatMember(123, 123, new DateTime(2027, 07, 27)));
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.UnbanChatMember"/>.
+        /// </summary>
+        [Test]
+        public void UnbanChatMemberTest()
+        {
+            mBotOkResponse.UnbanChatMember(123, 123);
+
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/unbanChatMember").UsingPost());
+
+            PrintResult(request);
+
+            Assert.AreEqual(request.FirstOrDefault()?.Body, 
+                "chat_id=123&" +
+                "user_id=123");
+
+            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/unbanChatMember");
+            Assert.Throws<Exception>(() => mBotBadResponse.UnbanChatMember(123, 123));
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.LeaveChat"/>.
+        /// </summary>
+        [Test]
+        public void LeaveChatTest()
+        {
+            mBotOkResponse.LeaveChat(123);
+
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/leaveChat").UsingPost());
+
+            PrintResult(request);
+
+            Assert.AreEqual(request.FirstOrDefault()?.Body, "chat_id=123");
+
+            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/leaveChat");
+            Assert.Throws<Exception>(() => mBotBadResponse.LeaveChat(123));
         }
 
         private static void PrintResult(IEnumerable<Request> request)

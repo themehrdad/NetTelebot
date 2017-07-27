@@ -1,5 +1,8 @@
 ﻿using System;
+using NetTelebot.BotEnum;
+using NetTelebot.Result;
 using NetTelebot.Tests.Utils;
+using NetTelebot.Type;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests
@@ -73,6 +76,15 @@ namespace NetTelebot.Tests
 
             Assert.AreEqual(sendLocation.Result.Location.Latitude, latitude);
             Assert.AreEqual(sendLocation.Result.Location.Longitude, longitude);
+        }
+
+        [Test, Ignore("Not use. Leave bot from group")]
+        public void TestLeaveChat()
+        {
+            BooleanResult leaveChat = mTelegramBot.LeaveChat(mChatId);
+
+            Assert.True(leaveChat.Ok);
+            Assert.True(leaveChat.Result);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using NetTelebot.Result;
 using NetTelebot.Tests.Utils;
+using NetTelebot.Type;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests
@@ -62,6 +64,62 @@ namespace NetTelebot.Tests
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardFromChat"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyForwardFromChat()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyForwardFrom()");
+            Assert.True(sendMessage.Ok);
+
+            // typeof MessageInfo.ForwardFromChat
+            ChatInfo forwardFromChat = sendMessage.Result.ForwardFromChat;
+
+            // field MessageInfo.ForwardFromChat
+            var id = sendMessage.Result.ForwardFromChat.Id;
+            var type = sendMessage.Result.ForwardFromChat.Type;
+            var title = sendMessage.Result.ForwardFromChat.Title;
+            var userName = sendMessage.Result.ForwardFromChat.Username;
+            var firstName = sendMessage.Result.ForwardFromChat.FirstName;
+            var lastName = sendMessage.Result.ForwardFromChat.LastName;
+            var allMembersAreAdministrators = sendMessage.Result.ForwardFromChat.AllMembersAreAdministrators;
+            var description = sendMessage.Result.ForwardFromChat.Description;
+            var inviteLink = sendMessage.Result.ForwardFromChat.InviteLink;
+
+            var photoBigFlleId = sendMessage.Result.ForwardFromChat.Photo.BigFileId;
+            var photoSmallFileId = sendMessage.Result.ForwardFromChat.Photo.SmallFileId;
+
+            Console.WriteLine("TestAppealToTheEmptyForwardFrom():" +
+                "\n sendMessage.Result.ForwardFromChat.Id: " + id +
+                "\n sendMessage.Result.ForwardFromChat.Type: " + type +
+                "\n sendMessage.Result.ForwardFromChat.Title: " + title +
+                "\n sendMessage.Result.ForwardFromChat.Username: " + userName +
+                "\n sendMessage.Result.ForwardFromChat.FirstName: " + firstName +
+                "\n sendMessage.Result.ForwardFromChat.LastName: " + lastName +
+                "\n sendMessage.Result.ForwardFromChat.AllMembersAreAdministrators: " + allMembersAreAdministrators +
+                "\n sendMessage.Result.ForwardFromChat.Photo.BigFileId: " + photoBigFlleId +
+                "\n sendMessage.Result.ForwardFromChat.Photo.SmallFileId: " + photoSmallFileId +
+                "\n description = sendMessage.Result.ForwardFromChat.Description: " + description +
+                "\n sendMessage.Result.ForwardFromChat.Description: " + inviteLink);
+
+            //check instance MessageInfo.ForwardFromChat
+            Assert.IsInstanceOf(typeof(ChatInfo), forwardFromChat);
+
+            //check MessageInfo.ForwardFromChat.field
+            Assert.AreEqual(id, 0);
+            Assert.IsNull(type);
+            Assert.IsNull(title);
+            Assert.IsNull(userName);
+            Assert.IsNull(firstName);
+            Assert.IsNull(lastName);
+            Assert.IsFalse(allMembersAreAdministrators);
+            Assert.IsNull(photoBigFlleId);
+            Assert.IsNull(photoSmallFileId);
+            Assert.IsNull(description);
+            Assert.IsNull(inviteLink);
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardDateUnix"/>
         /// </summary>
         [Test]
@@ -79,7 +137,7 @@ namespace NetTelebot.Tests
                               + "\n sendMessage.Result.ForwardDateUnix.ToString(): " + forwardDateString);
 
             //check instance MessageInfo.ForwardDate
-            Assert.IsInstanceOf(typeof(int), forwardDateUnix);
+            Assert.IsInstanceOf(typeof(long), forwardDateUnix);
 
             //check value MessageInfo.ForwardDate
             Assert.AreEqual(forwardDateUnix, 0);
@@ -128,47 +186,76 @@ namespace NetTelebot.Tests
             Assert.True(sendMessage.Ok);
 
             // typeof MessageInfo.ReplyToMessage
-            MessageInfo message = sendMessage.Result.ReplyToMessage;
-
+            MessageInfo replyMessage = sendMessage.Result.ReplyToMessage;
+            
             // field MessageInfo.PinnedMessage.field
             var messageId = sendMessage.Result.ReplyToMessage.MessageId;
-            UserInfo from = sendMessage.Result.ReplyToMessage.From;
-            DateTime date = sendMessage.Result.ReplyToMessage.Date;
 
-            // to obsolete fields chat
+            UserInfo from = sendMessage.Result.ReplyToMessage.From;
+            var fromId = sendMessage.Result.ReplyToMessage.From.Id;
+
+            DateTime date = sendMessage.Result.ReplyToMessage.Date;
+            var dateDay = sendMessage.Result.ReplyToMessage.Date.Day;
+
             ChatInfo chat = sendMessage.Result.ReplyToMessage.Chat;
+            var chatId = sendMessage.Result.ReplyToMessage.Chat.Id;
 
             UserInfo forwardFrom = sendMessage.Result.ReplyToMessage.ForwardFrom;
-            
-            //todo forward_from_chat
+
             var forwardFromMessageId = sendMessage.Result.ReplyToMessage.ForwardFromMessageId;
+
+            ChatInfo forwardFromChat = sendMessage.Result.ReplyToMessage.ForwardFromChat;
+            var forwardFromChatId = sendMessage.Result.ReplyToMessage.ForwardFromChat.Id;
+
             DateTime forwardDate = sendMessage.Result.ReplyToMessage.ForwardDate;
+            var forwardDateDay = sendMessage.Result.ReplyToMessage.ForwardDate.Day;
+
             MessageInfo replyToMessage = sendMessage.Result.ReplyToMessage.ReplyToMessage;
+            var replyToMessageChatId = sendMessage.Result.ReplyToMessage.ReplyToMessage.Chat.Id;
+
             DateTime editDate = sendMessage.Result.ReplyToMessage.EditDate;
+            var editDateDay = sendMessage.Result.ReplyToMessage.EditDate.Day;
+
             var text = sendMessage.Result.ReplyToMessage.Text;
-            
+
             //todo entities
+
             AudioInfo audio = sendMessage.Result.ReplyToMessage.Audio;
+            var audioDuration = sendMessage.Result.ReplyToMessage.Audio.Duration;
+
             DocumentInfo document = sendMessage.Result.ReplyToMessage.Document;
-            
+            var documentFileId = sendMessage.Result.ReplyToMessage.Document.FileId;
+
             //todo game
 
             var photo = sendMessage.Result.ReplyToMessage.Photo;
+
             StickerInfo sticker = sendMessage.Result.ReplyToMessage.Sticker;
+            var stickerFileId = sendMessage.Result.ReplyToMessage.Sticker.FileId;
+
             VideoInfo video = sendMessage.Result.ReplyToMessage.Video;
-            
+            var videoFileid = sendMessage.Result.ReplyToMessage.Video.FileId;
+
             //todo Voice
             //todo VideoNote
             //todo NewChatMembers;
 
             var caption = sendMessage.Result.ReplyToMessage.Caption;
+
             ContactInfo contact = sendMessage.Result.ReplyToMessage.Contact;
+            var contactUserId = sendMessage.Result.ReplyToMessage.Contact.UserId;
+
             LocationInfo location = sendMessage.Result.ReplyToMessage.Location;
+            var locationLatitude = sendMessage.Result.ReplyToMessage.Location.Latitude;
 
             //todo Venue
 
             UserInfo newChatMember = sendMessage.Result.ReplyToMessage.NewChatMember;
+            var newChatMemberId = sendMessage.Result.ReplyToMessage.NewChatMember.Id;
+
             UserInfo leftChatMember = sendMessage.Result.ReplyToMessage.LeftChatMember;
+            var leftChatMemberId = sendMessage.Result.ReplyToMessage.LeftChatMember.Id;
+
             var newChatTitle = sendMessage.Result.ReplyToMessage.NewChatTitle;
             var newChatPhoto = sendMessage.Result.ReplyToMessage.NewChatPhoto;
             var deleteChatPhoto = sendMessage.Result.ReplyToMessage.DeleteChatPhoto;
@@ -177,31 +264,48 @@ namespace NetTelebot.Tests
             var channelChatCreated = sendMessage.Result.ReplyToMessage.ChannelChatCreated;
             var migrateToChatId = sendMessage.Result.ReplyToMessage.MigrateToChatId;
             var migrateFromChatId = sendMessage.Result.ReplyToMessage.MigrateFromChatId;
+
             MessageInfo pinnedMessage = sendMessage.Result.ReplyToMessage.PinnedMessage;
+            var pinnedMessageChatId = sendMessage.Result.ReplyToMessage.PinnedMessage.Chat.Id;
+
             //todo Invoice
             //todo SuceffulPayment
 
             Console.WriteLine("TestAppealToMigrateFromReplyToMessage():"
-                              + "\n sendMessage.Result.ReplyToMessage: " + message
+                              + "\n sendMessage.Result.ReplyToMessage: " + replyMessage
                               + "\n sendMessage.Result.ReplyToMessage.MessageId: " + messageId
                               + "\n sendMessage.Result.ReplyToMessage.From: " + from
+                              + "\n sendMessage.Result.ReplyToMessage.From.Id: " + fromId
                               + "\n sendMessage.Result.ReplyToMessage.Date: " + date
+                              + "\n sendMessage.Result.ReplyToMessage.Date.Day: " + dateDay
                               + "\n sendMessage.Result.ReplyToMessage.Chat: " + chat
+                              + "\n sendMessage.Result.ReplyToMessage.Chat.Id: " + chatId
                               + "\n sendMessage.Result.ReplyToMessage.ForwardFrom: " + forwardFrom
                               + "\n sendMessage.Result.ReplyToMessage.ForwardFromMessageId: " + forwardFromMessageId
+                              + "\n sendMessage.Result.ReplyToMessage.ForwardFromChat: " + forwardFromChat
+                              + "\n sendMessage.Result.ReplyToMessage.ForwardFromChatId: " + forwardFromChatId
                               + "\n sendMessage.Result.ReplyToMessage.ReplyToMessage: " + replyToMessage
+                              + "\n sendMessage.Result.ReplyToMessage.ReplyToMessage.Chat.Id: " + replyToMessageChatId
                               + "\n sendMessage.Result.ReplyToMessage.EditDate: " + editDate
+                              + "\n sendMessage.Result.ReplyToMessage.EditDate.Day: " + editDateDay
                               + "\n sendMessage.Result.ReplyToMessage.Text: " + text
                               + "\n sendMessage.Result.ReplyToMessage.Audio: " + audio
+                              + "\n sendMessage.Result.ReplyToMessage.Audio.Duration: " + audioDuration
                               + "\n sendMessage.Result.ReplyToMessage.Document: " + document
+                              + "\n sendMessage.Result.ReplyToMessage.Document.FileId: " + documentFileId
                               + "\n sendMessage.Result.ReplyToMessage.Photo: " + photo
                               + "\n sendMessage.Result.ReplyToMessage.Sticker " + sticker
+                              + "\n sendMessage.Result.ReplyToMessage.Sticker.FileId " + stickerFileId
                               + "\n sendMessage.Result.ReplyToMessage.Video: " + video
                               + "\n sendMessage.Result.ReplyToMessage.Caption: " + caption
                               + "\n sendMessage.Result.ReplyToMessage.Contact: " + contact
+                              + "\n sendMessage.Result.ReplyToMessage.Contact.UserId: " + contactUserId
                               + "\n sendMessage.Result.ReplyToMessage.Location: " + location
+                              + "\n sendMessage.Result.ReplyToMessage.Location.Latitude: " + locationLatitude
                               + "\n sendMessage.Result.ReplyToMessage.NewChatMember: " + newChatMember
+                              + "\n sendMessage.Result.ReplyToMessage.NewChatMember.Id: " + newChatMemberId
                               + "\n sendMessage.Result.ReplyToMessage.LeftChatMember: " + leftChatMember
+                              + "\n sendMessage.Result.ReplyToMessage.LeftChatMember.Id: " + leftChatMemberId
                               + "\n sendMessage.Result.ReplyToMessage.NewChatTitle: " + newChatTitle
                               + "\n sendMessage.Result.ReplyToMessage.NewChatPhoto: " + newChatPhoto
                               + "\n sendMessage.Result.ReplyToMessage.DeleteChatPhoto: " + deleteChatPhoto
@@ -210,44 +314,84 @@ namespace NetTelebot.Tests
                               + "\n sendMessage.Result.ReplyToMessage.ChannelChatCreated: " + channelChatCreated
                               + "\n sendMessage.Result.ReplyToMessage.MigrateToChatId: " + migrateToChatId
                               + "\n sendMessage.Result.ReplyToMessage.MigrateFromChatId: " + migrateFromChatId
-                              + "\n sendMessage.Result.ReplyToMessage.PinnedMessage: " + pinnedMessage);
+                              + "\n sendMessage.Result.ReplyToMessage.PinnedMessage: " + pinnedMessage
+                              + "\n sendMessage.Result.ReplyToMessage.PinnedMessage.ChatId: " + pinnedMessageChatId);
 
-            //check instance MessageInfo.PinnedMesage
-            Assert.IsInstanceOf(typeof(MessageInfo), message);
+            //check instance MessageInfo.ReplyToMessage
+            Assert.IsInstanceOf(typeof(MessageInfo), replyMessage);
 
-            //check MessageInfo.PinnedMesage.field
+            //check MessageInfo.ReplyToMessage.field
             Assert.AreEqual(messageId, 0);
-            Assert.IsNull(from);
+
+            Assert.IsInstanceOf<UserInfo>(from);
+            Assert.AreEqual(fromId, 0);
+
             Assert.AreEqual(date, DateTime.MinValue);
-            
-            //chat && chats
-            Assert.IsNull(chat);
-            Assert.IsNull(forwardFrom);
+            Assert.AreEqual(dateDay, DateTime.MinValue.Day);
+
+            Assert.IsInstanceOf<ChatInfo>(chat);
+            Assert.AreEqual(chatId, 0);
+
+            Assert.IsInstanceOf<UserInfo>(forwardFrom);
+
             Assert.AreEqual(forwardFromMessageId, 0);
+
+            Assert.IsInstanceOf<ChatInfo> (forwardFromChat);
+            Assert.AreEqual(forwardFromChatId, 0);
+
             Assert.AreEqual(forwardDate, DateTime.MinValue);
-            Assert.IsNull(replyToMessage);
+            Assert.AreEqual(forwardDateDay, DateTime.MinValue.Day);
+
+            Assert.IsInstanceOf<MessageInfo>(replyToMessage);
+            Assert.AreEqual(replyToMessageChatId, 0);
+
             Assert.AreEqual(editDate, DateTime.MinValue);
+            Assert.AreEqual(editDateDay, DateTime.MinValue.Day);
+
             Assert.IsNull(text);
-            Assert.IsNull(audio);
-            Assert.IsNull(document);
-            Assert.IsNull(photo);
-            Assert.IsNull(sticker);
-            Assert.IsNull(video);
+
+            Assert.IsInstanceOf<AudioInfo>(audio);
+            Assert.AreEqual(audioDuration, 0);
+
+            Assert.IsInstanceOf<DocumentInfo>(document);
+            Assert.IsNull(documentFileId);
+
+            Assert.IsEmpty(photo);
+
+            Assert.IsInstanceOf<StickerInfo>(sticker);
+            Assert.IsNull(stickerFileId);
+
+            Assert.IsInstanceOf<VideoInfo>(video);
+            Assert.IsNull(videoFileid);
+
             Assert.IsNull(caption);
-            Assert.IsNull(contact);
-            Assert.IsNull(location);
-            Assert.IsNull(newChatMember);
-            Assert.IsNull(leftChatMember);
-            Assert.IsNull(leftChatMember);
+
+            Assert.IsInstanceOf<ContactInfo>(contact);
+            Assert.IsNull(contactUserId);
+
+            Assert.IsInstanceOf<LocationInfo>(location);
+            Assert.AreEqual(locationLatitude, 0);
+
+            Assert.IsInstanceOf<UserInfo>(newChatMember);
+            Assert.AreEqual(newChatMemberId, 0);
+
+            Assert.IsInstanceOf<UserInfo>(leftChatMember);
+            Assert.AreEqual(leftChatMemberId, 0);
+
+            Assert.IsInstanceOf<UserInfo>(leftChatMember);
+            Assert.AreEqual(leftChatMemberId, 0);
+
             Assert.IsNull(newChatTitle);
-            Assert.IsNull(newChatPhoto);
+            Assert.IsEmpty(newChatPhoto);
             Assert.IsFalse(deleteChatPhoto);
             Assert.IsFalse(groupChatCreated);
             Assert.IsFalse(superGroupChatCreated);
             Assert.IsFalse(channelChatCreated);
             Assert.AreEqual(migrateToChatId, 0);
             Assert.AreEqual(migrateFromChatId, 0);
-            Assert.IsNull(pinnedMessage);
+
+            Assert.IsInstanceOf<MessageInfo>(pinnedMessage);
+            Assert.AreEqual(pinnedMessageChatId, 0);
         }
 
         /// <summary>
@@ -268,7 +412,7 @@ namespace NetTelebot.Tests
                               + "\n sendMessage.Result.EditDateUnix.ToString(): " + editDateString);
 
             //check instance MessageInfo.ForwardDate
-            Assert.IsInstanceOf(typeof(int), editDateUnix);
+            Assert.IsInstanceOf(typeof(long), editDateUnix);
 
             //check value MessageInfo.ForwardDate
             Assert.AreEqual(editDateUnix, 0);
@@ -960,42 +1104,72 @@ namespace NetTelebot.Tests
 
             // field MessageInfo.PinnedMessage.field
             var messageId = sendMessage.Result.PinnedMessage.MessageId;
+
             UserInfo from = sendMessage.Result.PinnedMessage.From;
+            var fromId = sendMessage.Result.PinnedMessage.From.Id;
+
             DateTime date = sendMessage.Result.PinnedMessage.Date;
-            IConversationSource chat = sendMessage.Result.PinnedMessage.Chat;
+            var dateDay = sendMessage.Result.PinnedMessage.Date.Day;
+
+            ChatInfo chat = sendMessage.Result.PinnedMessage.Chat;
+            var chatId = sendMessage.Result.PinnedMessage.Chat.Id;
+
             UserInfo forwardFrom = sendMessage.Result.PinnedMessage.ForwardFrom;
-            
-            //todo forward_from_chat
 
             var forwardFromMessageId = sendMessage.Result.PinnedMessage.ForwardFromMessageId;
+
+            ChatInfo forwardFromChat = sendMessage.Result.PinnedMessage.ForwardFromChat;
+            var forwardFromChatId = sendMessage.Result.PinnedMessage.ForwardFromChat.Id;
+
             DateTime forwardDate = sendMessage.Result.PinnedMessage.ForwardDate;
+            var forwardDateDay = sendMessage.Result.PinnedMessage.ForwardDate.Day;
+
             MessageInfo replyToMessage = sendMessage.Result.PinnedMessage.ReplyToMessage;
+            var replyToMessageChatId = sendMessage.Result.PinnedMessage.ReplyToMessage.Chat.Id;
+
             DateTime editDate = sendMessage.Result.PinnedMessage.EditDate;
+            var editDateDay = sendMessage.Result.PinnedMessage.EditDate.Day;
+
             var text = sendMessage.Result.PinnedMessage.Text;
             
             //todo entities
 
             AudioInfo audio = sendMessage.Result.PinnedMessage.Audio;
+            var audioDuration = sendMessage.Result.PinnedMessage.Audio.Duration;
+
             DocumentInfo document = sendMessage.Result.PinnedMessage.Document;
-            
+            var documentFileId = sendMessage.Result.PinnedMessage.Document.FileId;
+
             //todo game
 
             var photo = sendMessage.Result.PinnedMessage.Photo;
+
             StickerInfo sticker = sendMessage.Result.PinnedMessage.Sticker;
+            var stickerFileId = sendMessage.Result.PinnedMessage.Sticker.FileId;
+
             VideoInfo video = sendMessage.Result.PinnedMessage.Video;
-            
+            var videoFileid = sendMessage.Result.PinnedMessage.Video.FileId;
+
             //todo Voice
             //todo VideoNote
             //todo NewChatMembers;
 
             var caption = sendMessage.Result.PinnedMessage.Caption;
+
             ContactInfo contact = sendMessage.Result.PinnedMessage.Contact;
+            var contactUserId = sendMessage.Result.PinnedMessage.Contact.UserId;
+
             LocationInfo location = sendMessage.Result.PinnedMessage.Location;
-            
+            var locationLatitude = sendMessage.Result.PinnedMessage.Location.Latitude;
+
             //todo Venue
 
             UserInfo newChatMember = sendMessage.Result.PinnedMessage.NewChatMember;
+            var newChatMemberId = sendMessage.Result.PinnedMessage.NewChatMember.Id;
+
             UserInfo leftChatMember = sendMessage.Result.PinnedMessage.LeftChatMember;
+            var leftChatMemberId = sendMessage.Result.PinnedMessage.LeftChatMember.Id;
+
             var newChatTitle = sendMessage.Result.PinnedMessage.NewChatTitle;
             var newChatPhoto = sendMessage.Result.PinnedMessage.NewChatPhoto;
             var deleteChatPhoto = sendMessage.Result.PinnedMessage.DeleteChatPhoto;
@@ -1004,8 +1178,10 @@ namespace NetTelebot.Tests
             var channelChatCreated = sendMessage.Result.PinnedMessage.ChannelChatCreated;
             var migrateToChatId = sendMessage.Result.PinnedMessage.MigrateToChatId;
             var migrateFromChatId = sendMessage.Result.PinnedMessage.MigrateFromChatId;
+
             MessageInfo pinnedMessage = sendMessage.Result.PinnedMessage.PinnedMessage;
-            
+            var pinnedMessageChatId = sendMessage.Result.PinnedMessage.PinnedMessage.Chat.Id;
+
             //todo Invoice
             //todo SuceffulPayment
 
@@ -1013,23 +1189,38 @@ namespace NetTelebot.Tests
                               + "\n sendMessage.Result.PinnedMessage: " + message
                               + "\n sendMessage.Result.PinnedMessage.MessageId: " + messageId
                               + "\n sendMessage.Result.PinnedMessage.From: " + from
+                              + "\n sendMessage.Result.PinnedMessage.From.Id: " + fromId
                               + "\n sendMessage.Result.PinnedMessage.Date: " + date
+                              + "\n sendMessage.Result.PinnedMessage.Date.Day: " + dateDay
                               + "\n sendMessage.Result.PinnedMessage.Chat: " + chat
+                              + "\n sendMessage.Result.PinnedMessage.Chat.Id: " + chatId
                               + "\n sendMessage.Result.PinnedMessage.ForwardFrom: " + forwardFrom
                               + "\n sendMessage.Result.PinnedMessage.ForwardFromMessageId: " + forwardFromMessageId
+                              + "\n sendMessage.Result.PinnedMessage.ForwardFromChat: " + forwardFromChat
+                              + "\n sendMessage.Result.PinnedMessage.ForwardFromChatId: " + forwardFromChatId
                               + "\n sendMessage.Result.PinnedMessage.ReplyToMessage: " + replyToMessage
+                              + "\n sendMessage.Result.PinnedMessage.ReplyToMessage.Chat.Id: " + replyToMessageChatId
                               + "\n sendMessage.Result.PinnedMessage.EditDate: " + editDate
+                              + "\n sendMessage.Result.PinnedMessage.EditDate.Day: " + editDateDay
                               + "\n sendMessage.Result.PinnedMessage.Text: " + text
                               + "\n sendMessage.Result.PinnedMessage.Audio: " + audio
+                              + "\n sendMessage.Result.PinnedMessage.Audio.Duration: " + audioDuration
                               + "\n sendMessage.Result.PinnedMessage.Document: " + document
+                              + "\n sendMessage.Result.PinnedMessage.Document.FileId: " + documentFileId
                               + "\n sendMessage.Result.PinnedMessage.Photo: " + photo
                               + "\n sendMessage.Result.PinnedMessage.Sticker " + sticker
+                              + "\n sendMessage.Result.PinnedMessage.Sticker.FileId " + stickerFileId
                               + "\n sendMessage.Result.PinnedMessage.Video: " + video
+                              + "\n sendMessage.Result.PinnedMessage.Video.FileId: " + videoFileid
                               + "\n sendMessage.Result.PinnedMessage.Caption: " + caption
                               + "\n sendMessage.Result.PinnedMessage.Contact: " + contact
+                              + "\n sendMessage.Result.PinnedMessage.Contact.UserId: " + contactUserId
                               + "\n sendMessage.Result.PinnedMessage.Location: " + location
+                              + "\n sendMessage.Result.PinnedMessage.Location.Latitude: " + locationLatitude
                               + "\n sendMessage.Result.PinnedMessage.NewChatMember: " + newChatMember
+                              + "\n sendMessage.Result.PinnedMessage.NewChatMember.Id: " + newChatMemberId
                               + "\n sendMessage.Result.PinnedMessage.LeftChatMember: " + leftChatMember
+                              + "\n sendMessage.Result.PinnedMessage.LeftChatMember.Id: " + leftChatMemberId
                               + "\n sendMessage.Result.PinnedMessage.NewChatTitle: " + newChatTitle
                               + "\n sendMessage.Result.PinnedMessage.NewChatPhoto: " + newChatPhoto
                               + "\n sendMessage.Result.PinnedMessage.DeleteChatPhoto: " + deleteChatPhoto
@@ -1038,42 +1229,84 @@ namespace NetTelebot.Tests
                               + "\n sendMessage.Result.PinnedMessage.ChannelChatCreated: " + channelChatCreated
                               + "\n sendMessage.Result.PinnedMessage.MigrateToChatId: " + migrateToChatId
                               + "\n sendMessage.Result.PinnedMessage.MigrateFromChatId: " + migrateFromChatId
-                              + "\n sendMessage.Result.PinnedMessage.PinnedMessage: " + pinnedMessage);
+                              + "\n sendMessage.Result.PinnedMessage.PinnedMessage: " + pinnedMessage
+                              + "\n sendMessage.Result.PinnedMessage.PinnedMessage.Chat.Id: " + pinnedMessageChatId);
 
             //check instance MessageInfo.PinnedMesage
             Assert.IsInstanceOf(typeof(MessageInfo), message);
 
             //check MessageInfo.PinnedMesage.field
             Assert.AreEqual(messageId, 0);
-            Assert.IsNull(from);
+
+            Assert.IsInstanceOf<UserInfo>(from);
+            Assert.AreEqual(fromId, 0);
+
             Assert.AreEqual(date, DateTime.MinValue);
-            Assert.IsNull(chat);
-            Assert.IsNull(forwardFrom);
+            Assert.AreEqual(dateDay, DateTime.MinValue.Day);
+
+            Assert.IsInstanceOf<ChatInfo>(chat);
+            Assert.AreEqual(chatId, 0);
+
+            Assert.IsInstanceOf<UserInfo>(forwardFrom);
+
             Assert.AreEqual(forwardFromMessageId, 0);
+
+            Assert.IsInstanceOf<ChatInfo>(forwardFromChat);
+            Assert.AreEqual(forwardFromChatId, 0);
+
             Assert.AreEqual(forwardDate, DateTime.MinValue);
-            Assert.IsNull(replyToMessage);
+            Assert.AreEqual(forwardDateDay, DateTime.MinValue.Day);
+
+            Assert.IsInstanceOf<MessageInfo>(replyToMessage);
+            Assert.AreEqual(replyToMessageChatId, 0);
+
             Assert.AreEqual(editDate, DateTime.MinValue);
+            Assert.AreEqual(editDateDay, DateTime.MinValue.Day);
+
             Assert.IsNull(text);
-            Assert.IsNull(audio);
-            Assert.IsNull(document);
-            Assert.IsNull(photo);
-            Assert.IsNull(sticker);
-            Assert.IsNull(video);
+
+            Assert.IsInstanceOf<AudioInfo>(audio);
+            Assert.AreEqual(audioDuration, 0);
+
+            Assert.IsInstanceOf<DocumentInfo>(document);
+            Assert.IsNull(documentFileId);
+
+            Assert.IsEmpty(photo);
+
+            Assert.IsInstanceOf<StickerInfo>(sticker);
+            Assert.IsNull(stickerFileId);
+
+            Assert.IsInstanceOf<VideoInfo>(video);
+            Assert.IsNull(videoFileid);
+
             Assert.IsNull(caption);
-            Assert.IsNull(contact);
-            Assert.IsNull(location);
-            Assert.IsNull(newChatMember);
-            Assert.IsNull(leftChatMember);
-            Assert.IsNull(leftChatMember);
+
+            Assert.IsInstanceOf<ContactInfo>(contact);
+            Assert.IsNull(contactUserId);
+
+            Assert.IsInstanceOf<LocationInfo>(location);
+            Assert.AreEqual(locationLatitude, 0);
+
+            Assert.IsInstanceOf<UserInfo>(newChatMember);
+            Assert.AreEqual(newChatMemberId, 0);
+
+            Assert.IsInstanceOf<UserInfo>(leftChatMember);
+            Assert.AreEqual(leftChatMemberId, 0);
+
+            Assert.IsInstanceOf<UserInfo>(leftChatMember);
+            Assert.AreEqual(leftChatMemberId, 0);
+
             Assert.IsNull(newChatTitle);
-            Assert.IsNull(newChatPhoto);
+            Assert.IsEmpty(newChatPhoto);
             Assert.IsFalse(deleteChatPhoto);
             Assert.IsFalse(groupChatCreated);
             Assert.IsFalse(superGroupChatCreated);
             Assert.IsFalse(channelChatCreated);
             Assert.AreEqual(migrateToChatId, 0);
             Assert.AreEqual(migrateFromChatId, 0);
-            Assert.IsNull(pinnedMessage);
+
+            Assert.IsInstanceOf<MessageInfo>(pinnedMessage);
+            Assert.AreEqual(pinnedMessageChatId, 0);
         }  
     }
 }

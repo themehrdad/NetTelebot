@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal sealed class ChatPhotoInfoObject
+    internal static class ChatPhotoInfoObject
     {
         /// <summary>
         /// This object represents a chat photo.

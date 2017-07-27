@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using NetTelebot.BotEnum;
+using NetTelebot.Type;
+using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.TypeTestObject
 {
-    internal sealed class MessageInfoObject
+    internal static class MessageInfoObject
     {
         /// <summary>
         /// Minimum required object fields <see cref="MessageInfo" />
