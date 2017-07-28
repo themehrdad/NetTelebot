@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using NetTelebot.Commands.TestApplication.Properties;
 using NetTelebot.Commands.TestApplication.Utils;
 
 
@@ -7,7 +8,7 @@ namespace NetTelebot.Commands.TestApplication
 {
     public partial class FormMain : Form, IWindowsCredential
     {
-        private const string mBotName = "NetTelebotTest";
+        private const string mBotName = "NetTelebotBot";
 
         private readonly CalculatorBot mBot;
 
@@ -36,13 +37,13 @@ namespace NetTelebot.Commands.TestApplication
         private void btnStart_Click(object sender, EventArgs e)
         {
             mBot.Start();
-            txtLog.AppendText(@"Bot Start");
+            txtLog.Text += Resources.BotStart;
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
             mBot.Stop();
-            txtLog.AppendText(@"Bot Stop"); 
+            txtLog.Text += Resources.BotStop;
         }
 
         public TelegramCredentials GetTelegramCredential(string botAlias)

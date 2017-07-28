@@ -59,5 +59,25 @@ namespace NetTelebot.Commands.TestApplication.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bot Start
+        ///.
+        /// </summary>
+        internal static string BotStart {
+            get {
+                return ResourceManager.GetString("BotStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bot Stop
+        ///.
+        /// </summary>
+        internal static string BotStop {
+            get {
+                return ResourceManager.GetString("BotStop", resourceCulture);
+            }
+        }
     }
 }
