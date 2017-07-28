@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NetTelebot.Commands.TestApplication.Utils
+﻿namespace NetTelebot.Commands.TestApplication.Utils
 {
     public class TelegramBot : IWindowsCredential
     {
@@ -41,11 +39,6 @@ namespace NetTelebot.Commands.TestApplication.Utils
         public TelegramCredentials GetTelegramCredential(string botAlias)
         {
             return new WindowsCredential().GetTelegramCredential(botAlias);
-        }
-
-        TelegramCredentials IWindowsCredential.GetTelegramCredential(string botAlias)
-        {
-            throw new NotImplementedException();
         }
     }
 }

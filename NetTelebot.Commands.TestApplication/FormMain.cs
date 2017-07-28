@@ -36,11 +36,13 @@ namespace NetTelebot.Commands.TestApplication
         private void btnStart_Click(object sender, EventArgs e)
         {
             mBot.Start();
+            txtLog.AppendText(@"Bot Start");
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
             mBot.Stop();
+            txtLog.AppendText(@"Bot Stop"); 
         }
 
         public TelegramCredentials GetTelegramCredential(string botAlias)

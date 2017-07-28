@@ -1,5 +1,4 @@
-﻿using NetTelebot.Interface;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
@@ -9,7 +8,7 @@ namespace NetTelebot.Type
     /// See in <see href="https://core.telegram.org/bots/api#getme">API</see>>
     /// This class is a copy of the UserInfo class, but with access to the ok field.
     /// </summary>
-    public class MeInfo : IConversationSource
+    public class MeInfo
     {
         internal MeInfo(string jsonText)
         {
@@ -30,7 +29,7 @@ namespace NetTelebot.Type
         private void Parse(JObject jsonObject)
         {
             Ok = jsonObject["ok"].Value<bool>();
-            Id = jsonObject["result"]["id"].Value<long>();
+            Id = jsonObject["result"]["id"].Value<int>();
             FirstName = jsonObject["result"]["first_name"].Value<string>();
 
             if (jsonObject["result"]["last_name"] != null)
@@ -50,7 +49,7 @@ namespace NetTelebot.Type
         /// <summary>
         /// Unique identifier for this user or bot
         /// </summary>
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// User‘s or bot’s first name
