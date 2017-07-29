@@ -153,7 +153,7 @@ namespace NetTelebot.Tests.ParserTest
         /// Test for <see cref="MessageInfo.Chat"/> parse field.
         /// </summary>
         [Test]
-        public static void MessageInfoChatsTest()
+        public static void MessageInfoChatTest()
         {
             const int id = 1049413668;
             const string type = "channel";
@@ -178,6 +178,8 @@ namespace NetTelebot.Tests.ParserTest
             MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
             Assert.AreEqual(messageInfo.Chat.Id, id);
+            Assert.IsInstanceOf<long>(messageInfo.Chat.Id);
+
             Assert.AreEqual(messageInfo.Chat.Type, ChatType.channel);
             Assert.AreEqual(messageInfo.Chat.Title, title);
             Assert.AreEqual(messageInfo.Chat.Username, username);
@@ -190,6 +192,46 @@ namespace NetTelebot.Tests.ParserTest
             Assert.AreEqual(messageInfo.Chat.InviteLink, inviteLink);
 
             Console.WriteLine(mandatoryMessageInfoFields);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Chat"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoParseChatIdTest()
+        {
+            const int id_int_min = int.MinValue;
+            const int id_int_max = int.MaxValue;
+
+            const long id_long_min = long.MinValue;
+            const long id_long_max = long.MaxValue;
+
+            const string type = "channel";
+            
+            dynamic mandatoryMessageInfoFields = new JObject();
+
+            mandatoryMessageInfoFields.message_id = -1147483648;
+            mandatoryMessageInfoFields.date = 0;
+
+            //min_int
+            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id_int_min, type);
+            MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
+            Assert.IsInstanceOf<long>(messageInfo.Chat.Id);
+
+            //max_int
+            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id_int_max, type);
+            messageInfo = new MessageInfo(mandatoryMessageInfoFields);
+            Assert.IsInstanceOf<long>(messageInfo.Chat.Id);
+
+            //min_long
+            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id_long_min, type);
+            messageInfo = new MessageInfo(mandatoryMessageInfoFields);
+            Assert.IsInstanceOf<long>(messageInfo.Chat.Id);
+
+            //max_long
+            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id_long_max, type);
+            messageInfo = new MessageInfo(mandatoryMessageInfoFields);
+            Assert.IsInstanceOf<long>(messageInfo.Chat.Id);
         }
 
         /// <summary>

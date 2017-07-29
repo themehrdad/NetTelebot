@@ -11,13 +11,15 @@ namespace NetTelebot.Tests
     internal class TelegramRealBotClientTest
     {
         private TelegramBotClient mTelegramBot;
-        private int mChatId;
+        private long mChatGroupId;
+        private long mChatSuperGroupId;
 
         [SetUp]
         public void OnTestStart()
         {
-            mTelegramBot = new TelegramBot().GetBot();
-            mChatId = new TelegramBot().GetChatId();
+            mTelegramBot = new TelegramBotGroupChat().GetBot();
+            mChatGroupId = new TelegramBotGroupChat().GetChatId();
+            mChatSuperGroupId = new TelegramBotSuperGroupChat().GetChatId();
         }
 
 
@@ -43,11 +45,11 @@ namespace NetTelebot.Tests
         [Test]
         public void TestSendMessageToChat()
         {
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "Test");
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Test");
 
             Console.WriteLine(
-                "\n id " + sendMessage.Result.Chat.Id + 
-                "\n type " + sendMessage.Result.Chat.Type + 
+                "\n id " + sendMessage.Result.Chat.Id +
+                "\n type " + sendMessage.Result.Chat.Type +
                 "\n title " + sendMessage.Result.Chat.Title +
                 "\n username " + sendMessage.Result.Chat.Username +
                 "\n firstname " + sendMessage.Result.Chat.FirstName +
@@ -58,7 +60,7 @@ namespace NetTelebot.Tests
                 "\n invite link" + sendMessage.Result.Chat.InviteLink
                 );
 
-            Assert.AreEqual(sendMessage.Result.Chat.Id, mChatId);
+            Assert.AreEqual(sendMessage.Result.Chat.Id, mChatGroupId);
             Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.@group);
             Assert.IsTrue(sendMessage.Result.Chat.AllMembersAreAdministrators);
         }
@@ -72,7 +74,7 @@ namespace NetTelebot.Tests
             const float latitude = 1.00000095f;
             const float longitude = 1.00000203f;
 
-            SendMessageResult sendLocation = mTelegramBot.SendLocation(mChatId, latitude, longitude);
+            SendMessageResult sendLocation = mTelegramBot.SendLocation(mChatGroupId, latitude, longitude);
 
             Assert.AreEqual(sendLocation.Result.Location.Latitude, latitude);
             Assert.AreEqual(sendLocation.Result.Location.Longitude, longitude);
@@ -81,10 +83,60 @@ namespace NetTelebot.Tests
         [Test, Ignore("Not use. Leave bot from group")]
         public void TestLeaveChat()
         {
-            BooleanResult leaveChat = mTelegramBot.LeaveChat(mChatId);
+            BooleanResult leaveChat = mTelegramBot.LeaveChat(mChatGroupId);
 
             Assert.True(leaveChat.Ok);
             Assert.True(leaveChat.Result);
+        }
+
+        [Test]
+        public void SendMessageToSuperGroup()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatSuperGroupId, "Test");
+
+            Console.WriteLine(
+                "\n id " + sendMessage.Result.Chat.Id +
+                "\n type " + sendMessage.Result.Chat.Type +
+                "\n title " + sendMessage.Result.Chat.Title +
+                "\n username " + sendMessage.Result.Chat.Username +
+                "\n firstname " + sendMessage.Result.Chat.FirstName +
+                "\n lastaname " + sendMessage.Result.Chat.LastName +
+                "\n All members are administrator " + sendMessage.Result.Chat.AllMembersAreAdministrators +
+                "\n Photo " + sendMessage.Result.Chat.Photo +
+                "\n description " + sendMessage.Result.Chat.Description +
+                "\n invite link" + sendMessage.Result.Chat.InviteLink
+                );
+
+            Assert.AreEqual(sendMessage.Result.Chat.Id, mChatSuperGroupId);
+            Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.supergroup);
+            Assert.IsFalse(sendMessage.Result.Chat.AllMembersAreAdministrators);
+        }
+        
+        /// <summary>
+        /// For send messages to @public_shannel added bot to shannel admin (need off privacy mode)
+        /// </summary>
+        [Test]
+        public void SendMessageToPublicChannel()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage("@telebotTestChannel", "Test");
+
+            Console.WriteLine(
+                "\n id " + sendMessage.Result.Chat.Id +
+                "\n type " + sendMessage.Result.Chat.Type +
+                "\n title " + sendMessage.Result.Chat.Title +
+                "\n username " + sendMessage.Result.Chat.Username +
+                "\n firstname " + sendMessage.Result.Chat.FirstName +
+                "\n lastaname " + sendMessage.Result.Chat.LastName +
+                "\n All members are administrator " + sendMessage.Result.Chat.AllMembersAreAdministrators +
+                "\n Photo " + sendMessage.Result.Chat.Photo +
+                "\n description " + sendMessage.Result.Chat.Description +
+                "\n invite link" + sendMessage.Result.Chat.InviteLink
+                );
+
+            Console.WriteLine(sendMessage);
+
+            Assert.IsInstanceOf<long>(sendMessage.Result.Chat.Id);
+            Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.channel);
         }
     }
 }

@@ -1,13 +1,13 @@
-﻿namespace NetTelebot.Commands.TestApplication.Utils
+﻿namespace NetTelebot.Tests.Utils
 {
-    public class TelegramBot : IWindowsCredential
+    internal class TelegramBotSuperGroupChat : IWindowsCredential
     {
-        private const string mBotName = "NetTelebotTest";
+        private const string mBotName = "NetTelebotSuperGroupTest";
 
         private readonly string mToken;
-        private readonly int mChatId;
+        private readonly long mChatId;
 
-        public TelegramBot()
+        public TelegramBotSuperGroupChat()
         {
             mToken = GetTelegramCredential(mBotName).Token;
             mChatId = GetTelegramCredential(mBotName).ChatId;
@@ -28,10 +28,10 @@
         }
 
         /// <summary>
-        /// 
+        /// Supergroup chat id
         /// </summary>
         /// <returns>Telegram ChatId</returns>
-        public int GetChatId()
+        public long GetChatId()
         {
             return mChatId;
         }

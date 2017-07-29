@@ -13,7 +13,7 @@ namespace NetTelebot.Tests
     internal class MessageInfoNullRefExcTest
     {
         private TelegramBotClient mTelegramBot;
-        private int mChatId;
+        private long mChatId;
 
         /// <summary>
         /// Called when [test start].
@@ -21,8 +21,8 @@ namespace NetTelebot.Tests
         [SetUp]
         public void OnTestStart()
         {
-            mTelegramBot = new TelegramBot().GetBot();
-            mChatId = new TelegramBot().GetChatId();
+            mTelegramBot = new TelegramBotGroupChat().GetBot();
+            mChatId = new TelegramBotGroupChat().GetChatId();
         }
 
         /// <summary>

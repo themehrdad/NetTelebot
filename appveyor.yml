@@ -1,5 +1,7 @@
 version: 1.0.{build}
 environment:
+  user_supergroup:
+    secure: PUKA+dlhFl2Zgo0wJr1i7kpSpp2xy2tghDq4FvKkWzM=
   user:
     secure: erTAPS0qeMOBV0z7QZjudA==
   token:
@@ -17,6 +19,7 @@ build:
   verbosity: minimal
 before_test:
 - cmd: cmdkey /generic:NetTelebotTest /user:%user% /pass:%token%
+- cmd: cmdkey /generic:NetTelebotSuperGroupTest /user:%user_supergroup% /pass:%token%
 test:
   assemblies:
     only:

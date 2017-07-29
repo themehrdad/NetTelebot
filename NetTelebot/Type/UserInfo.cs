@@ -1,5 +1,4 @@
-﻿using NetTelebot.Interface;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
@@ -7,7 +6,7 @@ namespace NetTelebot.Type
     /// <summary>
     /// This object represents a Telegram user or bot.
     /// </summary>
-    public class UserInfo : IConversationSource
+    public class UserInfo
     {
         internal UserInfo()
         {

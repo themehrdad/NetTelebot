@@ -8,6 +8,6 @@
         /// <summary>
         /// Unique identifier of the group chat or user.
         /// </summary>
-        int Id { get; set; }
+        long Id { get; set; }
     }
 }
