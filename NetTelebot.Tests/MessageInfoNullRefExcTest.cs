@@ -106,7 +106,7 @@ namespace NetTelebot.Tests
             Assert.IsInstanceOf(typeof(ChatInfo), forwardFromChat);
 
             //check MessageInfo.ForwardFromChat.field
-            Assert.AreEqual(id, null);
+            Assert.AreEqual(id, 0);
             Assert.IsNull(type);
             Assert.IsNull(title);
             Assert.IsNull(userName);
@@ -330,20 +330,20 @@ namespace NetTelebot.Tests
             Assert.AreEqual(dateDay, DateTime.MinValue.Day);
 
             Assert.IsInstanceOf<ChatInfo>(chat);
-            Assert.AreEqual(chatId, null);
+            Assert.AreEqual(chatId, 0);
 
             Assert.IsInstanceOf<UserInfo>(forwardFrom);
 
             Assert.AreEqual(forwardFromMessageId, 0);
 
             Assert.IsInstanceOf<ChatInfo> (forwardFromChat);
-            Assert.AreEqual(forwardFromChatId, null);
+            Assert.AreEqual(forwardFromChatId, 0);
 
             Assert.AreEqual(forwardDate, DateTime.MinValue);
             Assert.AreEqual(forwardDateDay, DateTime.MinValue.Day);
 
             Assert.IsInstanceOf<MessageInfo>(replyToMessage);
-            Assert.AreEqual(replyToMessageChatId, null);
+            Assert.AreEqual(replyToMessageChatId, 0);
 
             Assert.AreEqual(editDate, DateTime.MinValue);
             Assert.AreEqual(editDateDay, DateTime.MinValue.Day);
@@ -391,7 +391,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(migrateFromChatId, 0);
 
             Assert.IsInstanceOf<MessageInfo>(pinnedMessage);
-            Assert.AreEqual(pinnedMessageChatId, null);
+            Assert.AreEqual(pinnedMessageChatId, 0);
         }
 
         /// <summary>
@@ -1245,20 +1245,20 @@ namespace NetTelebot.Tests
             Assert.AreEqual(dateDay, DateTime.MinValue.Day);
 
             Assert.IsInstanceOf<ChatInfo>(chat);
-            Assert.AreEqual(chatId, null);
+            Assert.AreEqual(chatId, 0);
 
             Assert.IsInstanceOf<UserInfo>(forwardFrom);
 
             Assert.AreEqual(forwardFromMessageId, 0);
 
             Assert.IsInstanceOf<ChatInfo>(forwardFromChat);
-            Assert.AreEqual(forwardFromChatId, null);
+            Assert.AreEqual(forwardFromChatId, 0);
 
             Assert.AreEqual(forwardDate, DateTime.MinValue);
             Assert.AreEqual(forwardDateDay, DateTime.MinValue.Day);
 
             Assert.IsInstanceOf<MessageInfo>(replyToMessage);
-            Assert.AreEqual(replyToMessageChatId, null);
+            Assert.AreEqual(replyToMessageChatId, 0);
 
             Assert.AreEqual(editDate, DateTime.MinValue);
             Assert.AreEqual(editDateDay, DateTime.MinValue.Day);
@@ -1306,7 +1306,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(migrateFromChatId, 0);
 
             Assert.IsInstanceOf<MessageInfo>(pinnedMessage);
-            Assert.AreEqual(pinnedMessageChatId, null);
+            Assert.AreEqual(pinnedMessageChatId, 0);
         }  
     }
 }

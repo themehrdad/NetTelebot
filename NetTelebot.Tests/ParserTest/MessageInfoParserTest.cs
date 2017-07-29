@@ -206,11 +206,6 @@ namespace NetTelebot.Tests.ParserTest
             const long id_long_min = long.MinValue;
             const long id_long_max = long.MaxValue;
 
-            const double id_double_min = double.MinValue;
-            const double id_double_max = double.MaxValue;
-
-            const string id_string = "@shannel_name";
-
             const string type = "channel";
             
             dynamic mandatoryMessageInfoFields = new JObject();
@@ -237,22 +232,6 @@ namespace NetTelebot.Tests.ParserTest
             mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id_long_max, type);
             messageInfo = new MessageInfo(mandatoryMessageInfoFields);
             Assert.IsInstanceOf<long>(messageInfo.Chat.Id);
-
-            //max_double_min
-            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id_double_min, type);
-            messageInfo = new MessageInfo(mandatoryMessageInfoFields);
-            Console.WriteLine(messageInfo.Chat.Id);
-            Assert.IsInstanceOf<string>(messageInfo.Chat.Id);
-
-            //max_double_max
-            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id_double_max, type);
-            messageInfo = new MessageInfo(mandatoryMessageInfoFields);
-            Assert.IsInstanceOf<string>(messageInfo.Chat.Id);
-
-            //string
-            mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id_string, type);
-            messageInfo = new MessageInfo(mandatoryMessageInfoFields);
-            Assert.IsInstanceOf<string>(messageInfo.Chat.Id);
         }
 
         /// <summary>
