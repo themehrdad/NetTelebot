@@ -41,7 +41,7 @@ namespace NetTelebot.Tests.TypeTestObject
         /// <param name="description">Optional. Description, for supergroups and channel chats. Returned only in getChat.</param>
         /// <param name="inviteLink">Optional. Chat invite link, for supergroups and channel chats. Returned only in getChat.</param>
         /// <returns><see cref="Type.ChatInfo"/></returns>
-        internal static JObject GetObject(int id, string type, 
+        internal static JObject GetObject(object id, string type, 
             string title = null, 
             string username = null,
             string firstName = null, 

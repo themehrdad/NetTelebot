@@ -14,7 +14,7 @@ namespace NetTelebot.Commands
         }
 
         public Bot Bot { get; }
-        internal void SetCommand(int userId, long chatId, string command)
+        internal void SetCommand(int userId, object chatId, string command)
         {
             CommandState commandState = GetCommandState(userId, chatId) ?? new CommandState();
 
@@ -35,7 +35,7 @@ namespace NetTelebot.Commands
             commandState?.Parameters.Add(parameter);
         }
 
-        internal void DeleteCommandState(int userId, long chatId)
+        internal void DeleteCommandState(int userId, object chatId)
         {
             CommandState commandState = GetCommandState(userId, chatId);
             if (commandState == null) return;
@@ -48,7 +48,7 @@ namespace NetTelebot.Commands
             GetOdb().Store(commandState);
         }
 
-        internal CommandState GetCommandState(int userId, long chatId)
+        internal CommandState GetCommandState(int userId, object chatId)
         {
             return GetOdb().Query<CommandState>().Execute<CommandState>()
                 .FirstOrDefault(cs => cs.ChatId == chatId && cs.UserId == userId);

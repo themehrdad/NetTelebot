@@ -8,7 +8,7 @@ namespace NetTelebot.Commands
         {
             Parameters = new List<object>();
         }
-        public long ChatId { get; set; }
+        public object ChatId { get; set; }
         public int UserId { get; set; }
         public string CommandText { get; set; }
         public List<object> Parameters { get; private set; }
