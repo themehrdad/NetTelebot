@@ -31,6 +31,10 @@ namespace NetTelebot.Type
         public bool? Selective { get; set; }
 
 
+        /// <summary>
+        /// Gets the json.
+        /// </summary>
+        /// <returns></returns>
         public string GetJson()
         {
             StringBuilder builder = new StringBuilder();

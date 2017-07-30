@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using System.Text;
 using NetTelebot.Interface;
+using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
@@ -33,25 +33,63 @@ namespace NetTelebot.Type
         /// </summary>
         public bool? Selective { get; set; }
 
-        public string GetJson()
+        #region old
+        /// <summary>
+        /// Gets the json.
+        /// </summary>
+        /*public string GetJson()
         {
             var builder = new StringBuilder();
             var keyboard = GetKeyboardJson();
-            builder.AppendFormat("{{ \"keyboard\" : [{0}] ",keyboard);
+         
+            builder.AppendFormat("{{\"keyboard\": [{0}]", keyboard);
             if (ResizeKeyboard.HasValue)
-                builder.AppendFormat(", \"resize_keyboard\" : {0} ", ResizeKeyboard.Value.ToString().ToLower());
+                builder.AppendFormat(",\"resize_keyboard\": {0}", ResizeKeyboard.Value.ToString().ToLower());
             if (OneTimeKeyboard.HasValue)
-                builder.AppendFormat(", \"one_time_keyboard\" : {0} ", OneTimeKeyboard.Value.ToString().ToLower());
+                builder.AppendFormat(",\"one_time_keyboard\": {0}", OneTimeKeyboard.Value.ToString().ToLower());
             if (Selective.HasValue)
-                builder.AppendFormat(", \"selective\" : {0} ", Selective.Value.ToString().ToLower());
+                builder.AppendFormat(",\"selective\": {0}", Selective.Value.ToString().ToLower());
             builder.Append("}");
-            return builder.ToString();
+
+            var request = builder.ToString().Normalize();
+
+            byte[] utfBytes = Encoding.Default.GetBytes(request);
+            
+            return Encoding.UTF8.GetString(utfBytes);
+        }*/
+
+        /*
+        public string GetJson()
+        {
+            RestRequest request = new RestRequest();
+            var keyboard = GetKeyboardJson();
+
+            request.AddParameter("keyboard", keyboard);
+
+            return request.ToString();
+        }*/
+
+#endregion
+
+        public string GetJson()
+        {
+            dynamic json = new JObject();
+
+            var jArray = new JArray(Keyboard.Select(JToken.FromObject));
+
+            json.keyboard = jArray;
+
+            return json.ToString();
         }
 
+        /*
         private string GetKeyboardJson()
         {
             return string.Join(",", Keyboard.Select(line =>
                 $"[{string.Join(",", line.Select(item => $"\"{item}\"").ToArray())}]").ToArray());
         }
+        */
+
+        
     }
 }

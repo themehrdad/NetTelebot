@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using Mock4Net.Core;
 using NetTelebot.BotEnum;
+using NetTelebot.Result;
 using NetTelebot.Type;
 using NUnit.Framework;
 using RestSharp;
@@ -175,6 +177,33 @@ namespace NetTelebot.Tests
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendMessage");
             Assert.Throws<Exception>(() => mBotBadResponse.SendMessage(123, "123", ParseMode.HTML, false, false, 123, new ForceReplyMarkup()));
+        }
+
+        //todo to extended class
+        [Test]
+        public void SendReplyKeyboardMarkupTest()
+        {
+            //var line1 = new [] { new KeyboardButton { text = "Test" }, new KeyboardButton { text = "Test2" }};
+            var line1 = new[] { "Test"};
+            //var line2 = new [] { new KeyboardButton { text = "Button2" } };
+
+            string[][] lines = { line1 };
+
+            var replyMarkup = new ReplyKeyboardMarkup
+            {
+                Keyboard = lines
+            };
+
+            SendMessageResult sendMessage = mBotOkResponse.SendMessage(123, "Test", replyMarkup: replyMarkup);
+
+            var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
+
+            /*Assert.AreEqual(request.FirstOrDefault()?.Body,
+            "chat_id=123&" +
+            "text=Test&" +
+            "reply_markup=%7B%22keyboard%22%3A+%5B%5B%22Button%22%5D%5D%7D");*/
+
+            PrintResult(request);
         }
 
         /// <summary>

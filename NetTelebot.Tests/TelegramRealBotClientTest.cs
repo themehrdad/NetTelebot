@@ -22,7 +22,6 @@ namespace NetTelebot.Tests
             mChatSuperGroupId = new TelegramBotSuperGroupChat().GetChatId();
         }
 
-
         /// <summary>
         /// Gets me test for method <see cref="TelegramBotClient.GetMe"/>.
         /// </summary>
@@ -111,7 +110,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.supergroup);
             Assert.IsFalse(sendMessage.Result.Chat.AllMembersAreAdministrators);
         }
-        
+
         /// <summary>
         /// For send messages to @public_shannel added bot to shannel admin (need off privacy mode)
         /// </summary>
@@ -137,6 +136,22 @@ namespace NetTelebot.Tests
 
             Assert.IsInstanceOf<long>(sendMessage.Result.Chat.Id);
             Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.channel);
+        }
+
+        [Test]
+        public void SendKeyboardButtonToPublicChannel()
+        {
+            //var line1 = new[] { new KeyboardButton { text = "Test" } };
+            var line1 = new[] { "Test", "Test2" };
+
+            string[][] lines = { line1 };
+
+            var replyMarkup = new ReplyKeyboardMarkup
+            {
+                Keyboard = lines
+            };
+
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Test", replyMarkup: replyMarkup);
         }
     }
 }
