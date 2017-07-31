@@ -10,6 +10,26 @@ namespace NetTelebot.Type
     public class ReplyKeyboardMarkup : IReplyMarkup
     {
         /// <summary>
+        /// Gets the json.
+        /// </summary>
+        /// <returns></returns>
+        public string GetJson()
+        {
+            dynamic replyKeyboardMarkup = new JObject();
+
+            replyKeyboardMarkup.keyboard = new JArray(Keyboard.Select(JToken.FromObject));
+
+            if (ResizeKeyboard.HasValue)
+                replyKeyboardMarkup.keyboard = ResizeKeyboard;
+            if (OneTimeKeyboard.HasValue)
+                replyKeyboardMarkup.one_time_keyboard = OneTimeKeyboard;
+            if (Selective.HasValue)
+                replyKeyboardMarkup.selective = Selective;
+
+            return replyKeyboardMarkup.ToString();
+        }
+
+        /// <summary>
         /// Array of button rows, each represented by an Array of Strings
         /// </summary>
         public string[][] Keyboard { get; set; }
@@ -32,64 +52,5 @@ namespace NetTelebot.Type
         /// 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
         /// </summary>
         public bool? Selective { get; set; }
-
-        #region old
-        /// <summary>
-        /// Gets the json.
-        /// </summary>
-        /*public string GetJson()
-        {
-            var builder = new StringBuilder();
-            var keyboard = GetKeyboardJson();
-         
-            builder.AppendFormat("{{\"keyboard\": [{0}]", keyboard);
-            if (ResizeKeyboard.HasValue)
-                builder.AppendFormat(",\"resize_keyboard\": {0}", ResizeKeyboard.Value.ToString().ToLower());
-            if (OneTimeKeyboard.HasValue)
-                builder.AppendFormat(",\"one_time_keyboard\": {0}", OneTimeKeyboard.Value.ToString().ToLower());
-            if (Selective.HasValue)
-                builder.AppendFormat(",\"selective\": {0}", Selective.Value.ToString().ToLower());
-            builder.Append("}");
-
-            var request = builder.ToString().Normalize();
-
-            byte[] utfBytes = Encoding.Default.GetBytes(request);
-            
-            return Encoding.UTF8.GetString(utfBytes);
-        }*/
-
-        /*
-        public string GetJson()
-        {
-            RestRequest request = new RestRequest();
-            var keyboard = GetKeyboardJson();
-
-            request.AddParameter("keyboard", keyboard);
-
-            return request.ToString();
-        }*/
-
-#endregion
-
-        public string GetJson()
-        {
-            dynamic json = new JObject();
-
-            var jArray = new JArray(Keyboard.Select(JToken.FromObject));
-
-            json.keyboard = jArray;
-
-            return json.ToString();
-        }
-
-        /*
-        private string GetKeyboardJson()
-        {
-            return string.Join(",", Keyboard.Select(line =>
-                $"[{string.Join(",", line.Select(item => $"\"{item}\"").ToArray())}]").ToArray());
-        }
-        */
-
-        
     }
 }

@@ -181,15 +181,14 @@ namespace NetTelebot.Tests
 
         //todo to extended class
         [Test]
-        public void SendReplyKeyboardMarkupTest()
+        public void SendReplyKeyboardWithTextMarkupTest()
         {
-            //var line1 = new [] { new KeyboardButton { text = "Test" }, new KeyboardButton { text = "Test2" }};
-            var line1 = new[] { "Test"};
-            //var line2 = new [] { new KeyboardButton { text = "Button2" } };
+            var line1 = new[] {"Test", "Test2"};
+            var line2 = new[] {"Test3", "Test4"};
 
-            string[][] lines = { line1 };
+            string[][] lines = { line1, line2 };
 
-            var replyMarkup = new ReplyKeyboardMarkup
+            ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup
             {
                 Keyboard = lines
             };
@@ -198,7 +197,14 @@ namespace NetTelebot.Tests
 
             var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
 
-            /*Assert.AreEqual(request.FirstOrDefault()?.Body,
+            Assert.AreEqual(request.FirstOrDefault()?.Body, 
+                "chat_id=123&" +
+                "text=Test&" +
+                "reply_markup=%7B%0D%0A%20%20%22keyboard%22%3A%20%5B%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%22Test%22%2C%0D%0A%20%20%20%20%20%20%22Test2%22%0D%0A%20%20%20%20%5D%2C%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%22Test3%22%2C%0D%0A%20%20%20%20%20%20%22Test4%22%0D%0A%20%20%20%20%5D%0D%0A%20%20%5D%0D%0A%7D");
+
+            /* Is exanmple with one button named "Button" in text field
+             * 
+             * Assert.AreEqual(request.FirstOrDefault()?.Body,
             "chat_id=123&" +
             "text=Test&" +
             "reply_markup=%7B%22keyboard%22%3A+%5B%5B%22Button%22%5D%5D%7D");*/

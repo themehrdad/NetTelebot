@@ -42,7 +42,7 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void TestSendMessageToChat()
+        public void SendMessageToChatTest()
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Test");
 
@@ -68,7 +68,7 @@ namespace NetTelebot.Tests
         /// Test the send and return location point (SendMessageResult.Result.Location.Latitude, SendMessageResult.Result.Location.Longitude)
         /// </summary>
         [Test]
-        public void TestSendSendLocation()
+        public void SendSendLocationTest()
         {
             const float latitude = 1.00000095f;
             const float longitude = 1.00000203f;
@@ -80,7 +80,7 @@ namespace NetTelebot.Tests
         }
 
         [Test, Ignore("Not use. Leave bot from group")]
-        public void TestLeaveChat()
+        public void LeaveChatTest()
         {
             BooleanResult leaveChat = mTelegramBot.LeaveChat(mChatGroupId);
 
@@ -89,7 +89,7 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void SendMessageToSuperGroup()
+        public void SendMessageToSuperGroupTest()
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatSuperGroupId, "Test");
 
@@ -115,7 +115,7 @@ namespace NetTelebot.Tests
         /// For send messages to @public_shannel added bot to shannel admin (need off privacy mode)
         /// </summary>
         [Test]
-        public void SendMessageToPublicChannel()
+        public void SendMessageToPublicChannelTest()
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage("@telebotTestChannel", "Test");
 
@@ -139,19 +139,21 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void SendKeyboardButtonToPublicChannel()
+        public void SendKeyboardButtonToGroupTest()
         {
-            //var line1 = new[] { new KeyboardButton { text = "Test" } };
             var line1 = new[] { "Test", "Test2" };
+            var line2 = new[] { "Test3", "Test4" };
 
-            string[][] lines = { line1 };
+            string[][] lines = { line1, line2 };
 
-            var replyMarkup = new ReplyKeyboardMarkup
+            ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup
             {
                 Keyboard = lines
             };
 
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Test", replyMarkup: replyMarkup);
+
+            Assert.True(sendMessage.Ok);
         }
     }
 }
