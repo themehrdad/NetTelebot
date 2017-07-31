@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Security.Cryptography;
 using NetTelebot.Interface;
 using Newtonsoft.Json.Linq;
 
@@ -17,8 +18,10 @@ namespace NetTelebot.Type
         {
             dynamic replyKeyboardMarkup = new JObject();
 
-            replyKeyboardMarkup.keyboard = new JArray(Keyboard.Select(JToken.FromObject));
+            //JArray test =
+                //new JArray(Keyboard.Select(item => new KeyboardButton {Text = item.Select(s => s)}.GetJson()));
 
+            replyKeyboardMarkup.keyboard = test; // new JArray(Keyboard.Select(JToken.FromObject));
             if (ResizeKeyboard.HasValue)
                 replyKeyboardMarkup.keyboard = ResizeKeyboard;
             if (OneTimeKeyboard.HasValue)
@@ -32,7 +35,7 @@ namespace NetTelebot.Type
         /// <summary>
         /// Array of button rows, each represented by an Array of Strings
         /// </summary>
-        public string[][] Keyboard { get; set; }
+        public KeyboardButton[][] Keyboard { get; set; }
 
         /// <summary>
         /// Optional. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons).
