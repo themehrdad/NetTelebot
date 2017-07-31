@@ -21,7 +21,7 @@ namespace NetTelebot.Type
             //JArray test =
                 //new JArray(Keyboard.Select(item => new KeyboardButton {Text = item.Select(s => s)}.GetJson()));
 
-            replyKeyboardMarkup.keyboard = test; // new JArray(Keyboard.Select(JToken.FromObject));
+            replyKeyboardMarkup.keyboard = new JArray(Keyboard.Select(JToken.FromObject));
             if (ResizeKeyboard.HasValue)
                 replyKeyboardMarkup.keyboard = ResizeKeyboard;
             if (OneTimeKeyboard.HasValue)
