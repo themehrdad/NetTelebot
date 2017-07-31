@@ -175,10 +175,13 @@ namespace NetTelebot.Tests
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendMessage");
             Assert.Throws<Exception>(() => mBotBadResponse.SendMessage(123, "123", ParseMode.HTML, false, false, 123, new ForceReplyMarkup()));
+
+            // for correct work SearchLogsFor in SendReplyKeyboardWithTextMarkupTest()
+            mServerOkResponse.ResetRequestLogs();
         }
 
         //todo to extended class
-        [Test, Ignore("Need chahge request")]
+        [Test]
         public void SendReplyKeyboardWithTextMarkupTest()
         {
             var line1 = new[] {"Test", "Test2"};
