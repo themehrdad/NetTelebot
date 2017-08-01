@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using NetTelebot.Interface;
 
-namespace NetTelebot.Type
+namespace NetTelebot.Type.Keyboard
 {
     /// <summary>
     /// Upon receiving a message with this object, Telegram clients will display a reply interface to the user 
@@ -38,12 +38,14 @@ namespace NetTelebot.Type
         public string GetJson()
         {
             StringBuilder builder = new StringBuilder();
+
             builder.Append("{ \"force_reply\" : true ");
             if (Selective.HasValue)
             {
                 builder.AppendFormat(", \"selective\" : {0} ", Selective.Value.ToString().ToLower());
             }
             builder.Append("}");
+
             return builder.ToString();
         }
     }

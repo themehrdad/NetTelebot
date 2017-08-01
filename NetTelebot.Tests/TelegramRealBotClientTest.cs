@@ -3,6 +3,7 @@ using NetTelebot.BotEnum;
 using NetTelebot.Result;
 using NetTelebot.Tests.Utils;
 using NetTelebot.Type;
+using NetTelebot.Type.Keyboard;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests
@@ -143,13 +144,19 @@ namespace NetTelebot.Tests
         {
             KeyboardButton line1 = new KeyboardButton { Text = "Button1" };
             KeyboardButton line2 = new KeyboardButton { Text = "Button2" };
+            KeyboardButton line3 = new KeyboardButton { Text = "Button3" };
+            KeyboardButton line4 = new KeyboardButton { Text = "Button4" };
 
-            KeyboardButton[] lines = { line1, line2 };
-            KeyboardButton[][] keyboard = { lines };
+            KeyboardButton[] lines1 = { line1, line2, line3, line4 };
+            KeyboardButton[] lines2 = {line3, line4};
+            KeyboardButton[][] keyboard =
+            {
+                lines1, lines2
+            };
 
             ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup
             {
-                Keyboard = keyboard
+                Keyboard = keyboard,
             };
 
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Test", replyMarkup: replyMarkup);

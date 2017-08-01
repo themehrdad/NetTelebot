@@ -55,14 +55,14 @@
     <Compile Include="Type\ContactInfo.cs" />
     <Compile Include="Type\DocumentInfo.cs" />
     <Compile Include="Type\ExistingFile.cs" />
-    <Compile Include="Type\ForceReplyMarkup.cs" />
+    <Compile Include="Type\Keyboard\ForceReplyMarkup.cs" />
     <Compile Include="Result\GetUpdatesResult.cs" />
     <Compile Include="Result\GetUserProfilePhotosResult.cs" />
     <Compile Include="Type\GroupChatInfo.cs" />
     <Compile Include="Interface\IConversationSource.cs" />
     <Compile Include="Interface\IFile.cs" />
     <Compile Include="Interface\IReplyMarkup.cs" />
-    <Compile Include="Type\KeyboardButton.cs" />
+    <Compile Include="Type\Keyboard\KeyboardButton.cs" />
     <Compile Include="Type\LocationInfo.cs" />
     <Compile Include="Type\MeInfo.cs" />
     <Compile Include="Type\MessageInfo.cs" />
@@ -70,8 +70,8 @@
     <Compile Include="BotEnum\ParseMode.cs" />
     <Compile Include="Type\PhotoSizeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Type\ReplyKeyboardHideMarkup.cs" />
-    <Compile Include="Type\ReplyKeyboardMarkup.cs" />
+    <Compile Include="Type\Keyboard\ReplyKeyboardHideMarkup.cs" />
+    <Compile Include="Type\Keyboard\ReplyKeyboardMarkup.cs" />
     <Compile Include="Result\SendMessageResult.cs" />
     <Compile Include="Type\StickerInfo.cs" />
     <Compile Include="TelegramBotClient.cs" />

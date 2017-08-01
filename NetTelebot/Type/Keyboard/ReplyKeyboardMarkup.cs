@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using NetTelebot.Interface;
 using Newtonsoft.Json.Linq;
 
-namespace NetTelebot.Type
+namespace NetTelebot.Type.Keyboard
 {
     /// <summary>
     /// This object represents a custom keyboard with reply options
@@ -16,23 +18,28 @@ namespace NetTelebot.Type
         {
             dynamic replyKeyboardMarkup = new JObject();
 
-            JArray keyboardArray = new JArray(Keyboard.Select(item => item.Select(s =>
-                new KeyboardButton
-                {
-                    Text = s.Text,
-                    RequestContact = s.RequestContact,
-                    RequestLocation = s.RequestLocation
-                }.GetJsonArray())));
-           
-            replyKeyboardMarkup.keyboard = keyboardArray;
+            replyKeyboardMarkup.keyboard = GetJsonArrayOfArray(Keyboard);
+
             if (ResizeKeyboard.HasValue)
-                replyKeyboardMarkup.keyboard = ResizeKeyboard;
+                replyKeyboardMarkup.resize_keyboard = ResizeKeyboard;
             if (OneTimeKeyboard.HasValue)
                 replyKeyboardMarkup.one_time_keyboard = OneTimeKeyboard;
             if (Selective.HasValue)
                 replyKeyboardMarkup.selective = Selective;
 
             return replyKeyboardMarkup.ToString();
+        }
+
+        private static JArray GetJsonArrayOfArray(KeyboardButton[][] keyboard)
+        {
+            JArray jArray = new JArray();
+
+            foreach (var keyboardArray in keyboard)
+            {
+                jArray.Add(new KeyboardButton().GetJsonArray(keyboardArray));
+            }
+
+            return jArray;
         }
 
         /// <summary>
