@@ -138,17 +138,18 @@ namespace NetTelebot.Tests
             Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.channel);
         }
 
-        [Test, Ignore("Not complete")]
+        [Test]
         public void SendKeyboardButtonToGroupTest()
         {
-            var line1 = new[] { "Test", "Test2" };
-            var line2 = new[] { "Test3", "Test4" };
+            KeyboardButton line1 = new KeyboardButton { Text = "Button1" };
+            KeyboardButton line2 = new KeyboardButton { Text = "Button2" };
 
-            string[][] lines = { line1, line2 };
+            KeyboardButton[] lines = { line1, line2 };
+            KeyboardButton[][] keyboard = { lines };
 
             ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup
             {
-                //Keyboard = lines
+                Keyboard = keyboard
             };
 
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Test", replyMarkup: replyMarkup);

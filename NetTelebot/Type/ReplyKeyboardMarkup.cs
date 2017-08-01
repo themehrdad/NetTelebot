@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Security.Cryptography;
 using NetTelebot.Interface;
 using Newtonsoft.Json.Linq;
 
@@ -13,15 +12,19 @@ namespace NetTelebot.Type
         /// <summary>
         /// Gets the json.
         /// </summary>
-        /// <returns></returns>
         public string GetJson()
         {
             dynamic replyKeyboardMarkup = new JObject();
 
-            //JArray test =
-                //new JArray(Keyboard.Select(item => new KeyboardButton {Text = item.Select(s => s)}.GetJson()));
-
-            replyKeyboardMarkup.keyboard = new JArray(Keyboard.Select(JToken.FromObject));
+            JArray keyboardArray = new JArray(Keyboard.Select(item => item.Select(s =>
+                new KeyboardButton
+                {
+                    Text = s.Text,
+                    RequestContact = s.RequestContact,
+                    RequestLocation = s.RequestLocation
+                }.GetJsonArray())));
+           
+            replyKeyboardMarkup.keyboard = keyboardArray;
             if (ResizeKeyboard.HasValue)
                 replyKeyboardMarkup.keyboard = ResizeKeyboard;
             if (OneTimeKeyboard.HasValue)

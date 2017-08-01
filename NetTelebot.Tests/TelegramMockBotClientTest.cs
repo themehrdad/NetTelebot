@@ -181,14 +181,15 @@ namespace NetTelebot.Tests
         }
 
         //todo to extended class
-        [Test, Ignore("Not complete")]
+        [Test]
         public void SendReplyKeyboardWithTextMarkupTest()
         {
-            var line1 = new KeyboardButton { Text = "Button1"};
-            var line2 = new KeyboardButton { Text = "Button2"};
+            KeyboardButton line1 = new KeyboardButton { Text = "Button1"};
+            KeyboardButton line2 = new KeyboardButton { Text = "Button2"};
 
             KeyboardButton[] lines = { line1, line2 };
-            KeyboardButton[][] keyboard = { lines };
+            KeyboardButton[] lines2 = { line1, line2 };
+            KeyboardButton[][] keyboard = { lines, lines2 };
 
             ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup
             {
@@ -199,17 +200,10 @@ namespace NetTelebot.Tests
 
             var request = mServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
 
-            /*Assert.AreEqual(request.FirstOrDefault()?.Body,
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "text=Test&" +
-                "reply_markup=%7B%0D%0A%20%20%22keyboard%22%3A%20%5B%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%22Test%22%2C%0D%0A%20%20%20%20%20%20%22Test2%22%0D%0A%20%20%20%20%5D%2C%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%22Test3%22%2C%0D%0A%20%20%20%20%20%20%22Test4%22%0D%0A%20%20%20%20%5D%0D%0A%20%20%5D%0D%0A%7D");*/
-
-            /* Is exanmple with one button named "Button" in Text field
-             * 
-             * Assert.AreEqual(request.FirstOrDefault()?.Body,
-            "chat_id=123&" +
-            "Text=Test&" +
-            "reply_markup=%7B%22keyboard%22%3A+%5B%5B%22Button%22%5D%5D%7D");*/
+                "reply_markup=%7B%0D%0A%20%20%22keyboard%22%3A%20%5B%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%22Button1%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%2C%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%22Button1%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%2C%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%22Button2%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%2C%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%22Button2%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%0D%0A%20%20%5D%0D%0A%7D");
 
             PrintResult(request);
         }

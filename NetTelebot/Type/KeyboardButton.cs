@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
@@ -25,11 +23,7 @@ namespace NetTelebot.Type
         /// </summary>
         public bool? RequestLocation { get; set; }
 
-        /// <summary>
-        /// Gets the json.
-        /// </summary>
-        /// <returns></returns>
-        public string GetJson()
+        private JObject GetJson()
         {
             dynamic json = new JObject();
 
@@ -38,8 +32,16 @@ namespace NetTelebot.Type
                 json.request_contact = RequestContact;
             if (RequestLocation.HasValue)
                 json.request_location = RequestLocation;
+            
+            return json;
+        }
 
-            return json.ToString();
+        /// <summary>
+        /// Gets the json array.
+        /// </summary>
+        public JArray GetJsonArray()
+        {
+            return new JArray { GetJson() };
         }
     }
 }
