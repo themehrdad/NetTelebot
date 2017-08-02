@@ -1,9 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using System.Linq;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Linq;
-using NetTelebot.Type;
 
-namespace NetTelebot
+namespace NetTelebot.Type
 {
     /// <summary>
     /// This object represent a user's profile pictures.

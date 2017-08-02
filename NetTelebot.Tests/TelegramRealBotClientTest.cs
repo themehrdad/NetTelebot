@@ -3,6 +3,7 @@ using NetTelebot.BotEnum;
 using NetTelebot.Result;
 using NetTelebot.Tests.Utils;
 using NetTelebot.Type;
+using NetTelebot.Type.Keyboard;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests
@@ -21,7 +22,6 @@ namespace NetTelebot.Tests
             mChatGroupId = new TelegramBotGroupChat().GetChatId();
             mChatSuperGroupId = new TelegramBotSuperGroupChat().GetChatId();
         }
-
 
         /// <summary>
         /// Gets me test for method <see cref="TelegramBotClient.GetMe"/>.
@@ -43,7 +43,7 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void TestSendMessageToChat()
+        public void SendMessageToChatTest()
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Test");
 
@@ -69,7 +69,7 @@ namespace NetTelebot.Tests
         /// Test the send and return location point (SendMessageResult.Result.Location.Latitude, SendMessageResult.Result.Location.Longitude)
         /// </summary>
         [Test]
-        public void TestSendSendLocation()
+        public void SendSendLocationTest()
         {
             const float latitude = 1.00000095f;
             const float longitude = 1.00000203f;
@@ -81,7 +81,7 @@ namespace NetTelebot.Tests
         }
 
         [Test, Ignore("Not use. Leave bot from group")]
-        public void TestLeaveChat()
+        public void LeaveChatTest()
         {
             BooleanResult leaveChat = mTelegramBot.LeaveChat(mChatGroupId);
 
@@ -90,7 +90,7 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void SendMessageToSuperGroup()
+        public void SendMessageToSuperGroupTest()
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatSuperGroupId, "Test");
 
@@ -111,12 +111,12 @@ namespace NetTelebot.Tests
             Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.supergroup);
             Assert.IsFalse(sendMessage.Result.Chat.AllMembersAreAdministrators);
         }
-        
+
         /// <summary>
         /// For send messages to @public_shannel added bot to shannel admin (need off privacy mode)
         /// </summary>
         [Test]
-        public void SendMessageToPublicChannel()
+        public void SendMessageToPublicChannelTest()
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage("@telebotTestChannel", "Test");
 
@@ -137,6 +137,31 @@ namespace NetTelebot.Tests
 
             Assert.IsInstanceOf<long>(sendMessage.Result.Chat.Id);
             Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.channel);
+        }
+
+        [Test]
+        public void SendKeyboardButtonToGroupTest()
+        {
+            KeyboardButton line1 = new KeyboardButton { Text = "Button1" };
+            KeyboardButton line2 = new KeyboardButton { Text = "Button2" };
+            KeyboardButton line3 = new KeyboardButton { Text = "Button3" };
+            KeyboardButton line4 = new KeyboardButton { Text = "Button4" };
+
+            KeyboardButton[] lines1 = { line1, line2, line3, line4 };
+            KeyboardButton[] lines2 = {line3, line4};
+            KeyboardButton[][] keyboard =
+            {
+                lines1, lines2
+            };
+
+            ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup
+            {
+                Keyboard = keyboard,
+            };
+
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Test", replyMarkup: replyMarkup);
+
+            Assert.True(sendMessage.Ok);
         }
     }
 }

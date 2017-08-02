@@ -75,13 +75,16 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="MockServerObject\MockServer.cs" />
+    <Compile Include="MockServerObject\ResponseString.cs" />
     <Compile Include="ParserTest\BooleanResultParserTest.cs" />
     <Compile Include="ParserTest\MeInfoParserTest.cs" />
     <Compile Include="MessageInfoNullRefExcTest.cs" />
     <Compile Include="ParserTest\MessageInfoParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultTestObject\BooleanResultObect.cs" />
-    <Compile Include="TelegramMockBotClientTest.cs" />
+    <Compile Include="RequestTest\TelegramMockBotClientTest.cs" />
+    <Compile Include="RequestTest\TelegramMockBotKeyboardTest.cs" />
     <Compile Include="TelegramRealBotClientTest.cs" />
     <Compile Include="TypeTestObject\AudioInfoObject.cs" />
     <Compile Include="TypeTestObject\ChatInfoObject.cs" />

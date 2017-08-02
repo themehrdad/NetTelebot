@@ -2,7 +2,7 @@
 using System.Text;
 using NetTelebot.Interface;
 
-namespace NetTelebot
+namespace NetTelebot.Type.Keyboard
 {
     /// <summary>
     /// Upon receiving a message with this object, Telegram clients will hide the current custom keyboard and display the default letter-keyboard.
@@ -11,6 +11,9 @@ namespace NetTelebot
     [Obsolete]
     public class ReplyKeyboardHideMarkup : IReplyMarkup
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReplyKeyboardHideMarkup"/> class.
+        /// </summary>
         public ReplyKeyboardHideMarkup()
         {
             HideKeyboard = true;
@@ -29,15 +32,21 @@ namespace NetTelebot
         /// </summary>
         public bool? Selective { get; set; }
 
+        /// <summary>
+        /// Gets the json.
+        /// </summary>
+        /// <returns></returns>
         public string GetJson()
         {
             var builder = new StringBuilder();
+
             builder.Append("{ \"hide_keyboard\" : true ");
             if (Selective.HasValue)
             {
                 builder.AppendFormat(", \"selective\" : {0} ", Selective.Value.ToString().ToLower());
             }
             builder.Append("}");
+
             return builder.ToString();
         }
     }
