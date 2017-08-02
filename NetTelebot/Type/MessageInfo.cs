@@ -254,7 +254,6 @@ namespace NetTelebot.Type
         /// </summary>
         public int MessageId { get; private set; }
 
-        //todo need test with sent to @channels
         /// <summary>
         /// Optional. Sender, can be empty for messages sent to channel
         /// </summary>
