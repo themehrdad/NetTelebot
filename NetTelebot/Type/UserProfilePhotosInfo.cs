@@ -9,10 +9,6 @@ namespace NetTelebot.Type
     /// </summary>
     public class UserProfilePhotosInfo
     {
-        internal UserProfilePhotosInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
 
         internal UserProfilePhotosInfo(JObject jsonObject)
         {
@@ -24,12 +20,6 @@ namespace NetTelebot.Type
             TotalCount = jsonObject["total_count"].Value<int>();
             JArray arrayOfArrays = jsonObject["photos"].Value<JArray>();
             Photos = arrayOfArrays.Cast<JArray>().Select(PhotoSizeInfo.ParseArray).ToArray();
-        }
-
-        private void Parse(string jsonText)
-        {
-            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
-            Parse(jsonObject);
         }
 
         /// <summary>

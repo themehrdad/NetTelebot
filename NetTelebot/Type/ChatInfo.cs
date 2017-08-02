@@ -1,6 +1,5 @@
 ﻿using NetTelebot.BotEnum;
 using NetTelebot.Interface;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type 
@@ -14,19 +13,8 @@ namespace NetTelebot.Type
         {
         }
 
-        internal ChatInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
-
         internal ChatInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(string jsonText)
-        {
-            JObject jsonObject = (JObject) JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
 

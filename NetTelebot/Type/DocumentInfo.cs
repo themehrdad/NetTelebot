@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
@@ -12,22 +11,11 @@ namespace NetTelebot.Type
         {
         }
 
-        internal DocumentInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
-
         internal DocumentInfo(JObject jsonObject)
         {
             Parse(jsonObject);
         }
         
-        private void Parse(string jsonText)
-        {
-            var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
-            Parse(jsonObject);
-        }
-
         private void Parse(JObject jsonObject)
         {
             FileId = jsonObject["file_id"].Value<string>();

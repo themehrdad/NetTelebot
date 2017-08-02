@@ -13,19 +13,9 @@ namespace NetTelebot.Type
         {
         }
 
-        internal VideoInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
         internal VideoInfo(JObject jsonObject)
 
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(string jsonText)
-        {
-            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
 

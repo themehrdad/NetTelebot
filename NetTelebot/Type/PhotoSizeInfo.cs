@@ -12,23 +12,12 @@ namespace NetTelebot.Type
         internal PhotoSizeInfo()
         {
         }
-
-        internal PhotoSizeInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
-
+        
         internal PhotoSizeInfo(JObject jsonObject)
         {
             Parse(jsonObject);
         }
-
-        private void Parse(string jsonText)
-        {
-            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
-            Parse(jsonObject);
-        }
-
+        
         private void Parse(JObject jsonObject)
         {
             FileId = jsonObject["file_id"].Value<string>();

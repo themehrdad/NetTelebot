@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
@@ -12,23 +11,12 @@ namespace NetTelebot.Type
         internal ChatPhotoInfo()
         {
         }
-
-        internal ChatPhotoInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
-
+        
         internal ChatPhotoInfo(JObject jsonObject)
         {
             Parse(jsonObject);
         }
-
-        private void Parse(string jsonText)
-        {
-            JObject jsonObject = (JObject) JsonConvert.DeserializeObject(jsonText);
-            Parse(jsonObject);
-        }
-
+        
         private void Parse(JObject jsonObject)
         {
             if (jsonObject["small_file_id"] != null)

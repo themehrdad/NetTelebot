@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
@@ -17,17 +16,7 @@ namespace NetTelebot.Type
             Parse(jsonObject);
         }
 
-        internal AudioInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
-
-        private void Parse(string jsonText)
-        {
-            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
-            Parse(jsonObject);
-        }
-
+        
         private void Parse(JObject jsonObject)
         {
             FileId = jsonObject["file_id"].Value<string>();

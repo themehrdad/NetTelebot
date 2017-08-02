@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
@@ -12,11 +11,6 @@ namespace NetTelebot.Type
         {
         }
 
-        internal LocationInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
-
         internal LocationInfo(JObject jsonObject)
         {
             Parse(jsonObject);
@@ -26,12 +20,6 @@ namespace NetTelebot.Type
         {
             Longitude = jsonObject["longitude"].Value<float>();
             Latitude = jsonObject["latitude"].Value<float>();
-        }
-
-        private void Parse(string jsonText)
-        {
-            var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
-            Parse(jsonObject);
         }
 
         /// <summary>
