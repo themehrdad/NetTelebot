@@ -3,7 +3,8 @@
 namespace NetTelebot.Type
 {
     /// <summary>
-    /// This object represents an audio file (voice note). See <see href="https://core.telegram.org/bots/api#audio">API</see>
+    /// This object represents an audio file (voice note).
+    /// See <see href="https://core.telegram.org/bots/api#audio">API</see>
     /// </summary>
     public class AudioInfo
     {
@@ -16,7 +17,6 @@ namespace NetTelebot.Type
             Parse(jsonObject);
         }
 
-        
         private void Parse(JObject jsonObject)
         {
             FileId = jsonObject["file_id"].Value<string>();
@@ -34,31 +34,31 @@ namespace NetTelebot.Type
         /// <summary>
         /// Unique identifier for this file
         /// </summary>
-        public string FileId { get; set; }
+        public string FileId { get; private set; }
 
         /// <summary>
         /// Duration of the audio in seconds as defined by sender
         /// </summary>
-        public int Duration { get; set; }
+        public int Duration { get; private set; }
 
         /// <summary>
         /// Optional. Performer of the audio as defined by sender or by audio tags
         /// </summary>
-        public string Performer { get; set; }
+        public string Performer { get; private set; }
 
         /// <summary>
         /// Optional. Title of the audio as defined by sender or by audio tags
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; private set; }
 
         /// <summary>
         /// Optional. MIME type of the file as defined by sender
         /// </summary>
-        public string MimeType { get; set; }
+        public string MimeType { get; private set; }
 
         /// <summary>
         /// Optional. File size
         /// </summary>
-        public int FileSize { get; set; }
+        public int FileSize { get; private set; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using NetTelebot.Extension;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 #if DEBUG
@@ -85,6 +84,11 @@ namespace NetTelebot.Type
             Text = jsonObject["text"] != null 
                 ? jsonObject["text"].Value<string>() 
                 : string.Empty;
+
+            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoEntitiesTest()
+            Entities = jsonObject["entities"] != null
+                ? MessageEntityInfo.ParseArray(jsonObject["entities"].Value<JArray>())
+                : new MessageEntityInfo[0];
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoAudioTest()
             Audio = jsonObject["audio"] != null 
@@ -192,6 +196,7 @@ namespace NetTelebot.Type
                     ForwardFrom = new UserInfo(),
                     ForwardFromChat = new ChatInfo(),
                     ReplyToMessage = new MessageInfo(),
+                    Entities = new MessageEntityInfo[0],
                     Audio = new AudioInfo(),
                     Document = new DocumentInfo(),
                     Photo = new PhotoSizeInfo[0],
@@ -223,6 +228,7 @@ namespace NetTelebot.Type
                     ForwardFrom = new UserInfo(),
                     ForwardFromChat = new ChatInfo(),
                     ReplyToMessage = new MessageInfo(),
+                    Entities = new MessageEntityInfo[0],
                     Audio = new AudioInfo(),
                     Document = new DocumentInfo(),
                     Photo = new PhotoSizeInfo[0],
@@ -320,7 +326,11 @@ namespace NetTelebot.Type
         /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyText() </remarks>
         public string Text { get; private set; }
 
-        //todo add (MessageEntity) Entities
+        //todo add NullReferenceException test
+        /// <summary>
+        /// Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
+        /// </summary>
+        public MessageEntityInfo[] Entities { get; private set; }
 
         /// <summary>
         /// Optional. Message is an audio file, information about the file TestAppealToTheEmptyAudio()

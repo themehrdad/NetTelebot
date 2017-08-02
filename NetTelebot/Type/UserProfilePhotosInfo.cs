@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
@@ -25,11 +24,11 @@ namespace NetTelebot.Type
         /// <summary>
         /// Total number of profile pictures the target user has
         /// </summary>
-        public int TotalCount { get; set; }
+        public int TotalCount { get; private set; }
 
         /// <summary>
         /// Requested profile pictures (in up to 4 sizes each)
         /// </summary>
-        public PhotoSizeInfo[][] Photos { get; set; }
+        public PhotoSizeInfo[][] Photos { get; private set; }
     }
 }

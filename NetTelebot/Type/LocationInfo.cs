@@ -25,11 +25,11 @@ namespace NetTelebot.Type
         /// <summary>
         /// Longitude as defined by sender
         /// </summary>
-        public float Longitude { get; set; }
+        public float Longitude { get; private set; }
 
         /// <summary>
         /// Latitude as defined by sender
         /// </summary>
-        public float Latitude { get; set; }
+        public float Latitude { get; private set; }
     }
 }

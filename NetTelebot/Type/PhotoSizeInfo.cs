@@ -1,11 +1,11 @@
 ﻿using System.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
     /// <summary>
-    /// This object represents one size of a photo or a file / sticker thumbnail.
+    /// This object represents one size of a photo or a file/sticker thumbnail.
+    /// See <see href="https://core.telegram.org/bots/api#photosize">API</see>
     /// </summary>
     public class PhotoSizeInfo
     {

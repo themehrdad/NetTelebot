@@ -5,7 +5,8 @@ using Newtonsoft.Json.Linq;
 namespace NetTelebot.Type 
 { 
     /// <summary>
-    /// This object represents a chat. See <see href="https://core.telegram.org/bots/api#chat">API</see>
+    /// This object represents a chat. 
+    /// See <see href="https://core.telegram.org/bots/api#chat">API</see>
     /// </summary>
     public class ChatInfo : IConversationSource 
     {

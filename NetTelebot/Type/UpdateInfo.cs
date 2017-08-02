@@ -9,19 +9,8 @@ namespace NetTelebot.Type
     /// </summary>
     public class UpdateInfo
     {
-        internal UpdateInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
-
         internal UpdateInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(string jsonText)
-        {
-            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
 

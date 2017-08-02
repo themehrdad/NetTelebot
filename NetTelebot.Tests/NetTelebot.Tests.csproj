@@ -93,6 +93,7 @@
     <Compile Include="TypeTestObject\DocumentInfoObject.cs" />
     <Compile Include="TypeTestObject\LocationInfoObject.cs" />
     <Compile Include="TypeTestObject\MeInfoObject.cs" />
+    <Compile Include="TypeTestObject\MessageEntityInfoObject.cs" />
     <Compile Include="TypeTestObject\MessageInfoObject.cs" />
     <Compile Include="TypeTestObject\PhotoSizeInfoObject.cs" />
     <Compile Include="TypeTestObject\StickerInfoObject.cs" />
