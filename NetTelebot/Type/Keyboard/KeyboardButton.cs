@@ -8,33 +8,17 @@ namespace NetTelebot.Type.Keyboard
     /// </summary>
     public class KeyboardButton
     {
-
-        private JObject GetJson(KeyboardButton button)
+        internal JObject GetJson(KeyboardButton button)
         {
             dynamic json = new JObject();
 
             json.text = button.Text;
-            if (RequestContact.HasValue)
+            if (button.RequestContact.HasValue)
                 json.request_contact = button.RequestContact;
-            if (RequestLocation.HasValue)
+            if (button.RequestLocation.HasValue)
                 json.request_location = button.RequestLocation;
-            
+
             return json;
-        }
-
-        /// <summary>
-        /// Gets the json array keyboard button.
-        /// </summary>
-        internal JArray GetJsonArray(KeyboardButton[] array)
-        {
-            JArray jArray = new JArray();
-
-            foreach (KeyboardButton t in array)
-            {
-                jArray.Add(GetJson(t));
-            }
-
-            return jArray;
         }
 
         /// <summary>

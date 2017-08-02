@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using NetTelebot.Interface;
 using Newtonsoft.Json.Linq;
 
@@ -32,12 +30,22 @@ namespace NetTelebot.Type.Keyboard
 
         private static JArray GetJsonArrayOfArray(KeyboardButton[][] keyboard)
         {
-            JArray jArray = new JArray();
-
-            foreach (var keyboardArray in keyboard)
+            JArray jArray = new JArray
             {
-                jArray.Add(new KeyboardButton().GetJsonArray(keyboardArray));
-            }
+                from KeyboardArray in keyboard
+                select GetJsonArray(KeyboardArray)
+            };
+
+            return jArray;
+        }
+
+        private static JArray GetJsonArray(KeyboardButton[] keyboard)
+        {
+            JArray jArray = new JArray
+            {
+                from KeyboardArray in keyboard
+                select new KeyboardButton().GetJson(KeyboardArray)
+            };
 
             return jArray;
         }
