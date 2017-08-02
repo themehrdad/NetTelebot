@@ -15,13 +15,13 @@ namespace NetTelebot.Tests.RequestTest
         private readonly TelegramBotClient mBotOkResponse = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:" + mServerPort) };
 
         [OneTimeSetUp]
-        public void OnStart()
+        public static void OnStart()
         {
             MockServer.Start(mServerPort);
         }
 
         [OneTimeTearDown]
-        public void OnStop()
+        public static void OnStop()
         {
             MockServer.Stop();
         }
@@ -62,8 +62,9 @@ namespace NetTelebot.Tests.RequestTest
                 "%22%3A%20false%2C%0D%0A%20%20%20%20%20%20%20%20%22request_location%22%3A%20true%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
                 "%22%3A%20%22Button3%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%22Button4" +
                 "%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%2C%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%22Button3" +
-                "%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%22Button4%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%0D%0A%20%20%5D%2C%0D%0A%20%20%22resize_keyboard" +
-                "%22%3A%20true%2C%0D%0A%20%20%22one_time_keyboard%22%3A%20true%2C%0D%0A%20%20%22selective%22%3A%20false%0D%0A%7D");
+                "%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%22Button4" +
+                "%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%0D%0A%20%20%5D%2C%0D%0A%20%20%22resize_keyboard%22%3A%20true%2C%0D%0A%20%20%22" +
+                "one_time_keyboard%22%3A%20true%2C%0D%0A%20%20%22selective%22%3A%20false%0D%0A%7D");
 
             TelegramMockBotClientTest.PrintResult(request);
         }

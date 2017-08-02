@@ -8,7 +8,7 @@ namespace NetTelebot.Type.Keyboard
     /// </summary>
     public class KeyboardButton
     {
-        internal JObject GetJson(KeyboardButton button)
+        internal static JObject GetJson(KeyboardButton button)
         {
             dynamic json = new JObject();
 

@@ -44,7 +44,7 @@ namespace NetTelebot.Type.Keyboard
             JArray jArray = new JArray
             {
                 from KeyboardArray in keyboard
-                select new KeyboardButton().GetJson(KeyboardArray)
+                select KeyboardButton.GetJson(KeyboardArray)
             };
 
             return jArray;

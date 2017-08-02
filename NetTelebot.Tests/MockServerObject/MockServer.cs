@@ -9,8 +9,10 @@ namespace NetTelebot.Tests.MockServerObject
 
         public static void Start(int? portOkResponse = null, int? portBadResponse = null)
         {
-            if (portOkResponse != null) ServerOkResponse = FluentMockServer.Start(portOkResponse.Value);
-            if (portBadResponse != null) ServerBadResponse = FluentMockServer.Start(portBadResponse.Value);
+            if (portOkResponse != null)
+                ServerOkResponse = FluentMockServer.Start(portOkResponse.Value);
+            if (portBadResponse != null)
+                ServerBadResponse = FluentMockServer.Start(portBadResponse.Value);
 
             ServerOkResponse?
                 .Given(
