@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
@@ -12,19 +11,8 @@ namespace NetTelebot.Type
         {
         }
 
-        internal UserInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
-
         internal UserInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(string jsonText)
-        {
-            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
 
@@ -43,27 +31,27 @@ namespace NetTelebot.Type
         /// <summary>
         /// Unique identifier for this user or bot
         /// </summary>
-        public int Id { get; set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// User‘s or bot’s first name
         /// </summary>
-        public string FirstName { get; set; }
+        public string FirstName { get; private set; }
 
         /// <summary>
         /// Optional. User‘s or bot’s last name
         /// </summary>
-        public string LastName { get; set; }
+        public string LastName { get; private set; }
 
         /// <summary>
         /// Optional. User‘s or bot’s username
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName { get; private set; }
 
         /// <summary>
         /// Optional. IETF language tag of the user's language
         /// About <see href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language tag</see>
         /// </summary>
-        public string LanguageCode { get; set; }
+        public string LanguageCode { get; private set; }
     }
 }

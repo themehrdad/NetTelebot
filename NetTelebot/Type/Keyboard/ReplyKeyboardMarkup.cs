@@ -1,8 +1,7 @@
 ﻿using System.Linq;
-using NetTelebot.Interface;
 using Newtonsoft.Json.Linq;
 
-namespace NetTelebot.Type.Keyboard
+namespace NetTelebot.Type.Keyboard 
 {
     /// <summary>
     /// This object represents a custom keyboard with reply options

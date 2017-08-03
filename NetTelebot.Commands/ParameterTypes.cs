@@ -8,6 +8,7 @@
         Document,
         Sticker,
         Video,
-        Location
+        Location,
+        Keyboard
     }
 }

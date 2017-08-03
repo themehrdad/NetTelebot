@@ -65,6 +65,7 @@
     <Compile Include="Type\Keyboard\KeyboardButton.cs" />
     <Compile Include="Type\LocationInfo.cs" />
     <Compile Include="Type\MeInfo.cs" />
+    <Compile Include="Type\MessageEntityInfo.cs" />
     <Compile Include="Type\MessageInfo.cs" />
     <Compile Include="Type\NewFile.cs" />
     <Compile Include="BotEnum\ParseMode.cs" />

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
@@ -12,19 +11,9 @@ namespace NetTelebot.Type
         {
         }
 
-        internal ContactInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
-
+        
         internal ContactInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(string jsonText)
-        {
-            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
 

@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
@@ -9,10 +8,6 @@ namespace NetTelebot.Type
     /// </summary>
     public class UserProfilePhotosInfo
     {
-        internal UserProfilePhotosInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
 
         internal UserProfilePhotosInfo(JObject jsonObject)
         {
@@ -26,20 +21,14 @@ namespace NetTelebot.Type
             Photos = arrayOfArrays.Cast<JArray>().Select(PhotoSizeInfo.ParseArray).ToArray();
         }
 
-        private void Parse(string jsonText)
-        {
-            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
-            Parse(jsonObject);
-        }
-
         /// <summary>
         /// Total number of profile pictures the target user has
         /// </summary>
-        public int TotalCount { get; set; }
+        public int TotalCount { get; private set; }
 
         /// <summary>
         /// Requested profile pictures (in up to 4 sizes each)
         /// </summary>
-        public PhotoSizeInfo[][] Photos { get; set; }
+        public PhotoSizeInfo[][] Photos { get; private set; }
     }
 }

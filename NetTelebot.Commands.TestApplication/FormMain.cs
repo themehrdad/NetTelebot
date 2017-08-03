@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using NetTelebot.Commands.TestApplication.Properties;
-using NetTelebot.Commands.TestApplication.Utils;
+using NetTelebot.CommonUtils;
 
 
 namespace NetTelebot.Commands.TestApplication

@@ -306,6 +306,47 @@ namespace NetTelebot.Tests.ParserTest
         }
 
         /// <summary>
+        /// Test for <see cref="MessageInfo.Entities"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoEntitiesTest()
+        {
+            const string type = "type";
+            const int offset= 10;
+            const int length = 12345;
+            const string url = "url";
+
+            const int id = 123;
+            const string firstName = "name";
+            const string lastName = "lastName";
+            const string username = "username";
+            const string languageCode = "code";
+
+            JObject user = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            dynamic MessageInfoEntities = mMandatoryFieldsMessageInfo;
+
+            MessageInfoEntities.entities = new JArray(MessageEntityInfoObject.GetObject(type, offset, length, url, user));
+
+            MessageInfo messageInfo = new MessageInfo(MessageInfoEntities);
+
+            //test MessageInfo.Entities
+            Assert.AreEqual(messageInfo.Entities[0].Type, type);
+            Assert.AreEqual(messageInfo.Entities[0].Offset, offset);
+            Assert.AreEqual(messageInfo.Entities[0].Length, length);
+            Assert.AreEqual(messageInfo.Entities[0].Url, url);
+
+            //test MessageInfo.Entities.User
+            Assert.AreEqual(messageInfo.Entities[0].User.Id, id);
+            Assert.AreEqual(messageInfo.Entities[0].User.FirstName, firstName);
+            Assert.AreEqual(messageInfo.Entities[0].User.LastName, lastName);
+            Assert.AreEqual(messageInfo.Entities[0].User.UserName, username);
+            Assert.AreEqual(messageInfo.Entities[0].User.LanguageCode, languageCode);
+
+            Console.WriteLine(MessageInfoEntities);
+        }
+
+        /// <summary>
         /// Test for <see cref="MessageInfo.EditDate"/> parse field.
         /// </summary>
         [Test]

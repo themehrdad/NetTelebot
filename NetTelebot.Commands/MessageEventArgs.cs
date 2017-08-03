@@ -9,6 +9,7 @@ namespace NetTelebot.Commands
         {
             Message = message;
         }
+
         public MessageInfo Message { get; private set; }
     }
 }

@@ -14,11 +14,6 @@ namespace NetTelebot.Result
             Parse(jsonText);
         }
 
-        internal SendMessageResult(JObject jsonObject)
-        {
-            Parse(jsonObject);
-        }
-
         private void Parse(JObject jsonObject)
         {
             Ok = jsonObject["ok"].Value<bool>();

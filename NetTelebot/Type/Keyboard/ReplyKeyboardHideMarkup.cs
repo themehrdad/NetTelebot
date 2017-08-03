@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-using NetTelebot.Interface;
 
 namespace NetTelebot.Type.Keyboard
 {

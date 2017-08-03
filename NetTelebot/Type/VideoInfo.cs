@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
@@ -13,19 +12,9 @@ namespace NetTelebot.Type
         {
         }
 
-        internal VideoInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
         internal VideoInfo(JObject jsonObject)
 
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(string jsonText)
-        {
-            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
 
@@ -46,36 +35,36 @@ namespace NetTelebot.Type
         /// <summary>
         /// Unique identifier for this file
         /// </summary>
-        public string FileId { get; set; }
+        public string FileId { get; private set; }
 
         /// <summary>
         /// Video width as defined by sender
         /// </summary>
-        public int Width { get; set; }
+        public int Width { get; private set; }
 
         /// <summary>
         /// Video height as defined by sender
         /// </summary>
-        public int Height { get; set; }
+        public int Height { get; private set; }
 
         /// <summary>
         /// Duration of the video in seconds as defined by sender
         /// </summary>
-        public int Duration { get; set; }
+        public int Duration { get; private set; }
 
         /// <summary>
         /// Optional. Video thumbnail
         /// </summary>
-        public PhotoSizeInfo Thumb { get; set; }
+        public PhotoSizeInfo Thumb { get; internal set; }
 
         /// <summary>
         /// Optional. Mime type of a file as defined by sender
         /// </summary>
-        public string MimeType { get; set; }
+        public string MimeType { get; private set; }
 
         /// <summary>
         /// Optional. File size
         /// </summary>
-        public int FileSize { get; set; }
+        public int FileSize { get; private set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
@@ -11,20 +10,9 @@ namespace NetTelebot.Type
         internal StickerInfo()
         {
         }
-
-        internal StickerInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
-
+        
         internal StickerInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(string jsonText)
-        {
-            var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
 

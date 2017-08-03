@@ -1,12 +1,12 @@
 ﻿using NetTelebot.BotEnum;
 using NetTelebot.Interface;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type 
 { 
     /// <summary>
-    /// This object represents a chat. See <see href="https://core.telegram.org/bots/api#chat">API</see>
+    /// This object represents a chat. 
+    /// See <see href="https://core.telegram.org/bots/api#chat">API</see>
     /// </summary>
     public class ChatInfo : IConversationSource 
     {
@@ -14,19 +14,8 @@ namespace NetTelebot.Type
         {
         }
 
-        internal ChatInfo(string jsonText)
-        {
-            Parse(jsonText);
-        }
-
         internal ChatInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(string jsonText)
-        {
-            JObject jsonObject = (JObject) JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
 

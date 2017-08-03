@@ -1,4 +1,4 @@
-﻿namespace NetTelebot.Commands.TestApplication.Utils
+﻿namespace NetTelebot.CommonUtils
 {
     public class TelegramBot : IWindowsCredential
     {

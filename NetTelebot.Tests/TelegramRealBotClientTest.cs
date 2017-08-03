@@ -142,13 +142,21 @@ namespace NetTelebot.Tests
         [Test]
         public void SendKeyboardButtonToGroupTest()
         {
-            KeyboardButton line1 = new KeyboardButton { Text = "Button1" };
-            KeyboardButton line2 = new KeyboardButton { Text = "Button2" };
-            KeyboardButton line3 = new KeyboardButton { Text = "Button3" };
-            KeyboardButton line4 = new KeyboardButton { Text = "Button4" };
 
-            KeyboardButton[] lines1 = { line1, line2, line3, line4 };
-            KeyboardButton[] lines2 = {line3, line4};
+            KeyboardButton[] lines1 =
+            {
+                new KeyboardButton {Text = "Button1"},
+                new KeyboardButton {Text = "Button2"},
+                new KeyboardButton {Text = "Button3"},
+                new KeyboardButton {Text = "Button4"}
+            };
+
+            KeyboardButton[] lines2 =
+            {
+                new KeyboardButton {Text = "Button5"},
+                new KeyboardButton {Text = "Button4"}
+            };
+
             KeyboardButton[][] keyboard =
             {
                 lines1, lines2
