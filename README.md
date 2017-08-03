@@ -53,7 +53,7 @@ See more examples in the project [wiki](https://github.com/themehrdad/NetTelebot
 On the nearest release (1.09)
 - [x] More tests (coverage > 80%)
 - [x] Support chat types (and type chat “private”, “group”, “supergroup” or “channel”). 
-- [ ] Support for sending messages to @channelusername
+- [x] Support for sending messages to @channelusername
 
 On the project
 * Full support API Telegrams

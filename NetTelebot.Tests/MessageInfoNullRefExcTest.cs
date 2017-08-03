@@ -218,7 +218,7 @@ namespace NetTelebot.Tests
 
             var text = sendMessage.Result.ReplyToMessage.Text;
 
-            //todo entities
+            var messageEntityInfo = sendMessage.Result.ReplyToMessage.Entities;
 
             AudioInfo audio = sendMessage.Result.ReplyToMessage.Audio;
             var audioDuration = sendMessage.Result.ReplyToMessage.Audio.Duration;
@@ -350,6 +350,8 @@ namespace NetTelebot.Tests
 
             Assert.IsNull(text);
 
+            Assert.IsInstanceOf<MessageEntityInfo[]>(messageEntityInfo);
+
             Assert.IsInstanceOf<AudioInfo>(audio);
             Assert.AreEqual(audioDuration, 0);
 
@@ -477,6 +479,33 @@ namespace NetTelebot.Tests
             //check value MessageInfo.Text
             Assert.IsEmpty(text);
             Assert.IsEmpty(textToUpper);
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Entities"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyEntities()
+        {
+            const float latitude = 37.0000114f;
+            const float longitude = 37.0000076f;
+
+            SendMessageResult sendLocation = mTelegramBot.SendLocation(mChatId, latitude, longitude);
+
+            // typeof MessageInfo.Entities
+            var entities = sendLocation.Result.Entities;
+            var entitesLength = sendLocation.Result.Entities.Length;
+
+            Console.WriteLine("TestAppealToTheEmptyEntities():"
+                              + "\n sendLocation.Result.Entities: " + entities
+                              + "\n sendLocation.Result.Entities.Length: " + entitesLength);
+
+            //check instance MessageInfo.Entities
+            Assert.IsInstanceOf(typeof(MessageEntityInfo[]), entities);
+
+            //check value MessageInfo.Entities
+            Assert.IsEmpty(entities);
+            Assert.AreEqual(entitesLength, 0);
         }
 
         /// <summary>
@@ -1131,9 +1160,9 @@ namespace NetTelebot.Tests
             var editDateDay = sendMessage.Result.PinnedMessage.EditDate.Day;
 
             var text = sendMessage.Result.PinnedMessage.Text;
-            
-            //todo entities
 
+            var messageEntityInfo = sendMessage.Result.PinnedMessage.Entities;
+            
             AudioInfo audio = sendMessage.Result.PinnedMessage.Audio;
             var audioDuration = sendMessage.Result.PinnedMessage.Audio.Duration;
 
@@ -1264,6 +1293,8 @@ namespace NetTelebot.Tests
             Assert.AreEqual(editDateDay, DateTime.MinValue.Day);
 
             Assert.IsNull(text);
+
+            Assert.IsInstanceOf<MessageEntityInfo[]>(messageEntityInfo);
 
             Assert.IsInstanceOf<AudioInfo>(audio);
             Assert.AreEqual(audioDuration, 0);
