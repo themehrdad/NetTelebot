@@ -1,7 +1,19 @@
 ﻿using RestSharp;
 using System;
 using System.Linq;
+using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading;
+using NetTelebot.BotEnum;
+using NetTelebot.Interface;
+using NetTelebot.Result;
+using NetTelebot.Type;
+using NetTelebot.Extension;
+using NetTelebot.Type.Keyboard;
+
+#if DEBUG
+[assembly: InternalsVisibleTo("NetTelebot.Tests")]
+#endif
 
 namespace NetTelebot
 {
@@ -16,15 +28,24 @@ namespace NetTelebot
         public TelegramBotClient()
         {
             CheckInterval = 1000;
+            RestClient = new RestClient("https://api.telegram.org");
         }
+
         /// <summary>
         /// Your bot token
         /// </summary>
         public string Token { get; set; }
+
+        /// <summary>
+        /// Gets or sets the REST client. Used in integartion test.
+        /// </summary>
+        internal RestClient RestClient { private get; set; }
+
         /// <summary>
         /// Interval time in milliseconds to get latest messages sent to your bot.
         /// </summary>
         public int CheckInterval { get; set; }
+
         private const string getMeUri = "/bot{0}/getMe";
         private const string getUpdatesUri = "/bot{0}/getUpdates";
         private const string sendMessageUri = "/bot{0}/sendMessage";
@@ -50,8 +71,7 @@ namespace NetTelebot
         private const string getChatMembersCountUri = "/bot{0}/getChatMembersCount";
         private const string getChatMemberUri = "/bot{0}/getChatMember";
         private const string answerCallbackQueryUri = "/bot{0}/getChatMember";
-        
-        private readonly RestClient restClient = new RestClient("https://api.telegram.org");
+
         private Timer updateTimer;
         private int lastUpdateId;
 
@@ -64,18 +84,6 @@ namespace NetTelebot
         /// Whenever a message is sent to your bot, this event will be raised.
         /// </summary>
         public event EventHandler<TelegramUpdateEventArgs> UpdatesReceived;
-
-        /// <summary>
-        /// Gets information about your bot. You can call this method as a ping
-        /// </summary>
-        /// <returns></returns>
-        public MeInfo GetMe()
-        {
-            RestRequest request = new RestRequest(string.Format(getMeUri, Token), Method.GET);
-            IRestResponse response = restClient.Execute(request);
-            //todo why MeInfo (in API UserInfo)?
-            return new MeInfo(response.Content);
-        }
 
         /// <summary>
         /// Gets first 100 messages sent to your bot.
@@ -126,9 +134,9 @@ namespace NetTelebot
             if (limit.HasValue)
                 request.AddQueryParameter("limit", limit.Value.ToString());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new GetUpdatesResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -144,6 +152,23 @@ namespace NetTelebot
         }
 
         /// <summary>
+        /// Gets information about your bot. You can call this method as a ping
+        /// </summary>
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.GetMeTest()</remarks>
+        /// <remarks>Test NetTelebot.Tests.TelegramRealBotClientTest.GetMeTest()</remarks>
+        public MeInfo GetMe()
+        {
+            RestRequest request = new RestRequest(string.Format(getMeUri, Token), Method.POST);
+
+            IRestResponse response = RestClient.Execute(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+                return new MeInfo(response.Content);
+
+            throw new Exception(response.StatusDescription);
+        }
+
+        /// <summary>
         /// Use this method to send text messages. See <see href="https://core.telegram.org/bots/api#sendmessage">API</see>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
@@ -154,7 +179,8 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        public SendMessageResult SendMessage(int chatId, string text,
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendMessageTest()</remarks>
+        public SendMessageResult SendMessage(object chatId, string text,
             ParseMode? parseMode = null,
             bool? disableWebPagePreview = null,
             bool? disableNotification = null,
@@ -162,6 +188,7 @@ namespace NetTelebot
             IReplyMarkup replyMarkup = null)
         {
             RestRequest request = new RestRequest(string.Format(sendMessageUri, Token), Method.POST);
+            
             request.AddParameter("chat_id", chatId);
             request.AddParameter("text", text);
             if (parseMode != null)
@@ -175,9 +202,9 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -191,20 +218,21 @@ namespace NetTelebot
         /// <param name="messageId">Unique message identifier</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        public SendMessageResult ForwardMessage(int chatId, int fromChatId, 
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.ForwardMessageTest()</remarks>
+        public SendMessageResult ForwardMessage(object chatId, int fromChatId, 
             int messageId,
             bool? disableNotification = null)
         {
             RestRequest request = new RestRequest(string.Format(forwardMessageUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("from_chat_id", fromChatId);
-            request.AddParameter("message_id", messageId);
             if (disableNotification.HasValue)
                 request.AddParameter("disable_notification", disableNotification.Value);
+            request.AddParameter("message_id", messageId);
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -221,7 +249,8 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        public SendMessageResult SendPhoto(int chatId, IFile photo,
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendPhotoTest()</remarks>
+        public SendMessageResult SendPhoto(object chatId, IFile photo,
             string caption = null,
             bool? disableNotification = null,
             int? replyToMessageId = null,
@@ -249,9 +278,9 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -274,7 +303,8 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        public SendMessageResult SendAudio(int chatId, IFile audio,
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendAudioTest()</remarks>
+        public SendMessageResult SendAudio(object chatId, IFile audio,
             string caption = null,
             int? duration = null,
             string performer = null,
@@ -313,9 +343,9 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -333,7 +363,8 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        public SendMessageResult SendDocument(int chatId, IFile document,
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendDocumentTest()</remarks>
+        public SendMessageResult SendDocument(object chatId, IFile document,
             string caption = null,
             bool? disableNotification = null,
             int? replyToMessageId = null,
@@ -363,9 +394,9 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -381,7 +412,8 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        public SendMessageResult SendSticker(int chatId, IFile sticker,
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendStickerTest()</remarks>
+        public SendMessageResult SendSticker(object chatId, IFile sticker,
             bool? disableNotification = null,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
@@ -409,9 +441,9 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -432,7 +464,8 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        public SendMessageResult SendVideo(int chatId, IFile video,
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendVideoTest()</remarks>
+        public SendMessageResult SendVideo(object chatId, IFile video,
             int? duration = null,
             int? width = null,
             int? height = null,
@@ -472,9 +505,9 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -494,7 +527,8 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        public SendMessageResult SendLocation(int chatId, float latitude, float longitude,
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendLocationTest()</remarks>
+        public SendMessageResult SendLocation(object chatId, float latitude, float longitude,
             bool? disableNotification = null,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
@@ -511,9 +545,9 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
@@ -533,7 +567,8 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard,
         /// instructions to remove keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        public SendMessageResult SendContact(int chatId, string phoneNumber, string firstName,
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendContactTest()</remarks>
+        public SendMessageResult SendContact(object chatId, string phoneNumber, string firstName,
             string lastName = null,
             bool? disableNotification = null,
             int? replyToMessageId = null,
@@ -553,15 +588,14 @@ namespace NetTelebot
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
-            IRestResponse response = restClient.Execute(request);
+            IRestResponse response = RestClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new SendMessageResult(response.Content);
 
             throw new Exception(response.StatusDescription);
         }
 
-        //todo add new chat action to <param name="action">
         /// <summary>
         /// Use this method when you need to tell the user that something is happening on the bot's side. 
         /// The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
@@ -571,14 +605,19 @@ namespace NetTelebot
         /// <param name="action">Type of action to broadcast. Choose one, depending on what the user is about to receive: 
         /// typing for text messages, upload_photo for photos, record_video or upload_video for videos, 
         /// record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.</param>
-        public void SendChatAction(int chatId, ChatActions action)
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendChatActionTest()</remarks>
+        public BooleanResult SendChatAction(object chatId, ChatActions action)
         {
             RestRequest request = new RestRequest(string.Format(sendChatActionUri, Token), Method.POST);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("action", action.ToString().ToLower());
-            IRestResponse response = restClient.Execute(request);
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-                throw new Exception(response.StatusDescription);
+
+            IRestResponse response = RestClient.Execute(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+                return new BooleanResult(response.Content);
+
+            throw new Exception(response.StatusDescription);
         }
 
         /// <summary>
@@ -589,26 +628,100 @@ namespace NetTelebot
         /// <param name="offset">Sequential number of the first photo to be returned. By default, all photos are returned.</param>
         /// <param name="limit">Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.</param>
         /// <returns><see cref="UserProfilePhotosInfo"/></returns>
+        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.GetUserProfilePhotosTest()</remarks>
         public GetUserProfilePhotosResult GetUserProfilePhotos(int userId, int? offset = null, byte? limit = null)
         {
             RestRequest request = new RestRequest(string.Format(getUserProfilePhotosUri, Token), Method.POST);
+
             request.AddParameter("user_id", userId);
             if (offset.HasValue)
                 request.AddParameter("offset", offset.Value);
             if (limit.HasValue)
                 request.AddParameter("limit", limit.Value);
-            IRestResponse response = restClient.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            IRestResponse response = RestClient.Execute(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
                 return new GetUserProfilePhotosResult(response.Content);
 
             throw new Exception(response.StatusDescription);
         }
 
         //todo getFile (https://core.telegram.org/bots/api#getfile)
-        //todo kickChatMember (https://core.telegram.org/bots/api#kickchatmember)
-        //todo unbanChatMember (https://core.telegram.org/bots/api#unbanchatmember)
-        //todo leaveChat (https://core.telegram.org/bots/api#leavechat)
+
+        /// <summary>
+        /// Use this method to kick a user from a group, a supergroup or a channel. 
+        /// In the case of supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., 
+        /// unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. 
+        /// See <see href="https://core.telegram.org/bots/api#kickchatmember">API</see> 
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target group or username of the target supergroup or channel</param>
+        /// <param name="userId">Unique identifier of the target user</param>
+        /// <param name="untilDate">Date when the user will be unbanned. 
+        /// If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever</param>
+        /// <returns>Returns True on success, false otherwise</returns>
+        public BooleanResult KickChatMember(object chatId, int userId, DateTime untilDate)
+        {
+            
+            RestRequest request = new RestRequest(string.Format(kickChatMemberUri, Token), Method.POST);
+
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("user_id", userId);
+            request.AddParameter("until_date", untilDate.ToUnixTime());
+
+            IRestResponse response = RestClient.Execute(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+                return new BooleanResult(response.Content);
+
+            throw new Exception(response.StatusDescription);
+        }
+
+        /// <summary>
+        /// Use this method to unban a previously kicked user in a supergroup or channel. 
+        /// The user will not return to the group or channel automatically, but will be able to join via link, etc. 
+        /// The bot must be an administrator for this to work.
+        /// See <see href="https://core.telegram.org/bots/api#unbanchatmember">API</see> 
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target group or username of the target supergroup or channel</param>
+        /// <param name="userId">Unique identifier of the target user</param>
+        /// <returns>Returns True on success, false otherwise</returns>
+        public BooleanResult UnbanChatMember(object chatId, int userId)
+        {
+
+            RestRequest request = new RestRequest(string.Format(unbanChatMemberUri, Token), Method.POST);
+
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("user_id", userId);
+
+            IRestResponse response = RestClient.Execute(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+                return new BooleanResult(response.Content);
+
+            throw new Exception(response.StatusDescription);
+        }
+
+        /// <summary>
+        /// Use this method for your bot to leave a group, supergroup or channel.
+        /// See <see href="https://core.telegram.org/bots/api#leavechat">API</see> 
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat</param>
+        /// <returns>Returns True on success, false otherwise</returns>
+        public BooleanResult LeaveChat(object chatId)
+        {
+            RestRequest request = new RestRequest(string.Format(leaveChatUri, Token), Method.POST);
+
+            request.AddParameter("chat_id", chatId);
+
+            IRestResponse response = RestClient.Execute(request);
+
+            if(response.StatusCode == HttpStatusCode.OK)
+                return new BooleanResult(response.Content);
+
+            throw new Exception(response.StatusDescription);
+        }
+
         //todo getChat (https://core.telegram.org/bots/api#getchat)
         //todo getChatAdministrators (https://core.telegram.org/bots/api#getchatadministrators)
         //todo getChatMembersCount (https://core.telegram.org/bots/api#getchatmemberscount)

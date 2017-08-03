@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using NetTelebot.Result;
+using NetTelebot.Type;
 
 namespace NetTelebot.Commands
 {
@@ -9,7 +11,7 @@ namespace NetTelebot.Commands
         {
             Configuration = new BotConfiguration();
             Token = token;
-            Client = new TelegramBotClient { Token = token };
+            Client = new TelegramBotClient { Token = token};
             Data = new BotData(this);
             Name = name;
         }

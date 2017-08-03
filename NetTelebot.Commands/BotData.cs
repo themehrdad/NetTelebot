@@ -7,14 +7,17 @@ namespace NetTelebot.Commands
     public class BotData : IDisposable
     {
         private IOdb odb;
+
         public BotData(Bot bot)
         {
             Bot = bot;
         }
+
         public Bot Bot { get; }
-        internal void SetCommand(int userId, int chatId, string command)
+        internal void SetCommand(int userId, object chatId, string command)
         {
             CommandState commandState = GetCommandState(userId, chatId) ?? new CommandState();
+
             if (string.IsNullOrEmpty(commandState.CommandText) ||
                 !commandState.CommandText.Equals(command, StringComparison.InvariantCultureIgnoreCase))
             {
@@ -32,7 +35,7 @@ namespace NetTelebot.Commands
             commandState?.Parameters.Add(parameter);
         }
 
-        internal void DeleteCommandState(int userId, int chatId)
+        internal void DeleteCommandState(int userId, object chatId)
         {
             CommandState commandState = GetCommandState(userId, chatId);
             if (commandState == null) return;
@@ -45,7 +48,7 @@ namespace NetTelebot.Commands
             GetOdb().Store(commandState);
         }
 
-        internal CommandState GetCommandState(int userId, int chatId)
+        internal CommandState GetCommandState(int userId, object chatId)
         {
             return GetOdb().Query<CommandState>().Execute<CommandState>()
                 .FirstOrDefault(cs => cs.ChatId == chatId && cs.UserId == userId);

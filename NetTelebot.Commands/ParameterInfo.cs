@@ -7,6 +7,5 @@
         public string StaticPrompt { get; set; }
         public bool Optional { get; set; }
         public string EmptyValue { get; set; }
-
     }
 }

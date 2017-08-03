@@ -1,4 +1,5 @@
 ﻿using System;
+using NetTelebot.Type;
 
 namespace NetTelebot.Commands
 {
@@ -8,6 +9,7 @@ namespace NetTelebot.Commands
         {
             Message = message;
         }
+
         public MessageInfo Message { get; private set; }
     }
 }
