@@ -17,12 +17,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.Commands", "NetT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.Commands.TestApplication", "NetTelebot.Commands.TestApplication\NetTelebot.Commands.TestApplication.csproj", "{CF6021EF-9C18-4B53-AAC2-E75611F37263}"
 	ProjectSection(ProjectDependencies) = postProject
+		{58C5212E-1FF1-47E4-A131-A872E46E3A4C} = {58C5212E-1FF1-47E4-A131-A872E46E3A4C}
+		{49C7146E-4A6B-406F-8332-042B9BCA19EB} = {49C7146E-4A6B-406F-8332-042B9BCA19EB}
 		{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E} = {E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{4A41CC2C-8882-4FB4-BFF8-3B4ED14421A9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.ReplyKeyboardMarkup.TestApplication", "NetTelebot.ReplyKeyboardMarkup.TestApplication\NetTelebot.ReplyKeyboardMarkup.TestApplication.csproj", "{A6F3D4C3-6628-47FF-94E7-09B87337B1C5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{58C5212E-1FF1-47E4-A131-A872E46E3A4C} = {58C5212E-1FF1-47E4-A131-A872E46E3A4C}
+		{49C7146E-4A6B-406F-8332-042B9BCA19EB} = {49C7146E-4A6B-406F-8332-042B9BCA19EB}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.CommonUtils", "NetTelebot.CommonUtils\NetTelebot.CommonUtils.csproj", "{58C5212E-1FF1-47E4-A131-A872E46E3A4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +58,10 @@ Global
 		{A6F3D4C3-6628-47FF-94E7-09B87337B1C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6F3D4C3-6628-47FF-94E7-09B87337B1C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6F3D4C3-6628-47FF-94E7-09B87337B1C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58C5212E-1FF1-47E4-A131-A872E46E3A4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58C5212E-1FF1-47E4-A131-A872E46E3A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58C5212E-1FF1-47E4-A131-A872E46E3A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58C5212E-1FF1-47E4-A131-A872E46E3A4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,5 +70,6 @@ Global
 		{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E} = {4A41CC2C-8882-4FB4-BFF8-3B4ED14421A9}
 		{CF6021EF-9C18-4B53-AAC2-E75611F37263} = {4A41CC2C-8882-4FB4-BFF8-3B4ED14421A9}
 		{A6F3D4C3-6628-47FF-94E7-09B87337B1C5} = {4A41CC2C-8882-4FB4-BFF8-3B4ED14421A9}
+		{58C5212E-1FF1-47E4-A131-A872E46E3A4C} = {4A41CC2C-8882-4FB4-BFF8-3B4ED14421A9}
 	EndGlobalSection
 EndGlobal

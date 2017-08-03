@@ -1,7 +1,7 @@
 ﻿using System;
 using CredentialManagement;
 
-namespace NetTelebot.Commands.TestApplication.Utils
+namespace NetTelebot.CommonUtils
 {
     public interface IWindowsCredential
     {

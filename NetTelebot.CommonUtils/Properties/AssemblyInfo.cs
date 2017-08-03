@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NetTelebot.ReplyKeyboardMarkup.TestApplication")]
+[assembly: AssemblyTitle("NetTelebot.CommonUtils")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NetTelebot.ReplyKeyboardMarkup.TestApplication")]
+[assembly: AssemblyProduct("NetTelebot.CommonUtils")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a6f3d4c3-6628-47ff-94e7-09b87337b1c5")]
+[assembly: Guid("58c5212e-1ff1-47e4-a131-a872e46e3a4c")]
 
 // Version information for an assembly consists of the following four values:
 //

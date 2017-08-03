@@ -9,6 +9,7 @@ using NetTelebot.Interface;
 using NetTelebot.Result;
 using NetTelebot.Type;
 using NetTelebot.Extension;
+using NetTelebot.Type.Keyboard;
 
 #if DEBUG
 [assembly: InternalsVisibleTo("NetTelebot.Tests")]
