@@ -39,7 +39,7 @@
             Configuration.Commands.Add(command3);
 
             //getkeyboard command
-            CommandInfo commmand4 = new CommandInfo("/getkeyboard");
+            CommandInfo command4 = new CommandInfo("/getkeyboard");
             ParameterInfo parameter4 = new ParameterInfo()
             {
                 Name = "Keyboard",
@@ -47,6 +47,9 @@
                 Optional = false,
                 StaticPrompt = "Is keyboard"
             };
+
+            command4.Parameters.Add(parameter4);
+            Configuration.Commands.Add(command4);
         }
     }
 }
