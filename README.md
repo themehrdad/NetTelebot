@@ -1,15 +1,18 @@
 <img src="Images/Logo/logo-100.png"  alt="logo" title="NetTelebot" align="right" height="60" />
 
-# NetTelebot
+# NetTelebot [![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/vertigra/nettelebot) 
 
 Telegram bot API implementation on .NET framework
 
-| | |
-| --- | --- |
-| **Build** |<a href="https://teamcity.nesterov.tk/viewType.html?buildTypeId=NetTelebotGithubRepository_BuildTestDebug&guest=1"><img src="https://teamcity.nesterov.tk/app/rest/builds/buildType:(id:NetTelebotGithubRepository_BuildTestDebug)/statusIcon"> [![Build status](https://ci.appveyor.com/api/projects/status/xrdhuq2v0piigwfq?svg=true)](https://ci.appveyor.com/project/vertigra/nettelebot-2-0) |
+| Repository | [Net-Telebot-2.0](https://github.com/vertigra/NetTelebot-2.0) (master) | [Net-Telebot](https://github.com/themehrdad/NetTelebot) (master) |
+| --- | --- | --- |
+| **Build** |<a href="https://teamcity.nesterov.tk/viewType.html?buildTypeId=NetTelebotGithubRepository_BuildTestDebug&guest=1"><img src="https://teamcity.nesterov.tk/app/rest/builds/buildType:(id:NetTelebotGithubRepository_BuildTestDebug)/statusIcon"> [![Build status](https://ci.appveyor.com/api/projects/status/xrdhuq2v0piigwfq?svg=true)](https://ci.appveyor.com/project/vertigra/nettelebot-2-0) | |
 | **Coverage** | [![Coverage Status](https://coveralls.io/repos/github/vertigra/NetTelebot-2.0/badge.svg)](https://coveralls.io/github/vertigra/NetTelebot-2.0) | 
-| **Quality** | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d1d114894a7345999ecff230bdbd9bdb)](https://www.codacy.com/app/vertigra/NetTelebot-2.0?utm_source=github.com&utm_medium=referral&utm_content=vertigra/NetTelebot-2.0&utm_campaign=badger) | 
-| **Stack** | [![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/vertigra/nettelebot) |
+| **Quality** | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d1d114894a7345999ecff230bdbd9bdb)](https://www.codacy.com/app/vertigra/NetTelebot-2.0?utm_source=github.com&utm_medium=referral&utm_content=vertigra/NetTelebot-2.0&utm_campaign=badger) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/275548e27e784897ab704a7349ed6b37)](https://www.codacy.com/app/vertigra/NetTelebot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=themehrdad/NetTelebot&amp;utm_campaign=Badge_Grade) |
+
+**Net-Telebot-2.0** is development repository.  
+**Net-Telebot** is release repository.  
+More about this on the wiki page [stages of development](https://github.com/themehrdad/NetTelebot/wiki/Stages-of-development)
 
 ## About
 Do you want to create a smart automated bot on Telegram App? If you plan to write the logic using .NET framework, this tool might help you.
