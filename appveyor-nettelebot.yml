@@ -1,0 +1,37 @@
+version: 1.0.{build}
+environment:
+  user_supergroup:
+    secure: PUKA+dlhFl2Zgo0wJr1i7kpSpp2xy2tghDq4FvKkWzM=
+  user:
+    secure: erTAPS0qeMOBV0z7QZjudA==
+  token:
+    secure: dBJuwzehA/7jrIvLkWNvjwl7Xa1J8d4Dwn5dWo1Mc84ITLKke0QDcqioFCzw+7sM
+  COVERALLS_REPO_TOKEN:
+    secure: Iu36hiV04q1YW+Ua4phBlVh7UM7QJ48rzF9jIWbDwbODs6UodJY6sVEdnhHoCHAI
+hosts:
+  api.nuget.org: 93.184.221.200
+install:
+- cmd: 
+before_build:
+- cmd: nuget restore
+build:
+  project: NetTelebot.sln
+  verbosity: minimal
+before_test:
+- cmd: cmdkey /generic:NetTelebotTest /user:%user% /pass:%token%
+- cmd: cmdkey /generic:NetTelebotSuperGroupTest /user:%user_supergroup% /pass:%token%
+test:
+  assemblies:
+    only:
+    - NetTelebot.Tests\bin\Debug\NetTelebot.Tests.dll
+after_test:
+- cmd: packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" -targetargs:"/domain:single NetTelebot.Tests/bin/debug/NetTelebot.Tests.dll" -output:coverage.xml
+- cmd: packages\coveralls.io.1.3.4\tools\coveralls.net.exe --opencover coverage.xml -r %COVERALLS_REPO_TOKEN%
+notifications:
+- provider: Slack
+  incoming_webhook: 
+    secure: gnRHDw9LKrdJsGWwLtl4g1dwx+A/5oYuJQpxs0BP1z81lsXT4OZCVSP4QNmKnGJgdhzCimwPnB0nwUjWSA/Xlp8Z2O9RS7ep8QSdH2np124=
+  channel: '#app-veyor'
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: true
