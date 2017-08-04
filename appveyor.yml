@@ -14,6 +14,7 @@ install:
 - cmd: 
 before_build:
 - cmd: nuget restore
+- choco install codecov
 build:
   project: NetTelebot.sln
   verbosity: minimal
@@ -27,6 +28,7 @@ test:
 after_test:
 - cmd: packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" -targetargs:"/domain:single NetTelebot.Tests/bin/debug/NetTelebot.Tests.dll" -output:coverage.xml
 - cmd: packages\coveralls.io.1.3.4\tools\coveralls.net.exe --opencover coverage.xml -r %COVERALLS_REPO_TOKEN%
+- codecov -f coverage.xml
 notifications:
 - provider: Slack
   incoming_webhook: 
