@@ -55,10 +55,10 @@ See more examples in the project [wiki](https://github.com/themehrdad/NetTelebot
 
 On the nearest release (1.10)
 - [ ] More tests (coverage ~ 100%)
-- [ ] Added ReplyKeyboardRemove 
-- [ ] Added InlineKeyboardMarkup
-- [ ] Added InlineKeyboardButton
-- [ ] Added CallbackGame
+- [ ] Add ReplyKeyboardRemove 
+- [ ] Add InlineKeyboardMarkup
+- [ ] Add InlineKeyboardButton
+- [ ] Add CallbackGame
 - [ ] Remove obsolete class and interface
 - [ ] In class MessageInfo add fields marked in todo
 
