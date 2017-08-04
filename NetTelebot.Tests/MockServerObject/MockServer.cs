@@ -1,7 +1,9 @@
 ﻿using Mock4Net.Core;
+using NUnit.Framework;
 
 namespace NetTelebot.Tests.MockServerObject
 {
+    [TestFixture]
     internal static class MockServer
     {
         internal static FluentMockServer ServerOkResponse { get; private set; }
