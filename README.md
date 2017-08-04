@@ -1,6 +1,6 @@
 <img src="Images/Logo/logo-100.png"  alt="logo" title="NetTelebot" align="right" height="60" />
 
-# NetTelebot [![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/vertigra/nettelebot) 
+# NetTelebot [![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/vertigra/nettelebot) [![NuGet version](https://badge.fury.io/nu/nettelebot.svg)](https://badge.fury.io/nu/nettelebot)
 
 Telegram bot API implementation on .NET framework
 
