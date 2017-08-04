@@ -50,10 +50,14 @@ See more examples in the project [wiki](https://github.com/themehrdad/NetTelebot
 
 ## Plans
 
-On the nearest release (1.09)
-- [x] More tests (coverage > 80%)
-- [x] Support chat types (and type chat “private”, “group”, “supergroup” or “channel”). 
-- [x] Support for sending messages to @channelusername
+On the nearest release (1.10)
+- [ ] More tests (coverage ~ 100%)
+- [ ] Added ReplyKeyboardRemove 
+- [ ] Added InlineKeyboardMarkup
+- [ ] Added InlineKeyboardButton
+- [ ] Added CallbackGame
+- [ ] Remove obsolete class and interface
+- [ ] In class MessageInfo add fields marked in todo
 
 On the project
 * Full support API Telegrams
