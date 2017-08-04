@@ -10,8 +10,8 @@ Telegram bot API implementation on .NET framework
 | **Coverage** | [![Coverage Status](https://coveralls.io/repos/github/vertigra/NetTelebot-2.0/badge.svg)](https://coveralls.io/github/vertigra/NetTelebot-2.0) | 
 | **Quality** | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d1d114894a7345999ecff230bdbd9bdb)](https://www.codacy.com/app/vertigra/NetTelebot-2.0?utm_source=github.com&utm_medium=referral&utm_content=vertigra/NetTelebot-2.0&utm_campaign=badger) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/275548e27e784897ab704a7349ed6b37)](https://www.codacy.com/app/vertigra/NetTelebot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=themehrdad/NetTelebot&amp;utm_campaign=Badge_Grade) |
 
-**Net-Telebot-2.0** is development repository
-**Net-Telebot** is release repository
+**Net-Telebot-2.0** is development repository.  
+**Net-Telebot** is release repository.  
 More about this on the wiki page [stages of development](https://github.com/themehrdad/NetTelebot/wiki/Stages-of-development)
 
 ## About
