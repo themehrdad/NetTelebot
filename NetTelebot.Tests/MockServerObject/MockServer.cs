@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.MockServerObject
 {
-    internal class MockServer
+    internal static class MockServer
     {
         internal static FluentMockServer ServerOkResponse { get; private set; }
         internal static FluentMockServer ServerBadResponse { get; private set; }

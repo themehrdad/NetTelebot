@@ -7,13 +7,13 @@ using NetTelebot.Type.Keyboard;
 
 namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
 {
-    internal class Program
+    internal static class Program
     {
         private static TelegramBotClient mClient;
 
         private static void Main()
         {
-            mClient = new TelegramBotClient()
+            mClient = new TelegramBotClient
             {
                 Token = new WindowsCredential().GetTelegramCredential("NetTelebotBot").Token,
                 CheckInterval = 1000
