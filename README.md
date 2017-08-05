@@ -61,6 +61,7 @@ On the nearest release (1.10)
 - [ ] Add CallbackGame
 - [ ] Remove obsolete class and interface
 - [ ] In class MessageInfo add fields marked in todo
+
 For the project
 - [ ] Full support API Telegrams
 
