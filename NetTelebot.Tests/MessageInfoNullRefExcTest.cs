@@ -1,6 +1,6 @@
 ﻿using System;
+using NetTelebot.CommonUtils;
 using NetTelebot.Result;
-using NetTelebot.Tests.Utils;
 using NetTelebot.Type;
 using NUnit.Framework;
 
