@@ -21,13 +21,13 @@ namespace NetTelebot.Tests.RequestTest
         private readonly TelegramBotClient mBotBadResponse = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:" + mBadServerPort) };
 
         [OneTimeSetUp]
-        public void OnStart()
+        public static void OnStart()
         {
             MockServer.Start(mOkServerPort, mBadServerPort);
         }
 
         [OneTimeTearDown]
-        public void OnStop()
+        public static void OnStop()
         {
             MockServer.Stop();
         }
