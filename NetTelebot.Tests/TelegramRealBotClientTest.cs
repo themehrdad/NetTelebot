@@ -19,10 +19,10 @@ namespace NetTelebot.Tests
         [SetUp]
         public void OnTestStart()
         {
-            mTelegramBot = new TelegramBotGroupChat().GetBot();
+            mTelegramBot = new TelegramBot().GetGroupChatBot();
 
-            mChatGroupId = new TelegramBotGroupChat().GetChatId();
-            mChatSuperGroupId = new TelegramBotSuperGroupChat().GetChatId();
+            mChatGroupId = new TelegramBot().GetGroupChatId();
+            mChatSuperGroupId = new TelegramBot().GetSuperGroupChatId();
         }
 
         /// <summary>

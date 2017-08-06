@@ -21,8 +21,8 @@ namespace NetTelebot.Tests
         [SetUp]
         public void OnTestStart()
         {
-            mTelegramBot = new TelegramBotGroupChat().GetBot();
-            mChatId = new TelegramBotGroupChat().GetChatId();
+            mTelegramBot = new TelegramBot().GetGroupChatBot();
+            mChatId = new TelegramBot().GetGroupChatId();
         }
 
         /// <summary>
