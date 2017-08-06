@@ -14,7 +14,7 @@ namespace NetTelebot.CommonUtils
     /// User Name: real telegram chat id
     /// Password: real telegram token
     /// </summary>
-    public class WindowsCredential
+    public static class WindowsCredential
     {
         /// <summary>
         /// Returns the telegram credentials
