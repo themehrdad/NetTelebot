@@ -31,9 +31,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.ReplyKeyboardMar
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.CommonUtils", "NetTelebot.CommonUtils\NetTelebot.CommonUtils.csproj", "{58C5212E-1FF1-47E4-A131-A872E46E3A4C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{49C7146E-4A6B-406F-8332-042B9BCA19EB} = {49C7146E-4A6B-406F-8332-042B9BCA19EB}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
