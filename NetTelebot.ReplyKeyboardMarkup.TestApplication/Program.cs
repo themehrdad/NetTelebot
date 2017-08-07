@@ -29,6 +29,10 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
 
         private static void ClientUpdatesReceived(object sender, TelegramUpdateEventArgs e)
         {
+            //log all updates
+            var message = from update in e.Updates select update;
+            Console.WriteLine(message);
+
             foreach (UpdateInfo update in e.Updates.Where(update => update.Message.Text.StartsWith("/")))
             {
                 if (update.Message.Text.Equals("/start"))
@@ -38,6 +42,11 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
                 else if (update.Message.Text.Equals("/calculate"))
                 {
                     mClient.SendMessage(update.Message.Chat.Id, "Please enter an arithmetic expression and press =", replyMarkup:GetKeyboardMarkup());
+                }
+                else if (update.Message.Text.Equals("/reply"))
+                {
+                    //todo in nested project
+                    Console.WriteLine(mClient.SendMessage(update.Message.Chat.Id, "Please enter an arithmetic expression and press =", replyMarkup: GetForceReply()));
                 }
                 else
                 {
@@ -94,6 +103,11 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
             };
 
             return keyboard;
+        }
+
+        private static ForceReplyMarkup GetForceReply()
+        {
+            return new ForceReplyMarkup();
         }
     }
 }

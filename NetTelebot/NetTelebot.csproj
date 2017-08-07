@@ -58,8 +58,6 @@
     <Compile Include="Type\Keyboard\ForceReplyMarkup.cs" />
     <Compile Include="Result\GetUpdatesResult.cs" />
     <Compile Include="Result\GetUserProfilePhotosResult.cs" />
-    <Compile Include="Type\GroupChatInfo.cs" />
-    <Compile Include="Interface\IConversationSource.cs" />
     <Compile Include="Interface\IFile.cs" />
     <Compile Include="Interface\IReplyMarkup.cs" />
     <Compile Include="Type\Keyboard\KeyboardButton.cs" />

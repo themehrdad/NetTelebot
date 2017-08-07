@@ -1,6 +1,5 @@
 ﻿using RestSharp;
 using System;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -11,7 +10,6 @@ using NetTelebot.Result;
 using NetTelebot.Type;
 using NetTelebot.Extension;
 using NetTelebot.Type.Keyboard;
-using RestSharp.Extensions;
 
 #if DEBUG
 [assembly: InternalsVisibleTo("NetTelebot.Tests")]
