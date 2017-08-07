@@ -1,44 +1,48 @@
 ﻿namespace NetTelebot.CommonUtils
 {
-    public class TelegramBot : IWindowsCredential
+    public class TelegramBot
     {
-        private const string mBotName = "NetTelebotTest";
+        private const string mGroupBotName = "NetTelebotTest";
+        private const string mSuperGroupBotName = "NetTelebotSuperGroupTest";
 
-        private readonly string mToken;
-        private readonly int mChatId;
+        private readonly string mTokenGroupChat;
+        private readonly long mGroupChatId;
+
+        private readonly string mTokenSuperGroupChat;
+        private readonly long mSuperGroupChatId;
 
         public TelegramBot()
         {
-            mToken = GetTelegramCredential(mBotName).Token;
-            mChatId = GetTelegramCredential(mBotName).ChatId;
+            mTokenGroupChat = WindowsCredential.GetTelegramCredential(mGroupBotName).Token;
+            mGroupChatId = WindowsCredential.GetTelegramCredential(mGroupBotName).ChatId;
+            
+            mTokenSuperGroupChat = WindowsCredential.GetTelegramCredential(mSuperGroupBotName).Token;
+            mSuperGroupChatId = WindowsCredential.GetTelegramCredential(mSuperGroupBotName).ChatId;
         }
 
-        /// <summary>
-        /// Create bot insatnce
-        /// </summary>
-        /// <returns>TelegramBotClient</returns>
-        public TelegramBotClient GetBot()
+        public TelegramBotClient GetGroupChatBot()
         {
-            TelegramBotClient telegramBotClient = new TelegramBotClient
-            {
-                Token = mToken
-            };
-
-            return telegramBotClient;
+            return GetBot(mTokenGroupChat);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>Telegram ChatId</returns>
-        public int GetChatId()
+        public TelegramBotClient GetSuperGroupChatBot()
         {
-            return mChatId;
+            return GetBot(mTokenSuperGroupChat);
         }
 
-        public TelegramCredentials GetTelegramCredential(string botAlias)
+        public long GetGroupChatId()
         {
-            return new WindowsCredential().GetTelegramCredential(botAlias);
+            return mGroupChatId;
+        }
+
+        public long GetSuperGroupChatId()
+        {
+            return mSuperGroupChatId;
+        }
+
+        private static TelegramBotClient GetBot(string token)
+        {
+            return new TelegramBotClient {Token = token};
         }
     }
 }

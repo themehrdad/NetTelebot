@@ -1,4 +1,5 @@
-﻿using NetTelebot.Type;
+﻿
+using NetTelebot.Type;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

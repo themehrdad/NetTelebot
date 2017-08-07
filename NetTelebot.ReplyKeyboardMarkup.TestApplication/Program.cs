@@ -15,7 +15,7 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
         {
             mClient = new TelegramBotClient
             {
-                Token = new WindowsCredential().GetTelegramCredential("NetTelebotBot").Token,
+                Token = WindowsCredential.GetTelegramCredential("NetTelebotBot").Token,
                 CheckInterval = 1000
             };
 

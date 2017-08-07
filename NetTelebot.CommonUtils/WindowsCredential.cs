@@ -3,11 +3,6 @@ using CredentialManagement;
 
 namespace NetTelebot.CommonUtils
 {
-    public interface IWindowsCredential
-    {
-        TelegramCredentials GetTelegramCredential(string botAlias);
-    }
-
     /// <summary>
     /// Some tests require the use of real credentials Telegram messenger (bot token and chart id). 
     /// For security purposes, this data is not defined in the variable test. Instead, the challenge WindowsCredential.GetCredential(botAlias) method, 
@@ -19,23 +14,19 @@ namespace NetTelebot.CommonUtils
     /// User Name: real telegram chat id
     /// Password: real telegram token
     /// </summary>
-    public class WindowsCredential : IWindowsCredential
+    public static class WindowsCredential
     {
         /// <summary>
         /// Returns the telegram credentials
         /// </summary>
         /// <param name="botAlias">Account stored in Windows Credential Manager</param>
         /// <returns></returns>
-        public TelegramCredentials GetTelegramCredential(string botAlias)
+        public static TelegramCredentials GetTelegramCredential(string botAlias)
         {
-            Credential credential = new Credential {Target = botAlias};
+            Credential credential = new Credential { Target = botAlias };
 
             return credential.Load()
-                ? new TelegramCredentials
-                {
-                    Token = credential.Password,
-                    ChatId = Convert.ToInt32(credential.Username)
-                }
+                ? new TelegramCredentials {Token = credential.Password, ChatId = Convert.ToInt64(credential.Username)}
                 : new TelegramCredentials {Token = null, ChatId = 0};
         }
     }
@@ -58,7 +49,7 @@ namespace NetTelebot.CommonUtils
         /// This is a sample of the response when you add your BOT into a group. 
         /// 4. Use the "id" of the "chat" object to send your messages.
         /// </summary>
-        public int ChatId { get; set; }
+        public long ChatId { get; set; }
 
         public bool Equals(TelegramCredentials credentials)
         {

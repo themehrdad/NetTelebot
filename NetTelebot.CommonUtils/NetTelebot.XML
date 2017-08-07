@@ -1,0 +1,1351 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NetTelebot</name>
+    </assembly>
+    <members>
+        <member name="T:NetTelebot.Type.AudioInfo">
+            <summary>
+            This object represents an audio file (voice note).
+            See <see href="https://core.telegram.org/bots/api#audio">API</see>
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.AudioInfo.FileId">
+            <summary>
+            Unique identifier for this file
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.AudioInfo.Duration">
+            <summary>
+            Duration of the audio in seconds as defined by sender
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.AudioInfo.Performer">
+            <summary>
+            Optional. Performer of the audio as defined by sender or by audio tags
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.AudioInfo.Title">
+            <summary>
+            Optional. Title of the audio as defined by sender or by audio tags
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.AudioInfo.MimeType">
+            <summary>
+            Optional. MIME type of the file as defined by sender
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.AudioInfo.FileSize">
+            <summary>
+            Optional. File size
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.ChatInfo">
+            <summary>
+            This object represents a chat. 
+            See <see href="https://core.telegram.org/bots/api#chat">API</see>
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ChatInfo.Id">
+            <summary>
+            Unique identifier for this chat. This number may be greater than 32 bits and some programming languages may have 
+            difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision
+            float type are safe for storing this identifier.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ChatInfo.Type">
+            <summary>
+            Type of chat, can be either “private”, “group”, “supergroup” or “channel”
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ChatInfo.Title">
+            <summary>
+            Optional. Title, for supergroups, channels and group chats
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ChatInfo.Username">
+            <summary>
+            Optional. Username, for private chats, supergroups and channels if available
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ChatInfo.FirstName">
+            <summary>
+            Optional. First name of the other party in a private chat
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ChatInfo.LastName">
+            <summary>
+            Optional. Last name of the other party in a private chat
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ChatInfo.AllMembersAreAdministrators">
+            <summary>
+            Optional. True if a group has ‘All Members Are Admins’ enabled.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ChatInfo.Photo">
+            <summary>
+            Optional. Chat photo. Returned only in getChat.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ChatInfo.Description">
+            <summary>
+            Optional. Description, for supergroups and channel chats. Returned only in getChat.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ChatInfo.InviteLink">
+            <summary>
+            Optional. Chat invite link, for supergroups and channel chats. Returned only in getChat.
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.ChatPhotoInfo">
+            <summary>
+            This object represents a chat photo.
+            See <see href="https://core.telegram.org/bots/api#chatphoto">API</see>
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ChatPhotoInfo.SmallFileId">
+            <summary>
+            Unique file identifier of small (160x160) chat photo. This file_id can be used only for photo download.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ChatPhotoInfo.BigFileId">
+            <summary>
+            Unique file identifier of big (640x640) chat photo. This file_id can be used only for photo download.
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.ContactInfo">
+            <summary>
+            This object represents a phone contact. See <see href="https://core.telegram.org/bots/api#contact">API</see>
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ContactInfo.PhoneNumber">
+            <summary>
+            Contact's phone number
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ContactInfo.FirstName">
+            <summary>
+            Contact's first name
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ContactInfo.LastName">
+            <summary>
+            Optional. Contact's last name
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ContactInfo.UserId">
+            <summary>
+            Optional. Contact's user identifier in Telegram
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.DocumentInfo">
+            <summary>
+            This object represents a general file (as opposed to photos and audio files).
+            See <see href="https://core.telegram.org/bots/api#document">API</see>
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.DocumentInfo.FileId">
+            <summary>
+            Unique file identifier
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.DocumentInfo.Thumb">
+            <summary>
+            Optional. Document thumbnail as defined by sender
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.DocumentInfo.FileName">
+            <summary>
+            Optional. Original filename as defined by sender
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.DocumentInfo.MimeType">
+            <summary>
+            Optional. MIME type of the file as defined by sender
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.DocumentInfo.FileSize">
+            <summary>
+            Optional. File size
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.ExistingFile">
+            <summary>
+            This object represents the identifier of the file on Telegram servers
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.ExistingFile.FileId">
+            <summary>
+            File identifier to get info about
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.Keyboard.ForceReplyMarkup">
+            <summary>
+            Upon receiving a message with this object, Telegram clients will display a reply interface to the user 
+            (act as if the user has selected the bot‘s message and tapped ’Reply'). 
+            </summary>
+        </member>
+        <member name="M:NetTelebot.Type.Keyboard.ForceReplyMarkup.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NetTelebot.Type.Keyboard.ForceReplyMarkup"/> class.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.Keyboard.ForceReplyMarkup.ForceReply">
+            <summary>
+            Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.Keyboard.ForceReplyMarkup.Selective">
+            <summary>
+            Optional. Use this parameter if you want to force reply from specific users only. 
+            Targets: 
+            1) users that are @mentioned in the text of the Message object; 
+            2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+            </summary>
+        </member>
+        <member name="M:NetTelebot.Type.Keyboard.ForceReplyMarkup.GetJson">
+            <summary>
+            Gets the json.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NetTelebot.Type.Keyboard.IReplyMarkup">
+            <summary>
+            This interface is used to specify reply_markup parameter when sending a message. It can be a ReplyKeyboardMarkup, ReplyKeyboardHideMarkup and ForceReplyMarkup.
+            </summary>
+        </member>
+        <member name="M:NetTelebot.Type.Keyboard.IReplyMarkup.GetJson">
+            <summary>
+            Gets the json.
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.Keyboard.KeyboardButton">
+            <summary>
+            This object represents one button of the reply keyboard. For simple Text buttons String can be used instead of this object to specify Text of the button. 
+            Optional fields are mutually exclusive.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.Keyboard.KeyboardButton.Text">
+            <summary>
+            Text of the button. If none of the optional fields are used, it will be sent to the bot as a message when the button is pressed
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.Keyboard.KeyboardButton.RequestContact">
+            <summary>
+            Optional. If True, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.Keyboard.KeyboardButton.RequestLocation">
+            <summary>
+            Optional. If True, the user's current location will be sent when the button is pressed. Available in private chats only
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.Keyboard.ReplyKeyboardHideMarkup">
+            <summary>
+            Upon receiving a message with this object, Telegram clients will hide the current custom keyboard and display the default letter-keyboard.
+            By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button
+            </summary>
+        </member>
+        <member name="M:NetTelebot.Type.Keyboard.ReplyKeyboardHideMarkup.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NetTelebot.Type.Keyboard.ReplyKeyboardHideMarkup"/> class.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.Keyboard.ReplyKeyboardHideMarkup.HideKeyboard">
+            <summary>
+            Requests clients to hide the custom keyboard
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.Keyboard.ReplyKeyboardHideMarkup.Selective">
+            <summary>
+            Optional. Use this parameter if you want to hide keyboard for specific users only.
+            Targets:
+            1) users that are @mentioned in the text of the Message object; 
+            2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+            </summary>
+        </member>
+        <member name="M:NetTelebot.Type.Keyboard.ReplyKeyboardHideMarkup.GetJson">
+            <summary>
+            Gets the json.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NetTelebot.Type.Keyboard.ReplyKeyboardMarkup">
+            <summary>
+            This object represents a custom keyboard with reply options
+            </summary>
+        </member>
+        <member name="M:NetTelebot.Type.Keyboard.ReplyKeyboardMarkup.GetJson">
+            <summary>
+            Gets the json.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.Keyboard.ReplyKeyboardMarkup.Keyboard">
+            <summary>
+            Array of button rows, each represented by an Array of Strings
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.Keyboard.ReplyKeyboardMarkup.ResizeKeyboard">
+            <summary>
+            Optional. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons).
+            Defaults to false, in which case the custom keyboard is always of the same height as the app's standard keyboard.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.Keyboard.ReplyKeyboardMarkup.OneTimeKeyboard">
+            <summary>
+            Optional. Requests clients to hide the keyboard as soon as it's been used. Defaults to false.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.Keyboard.ReplyKeyboardMarkup.Selective">
+            <summary>
+            Optional. Use this parameter if you want to show the keyboard to specific users only.
+            Targets:
+            1) users that are @mentioned in the text of the Message object;
+            2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.GroupChatInfo">
+            <summary>
+            This object represents a group chat.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.GroupChatInfo.Id">
+            <summary>
+            Unique identifier for this group chat
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.GroupChatInfo.Title">
+            <summary>
+            Unique identifier for this group chat
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.LocationInfo">
+            <summary>
+            This object represents a point on the map.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.LocationInfo.Longitude">
+            <summary>
+            Longitude as defined by sender
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.LocationInfo.Latitude">
+            <summary>
+            Latitude as defined by sender
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.MeInfo">
+            <summary>
+            When caling <see cref="M:NetTelebot.TelegramBotClient.GetMe"/>, method must return <see cref="T:NetTelebot.Type.UserInfo"/>. 
+            See in <see href="https://core.telegram.org/bots/api#getme">API</see>>
+            This class is a copy of the UserInfo class, but with access to the ok field.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MeInfo.Ok">
+            <summary>
+            Gets a value "ok" in response.
+            </summary>
+            <returns> <c>true</c> if ok; otherwise, <c>false</c>. </returns>
+        </member>
+        <member name="P:NetTelebot.Type.MeInfo.Id">
+            <summary>
+            Unique identifier for this user or bot
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MeInfo.FirstName">
+            <summary>
+            User‘s or bot’s first name
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MeInfo.LastName">
+            <summary>
+            Optional. User‘s or bot’s last name
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MeInfo.UserName">
+            <summary>
+            Optional. User‘s or bot’s username
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MeInfo.LanguageCode">
+            <summary>
+            Optional. <see href="https://en.wikipedia.org/wiki/IETF_language_tag"> IETF language tag  </see>of the user's language
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.MessageEntityInfo">
+            <summary>
+            This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
+            See <see href="https://core.telegram.org/bots/api#messageentity">API</see>
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MessageEntityInfo.Type">
+            <summary>
+            Type of the entity. Can be mention (@username), hashtag, bot_command, url, email, bold (bold text),
+            italic (italic text), code (monowidth string), pre (monowidth block), text_link (for clickable text URLs),
+            text_mention (for users without usernames)
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MessageEntityInfo.Offset">
+            <summary>
+            Offset in UTF-16 code units to the start of the entity
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MessageEntityInfo.Length">
+            <summary>
+            Length of the entity in UTF-16 code units
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MessageEntityInfo.Url">
+            <summary>
+            Optional. For “text_link” only, url that will be opened after user taps on the text
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MessageEntityInfo.User">
+            <summary>
+            Optional. For “text_mention” only, the mentioned user
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.MessageInfo">
+            <summary>
+            This object represents a message. 
+            API <link href="https://core.telegram.org/bots/api#message"></link>
+            </summary>
+        </member>
+        <member name="M:NetTelebot.Type.MessageInfo.Parse(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            Parses the specified json object.
+            </summary>
+            <param name="jsonObject">The json object.</param>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.MessageId">
+            <summary>
+            Unique message identifier inside this chat
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.From">
+            <summary>
+            Optional. Sender, can be empty for messages sent to channel
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.DateUnix">
+            <summary>
+            Date the message was sent in Unix time
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.Date">
+            <summary>
+            Date the message was sent in <see cref="T:System.DateTime"/>
+            </summary>
+            <remarks>This extension, not the available API type <seealso cref="M:NetTelebot.Extension.UtilityExtensions.ToDateTime(System.Int64)"/> </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.Chat">
+            <summary>
+            Conversation the message belongs to — user in case of a private message, GroupChat in case of a group.
+            To support the old version of the library, the chat object is equal to the old value.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.ForwardFrom">
+            <summary>
+            Optional. For forwarded messages, sender of the original message.
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyForwardFrom() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.ForwardFromChat">
+            <summary>
+            Optional. For messages forwarded from a channel, information about the original channel
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.ForwardFromMessageId">
+            <summary>
+            Optional. For forwarded channel posts, identifier of the original message in the channel 
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyForwardFromMessageId() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.ForwardDateUnix">
+            <summary>
+            Optional. For forwarded messages, date the original message was sent in Unix time
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromForwardDateUnix() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.ForwardDate">
+            <summary>
+            Optional. For forwarded messages, date the original message was sent in <see cref="T:System.DateTime"/>
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromForwardDate() </remarks>
+            <remarks> This extension, not the available API type <seealso cref="M:NetTelebot.Extension.UtilityExtensions.ToDateTime(System.Int64)"/> </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.ReplyToMessage">
+            <summary>
+            Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromReplyToMessage() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.EditDateUnix">
+            <summary>
+            Optional. Date the message was last edited in Unix time
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromEditDateUnix() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.EditDate">
+            <summary>
+            Optional. Date the message was last edited 
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromEditDate() </remarks>
+            <remarks> This extension, not the available API type <seealso cref="M:NetTelebot.Extension.UtilityExtensions.ToDateTime(System.Int64)"/> </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.Text">
+            <summary>
+            Optional. For text messages, the actual UTF-8 text of the message 
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyText() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.Entities">
+            <summary>
+            Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyEntities() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.Audio">
+            <summary>
+            Optional. Message is an audio file, information about the file TestAppealToTheEmptyAudio()
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyAudio() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.Document">
+            <summary>
+            Optional. Message is a general file, information about the file TestAppealToTheEmptyDocument()
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyDocument() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.Photo">
+            <summary>
+            Optional. Message is a photo, available sizes of the photo
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyPhoto() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.Sticker">
+            <summary>
+            Optional. Message is a sticker, information about the sticker 
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptySticker() </remarks>
+            <remarks> Parser test: NetTelebot.Tests.MessageInfoParserTest.MessageInfoStickerTest() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.Video">
+            <summary>
+            Optional. Message is a video, information about the video 
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyVideo() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.Caption">
+            <summary>
+            Optional. Caption for the document, photo or video, 0-200 characters 
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyCaption() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.Contact">
+            <summary>
+            Optional. Message is a shared contact, information about the contact TestAppealToTheEmptyContact()
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyContact() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.Location">
+            <summary>
+            Optional. Message is a shared location, information about the location 
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyLocation() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.NewChatMember">
+            <summary>
+            Optional. A new member was added to the group, information about them (this member may be bot itself)  
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyNewChatMember() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.LeftChatMember">
+            <summary>
+            Optional. A member was removed from the group, information about them (this member may be bot itself) 
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyLeftChatMember() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.NewChatTitle">
+            <summary>
+            Optional. A group title was changed to this value 
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyNewChatTitle() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.NewChatPhoto">
+            <summary>
+            Optional. A group photo was change to this value TestAppealToTheEmptyNewChatPhoto()
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyNewChatPhoto() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.DeleteChatPhoto">
+            <summary>
+            Optional. Informs that the group photo was deleted TestAppealToTheEmptyDeleteChatPhoto()
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyDeleteChatPhoto() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.GroupChatCreated">
+            <summary>
+            Optional. Informs that the group has been created TestAppealToTheGroupChatCreated()
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheGroupChatCreated() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.SuperGroupChatCreated">
+            <summary>
+            Optional. Service message: the supergroup has been created. This field can‘t be received in a message coming through updates,
+            because bot can’t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very
+            first message in a directly created supergroup. 
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToSuperGroupChatCreated() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.ChannelChatCreated">
+            <summary>
+            Optional. Service message: the channel has been created. This field can‘t be received in a message coming through updates, 
+            because bot can’t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very
+            first message in a channel. TestAppealToChannelChatCreated()
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToChannelChatCreated() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.MigrateToChatId">
+            <summary>
+            Optional. The group has been migrated to a supergroup with the specified identifier. This number may be greater than 32 bits and some
+            programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision
+            float type are safe for storing this identifier. 
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateToChatId() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.MigrateFromChatId">
+            <summary>
+            Optional. The supergroup has been migrated from a group with the specified identifier. This number may be greater than 32 bits and some
+            programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision
+            float type are safe for storing this identifier. 
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromChatId() </remarks>
+        </member>
+        <member name="P:NetTelebot.Type.MessageInfo.PinnedMessage">
+            <summary>
+            Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
+            </summary>
+            <remarks> Test NullReferenceException: NetTelebot.Tests.estAppealToMigrateFromPinnedMessage() </remarks>
+        </member>
+        <member name="T:NetTelebot.Type.NewFile">
+            <summary>
+            This object represents the contents of a file to be uploaded. 
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.NewFile.FileContent">
+            <summary>
+            Gets or sets the content of the file.
+            </summary>
+            <value>
+            The content of the file.
+            </value>
+        </member>
+        <member name="P:NetTelebot.Type.NewFile.FileName">
+            <summary>
+            Gets or sets the name of the file.
+            </summary>
+            <value>
+            The name of the file.
+            </value>
+        </member>
+        <member name="T:NetTelebot.Type.PhotoSizeInfo">
+            <summary>
+            This object represents one size of a photo or a file/sticker thumbnail.
+            See <see href="https://core.telegram.org/bots/api#photosize">API</see>
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.PhotoSizeInfo.FileId">
+            <summary>
+            Unique identifier for this file
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.PhotoSizeInfo.Width">
+            <summary>
+            Photo width
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.PhotoSizeInfo.Height">
+            <summary>
+            Photo height
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.PhotoSizeInfo.FileSize">
+            <summary>
+            Optional. File size
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.StickerInfo">
+            <summary>
+            This object represents a sticker.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.StickerInfo.FileId">
+            <summary>
+            Unique identifier for this file
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.StickerInfo.Width">
+            <summary>
+            Sticker width
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.StickerInfo.Height">
+            <summary>
+            Sticker height
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.StickerInfo.Thumb">
+            <summary>
+            Optional. Sticker thumbnail in .webp or .jpg format
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.StickerInfo.Emoji">
+            <summary>
+            Optional. Emoji associated with the sticker
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.StickerInfo.FileSize">
+            <summary>
+            Optional. File size
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.UpdateInfo">
+            <summary>
+            Represents an incoming message to your bot.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.UpdateInfo.UpdateId">
+            <summary>
+            The update‘s unique identifier.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.UpdateInfo.Message">
+            <summary>
+            New incoming message of any kind — text, photo, sticker, etc.
+            </summary>
+        </member>
+        <member name="M:NetTelebot.Type.UpdateInfo.ParseArray(System.String)">
+            <summary>
+            Parses the array.
+            </summary>
+            <param name="jsonText">The json text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetTelebot.Type.UpdateInfo.ParseArray(Newtonsoft.Json.Linq.JArray)">
+            <summary>
+            Parses the array.
+            </summary>
+            <param name="jsonArray">The json array.</param>
+            <returns></returns>
+        </member>
+        <member name="T:NetTelebot.Type.UserInfo">
+            <summary>
+            This object represents a Telegram user or bot.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.UserInfo.Id">
+            <summary>
+            Unique identifier for this user or bot
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.UserInfo.FirstName">
+            <summary>
+            User‘s or bot’s first name
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.UserInfo.LastName">
+            <summary>
+            Optional. User‘s or bot’s last name
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.UserInfo.UserName">
+            <summary>
+            Optional. User‘s or bot’s username
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.UserInfo.LanguageCode">
+            <summary>
+            Optional. IETF language tag of the user's language
+            About <see href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language tag</see>
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.UserProfilePhotosInfo">
+            <summary>
+            This object represent a user's profile pictures.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.UserProfilePhotosInfo.TotalCount">
+            <summary>
+            Total number of profile pictures the target user has
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.UserProfilePhotosInfo.Photos">
+            <summary>
+            Requested profile pictures (in up to 4 sizes each)
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Type.VideoInfo">
+            <summary>
+            This object represents a video file.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.VideoInfo.FileId">
+            <summary>
+            Unique identifier for this file
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.VideoInfo.Width">
+            <summary>
+            Video width as defined by sender
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.VideoInfo.Height">
+            <summary>
+            Video height as defined by sender
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.VideoInfo.Duration">
+            <summary>
+            Duration of the video in seconds as defined by sender
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.VideoInfo.Thumb">
+            <summary>
+            Optional. Video thumbnail
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.VideoInfo.MimeType">
+            <summary>
+            Optional. Mime type of a file as defined by sender
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Type.VideoInfo.FileSize">
+            <summary>
+            Optional. File size
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Result.BooleanResult">
+            <summary>
+            When calling method returned <see cref="T:System.Boolean"/> in result field on TelegramBotClient class, this object will be returned.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Result.BooleanResult.Ok">
+            <summary>
+            Result request
+            </summary>
+            <value>
+              <c>true</c> if ok; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:NetTelebot.Result.BooleanResult.Result">
+            <summary>
+            Gets the result.
+            </summary>
+            <value>
+             <c>true</c> if ok; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:NetTelebot.Result.GetUpdatesResult">
+            <summary>
+            When calling GetUpdates method on TelegramBotClient, this object will be returned.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Result.GetUpdatesResult.Ok">
+            <summary>
+            Gets a value indicating whether this <see cref="T:NetTelebot.Result.GetUpdatesResult"/> is ok.
+            </summary>
+            <value>
+              <c>true</c> if ok; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:NetTelebot.Result.GetUpdatesResult.Result">
+            <summary>
+            Gets the result.
+            </summary>
+            <value>
+            The result is instance of the <see cref="T:NetTelebot.Type.UpdateInfo"/> class
+            </value>
+        </member>
+        <member name="T:NetTelebot.Result.GetUserProfilePhotosResult">
+            <summary>
+            When calling GetUserProfilePhotos method on TelegramBotClient class, this object will be returned.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Result.GetUserProfilePhotosResult.Ok">
+            <summary>
+            Gets a value indicating whether this <see cref="T:NetTelebot.Result.GetUserProfilePhotosResult"/> is ok.
+            </summary>
+            <value>
+              <c>true</c> if ok; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:NetTelebot.Result.GetUserProfilePhotosResult.Result">
+            <summary>
+            Gets the result.
+            </summary>
+            <value>
+            The result is instance of the <see cref="T:NetTelebot.Type.UserProfilePhotosInfo"/> class
+            </value>
+        </member>
+        <member name="T:NetTelebot.Result.SendMessageResult">
+            <summary>
+            When calling method returned <see cref="T:NetTelebot.Type.MessageInfo"/> in result field on TelegramBotClient class, this object will be returned.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Result.SendMessageResult.Ok">
+            <summary>
+            Result request.
+            </summary>
+            <value>
+              <c>true</c> if ok; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:NetTelebot.Result.SendMessageResult.Result">
+            <summary>
+            Gets the result.
+            </summary>
+            <value>
+            The result is instance of the <see cref="T:NetTelebot.Type.MessageInfo"/> class
+            </value>
+        </member>
+        <member name="T:NetTelebot.Result.TelegramUpdateEventArgs">
+            <summary>
+            This object represents an incoming update.
+            At most one of the optional parameters class <see cref="T:NetTelebot.Type.UpdateInfo"/> can be present in any given update.
+            </summary>
+        </member>
+        <member name="M:NetTelebot.Result.TelegramUpdateEventArgs.#ctor(NetTelebot.Type.UpdateInfo[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:NetTelebot.Result.TelegramUpdateEventArgs"/> class.
+            </summary>
+            <param name="updates">The updates.</param>
+        </member>
+        <member name="P:NetTelebot.Result.TelegramUpdateEventArgs.Updates">
+            <summary>
+            An array of incoming messages wrapped in UpdateInfo class.
+            </summary>
+        </member>
+        <member name="T:NetTelebot.BotEnum.ChatActions">
+            <summary>
+            Use this enum when you need to tell the user that something is happening on the bot's side.
+            The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
+            Type of action to broadcast. Choose one, depending on what the user is about to receive
+            Type of action to broadcast. Choose one, depending on what the user is about to receive: 
+            typing for text messages, 
+            upload_photo for photos, 
+            record_video or upload_video for videos, 
+            record_audio or upload_audio for audio files, 
+            upload_document for general files, 
+            find_location for location data, 
+            record_video_note or upload_video_note for video notes.
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ChatActions.Typing">
+            <summary>
+            User is about to receive text message 
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ChatActions.Upload_photo">
+            <summary>
+            User is about to receive photos
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ChatActions.Record_video">
+            <summary>
+            User is about to receive video
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ChatActions.Upload_video">
+            <summary>
+            User is about to receive video
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ChatActions.Record_audio">
+            <summary>
+            User is about to receive audio files
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ChatActions.Upload_audio">
+            <summary>
+            User is about to receive audio files
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ChatActions.Upload_document">
+            <summary>
+            User is about to receive general files
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ChatActions.Find_location">
+            <summary>
+            User is about to receive location data
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ChatActions.Record_video_note">
+            <summary>
+            User is about to receive video notes
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ChatActions.Upload_video_note">
+            <summary>
+            User is about to receive video notes
+            </summary>
+        </member>
+        <member name="T:NetTelebot.BotEnum.ChatType">
+            <summary>
+            Type of chat, can be either “private”, “group”, “supergroup” or “channel”
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ChatType.private">
+            <summary>
+            The private
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ChatType.group">
+            <summary>
+            The group
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ChatType.supergroup">
+            <summary>
+            The supergroup
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ChatType.channel">
+            <summary>
+            The channel
+            </summary>
+        </member>
+        <member name="T:NetTelebot.BotEnum.ParseMode">
+            <summary>
+            Use this if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Optional.
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ParseMode.Markdown">
+            <summary>
+            How use <see href="https://core.telegram.org/bots/api#markdown-style">this</see>
+            </summary>
+        </member>
+        <member name="F:NetTelebot.BotEnum.ParseMode.HTML">
+            <summary>
+            How use <see href="https://core.telegram.org/bots/api#html-style">this</see>
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Interface.IConversationSource">
+            <summary>
+            This interface is used to specify the source of the conversation in an incoming message. It can be a UserInfo or a GroupChatInfo.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.Interface.IConversationSource.Id">
+            <summary>
+            Unique identifier of the group chat or user.
+            </summary>
+        </member>
+        <member name="T:NetTelebot.Interface.IFile">
+            <summary>
+            This interface is used when calling SendPhoto, SendAudio, SendVideo and SendDocument. It can be a NewFile or Existing class.
+            </summary>
+        </member>
+        <member name="T:NetTelebot.TelegramBotClient">
+            <summary>
+            The main class to use Telegram Bot API. Get an instance of this class and set the Token property and start calling methods.
+            </summary>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NetTelebot.TelegramBotClient"/> class.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.TelegramBotClient.Token">
+            <summary>
+            Your bot token
+            </summary>
+        </member>
+        <member name="P:NetTelebot.TelegramBotClient.RestClient">
+            <summary>
+            Gets or sets the REST client. Used in integartion test.
+            </summary>
+        </member>
+        <member name="P:NetTelebot.TelegramBotClient.CheckInterval">
+            <summary>
+            Interval time in milliseconds to get latest messages sent to your bot.
+            </summary>
+        </member>
+        <member name="E:NetTelebot.TelegramBotClient.GetUpdatesError">
+            <summary>
+            Occurs when [get updates error].
+            </summary>
+        </member>
+        <member name="E:NetTelebot.TelegramBotClient.UpdatesReceived">
+            <summary>
+            Whenever a message is sent to your bot, this event will be raised.
+            </summary>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.GetUpdates">
+            <summary>
+            Gets first 100 messages sent to your bot.
+            </summary>
+            <returns>Returns a class containing messages sent to your bot</returns>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.GetUpdates(System.Int32)">
+            <summary>
+            Gets maximum 100 messages sent to your bot, starting from update_id set by offset
+            </summary>
+            <param name="offset">First update_id to be downloaded</param>
+            <returns>Returns a class containing messages sent to your bot</returns>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.GetUpdates(System.Int32,System.Byte)">
+            <summary>
+            Gets messages sent to your bot, starting from update_id set by offset, maximum number is set by limit
+            </summary>
+            <param name="offset">First update_id to be downloaded</param>
+            <param name="limit">Maximum number of messages to receive. It cannot be more than 100</param>
+            <returns>Returns a class containing messages sent to your bot</returns>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.GetUpdates(System.Byte)">
+            <summary>
+            Gets messages sent to your bot, from the begining and maximum number of limit set as parameter
+            </summary>
+            <param name="limit">Maximum number of messages to receive. It cannot be more than 100</param>
+            <returns>Returns a class containing messages sent to your bot</returns>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.OnGetUpdatesError(System.Exception)">
+            <summary>
+            Called when [get updates error].
+            </summary>
+            <param name="exception">The exception.</param>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.GetMe">
+            <summary>
+            Gets information about your bot. You can call this method as a ping
+            </summary>
+            <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.GetMeTest()</remarks>
+            <remarks>Test NetTelebot.Tests.TelegramRealBotClientTest.GetMeTest()</remarks>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.SendMessage(System.Object,System.String,System.Nullable{NetTelebot.BotEnum.ParseMode},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},NetTelebot.Type.Keyboard.IReplyMarkup)">
+            <summary>
+            Use this method to send text messages. See <see href="https://core.telegram.org/bots/api#sendmessage">API</see>
+            </summary>
+            <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+            <param name="text">Text of the message to be sent</param>
+            <param name="parseMode">Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message</param>
+            <param name="disableWebPagePreview">Disables link previews for links in this message</param>
+            <param name="disableNotification">Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.</param>
+            <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+            <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+            <returns>On success, the sent <see cref="T:NetTelebot.Type.MessageInfo"/> is returned.</returns>
+            <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendMessageTest()</remarks>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.ForwardMessage(System.Object,System.Int32,System.Int32,System.Nullable{System.Boolean})">
+            <summary>
+            Use this method to forward messages of any kind. See <see href="https://core.telegram.org/bots/api#forwardmessage">API</see>
+            </summary>
+            <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+            <param name="fromChatId">Unique identifier for the chat where the original message was sent — User or GroupChat id</param>
+            <param name="messageId">Unique message identifier</param>
+            <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
+            <returns>On success, the sent <see cref="T:NetTelebot.Type.MessageInfo"/> is returned.</returns>
+            <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.ForwardMessageTest()</remarks>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.SendPhoto(System.Object,NetTelebot.Interface.IFile,System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},NetTelebot.Type.Keyboard.IReplyMarkup)">
+            <summary>
+            Use this method to send photos. See <see href="https://core.telegram.org/bots/api#sendphoto">API</see>
+            </summary>
+            <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+            <param name="photo">Photo to send. You can either pass a file_id as String to resend a photo that is already on the Telegram servers (using ExistingFile class),
+            or upload a new photo using multipart/form-data. (Using NewFile class)</param>
+            <param name="caption">Photo caption (may also be used when resending photos by file_id).</param>
+            <param name="disableNotification">Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.</param>
+            <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+            <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+            <returns>On success, the sent <see cref="T:NetTelebot.Type.MessageInfo"/> is returned.</returns>
+            <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendPhotoTest()</remarks>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.SendAudio(System.Object,NetTelebot.Interface.IFile,System.String,System.Nullable{System.Int32},System.String,System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},NetTelebot.Type.Keyboard.IReplyMarkup)">
+            <summary>
+            Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message.
+            For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Document). 
+            Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
+            See <see href="https://core.telegram.org/bots/api#sendaudio">API</see>
+            </summary>
+            <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+            <param name="audio">Audio file to send. You can either pass a file_id as String to resend an audio that is already on the Telegram servers,
+            or upload a new audio file using multipart/form-data.</param>
+            <param name="caption">Audio caption, 0-200 characters</param>
+            <param name="duration">Duration of the audio in seconds</param> 
+            <param name="performer">Duration of the audio in seconds</param>
+            <param name="title">Track name</param>
+            <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
+            <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+            <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+            <returns>On success, the sent <see cref="T:NetTelebot.Type.MessageInfo"/> is returned.</returns>
+            <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendAudioTest()</remarks>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.SendDocument(System.Object,NetTelebot.Interface.IFile,System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},NetTelebot.Type.Keyboard.IReplyMarkup)">
+            <summary>
+            Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+            See <see href="https://core.telegram.org/bots/api#senddocument">API</see>
+            </summary>
+            <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+            <param name="document">File to send. You can either pass a file_id as String to resend a file that is already on the Telegram servers,
+            or upload a new file using multipart/form-data.</param>
+            <param name="caption">Document caption (may also be used when resending documents by file_id), 0-200 characters</param>
+            <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
+            <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+            <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+            <returns>On success, the sent <see cref="T:NetTelebot.Type.MessageInfo"/> is returned.</returns>
+            <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendDocumentTest()</remarks>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.SendSticker(System.Object,NetTelebot.Interface.IFile,System.Nullable{System.Boolean},System.Nullable{System.Int32},NetTelebot.Type.Keyboard.IReplyMarkup)">
+            <summary>
+            Use this method to send .webp stickers. See <see href="https://core.telegram.org/bots/api#sendsticker">API</see>
+            </summary>
+            <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+            <param name="sticker">Sticker to send. You can either pass a file_id as String to resend a sticker that is 
+            already on the Telegram servers, or upload a new sticker using multipart/form-data.</param>
+            <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
+            <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+            <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+            <returns>On success, the sent <see cref="T:NetTelebot.Type.MessageInfo"/> is returned.</returns>
+            <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendStickerTest()</remarks>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.SendVideo(System.Object,NetTelebot.Interface.IFile,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},NetTelebot.Type.Keyboard.IReplyMarkup)">
+            <summary>
+            Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). 
+            Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future. See <see href="https://core.telegram.org/bots/api#sendvideo"></see>
+            </summary>
+            <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+            <param name="video">Video to send. You can either pass a file_id as String to resend a video that is already on the Telegram servers,
+            or upload a new video file using multipart/form-data.</param>
+            <param name="duration">Optional. Duration of sent video in seconds</param>
+            <param name="width">Optional. Video width</param> 
+            <param name="height">Video height</param>
+            <param name="caption">Optional. Video caption (may also be used when resending videos by file_id), 0-200 characters</param>
+            <param name="disableNotification">Optional. Sends the message silently. Users will receive a notification with no sound.</param>
+            <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+            <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+            <returns>On success, the sent <see cref="T:NetTelebot.Type.MessageInfo"/> is returned.</returns>
+            <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendVideoTest()</remarks>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.SendLocation(System.Object,System.Single,System.Single,System.Nullable{System.Boolean},System.Nullable{System.Int32},NetTelebot.Type.Keyboard.IReplyMarkup)">
+            <summary>
+            Use this method to send point on the map.
+            See <see href="https://core.telegram.org/bots/api#sendlocation">API</see>
+            </summary>
+            <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+            <param name="latitude">Latitude of location</param>
+            <param name="longitude">Longitude of location</param>
+            <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
+            <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+            <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+            <returns>On success, the sent <see cref="T:NetTelebot.Type.MessageInfo"/> is returned.</returns>
+            <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendLocationTest()</remarks>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.SendContact(System.Object,System.String,System.String,System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},NetTelebot.Type.Keyboard.IReplyMarkup)">
+            <summary>
+            Use this method to send phone contacts. See <see href="https://core.telegram.org/bots/api#sendcontact">API</see>
+            </summary>
+            <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
+            <param name="phoneNumber">Contact's phone number</param>
+            <param name="firstName">Contact's first name</param>
+            <param name="lastName">Contact's last name</param>
+            <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
+            <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+            <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard,
+            instructions to remove keyboard or to force a reply from the user.</param>
+            <returns>On success, the sent <see cref="T:NetTelebot.Type.MessageInfo"/> is returned.</returns>
+            <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendContactTest()</remarks>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.SendChatAction(System.Object,NetTelebot.BotEnum.ChatActions)">
+            <summary>
+            Use this method when you need to tell the user that something is happening on the bot's side. 
+            The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
+            See <see href="https://core.telegram.org/bots/api#sendchataction">API</see>
+            </summary>
+            <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+            <param name="action">Type of action to broadcast. Choose one, depending on what the user is about to receive: 
+            typing for text messages, upload_photo for photos, record_video or upload_video for videos, 
+            record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.</param>
+            <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendChatActionTest()</remarks>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.GetUserProfilePhotos(System.Int32,System.Nullable{System.Int32},System.Nullable{System.Byte})">
+            <summary>
+            Use this method to get a list of profile pictures for a user.
+            See <see href="https://core.telegram.org/bots/api#getuserprofilephotos">API</see>
+            </summary>
+            <param name="userId">Unique identifier of the target user</param>
+            <param name="offset">Sequential number of the first photo to be returned. By default, all photos are returned.</param>
+            <param name="limit">Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.</param>
+            <returns><see cref="T:NetTelebot.Type.UserProfilePhotosInfo"/></returns>
+            <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.GetUserProfilePhotosTest()</remarks>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.KickChatMember(System.Object,System.Int32,System.DateTime)">
+            <summary>
+            Use this method to kick a user from a group, a supergroup or a channel. 
+            In the case of supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., 
+            unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. 
+            See <see href="https://core.telegram.org/bots/api#kickchatmember">API</see> 
+            </summary>
+            <param name="chatId">Unique identifier for the target group or username of the target supergroup or channel</param>
+            <param name="userId">Unique identifier of the target user</param>
+            <param name="untilDate">Date when the user will be unbanned. 
+            If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever</param>
+            <returns>Returns True on success, false otherwise</returns>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.UnbanChatMember(System.Object,System.Int32)">
+            <summary>
+            Use this method to unban a previously kicked user in a supergroup or channel. 
+            The user will not return to the group or channel automatically, but will be able to join via link, etc. 
+            The bot must be an administrator for this to work.
+            See <see href="https://core.telegram.org/bots/api#unbanchatmember">API</see> 
+            </summary>
+            <param name="chatId">Unique identifier for the target group or username of the target supergroup or channel</param>
+            <param name="userId">Unique identifier of the target user</param>
+            <returns>Returns True on success, false otherwise</returns>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.LeaveChat(System.Object)">
+            <summary>
+            Use this method for your bot to leave a group, supergroup or channel.
+            See <see href="https://core.telegram.org/bots/api#leavechat">API</see> 
+            </summary>
+            <param name="chatId">Unique identifier for the target chat</param>
+            <returns>Returns True on success, false otherwise</returns>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.StartCheckingUpdates">
+            <summary>
+            Checks new updates (sent messages to your bot) automatically. Set CheckInterval property and handle UpdatesReceived event.
+            </summary>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.StopCheckUpdates">
+            <summary>
+            Stops automatic checking updates
+            </summary>
+        </member>
+        <member name="M:NetTelebot.TelegramBotClient.OnUpdatesReceived(NetTelebot.Type.UpdateInfo[])">
+            <summary>
+            Called when [updates received].
+            </summary>
+            <param name="updates">The updates.</param>
+        </member>
+        <member name="T:NetTelebot.Extension.UtilityExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetTelebot.Extension.UtilityExtensions.ToDateTime(System.Int64)">
+            <summary>
+            Convert date from unix time to the <see cref="T:System.DateTime"/>.
+            </summary>
+            <param name="unixDate">The unix date</param>
+            <returns>Convert DateTime</returns>
+        </member>
+        <member name="M:NetTelebot.Extension.UtilityExtensions.ToUnixTime(System.DateTime)">
+            <summary>
+            Convert a date time object to Unix time representation.
+            </summary>
+            <param name="dateTime">The datetime object to convert to Unix time stamp.</param>
+            <returns>Returns a numerical representation (Unix time) of the DateTime object.</returns>
+        </member>
+    </members>
+</doc>

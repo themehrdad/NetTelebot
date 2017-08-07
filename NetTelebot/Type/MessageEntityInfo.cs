@@ -10,8 +10,7 @@ namespace NetTelebot.Type
     public class MessageEntityInfo
     {
         internal MessageEntityInfo()
-        {
-            
+        {  
         }
 
         internal MessageEntityInfo(JObject jsonObject)

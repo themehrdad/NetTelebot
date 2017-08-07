@@ -1,10 +1,11 @@
 ﻿using System;
 using NetTelebot.BotEnum;
 using NetTelebot.Result;
-using NetTelebot.Tests.Utils;
 using NetTelebot.Type;
 using NetTelebot.Type.Keyboard;
 using NUnit.Framework;
+using NetTelebot.CommonUtils;
+
 
 namespace NetTelebot.Tests
 {
@@ -18,9 +19,10 @@ namespace NetTelebot.Tests
         [SetUp]
         public void OnTestStart()
         {
-            mTelegramBot = new TelegramBotGroupChat().GetBot();
-            mChatGroupId = new TelegramBotGroupChat().GetChatId();
-            mChatSuperGroupId = new TelegramBotSuperGroupChat().GetChatId();
+            mTelegramBot = new TelegramBot().GetGroupChatBot();
+
+            mChatGroupId = new TelegramBot().GetGroupChatId();
+            mChatSuperGroupId = new TelegramBot().GetSuperGroupChatId();
         }
 
         /// <summary>
@@ -80,7 +82,7 @@ namespace NetTelebot.Tests
             Assert.AreEqual(sendLocation.Result.Location.Longitude, longitude);
         }
 
-        [Test, Ignore("Not use. Leave bot from group")]
+        [Test, Ignore("Do not use. Leave bot from group")]
         public void LeaveChatTest()
         {
             BooleanResult leaveChat = mTelegramBot.LeaveChat(mChatGroupId);

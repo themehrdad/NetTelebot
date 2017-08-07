@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using NetTelebot.Extension;
 using Newtonsoft.Json.Linq;
-
-#if DEBUG
-[assembly: InternalsVisibleTo("NetTelebot.Tests")]
-#endif
 
 namespace NetTelebot.Type
 {
@@ -71,7 +66,7 @@ namespace NetTelebot.Type
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoReplyToMessageTest()
             ReplyToMessage = jsonObject["reply_to_message"] != null
                 ? new MessageInfo(jsonObject["reply_to_message"].Value<JObject>())
-                : MessageInfoWithNullField();
+                : GetNewMessageInfo(GetNewMessageInfo(), GetNewMessageInfo());
 
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoEditDateTest()
             if (jsonObject["edit_date"] != null)
@@ -177,10 +172,10 @@ namespace NetTelebot.Type
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoPinnedMessageTest()
             PinnedMessage = jsonObject["pinned_message"] != null
                 ? new MessageInfo(jsonObject["pinned_message"].Value<JObject>())
-                : MessageInfoWithNullField();
+                : GetNewMessageInfo(GetNewMessageInfo(), GetNewMessageInfo());
         }
 
-        private static MessageInfo MessageInfoWithNullField()
+        private static MessageInfo GetNewMessageInfo(MessageInfo pinned = null, MessageInfo reply = null)
         {
             return new MessageInfo
             {
@@ -188,28 +183,7 @@ namespace NetTelebot.Type
                 Chat = new ChatInfo(),
                 ForwardFrom = new UserInfo(),
                 ForwardFromChat = new ChatInfo(),
-
-                ReplyToMessage = new MessageInfo
-                {
-                    From = new UserInfo(),
-                    Chat = new ChatInfo(),
-                    ForwardFrom = new UserInfo(),
-                    ForwardFromChat = new ChatInfo(),
-                    ReplyToMessage = new MessageInfo(),
-                    Entities = new MessageEntityInfo[0],
-                    Audio = new AudioInfo(),
-                    Document = new DocumentInfo(),
-                    Photo = new PhotoSizeInfo[0],
-                    Sticker = new StickerInfo(),
-                    Video = new VideoInfo(),
-                    Contact = new ContactInfo(),
-                    Location = new LocationInfo(),
-                    NewChatMember = new UserInfo(),
-                    LeftChatMember = new UserInfo(),
-                    NewChatPhoto = new PhotoSizeInfo[0],
-                    PinnedMessage = new MessageInfo()
-                },
-
+                ReplyToMessage = reply,
                 Entities = new MessageEntityInfo[0],
                 Audio = new AudioInfo(),
                 Document = new DocumentInfo(),
@@ -221,27 +195,7 @@ namespace NetTelebot.Type
                 NewChatMember = new UserInfo(),
                 LeftChatMember = new UserInfo(),
                 NewChatPhoto = new PhotoSizeInfo[0],
-
-                PinnedMessage = new MessageInfo
-                {
-                    From = new UserInfo(),
-                    Chat = new ChatInfo(),
-                    ForwardFrom = new UserInfo(),
-                    ForwardFromChat = new ChatInfo(),
-                    ReplyToMessage = new MessageInfo(),
-                    Entities = new MessageEntityInfo[0],
-                    Audio = new AudioInfo(),
-                    Document = new DocumentInfo(),
-                    Photo = new PhotoSizeInfo[0],
-                    Sticker = new StickerInfo(),
-                    Video = new VideoInfo(),
-                    Contact = new ContactInfo(),
-                    Location = new LocationInfo(),
-                    NewChatMember = new UserInfo(),
-                    LeftChatMember = new UserInfo(),
-                    NewChatPhoto = new PhotoSizeInfo[0],
-                    PinnedMessage = new MessageInfo()
-                }
+                PinnedMessage = pinned
             };
         }
 
