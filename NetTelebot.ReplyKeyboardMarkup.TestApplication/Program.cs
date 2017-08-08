@@ -29,7 +29,8 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
 
         private static void ClientUpdatesReceived(object sender, TelegramUpdateEventArgs e)
         {
-            if (ForceReplyExample.InterceptorOfResponseMessages(e)) return;
+            if (ForceReplyExample.InterceptorOfResponseMessages(e))
+                return;
 
             foreach (UpdateInfo update in e.Updates.Where(update => update.Message.Text.StartsWith("/")))
             {

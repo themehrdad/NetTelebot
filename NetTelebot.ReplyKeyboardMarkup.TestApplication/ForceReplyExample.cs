@@ -15,8 +15,6 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
                 Console.WriteLine("Id " + update.UpdateId + " ReplyQuery" + update.Message.ReplyToMessage.Text);
 
                 Program.SendMessage(update.Message.Chat.Id, "Your reply is \"" + update.Message.Text + "\"");
-
-                return true;
             }
 
             return false;
