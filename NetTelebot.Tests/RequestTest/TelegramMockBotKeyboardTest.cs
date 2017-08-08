@@ -67,6 +67,26 @@ namespace NetTelebot.Tests.RequestTest
                 "one_time_keyboard%22%3A%20true%2C%0D%0A%20%20%22selective%22%3A%20false%0D%0A%7D");
 
             TelegramMockBotClientTest.PrintResult(request);
+
+            MockServer.ServerOkResponse.ResetRequestLogs();
+        }
+
+
+        [Test]
+        public void SendForceReplyTest()
+        {
+            mBotOkResponse.SendMessage(123, "Test", replyMarkup: new ForceReplyMarkup {Selective = true});
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
+
+            TelegramMockBotClientTest.PrintResult(request);
+
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "text=Test&" +
+                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%2C%20%22selective%22%20%3A%20true%20%7D");
+
+            MockServer.ServerOkResponse.ResetRequestLogs();
         }
     }
 }
