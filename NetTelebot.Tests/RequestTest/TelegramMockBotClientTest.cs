@@ -65,8 +65,8 @@ namespace NetTelebot.Tests.RequestTest
                 "disable_web_page_preview=False&" +
                 "disable_notification=False&" +
                 "reply_to_message_id=123&" +
-                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
-
+                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
+                   
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendMessage");
             Assert.Throws<Exception>(() => mBotBadResponse.SendMessage(123, "123", ParseMode.HTML, false, false, 123, new ForceReplyMarkup()));
         }
@@ -113,7 +113,7 @@ namespace NetTelebot.Tests.RequestTest
                 "caption=caption&" +
                 "disable_notification=False&" +
                 "reply_to_message_id=123&" +
-                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
+                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendPhoto");
             Assert.Throws<Exception>(() => mBotBadResponse.SendPhoto(123, new ExistingFile { FileId = "123" },
@@ -142,7 +142,7 @@ namespace NetTelebot.Tests.RequestTest
                 "title=title&" +
                 "disable_notification=True&" +
                 "reply_to_message_id=123&" +
-                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
+                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendAudio");
             Assert.Throws<Exception>(() => mBotBadResponse.SendAudio(123, new ExistingFile { FileId = "123" }, "caption", 123, "performer",
@@ -167,7 +167,7 @@ namespace NetTelebot.Tests.RequestTest
                 "caption=caption&" +
                 "disable_notification=True&" +
                 "reply_to_message_id=123&" +
-                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
+                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendDocument");
             Assert.Throws<Exception>(() => mBotBadResponse.SendDocument(123, new ExistingFile { FileId = "123" },
@@ -191,7 +191,7 @@ namespace NetTelebot.Tests.RequestTest
                 "sticker=123&" +
                 "disable_notification=True&" +
                 "reply_to_message_id=123&" +
-                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
+                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendSticker");
             Assert.Throws<Exception>(() => mBotBadResponse.SendSticker(123, new ExistingFile { FileId = "123" },
@@ -220,7 +220,7 @@ namespace NetTelebot.Tests.RequestTest
                 "caption=caption&" +
                 "disable_notification=True&" +
                 "reply_to_message_id=123&" +
-                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
+                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendVideo");
             Assert.Throws<Exception>(() => mBotBadResponse.SendVideo(123, new ExistingFile { FileId = "123" },
@@ -245,7 +245,7 @@ namespace NetTelebot.Tests.RequestTest
                 "longitude=1&" +
                 "disable_notification=True&" +
                 "reply_to_message_id=123&" +
-                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
+                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendLocation");
             Assert.Throws<Exception>(() => mBotBadResponse.SendLocation(123, 1.0f, 1.0f, true, 123, new ForceReplyMarkup()));
@@ -270,7 +270,7 @@ namespace NetTelebot.Tests.RequestTest
                 "last_name=lastName&" +
                 "disable_notification=True&" +
                 "reply_to_message_id=123&" +
-                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%7D");
+                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendContact");
             Assert.Throws<Exception>(() => mBotBadResponse.SendContact(123, "123", "firstName", "lastName", true, 123, new ForceReplyMarkup()));

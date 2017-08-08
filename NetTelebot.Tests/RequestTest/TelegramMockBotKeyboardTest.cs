@@ -27,7 +27,7 @@ namespace NetTelebot.Tests.RequestTest
         }
 
         [Test]
-        public void SendReplyKeyboardWithTextMarkupTest()
+        public void SendMessageWithReplyKeyboardMarkupTest()
         {
             KeyboardButton line1 = new KeyboardButton { Text = "Button1", RequestContact = true, RequestLocation = false };
             KeyboardButton line2 = new KeyboardButton { Text = "Button2", RequestContact = false, RequestLocation = true };
@@ -71,9 +71,8 @@ namespace NetTelebot.Tests.RequestTest
             MockServer.ServerOkResponse.ResetRequestLogs();
         }
 
-
         [Test]
-        public void SendForceReplyTest()
+        public void SendMessageWithForceReplyTest()
         {
             mBotOkResponse.SendMessage(123, "Test", replyMarkup: new ForceReplyMarkup {Selective = true});
 
@@ -83,8 +82,20 @@ namespace NetTelebot.Tests.RequestTest
 
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
-                "text=Test&" +
-                "reply_markup=%7B%20%22force_reply%22%20%3A%20true%20%2C%20%22selective%22%20%3A%20true%20%7D");
+                "text=Test&reply_markup=%" +
+                "7B%0D%0A%20%20%22force_reply%22%3A%20true%2C%0D%0A%20%20%22selective%22%3A%20true%0D%0A%7D");
+            
+
+            MockServer.ServerOkResponse.ResetRequestLogs();
+
+            mBotOkResponse.SendMessage(123, "Test", replyMarkup: new ForceReplyMarkup { Selective = false });
+
+            Assert.AreEqual(request.FirstOrDefault()?.Body,
+                "chat_id=123&" +
+                "text=Test&reply_markup=%" +
+                "7B%0D%0A%20%20%22force_reply%22%3A%20true%2C%0D%0A%20%20%22selective%22%3A%20false%0D%0A%7D");
+
+            TelegramMockBotClientTest.PrintResult(request);
 
             MockServer.ServerOkResponse.ResetRequestLogs();
         }

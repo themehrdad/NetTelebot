@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using NetTelebot.Interface;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type.Keyboard 

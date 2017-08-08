@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using NetTelebot.CommonUtils;
+using NetTelebot.Interface;
 using NetTelebot.Result;
 using NetTelebot.Type;
 using NetTelebot.Type.Keyboard;
