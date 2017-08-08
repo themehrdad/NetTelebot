@@ -71,8 +71,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="MockServerObject\MockServer.cs" />
-    <Compile Include="MockServerObject\ResponseString.cs" />
+    <Compile Include="MockServer\MockServer.cs" />
+    <Compile Include="MockServer\ResponseString.cs" />
     <Compile Include="ParserTest\BooleanResultParserTest.cs" />
     <Compile Include="ParserTest\MeInfoParserTest.cs" />
     <Compile Include="MessageInfoNullRefExcTest.cs" />

@@ -13,7 +13,7 @@ namespace NetTelebot.Type.Keyboard
     public class ForceReplyMarkup : IReplyMarkup
     {
         /// <summary>
-        /// Gets the string json object ForceReply.
+        /// Gets the string json object ForceReplyMarkup.
         /// </summary>
         public string GetJson()
         {

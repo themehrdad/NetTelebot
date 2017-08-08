@@ -61,6 +61,7 @@
     <Compile Include="Interface\IFile.cs" />
     <Compile Include="Interface\IReplyMarkup.cs" />
     <Compile Include="Type\Keyboard\KeyboardButton.cs" />
+    <Compile Include="Type\Keyboard\ReplyKeyboardRemove.cs" />
     <Compile Include="Type\LocationInfo.cs" />
     <Compile Include="Type\MeInfo.cs" />
     <Compile Include="Type\MessageEntityInfo.cs" />

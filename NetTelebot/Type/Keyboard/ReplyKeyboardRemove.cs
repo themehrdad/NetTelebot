@@ -1,25 +1,24 @@
-﻿using System;
-using NetTelebot.Interface;
+﻿using NetTelebot.Interface;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type.Keyboard
 {
     /// <summary>
-    /// Upon receiving a message with this object, Telegram clients will hide the current custom keyboard and display the default letter-keyboard.
-    /// By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button
-    /// Since the value "hide_keyboard: false" does not make sense, the field of the class of this value is missing
+    /// Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard.
+    /// By default, custom keyboards are displayed until a new keyboard is sent by a bot.
+    /// An exception is made for one-time keyboards that are hidden immediately after the user presses a button
+    /// Since the value "remove_keyboard: false" does not make sense, the field of the class of this value is missing
     /// </summary>
-    [Obsolete("In version 1.0.11 it will be deleted. Use ReplyKeyboardRemove")]
-    public class ReplyKeyboardHideMarkup : IReplyMarkup
+    public class ReplyKeyboardRemove : IReplyMarkup
     {
         /// <summary>
-        /// Gets the string json object ReplyKeyboardHideMarkup
+        /// Gets the string json object ReplyKeyboardRemove
         /// </summary>
         public string GetJson()
         {
             dynamic keyboardHide = new JObject();
 
-            keyboardHide.hide_keyboard = true;
+            keyboardHide.remove_keyboard = true;
 
             if (Selective.HasValue)
                 keyboardHide.selective = Selective;

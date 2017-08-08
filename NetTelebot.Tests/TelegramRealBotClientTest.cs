@@ -142,7 +142,7 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void SendKeyboardButtonToGroupTest()
+        public void SendReplyKeyboardMarkupToGroupTest()
         {
 
             KeyboardButton[] lines1 =
@@ -175,7 +175,33 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void SendForceReplyToGroupTest()
+        public void SendReplyKeyboardRemoveToGroupTest()
+        {
+            ReplyKeyboardRemove hideMarkup = new ReplyKeyboardRemove
+            {
+                Selective = false
+            };
+
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Goodbay", replyMarkup: hideMarkup);
+
+            Assert.True(sendMessage.Ok);
+        }
+
+        [Test, Obsolete("In version 1.0.11 it will be deleted")]
+        public void SendReplyKeyboardHideMarkupToGroupTest()
+        {
+            ReplyKeyboardHideMarkup hideMarkup = new ReplyKeyboardHideMarkup
+            {
+                Selective = false
+            };
+
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Goodbay", replyMarkup: hideMarkup);
+
+            Assert.True(sendMessage.Ok);
+        }
+
+        [Test]
+        public void SendForceReplyMarkupToGroupTest()
         {
             ForceReplyMarkup forceReply = new ForceReplyMarkup
             {
@@ -186,5 +212,7 @@ namespace NetTelebot.Tests
 
             Assert.True(sendMessage.Ok);
         }
+
+
     }
 }
