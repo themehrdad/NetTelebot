@@ -1,5 +1,4 @@
 ﻿using NetTelebot.BotEnum;
-using NetTelebot.Interface;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type 
@@ -8,7 +7,7 @@ namespace NetTelebot.Type
     /// This object represents a chat. 
     /// See <see href="https://core.telegram.org/bots/api#chat">API</see>
     /// </summary>
-    public class ChatInfo : IConversationSource 
+    public class ChatInfo
     {
         internal ChatInfo()
         {

@@ -173,5 +173,18 @@ namespace NetTelebot.Tests
 
             Assert.True(sendMessage.Ok);
         }
+
+        [Test]
+        public void SendForceReplyToGroupTest()
+        {
+            ForceReplyMarkup forceReply = new ForceReplyMarkup
+            {
+                Selective = false
+            };
+
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Please type number", replyMarkup: forceReply);
+
+            Assert.True(sendMessage.Ok);
+        }
     }
 }
