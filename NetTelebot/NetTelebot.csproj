@@ -46,6 +46,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Result\ChatInfoResult.cs" />
     <Compile Include="Type\AudioInfo.cs" />
     <Compile Include="Result\BooleanResult.cs" />
     <Compile Include="BotEnum\ChatActions.cs" />
@@ -60,7 +61,10 @@
     <Compile Include="Result\GetUserProfilePhotosResult.cs" />
     <Compile Include="Interface\IFile.cs" />
     <Compile Include="Interface\IReplyMarkup.cs" />
+    <Compile Include="Type\Keyboard\InlineKeyboardButton.cs" />
     <Compile Include="Type\Keyboard\KeyboardButton.cs" />
+    <Compile Include="Type\Keyboard\InlineKeyboardMarkup.cs" />
+    <Compile Include="Type\Keyboard\ReplyKeyboardRemove.cs" />
     <Compile Include="Type\LocationInfo.cs" />
     <Compile Include="Type\MeInfo.cs" />
     <Compile Include="Type\MessageEntityInfo.cs" />

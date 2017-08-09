@@ -71,17 +71,19 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="MockServerObject\MockServer.cs" />
-    <Compile Include="MockServerObject\ResponseString.cs" />
-    <Compile Include="ParserTest\BooleanResultParserTest.cs" />
-    <Compile Include="ParserTest\MeInfoParserTest.cs" />
+    <Compile Include="MockServer\MockServer.cs" />
+    <Compile Include="MockServer\ResponseString.cs" />
+    <Compile Include="RequestToTelegramTest\TelegramBotKeyboardTest.cs" />
+    <Compile Include="ResponseTest\BooleanResultParserTest.cs" />
+    <Compile Include="ResponseTest\MeInfoParserTest.cs" />
     <Compile Include="MessageInfoNullRefExcTest.cs" />
-    <Compile Include="ParserTest\MessageInfoParserTest.cs" />
+    <Compile Include="ResponseTest\MessageInfoParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestToMockTest\TelegramBotInlineKeyboardTest.cs" />
     <Compile Include="ResultTestObject\BooleanResultObect.cs" />
-    <Compile Include="RequestTest\TelegramMockBotClientTest.cs" />
-    <Compile Include="RequestTest\TelegramMockBotKeyboardTest.cs" />
-    <Compile Include="TelegramRealBotClientTest.cs" />
+    <Compile Include="RequestToMockTest\TelegramBotClientTest.cs" />
+    <Compile Include="RequestToMockTest\TelegramBotKeyboardTest.cs" />
+    <Compile Include="RequestToTelegramTest\TelegramBotClientTest.cs" />
     <Compile Include="TypeTestObject\AudioInfoObject.cs" />
     <Compile Include="TypeTestObject\ChatInfoObject.cs" />
     <Compile Include="TypeTestObject\ChatPhotoInfoObject.cs" />

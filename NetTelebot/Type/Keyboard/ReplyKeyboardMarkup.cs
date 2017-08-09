@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using NetTelebot.Interface;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type.Keyboard 
@@ -11,7 +12,7 @@ namespace NetTelebot.Type.Keyboard
         /// <summary>
         /// Gets the json.
         /// </summary>
-        public string GetJson()
+        public JObject GetJson()
         {
             dynamic replyKeyboardMarkup = new JObject();
 
@@ -24,7 +25,7 @@ namespace NetTelebot.Type.Keyboard
             if (Selective.HasValue)
                 replyKeyboardMarkup.selective = Selective;
 
-            return replyKeyboardMarkup.ToString();
+            return replyKeyboardMarkup;
         }
 
         private static JArray GetJsonArrayOfArray(KeyboardButton[][] keyboard)

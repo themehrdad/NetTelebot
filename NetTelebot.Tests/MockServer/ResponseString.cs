@@ -1,4 +1,4 @@
-﻿namespace NetTelebot.Tests.MockServerObject
+﻿namespace NetTelebot.Tests.MockServer
 {
     internal static class ResponseString
     {
@@ -10,6 +10,10 @@
 
         internal const string mExpectedBodyForGetMe =
             @"{ ok: ""true"", result: { id: ""123"", first_name: ""FirstName"", username: ""username"" }}";
+
+        internal const string mExpectedBodyForGetChat = @"{ ok: ""true"", result: { id: ""123"", type: ""private"",
+            title: ""TestTitle"", username: ""TestUsername"", first_name: ""TestFirstname"", last_name: ""TestLastName"",
+            all_members_are_administrators: ""true"" }}";
 
         internal const string mExpectedBodyForBooleanResult = @"{ ok: ""true"", result: ""true"" }";
 

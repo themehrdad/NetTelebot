@@ -1,13 +1,12 @@
 ﻿using System;
 using NetTelebot.BotEnum;
+using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type;
 using NetTelebot.Type.Keyboard;
 using NUnit.Framework;
-using NetTelebot.CommonUtils;
 
-
-namespace NetTelebot.Tests
+namespace NetTelebot.Tests.RequestToTelegramTest
 {
     [TestFixture]
     internal class TelegramRealBotClientTest
@@ -142,49 +141,58 @@ namespace NetTelebot.Tests
         }
 
         [Test]
-        public void SendKeyboardButtonToGroupTest()
+        public void SendInlineKeyboardToGroupTest()
         {
 
-            KeyboardButton[] lines1 =
+            InlineKeyboardButton[] lines1 =
             {
-                new KeyboardButton {Text = "Button1"},
-                new KeyboardButton {Text = "Button2"},
-                new KeyboardButton {Text = "Button3"},
-                new KeyboardButton {Text = "Button4"}
+                new InlineKeyboardButton {Text = "AboutInline", Url = "https://core.telegram.org/bots/api#inlinekeyboardmarkup"},
+                new InlineKeyboardButton {Text = "GoToRepo", Url = "https://github.com/themehrdad/NetTelebot"},
             };
 
-            KeyboardButton[] lines2 =
+            InlineKeyboardButton[] lines2 =
             {
-                new KeyboardButton {Text = "Button5"},
-                new KeyboardButton {Text = "Button4"}
+                new InlineKeyboardButton {Text = "GoToGoogle", Url = "https://www.google.com", },
+                new InlineKeyboardButton {Text = "GoToYouTube", Url = "https://www.youtube.com"}
             };
 
-            KeyboardButton[][] keyboard =
+            InlineKeyboardButton[][] keyboard =
             {
                 lines1, lines2
             };
 
-            ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup
+            InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup
             {
                 Keyboard = keyboard,
             };
 
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Test", replyMarkup: replyMarkup);
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Please press button", replyMarkup: inlineKeyboard);
 
             Assert.True(sendMessage.Ok);
         }
 
         [Test]
-        public void SendForceReplyToGroupTest()
+        public void GetChatFromGroupTest()
         {
-            ForceReplyMarkup forceReply = new ForceReplyMarkup
-            {
-                Selective = false
-            };
+            ChatInfoResult getChatResult = mTelegramBot.GetChat(mChatGroupId);
 
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Please type number", replyMarkup: forceReply);
+            Assert.True(getChatResult.Ok);
+            Assert.AreEqual(getChatResult.Result.Id, mChatGroupId);
+            Assert.AreEqual(getChatResult.Result.Type, ChatType.@group);
+            Assert.AreEqual(getChatResult.Result.AllMembersAreAdministrators, true);
 
-            Assert.True(sendMessage.Ok);
+            Console.WriteLine("GetChat result: " +
+                "\ngetChatResult.Result.Id " + getChatResult.Result.Id +
+                "\ngetChatResult.Result.Title " + getChatResult.Result.Type +
+                "\ngetChatResult.Result.Title " + getChatResult.Result.Title +
+                "\ngetChatResult.Result.Username " + getChatResult.Result.Username +
+                "\ngetChatResult.Result.FirstName " + getChatResult.Result.FirstName +
+                "\ngetChatResult.Result.LastName " + getChatResult.Result.LastName +
+                "\ngetChatResult.Result.AllMembersAreAdministrators " + getChatResult.Result.AllMembersAreAdministrators +
+                "\ngetChatResult.Result.Photo " + getChatResult.Result.Photo +
+                "\ngetChatResult.Result.Description " + getChatResult.Result.Description +
+                "\ngetChatResult.Result.InviteLink " + getChatResult.Result.InviteLink
+                );
         }
     }
 }

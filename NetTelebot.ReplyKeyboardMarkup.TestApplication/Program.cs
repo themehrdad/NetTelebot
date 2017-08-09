@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using NetTelebot.CommonUtils;
+using NetTelebot.Interface;
 using NetTelebot.Result;
 using NetTelebot.Type;
 using NetTelebot.Type.Keyboard;
@@ -29,29 +30,33 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
 
         private static void ClientUpdatesReceived(object sender, TelegramUpdateEventArgs e)
         {
-            //log all updates
-            var message = from update in e.Updates select update;
-            Console.WriteLine(message);
+            if (ForceReplyExample.InterceptorOfResponseMessages(e))
+                return;
 
             foreach (UpdateInfo update in e.Updates.Where(update => update.Message.Text.StartsWith("/")))
             {
                 if (update.Message.Text.Equals("/start"))
                 {
-                    mClient.SendMessage(update.Message.Chat.Id, "Hello. I`m calculator bot. Type \"/calculate\" to start the calculation");
+                    mClient.SendMessage(update.Message.Chat.Id,
+                        "Hello. I`m example bot. Type /calculate for exmple keyboard button and reply keyboard markup. " +
+                        "Type /reply for example force reply. Type /getId return chat_id");
                 }
                 else if (update.Message.Text.Equals("/calculate"))
                 {
-                    mClient.SendMessage(update.Message.Chat.Id, "Please enter an arithmetic expression and press =", replyMarkup:GetKeyboardMarkup());
+                    SendMessage(update.Message.Chat.Id, "Please enter an arithmetic expression and press =", ForceReplyMarkupExample.GetKeyboardMarkup());
                 }
                 else if (update.Message.Text.Equals("/reply"))
                 {
-                    //todo in nested project
-                    Console.WriteLine(mClient.SendMessage(update.Message.Chat.Id, "Please enter an arithmetic expression and press =", replyMarkup: GetForceReply()));
+                    SendMessage(update.Message.Chat.Id, "Please reply this message", new ForceReplyMarkup());
+                }
+                else if (update.Message.Text.Equals("/getId"))
+                {
+                    SendMessage(update.Message.Chat.Id, "This chat id is " + update.Message.Chat.Id);
                 }
                 else
                 {
                     mClient.SendMessage(update.Message.Chat.Id, "Unknow command");
-                } 
+                }
             }
         }
 
@@ -60,54 +65,9 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
             Console.WriteLine("Error occured: {0}", ((Exception)e.ExceptionObject).Message);
         }
 
-        private static ReplyKeyboardMarkup GetKeyboardMarkup()
+        internal static SendMessageResult SendMessage(long chat_id, string message, IReplyMarkup iReplyMarkup = null)
         {
-            KeyboardButton[] line1 =
-{
-                new KeyboardButton {Text = "1"},
-                new KeyboardButton {Text = "2"},
-                new KeyboardButton {Text = "3"},
-                new KeyboardButton {Text = "+"}
-            };
-
-            KeyboardButton[] line2 =
-            {
-                new KeyboardButton {Text = "4"},
-                new KeyboardButton {Text = "5"},
-                new KeyboardButton {Text = "6"},
-                new KeyboardButton {Text = "-"}
-            };
-
-            KeyboardButton[] line3 =
-            {
-                new KeyboardButton {Text = "7"},
-                new KeyboardButton {Text = "8"},
-                new KeyboardButton {Text = "9"},
-                new KeyboardButton {Text = "/"},
-            };
-
-            KeyboardButton[] line4 =
-            {
-                new KeyboardButton {Text = "."},
-                new KeyboardButton {Text = "0"},
-                new KeyboardButton {Text = "="},
-                new KeyboardButton {Text = "*"}
-            };
-
-            KeyboardButton[][] buttons = { line1, line2, line3, line4 };
-
-            ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup
-            {
-                Keyboard = buttons,
-                ResizeKeyboard = true
-            };
-
-            return keyboard;
-        }
-
-        private static ForceReplyMarkup GetForceReply()
-        {
-            return new ForceReplyMarkup();
-        }
+            return mClient.SendMessage(chat_id, message, replyMarkup: iReplyMarkup);
+        }        
     }
 }

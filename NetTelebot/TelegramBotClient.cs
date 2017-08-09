@@ -9,7 +9,7 @@ using NetTelebot.Interface;
 using NetTelebot.Result;
 using NetTelebot.Type;
 using NetTelebot.Extension;
-using NetTelebot.Type.Keyboard;
+
 
 #if DEBUG
 [assembly: InternalsVisibleTo("NetTelebot.Tests")]
@@ -641,8 +641,21 @@ namespace NetTelebot
 
             return ExecuteRequest<BooleanResult>(request) as BooleanResult;
         }
+        
+        /// <summary>
+        /// Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). 
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)</param>
+        /// <returns>Returns a <see cref="ChatInfo"/> object on success.</returns>
+        public ChatInfoResult GetChat(object chatId)
+        {
+            RestRequest request = new RestRequest(string.Format(getChatUri, Token), Method.POST);
 
-        //todo getChat (https://core.telegram.org/bots/api#getchat)
+            request.AddParameter("chat_id", chatId);
+
+            return ExecuteRequest<ChatInfoResult>(request) as ChatInfoResult;
+        }
+
         //todo getChatAdministrators (https://core.telegram.org/bots/api#getchatadministrators)
         //todo getChatMembersCount (https://core.telegram.org/bots/api#getchatmemberscount)
         //todo getChatMember (https://core.telegram.org/bots/api#getchatmember)
@@ -730,6 +743,9 @@ namespace NetTelebot
 
                 if (type == typeof(GetUpdatesResult))
                     return new GetUpdatesResult(response.Content);
+
+                if (type == typeof(ChatInfoResult))
+                    return new ChatInfoResult(response.Content);
             }
             
             throw new Exception(response.StatusDescription);
