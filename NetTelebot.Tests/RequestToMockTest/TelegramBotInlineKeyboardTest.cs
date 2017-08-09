@@ -1,15 +1,13 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Mock4Net.Core;
 using NetTelebot.Type.Keyboard;
 using NUnit.Framework;
 using RestSharp;
-using static NetTelebot.Tests.MockServer.MockServer;
 
-namespace NetTelebot.Tests.RequestTest
+namespace NetTelebot.Tests.RequestToMockTest
 {
     [TestFixture]
-    internal class TelegramMockBotInlineKeyboardTest
+    internal class TelegramBotInlineKeyboardTest
     {
         private const int mServerPort = 8081;
 
@@ -22,13 +20,13 @@ namespace NetTelebot.Tests.RequestTest
         [OneTimeSetUp]
         public static void OnStart()
         {
-            Start(mServerPort);
+            MockServer.MockServer.Start(mServerPort);
         }
 
         [OneTimeTearDown]
         public static void OnStop()
         {
-            Stop();
+            MockServer.MockServer.Stop();
         }
 
         [Test]
@@ -75,7 +73,7 @@ namespace NetTelebot.Tests.RequestTest
 
             mBotOkResponse.SendMessage(123, "Test", replyMarkup: inlineKeyboardMarkup);
 
-            var request = ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
+            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
 
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
@@ -93,11 +91,12 @@ namespace NetTelebot.Tests.RequestTest
                 "%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%22Button3" +
                 "%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%22Button4" +
                 "%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%2C%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%22Button3" +
-                "%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%22Button4%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%0D%0A%20%20%5D%0D%0A%7D");
+                "%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%22Button4" +
+                "%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%0D%0A%20%20%5D%0D%0A%7D");
 
-            TelegramMockBotClientTest.PrintResult(request);
+            TelegramBotClientTest.PrintResult(request);
 
-            ServerOkResponse.ResetRequestLogs();
+            MockServer.MockServer.ServerOkResponse.ResetRequestLogs();
         }
     }
 }

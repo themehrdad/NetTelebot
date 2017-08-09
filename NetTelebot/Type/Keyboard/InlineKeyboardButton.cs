@@ -15,16 +15,19 @@ namespace NetTelebot.Type.Keyboard
 
             if (!string.IsNullOrEmpty(button.Url))
                 json.url = button.Url;
+
             if (!string.IsNullOrEmpty(button.CallbackData))
                 json.callback_data = button.CallbackData;
-            if (!string.IsNullOrEmpty(button.SwitchInlineQuery))
-                json.switch_inline_query = button.CallbackData;
+
             if (!string.IsNullOrEmpty(button.SwitchInlineQuery))
                 json.switch_inline_query = button.SwitchInlineQuery;
+
             if (!string.IsNullOrEmpty(button.SwitchInlineQueryCurrentChat))
                 json.switch_inline_query_current_chat = button.SwitchInlineQueryCurrentChat;
+
             if (!string.IsNullOrEmpty(button.CallbackGame))
                 json.callback_game = button.CallbackGame;
+
             if (button.Pay.HasValue)
                 json.pay = button.Pay;
 

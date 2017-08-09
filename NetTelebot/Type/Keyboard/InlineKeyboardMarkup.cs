@@ -12,13 +12,13 @@ namespace NetTelebot.Type.Keyboard
         /// <summary>
         /// Gets the json.
         /// </summary>
-        public string GetJson()
+        public JObject GetJson()
         {
-            dynamic inlineKeyboard = new JObject();
+            dynamic json = new JObject();
 
-            inlineKeyboard.inline_keyboard = GetJsonArrayOfArray(Keyboard);
+            json.inline_keyboard = GetJsonArrayOfArray(Keyboard);
 
-            return inlineKeyboard.ToString();
+            return json;
         }
 
         private static JArray GetJsonArrayOfArray(InlineKeyboardButton[][] keyboard)

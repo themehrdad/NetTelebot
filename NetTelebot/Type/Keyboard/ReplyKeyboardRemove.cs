@@ -14,7 +14,7 @@ namespace NetTelebot.Type.Keyboard
         /// <summary>
         /// Gets the string json object ReplyKeyboardRemove
         /// </summary>
-        public string GetJson()
+        public JObject GetJson()
         {
             dynamic keyboardHide = new JObject();
 
@@ -23,7 +23,7 @@ namespace NetTelebot.Type.Keyboard
             if (Selective.HasValue)
                 keyboardHide.selective = Selective;
 
-            return keyboardHide.ToString();
+            return keyboardHide;
         }
 
         /// <summary>

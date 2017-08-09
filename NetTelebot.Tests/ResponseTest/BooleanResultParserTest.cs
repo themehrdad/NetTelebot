@@ -2,7 +2,7 @@
 using NetTelebot.Tests.ResultTestObject;
 using NUnit.Framework;
 
-namespace NetTelebot.Tests.ParserTest
+namespace NetTelebot.Tests.ResponseTest
 {
     internal static class BooleanResultParserTest
     {

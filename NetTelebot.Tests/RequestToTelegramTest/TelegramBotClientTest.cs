@@ -1,13 +1,12 @@
 ﻿using System;
 using NetTelebot.BotEnum;
+using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type;
 using NetTelebot.Type.Keyboard;
 using NUnit.Framework;
-using NetTelebot.CommonUtils;
 
-
-namespace NetTelebot.Tests
+namespace NetTelebot.Tests.RequestToTelegramTest
 {
     [TestFixture]
     internal class TelegramRealBotClientTest
@@ -141,22 +140,20 @@ namespace NetTelebot.Tests
             Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.channel);
         }
 
-        [Test, Ignore("AddedTestInProcess")]
+        [Test]
         public void SendInlineKeyboardToGroupTest()
         {
 
             InlineKeyboardButton[] lines1 =
             {
-                new InlineKeyboardButton {Text = "Button1"},
-                new InlineKeyboardButton {Text = "Button2"},
-                new InlineKeyboardButton {Text = "Button3"},
-                new InlineKeyboardButton {Text = "Button4"}
+                new InlineKeyboardButton {Text = "AboutInline", Url = "https://core.telegram.org/bots/api#inlinekeyboardmarkup"},
+                new InlineKeyboardButton {Text = "GoToRepo", Url = "https://github.com/themehrdad/NetTelebot"},
             };
 
             InlineKeyboardButton[] lines2 =
             {
-                new InlineKeyboardButton {Text = "Button5"},
-                new InlineKeyboardButton {Text = "Button4"}
+                new InlineKeyboardButton {Text = "GoToGoogle", Url = "https://www.google.com", },
+                new InlineKeyboardButton {Text = "GoToYouTube", Url = "https://www.youtube.com"}
             };
 
             InlineKeyboardButton[][] keyboard =
@@ -169,83 +166,10 @@ namespace NetTelebot.Tests
                 Keyboard = keyboard,
             };
 
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatSuperGroupId, "Test", replyMarkup: inlineKeyboard);
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Please press button", replyMarkup: inlineKeyboard);
 
             Assert.True(sendMessage.Ok);
         }
-
-        [Test]
-        public void SendReplyKeyboardMarkupToGroupTest()
-        {
-
-            KeyboardButton[] lines1 =
-            {
-                new KeyboardButton {Text = "Button1"},
-                new KeyboardButton {Text = "Button2"},
-                new KeyboardButton {Text = "Button3"},
-                new KeyboardButton {Text = "Button4"}
-            };
-
-            KeyboardButton[] lines2 =
-            {
-                new KeyboardButton {Text = "Button5"},
-                new KeyboardButton {Text = "Button4"}
-            };
-
-            KeyboardButton[][] keyboard =
-            {
-                lines1, lines2
-            };
-
-            ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup
-            {
-                Keyboard = keyboard,
-            };
-
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Test", replyMarkup: replyMarkup);
-
-            Assert.True(sendMessage.Ok);
-        }
-
-        [Test]
-        public void SendReplyKeyboardRemoveToGroupTest()
-        {
-            ReplyKeyboardRemove hideMarkup = new ReplyKeyboardRemove
-            {
-                Selective = false
-            };
-
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Goodbay", replyMarkup: hideMarkup);
-
-            Assert.True(sendMessage.Ok);
-        }
-
-        [Test, Obsolete("In version 1.0.11 it will be deleted")]
-        public void SendReplyKeyboardHideMarkupToGroupTest()
-        {
-            ReplyKeyboardHideMarkup hideMarkup = new ReplyKeyboardHideMarkup
-            {
-                Selective = false
-            };
-
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Goodbay", replyMarkup: hideMarkup);
-
-            Assert.True(sendMessage.Ok);
-        }
-
-        [Test]
-        public void SendForceReplyMarkupToGroupTest()
-        {
-            ForceReplyMarkup forceReply = new ForceReplyMarkup
-            {
-                Selective = false
-            };
-
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Please type number", replyMarkup: forceReply);
-
-            Assert.True(sendMessage.Ok);
-        }
-
 
         [Test]
         public void GetChatFromGroupTest()
@@ -270,7 +194,5 @@ namespace NetTelebot.Tests
                 "\ngetChatResult.Result.InviteLink " + getChatResult.Result.InviteLink
                 );
         }
-
-
     }
 }

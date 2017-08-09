@@ -5,7 +5,7 @@ using NetTelebot.Type;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace NetTelebot.Tests.ParserTest
+namespace NetTelebot.Tests.ResponseTest
 {
     [TestFixture]
     internal static class MessageInfoParserTest

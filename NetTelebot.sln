@@ -35,6 +35,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.ReplyKeyboardMar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.CommonUtils", "NetTelebot.CommonUtils\NetTelebot.CommonUtils.csproj", "{58C5212E-1FF1-47E4-A131-A872E46E3A4C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DE1029C8-2258-4098-BDFD-EBF6E2CD491C}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

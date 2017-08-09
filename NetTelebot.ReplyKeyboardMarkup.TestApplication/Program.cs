@@ -39,7 +39,7 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
                 {
                     mClient.SendMessage(update.Message.Chat.Id,
                         "Hello. I`m example bot. Type /calculate for exmple keyboard button and reply keyboard markup. " +
-                        "Type /reply for example force reply");
+                        "Type /reply for example force reply. Type /getId return chat_id");
                 }
                 else if (update.Message.Text.Equals("/calculate"))
                 {
@@ -47,8 +47,11 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
                 }
                 else if (update.Message.Text.Equals("/reply"))
                 {
-
                     SendMessage(update.Message.Chat.Id, "Please reply this message", new ForceReplyMarkup());
+                }
+                else if (update.Message.Text.Equals("/getId"))
+                {
+                    SendMessage(update.Message.Chat.Id, "This chat id is " + update.Message.Chat.Id);
                 }
                 else
                 {

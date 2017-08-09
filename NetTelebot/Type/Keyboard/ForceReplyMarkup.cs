@@ -15,7 +15,7 @@ namespace NetTelebot.Type.Keyboard
         /// <summary>
         /// Gets the string json object ForceReplyMarkup.
         /// </summary>
-        public string GetJson()
+        public JObject GetJson()
         {
             dynamic forceReply = new JObject();
             
@@ -24,7 +24,7 @@ namespace NetTelebot.Type.Keyboard
             if (Selective.HasValue)
                 forceReply.selective = Selective;
             
-            return forceReply.ToString();
+            return forceReply;
         }
 
         /// <summary>
