@@ -78,6 +78,7 @@
     <Compile Include="MessageInfoNullRefExcTest.cs" />
     <Compile Include="ParserTest\MessageInfoParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestTest\TelegramMockBotInlineKeyboardTest.cs" />
     <Compile Include="ResultTestObject\BooleanResultObect.cs" />
     <Compile Include="RequestTest\TelegramMockBotClientTest.cs" />
     <Compile Include="RequestTest\TelegramMockBotKeyboardTest.cs" />

@@ -141,6 +141,39 @@ namespace NetTelebot.Tests
             Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.channel);
         }
 
+        [Test, Ignore("AddedTestInProcess")]
+        public void SendInlineKeyboardToGroupTest()
+        {
+
+            InlineKeyboardButton[] lines1 =
+            {
+                new InlineKeyboardButton {Text = "Button1"},
+                new InlineKeyboardButton {Text = "Button2"},
+                new InlineKeyboardButton {Text = "Button3"},
+                new InlineKeyboardButton {Text = "Button4"}
+            };
+
+            InlineKeyboardButton[] lines2 =
+            {
+                new InlineKeyboardButton {Text = "Button5"},
+                new InlineKeyboardButton {Text = "Button4"}
+            };
+
+            InlineKeyboardButton[][] keyboard =
+            {
+                lines1, lines2
+            };
+
+            InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup
+            {
+                Keyboard = keyboard,
+            };
+
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatSuperGroupId, "Test", replyMarkup: inlineKeyboard);
+
+            Assert.True(sendMessage.Ok);
+        }
+
         [Test]
         public void SendReplyKeyboardMarkupToGroupTest()
         {
