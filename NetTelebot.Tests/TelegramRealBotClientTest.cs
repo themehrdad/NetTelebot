@@ -214,5 +214,30 @@ namespace NetTelebot.Tests
         }
 
 
+        [Test]
+        public void GetChatFromGroupTest()
+        {
+            ChatInfoResult getChatResult = mTelegramBot.GetChat(mChatGroupId);
+
+            Assert.True(getChatResult.Ok);
+            Assert.AreEqual(getChatResult.Result.Id, mChatGroupId);
+            Assert.AreEqual(getChatResult.Result.Type, ChatType.@group);
+            Assert.AreEqual(getChatResult.Result.AllMembersAreAdministrators, true);
+
+            Console.WriteLine("GetChat result: " +
+                "\ngetChatResult.Result.Id " + getChatResult.Result.Id +
+                "\ngetChatResult.Result.Title " + getChatResult.Result.Type +
+                "\ngetChatResult.Result.Title " + getChatResult.Result.Title +
+                "\ngetChatResult.Result.Username " + getChatResult.Result.Username +
+                "\ngetChatResult.Result.FirstName " + getChatResult.Result.FirstName +
+                "\ngetChatResult.Result.LastName " + getChatResult.Result.LastName +
+                "\ngetChatResult.Result.AllMembersAreAdministrators " + getChatResult.Result.AllMembersAreAdministrators +
+                "\ngetChatResult.Result.Photo " + getChatResult.Result.Photo +
+                "\ngetChatResult.Result.Description " + getChatResult.Result.Description +
+                "\ngetChatResult.Result.InviteLink " + getChatResult.Result.InviteLink
+                );
+        }
+
+
     }
 }

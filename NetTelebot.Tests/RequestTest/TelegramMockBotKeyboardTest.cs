@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using Mock4Net.Core;
-using NetTelebot.Tests.MockServerObject;
 using NetTelebot.Type.Keyboard;
 using NUnit.Framework;
 using RestSharp;
+using static NetTelebot.Tests.MockServer.MockServer;
 
 namespace NetTelebot.Tests.RequestTest
 {
@@ -18,13 +18,13 @@ namespace NetTelebot.Tests.RequestTest
         [OneTimeSetUp]
         public static void OnStart()
         {
-            MockServer.Start(mServerPort);
+            Start(mServerPort);
         }
 
         [OneTimeTearDown]
         public static void OnStop()
         {
-            MockServer.Stop();
+            Stop();
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace NetTelebot.Tests.RequestTest
 
             mBotOkResponse.SendMessage(123, "Test", replyMarkup: replyMarkup);
 
-            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
+            var request = ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
 
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
@@ -69,7 +69,7 @@ namespace NetTelebot.Tests.RequestTest
 
             TelegramMockBotClientTest.PrintResult(request);
 
-            MockServer.ServerOkResponse.ResetRequestLogs();
+            ServerOkResponse.ResetRequestLogs();
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace NetTelebot.Tests.RequestTest
         {
             mBotOkResponse.SendMessage(123, "Test", replyMarkup: new ForceReplyMarkup {Selective = true});
 
-            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
+            var request = ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
 
             TelegramMockBotClientTest.PrintResult(request);
 
@@ -87,7 +87,7 @@ namespace NetTelebot.Tests.RequestTest
                 "7B%0D%0A%20%20%22force_reply%22%3A%20true%2C%0D%0A%20%20%22selective%22%3A%20true%0D%0A%7D");
             
 
-            MockServer.ServerOkResponse.ResetRequestLogs();
+            ServerOkResponse.ResetRequestLogs();
 
             mBotOkResponse.SendMessage(123, "Test", replyMarkup: new ForceReplyMarkup { Selective = false });
 
@@ -98,7 +98,7 @@ namespace NetTelebot.Tests.RequestTest
 
             TelegramMockBotClientTest.PrintResult(request);
 
-            MockServer.ServerOkResponse.ResetRequestLogs();
+            ServerOkResponse.ResetRequestLogs();
         }
 
         [Test, Obsolete("In version 1.0.11 it will be deleted")]
@@ -106,7 +106,7 @@ namespace NetTelebot.Tests.RequestTest
         {
             mBotOkResponse.SendMessage(123, "Test", replyMarkup: new ReplyKeyboardHideMarkup { Selective = true });
 
-            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
+            var request = ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
 
             TelegramMockBotClientTest.PrintResult(request);
 
@@ -116,7 +116,7 @@ namespace NetTelebot.Tests.RequestTest
                 "7B%0D%0A%20%20%22hide_keyboard%22%3A%20true%2C%0D%0A%20%20%22selective%22%3A%20true%0D%0A%7D");
 
 
-            MockServer.ServerOkResponse.ResetRequestLogs();
+            ServerOkResponse.ResetRequestLogs();
 
             mBotOkResponse.SendMessage(123, "Test", replyMarkup: new ReplyKeyboardHideMarkup { Selective = false });
 
@@ -127,7 +127,7 @@ namespace NetTelebot.Tests.RequestTest
 
             TelegramMockBotClientTest.PrintResult(request);
 
-            MockServer.ServerOkResponse.ResetRequestLogs();
+            ServerOkResponse.ResetRequestLogs();
         }
 
         [Test]
@@ -135,7 +135,7 @@ namespace NetTelebot.Tests.RequestTest
         {
             mBotOkResponse.SendMessage(123, "Test", replyMarkup: new ReplyKeyboardRemove { Selective = true });
 
-            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
+            var request = ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
 
             TelegramMockBotClientTest.PrintResult(request);
 
@@ -145,7 +145,7 @@ namespace NetTelebot.Tests.RequestTest
                 "7B%0D%0A%20%20%22remove_keyboard%22%3A%20true%2C%0D%0A%20%20%22selective%22%3A%20true%0D%0A%7D");
 
 
-            MockServer.ServerOkResponse.ResetRequestLogs();
+            ServerOkResponse.ResetRequestLogs();
 
             mBotOkResponse.SendMessage(123, "Test", replyMarkup: new ReplyKeyboardRemove { Selective = false });
 
@@ -156,7 +156,7 @@ namespace NetTelebot.Tests.RequestTest
 
             TelegramMockBotClientTest.PrintResult(request);
 
-            MockServer.ServerOkResponse.ResetRequestLogs();
+            ServerOkResponse.ResetRequestLogs();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Mock4Net.Core;
 
-namespace NetTelebot.Tests.MockServerObject
+namespace NetTelebot.Tests.MockServer
 {
     internal static class MockServer
     {
@@ -92,6 +92,16 @@ namespace NetTelebot.Tests.MockServerObject
                     Responses
                         .WithStatusCode(200)
                         .WithBody(ResponseString.mExpectedBodyForBooleanResult)
+                );
+
+            ServerOkResponse?
+                .Given(
+                    Requests.WithUrl("/botToken/getChat").UsingPost()
+                )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(ResponseString.mExpectedBodyForGetChat)
                 );
 
             ServerBadResponse?
