@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using NetTelebot.CommonUtils;
 using NetTelebot.Interface;
 using NetTelebot.Result;
@@ -14,8 +15,10 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
 
         private static void Main()
         {
+            //EnableProxy();
+
             mClient = new TelegramBotClient
-            {
+            {    
                 Token = WindowsCredential.GetTelegramCredential("NetTelebotBot").Token,
                 CheckInterval = 1000
             };
@@ -26,6 +29,12 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
 
             Console.WriteLine("Bot start. For exit press any key");
             Console.ReadKey();
+        }
+
+        private static void EnableProxy()
+        {
+            WebProxy proxyObject = new WebProxy("http://192.168.1.254:3128/", true);
+            WebRequest.DefaultWebProxy = proxyObject;
         }
 
         private static void ClientUpdatesReceived(object sender, TelegramUpdateEventArgs e)
