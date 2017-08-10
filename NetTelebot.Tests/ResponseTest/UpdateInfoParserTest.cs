@@ -10,7 +10,7 @@ namespace NetTelebot.Tests.ResponseTest
     internal static class UpdateInfoParserTest
     {
         [Test]
-        internal static void UpdateInfoTest()
+        public static void UpdateInfoTest()
         {
             const int updateId = 123;
 
