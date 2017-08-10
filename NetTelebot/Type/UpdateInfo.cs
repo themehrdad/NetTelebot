@@ -17,19 +17,10 @@ namespace NetTelebot.Type
         private void Parse(JObject jsonObject)
         {
             UpdateId = jsonObject["update_id"].Value<int>();
+
             if (jsonObject["message"] != null)
                 Message = new MessageInfo(jsonObject["message"].Value<JObject>());
         }
-
-        /// <summary>
-        /// The update‘s unique identifier.
-        /// </summary>
-        public int UpdateId { get; private set; }
-        
-        /// <summary>
-        /// New incoming message of any kind — text, photo, sticker, etc.
-        /// </summary>
-        public MessageInfo Message { get; private set; }
 
         /// <summary>
         /// Parses the array.
@@ -51,5 +42,15 @@ namespace NetTelebot.Type
         {
             return jsonArray.Cast<JObject>().Select(jobject => new UpdateInfo(jobject)).ToArray();
         }
+
+        /// <summary>
+        /// The update‘s unique identifier.
+        /// </summary>
+        public int UpdateId { get; private set; }
+
+        /// <summary>
+        /// New incoming message of any kind — text, photo, sticker, etc.
+        /// </summary>
+        public MessageInfo Message { get; private set; }
     }
 }

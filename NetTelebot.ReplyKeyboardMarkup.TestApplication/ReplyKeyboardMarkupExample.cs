@@ -2,7 +2,7 @@
 
 namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
 {
-    internal static class ForceReplyMarkupExample
+    internal static class ReplyKeyboardMarkupExample
     {
         internal static ReplyKeyboardMarkup GetKeyboardMarkup()
         {

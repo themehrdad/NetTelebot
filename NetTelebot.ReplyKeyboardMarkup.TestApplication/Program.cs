@@ -39,11 +39,12 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
                 {
                     mClient.SendMessage(update.Message.Chat.Id,
                         "Hello. I`m example bot. Type /calculate for exmple keyboard button and reply keyboard markup. " +
-                        "Type /reply for example force reply. Type /getId return chat_id");
+                        "Type /reply for example force reply. Type /getId return chat_id", 
+                        replyMarkup: InlineKeyboardExample.GetInlineKeyboard());
                 }
                 else if (update.Message.Text.Equals("/calculate"))
                 {
-                    SendMessage(update.Message.Chat.Id, "Please enter an arithmetic expression and press =", ForceReplyMarkupExample.GetKeyboardMarkup());
+                    SendMessage(update.Message.Chat.Id, "Please enter an arithmetic expression and press =", ReplyKeyboardMarkupExample.GetKeyboardMarkup());
                 }
                 else if (update.Message.Text.Equals("/reply"))
                 {

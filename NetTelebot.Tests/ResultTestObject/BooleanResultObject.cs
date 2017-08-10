@@ -2,7 +2,7 @@
 
 namespace NetTelebot.Tests.ResultTestObject
 {
-    internal static class BooleanResultObect
+    internal static class BooleanResultObject
     {
 
         internal static JObject GetObject(bool ok, bool result)
