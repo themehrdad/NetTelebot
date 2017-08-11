@@ -6,7 +6,8 @@ namespace NetTelebot.Tests.TypeTestObject
     internal static class UserInfoObject
     {
         /// <summary>
-        /// This object represents a Telegram user or bot. See <see href="https://core.telegram.org/bots/api#user">API</see>
+        /// This object represents a Telegram user or bot. 
+        /// See <see href="https://core.telegram.org/bots/api#user">API</see>
         /// </summary>
         /// <param name="id">Unique identifier for this user or bot</param>
         /// <param name="firstName">User‘s or bot’s first name</param>

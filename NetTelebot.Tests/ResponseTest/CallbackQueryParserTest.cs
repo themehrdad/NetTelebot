@@ -9,9 +9,13 @@ namespace NetTelebot.Tests.ResponseTest
     [TestFixture]
     internal static class CallbackQueryParserTest
     {
+        /// <summary>
+        /// Test for <see cref="CallbackQueryInfo"/> parse field.
+        /// </summary>
         [Test]
         public static void CallbackQueryTest()
         {
+            //field class UserInfo
             const int id = 123;
             const string idСallback = "123";
             const string firstName = "TestFirstName";
@@ -19,11 +23,13 @@ namespace NetTelebot.Tests.ResponseTest
             const string username = " TestUserName";
             const string languageCode = "TestLanguageCode";
 
+            //field class MessageInfo
             const int messageId = 123;
             const int date = 0;
             const int chatId = 123;
             const ChatType chatType = ChatType.channel;
 
+            //field class CallbackQueryInfo
             const string inlineMessageId = "123";
             const string chatInstance = "123";
             const string data = "TestData";

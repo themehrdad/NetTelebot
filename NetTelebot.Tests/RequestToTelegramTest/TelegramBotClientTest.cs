@@ -25,7 +25,7 @@ namespace NetTelebot.Tests.RequestToTelegramTest
         }
 
         /// <summary>
-        /// Gets me test for method <see cref="TelegramBotClient.GetMe"/>.
+        /// Test for method <see cref="TelegramBotClient.GetMe"/>.
         /// </summary>
         [Test]
         public void GetMeTest()
@@ -43,6 +43,9 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             Assert.AreEqual(getMe.FirstName, "NetTelebotTestedBot");
         }
 
+        /// <summary>
+        /// Test for method <see cref="TelegramBotClient.SendMessage"/>. Send message to group chat id.
+        /// </summary>
         [Test]
         public void SendMessageToChatTest()
         {
@@ -67,29 +70,8 @@ namespace NetTelebot.Tests.RequestToTelegramTest
         }
 
         /// <summary>
-        /// Test the send and return location point (SendMessageResult.Result.Location.Latitude, SendMessageResult.Result.Location.Longitude)
+        /// Test for method <see cref="TelegramBotClient.SendMessage"/>. Send message to supergroup chat id.
         /// </summary>
-        [Test]
-        public void SendSendLocationTest()
-        {
-            const float latitude = 1.00000095f;
-            const float longitude = 1.00000203f;
-
-            SendMessageResult sendLocation = mTelegramBot.SendLocation(mChatGroupId, latitude, longitude);
-
-            Assert.AreEqual(sendLocation.Result.Location.Latitude, latitude);
-            Assert.AreEqual(sendLocation.Result.Location.Longitude, longitude);
-        }
-
-        [Test, Ignore("Do not use. Leave bot from group")]
-        public void LeaveChatTest()
-        {
-            BooleanResult leaveChat = mTelegramBot.LeaveChat(mChatGroupId);
-
-            Assert.True(leaveChat.Ok);
-            Assert.True(leaveChat.Result);
-        }
-
         [Test]
         public void SendMessageToSuperGroupTest()
         {
@@ -114,7 +96,7 @@ namespace NetTelebot.Tests.RequestToTelegramTest
         }
 
         /// <summary>
-        /// For send messages to @public_shannel added bot to shannel admin (need off privacy mode)
+        /// Test for method <see cref="TelegramBotClient.SendMessage"/>. Send message to @shannelname chat id.
         /// </summary>
         [Test]
         public void SendMessageToPublicChannelTest()
@@ -134,10 +116,35 @@ namespace NetTelebot.Tests.RequestToTelegramTest
                 "\n invite link" + sendMessage.Result.Chat.InviteLink
                 );
 
-            Console.WriteLine(sendMessage);
-
             Assert.IsInstanceOf<long>(sendMessage.Result.Chat.Id);
             Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.channel);
+        }
+
+        /// <summary>
+        /// Test for method <see cref="TelegramBotClient.SendLocation"/>.
+        /// </summary>
+        [Test]
+        public void SendLocationTest()
+        {
+            const float latitude = 1.00000095f;
+            const float longitude = 1.00000203f;
+
+            SendMessageResult sendLocation = mTelegramBot.SendLocation(mChatGroupId, latitude, longitude);
+
+            Assert.AreEqual(sendLocation.Result.Location.Latitude, latitude);
+            Assert.AreEqual(sendLocation.Result.Location.Longitude, longitude);
+        }
+
+        /// <summary>
+        /// Test for method <see cref="TelegramBotClient.LeaveChat"/>.
+        /// </summary>
+        [Test, Ignore("Do not use. Leave bot from group")]
+        public void LeaveChatTest()
+        {
+            BooleanResult leaveChat = mTelegramBot.LeaveChat(mChatGroupId);
+
+            Assert.True(leaveChat.Ok);
+            Assert.True(leaveChat.Result);
         }
 
         [Test]
