@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
@@ -20,17 +19,6 @@ namespace NetTelebot.Type
 
             if (jsonObject["message"] != null)
                 Message = new MessageInfo(jsonObject["message"].Value<JObject>());
-        }
-
-        /// <summary>
-        /// Parses the array.
-        /// </summary>
-        /// <param name="jsonText">The json text.</param>
-        /// <returns></returns>
-        public static UpdateInfo[] ParseArray(string jsonText)
-        {
-            JArray jsonArray = (JArray)JsonConvert.DeserializeObject(jsonText);
-            return ParseArray(jsonArray);
         }
 
         /// <summary>

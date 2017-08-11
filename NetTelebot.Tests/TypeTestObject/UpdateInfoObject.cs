@@ -14,5 +14,11 @@ namespace NetTelebot.Tests.TypeTestObject
 
             return updateInfo;
         }
+
+        internal static JArray GetObjectInArray(int updateId, JObject messageInfo = null)
+        {
+            JObject objects = GetObject(updateId, messageInfo);
+            return new JArray(objects);
+        }
     }
 }

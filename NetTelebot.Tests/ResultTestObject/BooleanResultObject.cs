@@ -4,7 +4,6 @@ namespace NetTelebot.Tests.ResultTestObject
 {
     internal static class BooleanResultObject
     {
-
         internal static JObject GetObject(bool ok, bool result)
         {
             dynamic booleanResult = new JObject();
