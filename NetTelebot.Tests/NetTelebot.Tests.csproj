@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="MockServer\MockServer.cs" />
     <Compile Include="MockServer\ResponseString.cs" />
+    <Compile Include="RequestToTelegramTest\TelegramBotInlineKeyboardTest.cs" />
     <Compile Include="RequestToTelegramTest\TelegramBotKeyboardTest.cs" />
     <Compile Include="ResponseTest\BooleanResultParserTest.cs" />
     <Compile Include="ResponseTest\CallbackQueryParserTest.cs" />

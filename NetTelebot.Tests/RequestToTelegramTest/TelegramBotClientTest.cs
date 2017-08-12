@@ -1,9 +1,7 @@
-﻿using System;
-using NetTelebot.BotEnum;
+﻿using NetTelebot.BotEnum;
 using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type;
-using NetTelebot.Type.Keyboard;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests.RequestToTelegramTest
@@ -32,15 +30,13 @@ namespace NetTelebot.Tests.RequestToTelegramTest
         {
             MeInfo getMe = mTelegramBot.GetMe();
 
-            Console.WriteLine(
-                "\nid: " + getMe.Id +
-                "\nFirstName: " + getMe.FirstName +
-                "\nLastName: " + getMe.LastName +
-                "\nUserName: " + getMe.UserName +
-                "\nLanguageCode: " + getMe.LanguageCode +
-                "\nOk: " + getMe.Ok);
+            ConsoleUtlis.PrintResult(getMe);
 
-            Assert.AreEqual(getMe.FirstName, "NetTelebotTestedBot");
+            Assert.Multiple(() =>
+            {
+                Assert.True(getMe.Ok);
+                Assert.AreEqual(getMe.FirstName, "NetTelebotTestedBot");
+            });
         }
 
         /// <summary>
@@ -51,22 +47,14 @@ namespace NetTelebot.Tests.RequestToTelegramTest
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Test");
 
-            Console.WriteLine(
-                "\n id " + sendMessage.Result.Chat.Id +
-                "\n type " + sendMessage.Result.Chat.Type +
-                "\n title " + sendMessage.Result.Chat.Title +
-                "\n username " + sendMessage.Result.Chat.Username +
-                "\n firstname " + sendMessage.Result.Chat.FirstName +
-                "\n lastaname " + sendMessage.Result.Chat.LastName +
-                "\n All members are administrator " + sendMessage.Result.Chat.AllMembersAreAdministrators +
-                "\n Photo " + sendMessage.Result.Chat.Photo +
-                "\n description " + sendMessage.Result.Chat.Description +
-                "\n invite link" + sendMessage.Result.Chat.InviteLink
-                );
+            ConsoleUtlis.PrintResult(sendMessage.Result.Chat);
 
-            Assert.AreEqual(sendMessage.Result.Chat.Id, mChatGroupId);
-            Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.@group);
-            Assert.IsTrue(sendMessage.Result.Chat.AllMembersAreAdministrators);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(sendMessage.Result.Chat.Id, mChatGroupId);
+                Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.@group);
+                Assert.IsTrue(sendMessage.Result.Chat.AllMembersAreAdministrators);
+            });
         }
 
         /// <summary>
@@ -77,22 +65,14 @@ namespace NetTelebot.Tests.RequestToTelegramTest
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatSuperGroupId, "Test");
 
-            Console.WriteLine(
-                "\n id " + sendMessage.Result.Chat.Id +
-                "\n type " + sendMessage.Result.Chat.Type +
-                "\n title " + sendMessage.Result.Chat.Title +
-                "\n username " + sendMessage.Result.Chat.Username +
-                "\n firstname " + sendMessage.Result.Chat.FirstName +
-                "\n lastaname " + sendMessage.Result.Chat.LastName +
-                "\n All members are administrator " + sendMessage.Result.Chat.AllMembersAreAdministrators +
-                "\n Photo " + sendMessage.Result.Chat.Photo +
-                "\n description " + sendMessage.Result.Chat.Description +
-                "\n invite link" + sendMessage.Result.Chat.InviteLink
-                );
+            ConsoleUtlis.PrintResult(sendMessage.Result.Chat);
 
-            Assert.AreEqual(sendMessage.Result.Chat.Id, mChatSuperGroupId);
-            Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.supergroup);
-            Assert.IsFalse(sendMessage.Result.Chat.AllMembersAreAdministrators);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(sendMessage.Result.Chat.Id, mChatSuperGroupId);
+                Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.supergroup);
+                Assert.IsFalse(sendMessage.Result.Chat.AllMembersAreAdministrators);
+            });
         }
 
         /// <summary>
@@ -103,21 +83,13 @@ namespace NetTelebot.Tests.RequestToTelegramTest
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage("@telebotTestChannel", "Test");
 
-            Console.WriteLine(
-                "\n id " + sendMessage.Result.Chat.Id +
-                "\n type " + sendMessage.Result.Chat.Type +
-                "\n title " + sendMessage.Result.Chat.Title +
-                "\n username " + sendMessage.Result.Chat.Username +
-                "\n firstname " + sendMessage.Result.Chat.FirstName +
-                "\n lastaname " + sendMessage.Result.Chat.LastName +
-                "\n All members are administrator " + sendMessage.Result.Chat.AllMembersAreAdministrators +
-                "\n Photo " + sendMessage.Result.Chat.Photo +
-                "\n description " + sendMessage.Result.Chat.Description +
-                "\n invite link" + sendMessage.Result.Chat.InviteLink
-                );
+            ConsoleUtlis.PrintResult(sendMessage.Result.Chat);
 
-            Assert.IsInstanceOf<long>(sendMessage.Result.Chat.Id);
-            Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.channel);
+            Assert.Multiple(() =>
+            {
+                Assert.IsInstanceOf<long>(sendMessage.Result.Chat.Id);
+                Assert.AreEqual(sendMessage.Result.Chat.Type, ChatType.channel);
+            });
         }
 
         /// <summary>
@@ -131,8 +103,13 @@ namespace NetTelebot.Tests.RequestToTelegramTest
 
             SendMessageResult sendLocation = mTelegramBot.SendLocation(mChatGroupId, latitude, longitude);
 
-            Assert.AreEqual(sendLocation.Result.Location.Latitude, latitude);
-            Assert.AreEqual(sendLocation.Result.Location.Longitude, longitude);
+            ConsoleUtlis.PrintResult(sendLocation.Result.Location);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(sendLocation.Result.Location.Latitude, latitude);
+                Assert.AreEqual(sendLocation.Result.Location.Longitude, longitude);
+            });
         }
 
         /// <summary>
@@ -143,39 +120,11 @@ namespace NetTelebot.Tests.RequestToTelegramTest
         {
             BooleanResult leaveChat = mTelegramBot.LeaveChat(mChatGroupId);
 
-            Assert.True(leaveChat.Ok);
-            Assert.True(leaveChat.Result);
-        }
-
-        [Test]
-        public void SendInlineKeyboardToGroupTest()
-        {
-
-            InlineKeyboardButton[] lines1 =
+            Assert.Multiple(() =>
             {
-                new InlineKeyboardButton {Text = "AboutInline", Url = "https://core.telegram.org/bots/api#inlinekeyboardmarkup"},
-                new InlineKeyboardButton {Text = "GoToRepo", Url = "https://github.com/themehrdad/NetTelebot"},
-            };
-
-            InlineKeyboardButton[] lines2 =
-            {
-                new InlineKeyboardButton {Text = "GoToGoogle", Url = "https://www.google.com", },
-                new InlineKeyboardButton {Text = "GoToYouTube", Url = "https://www.youtube.com"}
-            };
-
-            InlineKeyboardButton[][] keyboard =
-            {
-                lines1, lines2
-            };
-
-            InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup
-            {
-                Keyboard = keyboard,
-            };
-
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Please press button", replyMarkup: inlineKeyboard);
-
-            Assert.True(sendMessage.Ok);
+                Assert.True(leaveChat.Ok);
+                Assert.True(leaveChat.Result);
+            });
         }
 
         [Test]
@@ -183,23 +132,17 @@ namespace NetTelebot.Tests.RequestToTelegramTest
         {
             ChatInfoResult getChatResult = mTelegramBot.GetChat(mChatGroupId);
 
-            Assert.True(getChatResult.Ok);
-            Assert.AreEqual(getChatResult.Result.Id, mChatGroupId);
-            Assert.AreEqual(getChatResult.Result.Type, ChatType.@group);
-            Assert.AreEqual(getChatResult.Result.AllMembersAreAdministrators, true);
+            ConsoleUtlis.PrintResult(getChatResult.Result);
 
-            Console.WriteLine("GetChat result: " +
-                "\ngetChatResult.Result.Id " + getChatResult.Result.Id +
-                "\ngetChatResult.Result.Title " + getChatResult.Result.Type +
-                "\ngetChatResult.Result.Title " + getChatResult.Result.Title +
-                "\ngetChatResult.Result.Username " + getChatResult.Result.Username +
-                "\ngetChatResult.Result.FirstName " + getChatResult.Result.FirstName +
-                "\ngetChatResult.Result.LastName " + getChatResult.Result.LastName +
-                "\ngetChatResult.Result.AllMembersAreAdministrators " + getChatResult.Result.AllMembersAreAdministrators +
-                "\ngetChatResult.Result.Photo " + getChatResult.Result.Photo +
-                "\ngetChatResult.Result.Description " + getChatResult.Result.Description +
-                "\ngetChatResult.Result.InviteLink " + getChatResult.Result.InviteLink
-                );
+            Assert.Multiple(() =>
+            {
+                Assert.True(getChatResult.Ok);
+                Assert.AreEqual(getChatResult.Result.Id, mChatGroupId);
+                Assert.AreEqual(getChatResult.Result.Type, ChatType.@group);
+                Assert.AreEqual(getChatResult.Result.AllMembersAreAdministrators, true);
+            });
         }
+
+
     }
 }

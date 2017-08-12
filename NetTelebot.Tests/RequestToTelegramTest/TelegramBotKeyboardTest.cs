@@ -22,6 +22,7 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             mChatSuperGroupId = new TelegramBot().GetSuperGroupChatId();
         }
 
+
         [Test]
         public void SendReplyKeyboardToGroupTest()
         {
