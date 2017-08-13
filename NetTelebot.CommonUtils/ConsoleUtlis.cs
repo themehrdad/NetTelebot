@@ -10,6 +10,44 @@ namespace NetTelebot.CommonUtils
             {
                 Console.WriteLine("Property name: " + properties.Name + ". Property value: " + properties.GetValue(result, null));
             }
+
+        }
+
+        public static void PrintResult(DateTime result)
+        {
+            foreach (var properties in result.GetType().GetProperties())
+            {
+                Console.WriteLine("Property name: " + properties.Name + ". Property value: " + properties.GetValue(result, null));
+            }
+
+        }
+
+        public static void PrintResult(long result)
+        {
+            var properties = result.GetType().Name;
+
+            Console.WriteLine("Property name: " + properties + ". Property value: " + result);
+        }
+
+        public static void PrintResult(int result)
+        {
+            var properties = result.GetType().Name;
+
+            Console.WriteLine("Property name: " + properties + ". Property value: " + result);
+        }
+
+        public static void PrintResult(bool result)
+        {
+            var properties = result.GetType().Name;
+
+            Console.WriteLine("Property name: " + properties + ". Property value: " + result);
+        }
+
+        public static void PrintResult(string result)
+        {
+            var properties = result.GetType().Name;
+
+            Console.WriteLine("Property name: " + properties + ". Property value: " + result);
         }
     }
 }

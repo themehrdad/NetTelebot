@@ -1,0 +1,314 @@
+﻿using NetTelebot.CommonUtils;
+using NetTelebot.Result;
+using NetTelebot.Type;
+using NUnit.Framework;
+
+namespace NetTelebot.Tests.NullReferenceExceptionTest
+{
+    [TestFixture]
+    internal class MessageInfoSimpleTypesTest
+    {
+        private TelegramBotClient mTelegramBot;
+        private long mChatId;
+
+        /// <summary>
+        /// Called when [test start].
+        /// </summary>
+        [SetUp]
+        public void OnTestStart()
+        {
+            mTelegramBot = new TelegramBot().GetGroupChatBot();
+            mChatId = new TelegramBot().GetGroupChatId();
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardDateUnix"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToMigrateFromForwardDateUnix()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromForwardDateUnix()");
+            
+            var forwardDateUnix = sendMessage.Result.ForwardDateUnix;
+            var forwardDateString = sendMessage.Result.ForwardDateUnix.ToString();
+
+            ConsoleUtlis.PrintResult(forwardDateUnix);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+                
+                Assert.IsInstanceOf(typeof (long), forwardDateUnix);
+                Assert.AreEqual(forwardDateUnix, 0);
+                Assert.AreEqual(forwardDateString, "0");
+            });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.EditDateUnix"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToMigrateFromEditDateUnix()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromEditDateUnix()");
+            
+            var editDateUnix = sendMessage.Result.EditDateUnix;
+            var editDateString = sendMessage.Result.EditDateUnix.ToString();
+
+            ConsoleUtlis.PrintResult(editDateUnix);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+                
+                Assert.IsInstanceOf(typeof (long), editDateUnix);
+                Assert.AreEqual(editDateUnix, 0);
+                Assert.AreEqual(editDateString, "0");
+            });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Text"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyText()
+        {
+            const float latitude = 37.0000114f;
+            const float longitude = 37.0000076f;
+
+            SendMessageResult sendLocation = mTelegramBot.SendLocation(mChatId, latitude, longitude);
+
+            var text = sendLocation.Result.Text;
+            var textToUpper = sendLocation.Result.Text.ToUpper();
+
+            ConsoleUtlis.PrintResult(text);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendLocation.Ok);
+
+                Assert.IsInstanceOf(typeof (string), text);
+                Assert.IsEmpty(text);
+                Assert.IsEmpty(textToUpper);
+            });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardFromMessageId"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyForwardFromMessageId()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyForwardFromMessageId()");
+            
+            var forwardFromMessageId = sendMessage.Result.ForwardFromMessageId;
+
+            ConsoleUtlis.PrintResult(forwardFromMessageId);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof (int), forwardFromMessageId);
+                Assert.AreEqual(forwardFromMessageId, 0);
+            });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Caption"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyCaption()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyCaption()");
+            
+            var caption = sendMessage.Result.Caption;
+            var captionLength = sendMessage.Result.Caption.Length;
+
+            ConsoleUtlis.PrintResult(caption);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+                
+                Assert.IsInstanceOf(typeof (string), caption);
+                Assert.IsEmpty(caption);
+                Assert.AreEqual(caption, string.Empty);
+                Assert.AreEqual(captionLength, 0);
+            });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatTitle"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyNewChatTitle()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyNewChatTitle()");
+            
+            var newChatTitle = sendMessage.Result.NewChatTitle;
+            var newChatTitleLenth = sendMessage.Result.NewChatTitle.Length;
+
+            ConsoleUtlis.PrintResult(newChatTitle);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof (string), newChatTitle);
+                Assert.IsEmpty(newChatTitle);
+                Assert.AreEqual(newChatTitle, string.Empty);
+                Assert.AreEqual(newChatTitleLenth, 0);
+            });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.DeleteChatPhoto"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyDeleteChatPhoto()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyDeleteChatPhoto()");
+            
+            var deleteChatPhoto = sendMessage.Result.DeleteChatPhoto;
+
+            ConsoleUtlis.PrintResult(deleteChatPhoto);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof (bool), deleteChatPhoto);
+                Assert.IsFalse(deleteChatPhoto);
+            });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.GroupChatCreated"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheGroupChatCreated()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheGroupChatCreated()");
+            
+            var groupChatCreated = sendMessage.Result.GroupChatCreated;
+
+            ConsoleUtlis.PrintResult(groupChatCreated);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof (bool), groupChatCreated);
+                Assert.IsFalse(groupChatCreated);
+            });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.SuperGroupChatCreated"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToSuperGroupChatCreated()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToSuperGroupChatCreated()");
+            
+            var superGroupChatCreated = sendMessage.Result.SuperGroupChatCreated;
+
+            ConsoleUtlis.PrintResult(superGroupChatCreated);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof(bool), superGroupChatCreated);
+                Assert.IsFalse(superGroupChatCreated);
+            });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ChannelChatCreated"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToChannelChatCreated()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToChannelChatCreated()");
+            
+            var channelChatCreated = sendMessage.Result.ChannelChatCreated;
+
+            ConsoleUtlis.PrintResult(channelChatCreated);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+                
+                Assert.IsInstanceOf(typeof (bool), channelChatCreated);
+                Assert.IsFalse(channelChatCreated);
+            });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.MigrateToChatId"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToMigrateToChatId()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateToChatId()");
+
+            var migrateToChatId = sendMessage.Result.MigrateToChatId;
+
+            ConsoleUtlis.PrintResult(migrateToChatId);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+                
+                Assert.IsInstanceOf(typeof (int), migrateToChatId);
+                Assert.AreEqual(migrateToChatId, 0);
+            });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatPhoto"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyNewChatPhoto()
+        {
+            //todo remade this
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyNewChatPhoto()");
+            
+            var newChatPhoto = sendMessage.Result.NewChatPhoto;
+            var newChatPhotoLength = sendMessage.Result.NewChatPhoto.Length;
+
+            ConsoleUtlis.PrintResult(newChatPhoto);
+            
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof (PhotoSizeInfo[]), newChatPhoto);
+                Assert.AreEqual(newChatPhotoLength, 0);
+            });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.MigrateFromChatId"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToMigrateFromChatId()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromChatId()");
+            
+            var migrateFromChatId = sendMessage.Result.MigrateFromChatId;
+
+            ConsoleUtlis.PrintResult(migrateFromChatId);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof (int), migrateFromChatId);
+                Assert.AreEqual(migrateFromChatId, 0);
+            });
+        }
+    }
+}

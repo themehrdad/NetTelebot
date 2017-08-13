@@ -5,7 +5,8 @@ using NUnit.Framework;
 
 namespace NetTelebot.Tests.RequestToTelegramTest
 {
-    class TelegramBotInlineKeyboardTest
+    [TestFixture]
+    internal class TelegramBotInlineKeyboardTest
     {
         private TelegramBotClient mTelegramBot;
         private long mChatGroupId;
@@ -15,13 +16,12 @@ namespace NetTelebot.Tests.RequestToTelegramTest
         public void OnTestStart()
         {
             mTelegramBot = new TelegramBot().GetGroupChatBot();
-
             mChatGroupId = new TelegramBot().GetGroupChatId();
             mChatSuperGroupId = new TelegramBot().GetSuperGroupChatId();
         }
 
         [Test]
-        public void SendInlineKeyboardToGroupTest()
+        public void SendInlineKeyboardWithUrlToGroupTest()
         {
 
             InlineKeyboardButton[] lines1 =
@@ -46,9 +46,14 @@ namespace NetTelebot.Tests.RequestToTelegramTest
                 Keyboard = keyboard,
             };
 
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatGroupId, "Please press button", replyMarkup: inlineKeyboard);
+            SendMessageResult sendMessageToGroup = mTelegramBot.SendMessage(mChatGroupId, "Please press button", replyMarkup: inlineKeyboard);
+            SendMessageResult sendMessageToSuperGroup = mTelegramBot.SendMessage(mChatSuperGroupId, "Please press button", replyMarkup: inlineKeyboard);
 
-            Assert.True(sendMessage.Ok);
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessageToGroup.Ok);
+                Assert.True(sendMessageToSuperGroup.Ok);
+            });
         }
     }
 }
