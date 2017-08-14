@@ -32,7 +32,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             var forwardDateUnix = sendMessage.Result.ForwardDateUnix;
             var forwardDateString = sendMessage.Result.ForwardDateUnix.ToString();
 
-            ConsoleUtlis.PrintResult(forwardDateUnix);
+            ConsoleUtlis.PrintSimpleResult(forwardDateUnix);
 
             Assert.Multiple(() =>
             {
@@ -55,7 +55,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             var editDateUnix = sendMessage.Result.EditDateUnix;
             var editDateString = sendMessage.Result.EditDateUnix.ToString();
 
-            ConsoleUtlis.PrintResult(editDateUnix);
+            ConsoleUtlis.PrintSimpleResult(editDateUnix);
 
             Assert.Multiple(() =>
             {
@@ -81,7 +81,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             var text = sendLocation.Result.Text;
             var textToUpper = sendLocation.Result.Text.ToUpper();
 
-            ConsoleUtlis.PrintResult(text);
+            ConsoleUtlis.PrintSimpleResult(text);
 
             Assert.Multiple(() =>
             {
@@ -103,7 +103,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             
             var forwardFromMessageId = sendMessage.Result.ForwardFromMessageId;
 
-            ConsoleUtlis.PrintResult(forwardFromMessageId);
+            ConsoleUtlis.PrintSimpleResult(forwardFromMessageId);
 
             Assert.Multiple(() =>
             {
@@ -125,7 +125,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             var caption = sendMessage.Result.Caption;
             var captionLength = sendMessage.Result.Caption.Length;
 
-            ConsoleUtlis.PrintResult(caption);
+            ConsoleUtlis.PrintSimpleResult(caption);
 
             Assert.Multiple(() =>
             {
@@ -149,7 +149,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             var newChatTitle = sendMessage.Result.NewChatTitle;
             var newChatTitleLenth = sendMessage.Result.NewChatTitle.Length;
 
-            ConsoleUtlis.PrintResult(newChatTitle);
+            ConsoleUtlis.PrintSimpleResult(newChatTitle);
 
             Assert.Multiple(() =>
             {
@@ -172,7 +172,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             
             var deleteChatPhoto = sendMessage.Result.DeleteChatPhoto;
 
-            ConsoleUtlis.PrintResult(deleteChatPhoto);
+            ConsoleUtlis.PrintSimpleResult(deleteChatPhoto);
 
             Assert.Multiple(() =>
             {
@@ -193,7 +193,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             
             var groupChatCreated = sendMessage.Result.GroupChatCreated;
 
-            ConsoleUtlis.PrintResult(groupChatCreated);
+            ConsoleUtlis.PrintSimpleResult(groupChatCreated);
 
             Assert.Multiple(() =>
             {
@@ -214,7 +214,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             
             var superGroupChatCreated = sendMessage.Result.SuperGroupChatCreated;
 
-            ConsoleUtlis.PrintResult(superGroupChatCreated);
+            ConsoleUtlis.PrintSimpleResult(superGroupChatCreated);
 
             Assert.Multiple(() =>
             {
@@ -235,7 +235,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             
             var channelChatCreated = sendMessage.Result.ChannelChatCreated;
 
-            ConsoleUtlis.PrintResult(channelChatCreated);
+            ConsoleUtlis.PrintSimpleResult(channelChatCreated);
 
             Assert.Multiple(() =>
             {
@@ -256,7 +256,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
 
             var migrateToChatId = sendMessage.Result.MigrateToChatId;
 
-            ConsoleUtlis.PrintResult(migrateToChatId);
+            ConsoleUtlis.PrintSimpleResult(migrateToChatId);
 
             Assert.Multiple(() =>
             {
@@ -267,28 +267,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             });
         }
 
-        /// <summary>
-        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatPhoto"/>
-        /// </summary>
-        [Test]
-        public void TestAppealToTheEmptyNewChatPhoto()
-        {
-            //todo remade this
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyNewChatPhoto()");
-            
-            var newChatPhoto = sendMessage.Result.NewChatPhoto;
-            var newChatPhotoLength = sendMessage.Result.NewChatPhoto.Length;
 
-            ConsoleUtlis.PrintResult(newChatPhoto);
-            
-            Assert.Multiple(() =>
-            {
-                Assert.True(sendMessage.Ok);
-
-                Assert.IsInstanceOf(typeof (PhotoSizeInfo[]), newChatPhoto);
-                Assert.AreEqual(newChatPhotoLength, 0);
-            });
-        }
 
         /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.MigrateFromChatId"/>
@@ -300,7 +279,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             
             var migrateFromChatId = sendMessage.Result.MigrateFromChatId;
 
-            ConsoleUtlis.PrintResult(migrateFromChatId);
+            ConsoleUtlis.PrintSimpleResult(migrateFromChatId);
 
             Assert.Multiple(() =>
             {
