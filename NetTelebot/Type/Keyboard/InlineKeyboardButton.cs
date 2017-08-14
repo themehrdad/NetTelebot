@@ -63,8 +63,9 @@ namespace NetTelebot.Type.Keyboard
 
         /// <summary>
         /// Optional. 
-        /// If set, pressing the button will insert the bot‘s username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot’s username will be inserted.
-        /// This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting something from multiple options.
+        /// If set, pressing the button will insert the bot‘s username and the specified inline query in the current chat's input field. 
+        /// Can be empty, in which case only the bot’s username will be inserted. This offers a quick way for the user to open your bot in 
+        /// inline mode in the same chat – good for selecting something from multiple options.
         /// </summary>
         public string SwitchInlineQueryCurrentChat { get; set; }
 

@@ -22,6 +22,7 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             mChatSuperGroupId = new TelegramBot().GetSuperGroupChatId();
         }
 
+
         [Test]
         public void SendReplyKeyboardToGroupTest()
         {
@@ -52,8 +53,11 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             SendMessageResult sendMessageToGroup = mTelegramBot.SendMessage(mChatGroupId, "Test", replyMarkup: replyMarkup);
             SendMessageResult sendMessageToSuperGroup = mTelegramBot.SendMessage(mChatSuperGroupId, "Test", replyMarkup: replyMarkup);
 
-            Assert.True(sendMessageToGroup.Ok);
-            Assert.True(sendMessageToSuperGroup.Ok);
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessageToGroup.Ok);
+                Assert.True(sendMessageToSuperGroup.Ok);
+            });
         }
 
         [Test]
@@ -67,8 +71,11 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             SendMessageResult sendMessageToGroup = mTelegramBot.SendMessage(mChatGroupId, "Goodbay", replyMarkup: hideMarkup);
             SendMessageResult sendMessageToSuperGroup = mTelegramBot.SendMessage(mChatSuperGroupId, "Goodbay", replyMarkup: hideMarkup);
 
-            Assert.True(sendMessageToGroup.Ok);
-            Assert.True(sendMessageToSuperGroup.Ok);
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessageToGroup.Ok);
+                Assert.True(sendMessageToSuperGroup.Ok);
+            });
         }
 
         [Test]
@@ -81,9 +88,11 @@ namespace NetTelebot.Tests.RequestToTelegramTest
 
             SendMessageResult sendMessageToGroup = mTelegramBot.SendMessage(mChatGroupId, "Please type number", replyMarkup: forceReply);
             SendMessageResult sendMessageToSuperGroup = mTelegramBot.SendMessage(mChatSuperGroupId, "Please type number", replyMarkup: forceReply);
-
-            Assert.True(sendMessageToGroup.Ok);
-            Assert.True(sendMessageToSuperGroup.Ok);
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessageToGroup.Ok);
+                Assert.True(sendMessageToSuperGroup.Ok);
+            });
         }
 
         [Test, Obsolete("In version 1.0.11 it will be deleted")]
@@ -97,8 +106,11 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             SendMessageResult sendMessageToGroup = mTelegramBot.SendMessage(mChatGroupId, "Goodbay", replyMarkup: hideMarkup);
             SendMessageResult sendMessageToSuperGroup = mTelegramBot.SendMessage(mChatSuperGroupId, "Goodbay", replyMarkup: hideMarkup);
 
-            Assert.True(sendMessageToGroup.Ok);
-            Assert.True(sendMessageToSuperGroup.Ok);
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessageToGroup.Ok);
+                Assert.True(sendMessageToSuperGroup.Ok);
+            });
         }
     }
 }

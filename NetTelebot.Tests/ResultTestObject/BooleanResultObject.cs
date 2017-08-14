@@ -1,10 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using NetTelebot.Result;
+using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.ResultTestObject
 {
-    internal static class BooleanResultObect
+    internal static class BooleanResultObject
     {
-
+        /// <summary>
+        /// Object represent this type <see cref="BooleanResult"/>
+        /// </summary>
         internal static JObject GetObject(bool ok, bool result)
         {
             dynamic booleanResult = new JObject();

@@ -56,6 +56,7 @@
     <Compile Include="Type\ContactInfo.cs" />
     <Compile Include="Type\DocumentInfo.cs" />
     <Compile Include="Type\ExistingFile.cs" />
+    <Compile Include="Type\CallbackQueryInfo.cs" />
     <Compile Include="Type\Keyboard\ForceReplyMarkup.cs" />
     <Compile Include="Result\GetUpdatesResult.cs" />
     <Compile Include="Result\GetUserProfilePhotosResult.cs" />

@@ -15,7 +15,7 @@ namespace NetTelebot.Tests.ResponseTest
             const bool ok = true;
             const bool result = true;
            
-            dynamic booleanResultObject = BooleanResultObect.GetObject(ok, result);
+            dynamic booleanResultObject = BooleanResultObject.GetObject(ok, result);
 
             BooleanResult booleanResult = new BooleanResult(booleanResultObject);
 

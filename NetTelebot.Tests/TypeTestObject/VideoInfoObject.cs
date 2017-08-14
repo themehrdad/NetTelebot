@@ -6,7 +6,8 @@ namespace NetTelebot.Tests.TypeTestObject
     internal static class VideoInfoObject
     {
         /// <summary>
-        /// This object represents a video file. See <see href="https://core.telegram.org/bots/api#video">API</see>
+        /// This object represents a video file. 
+        /// See <see href="https://core.telegram.org/bots/api#video">API</see>
         /// </summary>
         /// <param name="fileId">Unique identifier for this file</param>
         /// <param name="width">Video width as defined by sender</param>
