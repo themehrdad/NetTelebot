@@ -35,12 +35,6 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
 
             UserInfo forwardFrom = sendMessage.Result.ForwardFrom;
 
-            var id = sendMessage.Result.ForwardFrom.Id;
-            var firstName = sendMessage.Result.ForwardFrom.FirstName;
-            var lastName = sendMessage.Result.ForwardFrom.LastName;
-            var userName = sendMessage.Result.ForwardFrom.UserName;
-            var languageCode = sendMessage.Result.ForwardFrom.LanguageCode;
-
             ConsoleUtlis.PrintResult(forwardFrom);
 
             Assert.Multiple(() =>
@@ -48,11 +42,11 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.True(sendMessage.Ok);
 
                 Assert.IsInstanceOf(typeof (UserInfo), forwardFrom);
-                Assert.AreEqual(id, 0);
-                Assert.IsNull(firstName);
-                Assert.IsNull(lastName);
-                Assert.IsNull(userName);
-                Assert.IsNull(languageCode);
+                Assert.AreEqual(forwardFrom.Id, 0);
+                Assert.IsNull(forwardFrom.FirstName);
+                Assert.IsNull(forwardFrom.LastName);
+                Assert.IsNull(forwardFrom.UserName);
+                Assert.IsNull(forwardFrom.LanguageCode);
             });
         }
 
@@ -65,20 +59,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyForwardFrom()");
 
             ChatInfo forwardFromChat = sendMessage.Result.ForwardFromChat;
-
-            var id = sendMessage.Result.ForwardFromChat.Id;
-            var type = sendMessage.Result.ForwardFromChat.Type;
-            var title = sendMessage.Result.ForwardFromChat.Title;
-            var userName = sendMessage.Result.ForwardFromChat.Username;
-            var firstName = sendMessage.Result.ForwardFromChat.FirstName;
-            var lastName = sendMessage.Result.ForwardFromChat.LastName;
-            var allMembersAreAdministrators = sendMessage.Result.ForwardFromChat.AllMembersAreAdministrators;
-            var description = sendMessage.Result.ForwardFromChat.Description;
-            var inviteLink = sendMessage.Result.ForwardFromChat.InviteLink;
-
-            var photoBigFlleId = sendMessage.Result.ForwardFromChat.Photo.BigFileId;
-            var photoSmallFileId = sendMessage.Result.ForwardFromChat.Photo.SmallFileId;
-
+            
             ConsoleUtlis.PrintResult(forwardFromChat);
             ConsoleUtlis.PrintResult(forwardFromChat.Photo);
 
@@ -87,17 +68,18 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.True(sendMessage.Ok);
 
                 Assert.IsInstanceOf(typeof (ChatInfo), forwardFromChat);
-                Assert.AreEqual(id, 0);
-                Assert.IsNull(type);
-                Assert.IsNull(title);
-                Assert.IsNull(userName);
-                Assert.IsNull(firstName);
-                Assert.IsNull(lastName);
-                Assert.IsFalse(allMembersAreAdministrators);
-                Assert.IsNull(photoBigFlleId);
-                Assert.IsNull(photoSmallFileId);
-                Assert.IsNull(description);
-                Assert.IsNull(inviteLink);
+                Assert.AreEqual(forwardFromChat.Id, 0);
+                Assert.IsNull(forwardFromChat.Type);
+                Assert.IsNull(forwardFromChat.Title);
+                Assert.IsNull(forwardFromChat.Username);
+                Assert.IsNull(forwardFromChat.FirstName);
+                Assert.IsNull(forwardFromChat.LastName);
+                Assert.IsFalse(forwardFromChat.AllMembersAreAdministrators);
+                Assert.IsNull(forwardFromChat.Description);
+                Assert.IsNull(forwardFromChat.InviteLink);
+
+                Assert.IsNull(forwardFromChat.Photo.BigFileId);
+                Assert.IsNull(forwardFromChat.Photo.SmallFileId);
             });
         }
 
@@ -108,12 +90,8 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
         public void TestAppealToMigrateFromForwardDate()
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromForwardDate()");
-            
-            DateTime forwardDate = sendMessage.Result.ForwardDate;
 
-            var forwardDateYear = sendMessage.Result.ForwardDate.Year;
-            var forwardDateMonth = sendMessage.Result.ForwardDate.Month;
-            var forwardDateDay = sendMessage.Result.ForwardDate.Day;
+            DateTime forwardDate = sendMessage.Result.ForwardDate;
 
             ConsoleUtlis.PrintResult(forwardDate);
 
@@ -121,17 +99,13 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             {
                 Assert.True(sendMessage.Ok);
 
-                Assert.IsInstanceOf(typeof (DateTime), forwardDate);
+                Assert.IsInstanceOf(typeof(DateTime), forwardDate);
                 Assert.AreEqual(forwardDate, DateTime.MinValue);
-                Assert.AreEqual(forwardDateYear, 0001);
-                Assert.AreEqual(forwardDateMonth, 01);
-                Assert.AreEqual(forwardDateDay, 01);
+                Assert.AreEqual(forwardDate.Year, 0001);
+                Assert.AreEqual(forwardDate.Month, 01);
+                Assert.AreEqual(forwardDate.Day, 01);
             });
         }
-
-
-
-
 
         /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.EditDate"/>
@@ -142,11 +116,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromEditDate()");
 
             DateTime editDate = sendMessage.Result.EditDate;
-
-            var editDateYear = sendMessage.Result.EditDate.Year;
-            var editDateMonth = sendMessage.Result.EditDate.Month;
-            var editDateDay = sendMessage.Result.EditDate.Day;
-
+            
             ConsoleUtlis.PrintResult(editDate);
 
             Assert.Multiple(() =>
@@ -155,14 +125,11 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
 
                 Assert.IsInstanceOf(typeof (DateTime), editDate);
                 Assert.AreEqual(editDate, DateTime.MinValue);
-                Assert.AreEqual(editDateYear, 0001);
-                Assert.AreEqual(editDateMonth, 01);
-                Assert.AreEqual(editDateDay, 01);
+                Assert.AreEqual(editDate.Year, 0001);
+                Assert.AreEqual(editDate.Month, 01);
+                Assert.AreEqual(editDate.Day, 01);
             });
         }
-
-        
-
 
         /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Audio"/>
@@ -173,14 +140,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyAudio()");
 
             AudioInfo audio = sendMessage.Result.Audio;
-
-            var fileId = sendMessage.Result.Audio.FileId;
-            var duration = sendMessage.Result.Audio.Duration;
-            var performer = sendMessage.Result.Audio.Performer;
-            var title = sendMessage.Result.Audio.Title;
-            var mimeType = sendMessage.Result.Audio.MimeType;
-            var fileSize = sendMessage.Result.Audio.FileSize;
-
+            
             ConsoleUtlis.PrintResult(audio);
 
             Assert.Multiple(() =>
@@ -188,12 +148,12 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.True(sendMessage.Ok);
 
                 Assert.IsInstanceOf(typeof (AudioInfo), audio);
-                Assert.IsNull(fileId);
-                Assert.AreEqual(duration, 0);
-                Assert.IsNull(performer);
-                Assert.IsNull(title);
-                Assert.IsNull(mimeType);
-                Assert.AreEqual(fileSize, 0);
+                Assert.IsNull(audio.FileId);
+                Assert.AreEqual(audio.Duration, 0);
+                Assert.IsNull(audio.Performer);
+                Assert.IsNull(audio.Title);
+                Assert.IsNull(audio.MimeType);
+                Assert.AreEqual(audio.FileSize, 0);
             });
         }
 
@@ -206,35 +166,25 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyDocument()");
 
             DocumentInfo document = sendMessage.Result.Document;
-            var fileId = sendMessage.Result.Document.FileId;
-            var fileName = sendMessage.Result.Document.FileName;
-            var mimeType = sendMessage.Result.Document.MimeType;
-            var fileSize = sendMessage.Result.Document.FileSize;
-
-            PhotoSizeInfo thumb = sendMessage.Result.Document.Thumb;
-            var thumbWidth = sendMessage.Result.Document.Thumb.Width;
-            var thumbHeight = sendMessage.Result.Document.Thumb.Height;
-            var thumbFileId = sendMessage.Result.Document.Thumb.FileId;
-            var thumbFileSize = sendMessage.Result.Document.Thumb.FileSize;
-
+            
             ConsoleUtlis.PrintResult(document);
-            ConsoleUtlis.PrintResult(thumb);
+            ConsoleUtlis.PrintResult(document.Thumb);
 
             Assert.Multiple(() =>
             {
                 Assert.True(sendMessage.Ok);
 
                 Assert.IsInstanceOf(typeof (DocumentInfo), document);
-                Assert.IsNull(fileId);
-                Assert.IsNull(fileName);
-                Assert.IsNull(mimeType);
-                Assert.AreEqual(fileSize, 0);
+                Assert.IsNull(document.FileId);
+                Assert.IsNull(document.FileName);
+                Assert.IsNull(document.MimeType);
+                Assert.AreEqual(document.FileSize, 0);
 
-                Assert.IsInstanceOf(typeof (PhotoSizeInfo), thumb);
-                Assert.AreEqual(thumbWidth, 0);
-                Assert.AreEqual(thumbHeight, 0);
-                Assert.IsNull(thumbFileId);
-                Assert.AreEqual(thumbFileSize, 0);
+                Assert.IsInstanceOf(typeof (PhotoSizeInfo), document.Thumb);
+                Assert.AreEqual(document.Thumb.Width, 0);
+                Assert.AreEqual(document.Thumb.Height, 0);
+                Assert.IsNull(document.Thumb.FileId);
+                Assert.AreEqual(document.Thumb.FileSize, 0);
             });
         }
 
@@ -248,37 +198,25 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             
             StickerInfo sticker = sendMessage.Result.Sticker;
 
-            var fileId = sendMessage.Result.Sticker.FileId;
-            var width = sendMessage.Result.Sticker.Width;
-            var height = sendMessage.Result.Sticker.Height;
-            var emoji = sendMessage.Result.Sticker.Emoji;
-            var fileSize = sendMessage.Result.Sticker.FileSize;
-
-            var thumb = sendMessage.Result.Sticker.Thumb;
-            var thumbWidth = sendMessage.Result.Sticker.Thumb.Width;
-            var thumbHeight = sendMessage.Result.Sticker.Thumb.Height;
-            var thumbFileId = sendMessage.Result.Sticker.Thumb.FileId;
-            var thumbFileSize = sendMessage.Result.Sticker.Thumb.FileSize;
-
             ConsoleUtlis.PrintResult(sticker);
-            ConsoleUtlis.PrintResult(thumb);
+            ConsoleUtlis.PrintResult(sticker.Thumb);
 
             Assert.Multiple(() =>
             {
                 Assert.True(sendMessage.Ok);
             
                 Assert.IsInstanceOf(typeof (StickerInfo), sticker);
-                Assert.IsNull(fileId);
-                Assert.AreEqual(width, 0);
-                Assert.AreEqual(height, 0);
-                Assert.IsNull(emoji);
-                Assert.AreEqual(fileSize, 0);
+                Assert.IsNull(sticker.FileId);
+                Assert.AreEqual(sticker.Width, 0);
+                Assert.AreEqual(sticker.Height, 0);
+                Assert.IsNull(sticker.Emoji);
+                Assert.AreEqual(sticker.FileSize, 0);
                 
-                Assert.IsInstanceOf(typeof (PhotoSizeInfo), thumb);
-                Assert.AreEqual(thumbWidth, 0);
-                Assert.AreEqual(thumbHeight, 0);
-                Assert.IsNull(thumbFileId);
-                Assert.AreEqual(thumbFileSize, 0);
+                Assert.IsInstanceOf(typeof (PhotoSizeInfo), sticker.Thumb);
+                Assert.AreEqual(sticker.Thumb.Width, 0);
+                Assert.AreEqual(sticker.Thumb.Height, 0);
+                Assert.IsNull(sticker.Thumb.FileId);
+                Assert.AreEqual(sticker.Thumb.FileSize, 0);
             });
         }
 
@@ -291,39 +229,27 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyVideo()");
             
             VideoInfo video = sendMessage.Result.Video;
-            var fileId = sendMessage.Result.Video.FileId;
-            var duration = sendMessage.Result.Video.Duration;
-            var fileSize = sendMessage.Result.Video.FileSize;
-            var width = sendMessage.Result.Video.Width;
-            var height = sendMessage.Result.Video.Height;
-            var mimeType = sendMessage.Result.Video.MimeType;
             
-            var thumb = sendMessage.Result.Video.Thumb;
-            var thumbWidth = sendMessage.Result.Video.Thumb.Width;
-            var thumbHeight = sendMessage.Result.Video.Thumb.Height;
-            var thumbFileId = sendMessage.Result.Video.Thumb.FileId;
-            var thumbFileSize = sendMessage.Result.Video.Thumb.FileSize;
-
             ConsoleUtlis.PrintResult(video);
-            ConsoleUtlis.PrintResult(thumb);
+            ConsoleUtlis.PrintResult(video.Thumb);
 
             Assert.Multiple(() =>
             {
                 Assert.True(sendMessage.Ok);
 
                 Assert.IsInstanceOf(typeof (VideoInfo), video);
-                Assert.IsNull(fileId);
-                Assert.AreEqual(duration, 0);
-                Assert.AreEqual(width, 0);
-                Assert.AreEqual(height, 0);
-                Assert.AreEqual(fileSize, 0);
-                Assert.IsNull(mimeType);
+                Assert.IsNull(video.FileId);
+                Assert.AreEqual(video.Duration, 0);
+                Assert.AreEqual(video.Width, 0);
+                Assert.AreEqual(video.Height, 0);
+                Assert.AreEqual(video.FileSize, 0);
+                Assert.IsNull(video.MimeType);
                 
-                Assert.IsInstanceOf(typeof (PhotoSizeInfo), thumb);
-                Assert.AreEqual(thumbWidth, 0);
-                Assert.AreEqual(thumbHeight, 0);
-                Assert.IsNull(thumbFileId);
-                Assert.AreEqual(thumbFileSize, 0);
+                Assert.IsInstanceOf(typeof (PhotoSizeInfo), video.Thumb);
+                Assert.AreEqual(video.Thumb.Width, 0);
+                Assert.AreEqual(video.Thumb.Height, 0);
+                Assert.IsNull(video.Thumb.FileId);
+                Assert.AreEqual(video.Thumb.FileSize, 0);
             });
         }
 
@@ -336,10 +262,6 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyContact()");
             
             ContactInfo contact = sendMessage.Result.Contact;
-            var userId = sendMessage.Result.Contact.UserId;
-            var phoneNumber = sendMessage.Result.Contact.PhoneNumber;
-            var firstName = sendMessage.Result.Contact.FirstName;
-            var lastName = sendMessage.Result.Contact.LastName;
             
             ConsoleUtlis.PrintResult(contact);
 
@@ -348,10 +270,10 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.True(sendMessage.Ok);
 
                 Assert.IsInstanceOf(typeof (ContactInfo), contact);
-                Assert.IsNull(userId);
-                Assert.IsNull(phoneNumber);
-                Assert.IsNull(firstName);
-                Assert.IsNull(lastName);
+                Assert.IsNull(contact.UserId);
+                Assert.IsNull(contact.PhoneNumber);
+                Assert.IsNull(contact.FirstName);
+                Assert.IsNull(contact.LastName);
             });
         }
 
@@ -364,8 +286,6 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyLocation()");
             
             LocationInfo location = sendMessage.Result.Location;
-            var latitude = sendMessage.Result.Location.Latitude;
-            var longitude = sendMessage.Result.Location.Longitude;
             
             ConsoleUtlis.PrintResult(location);
 
@@ -374,8 +294,8 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.True(sendMessage.Ok);
 
                 Assert.IsInstanceOf(typeof (LocationInfo), location);
-                Assert.AreEqual(latitude, 0);
-                Assert.AreEqual(longitude, 0);
+                Assert.AreEqual(location.Latitude, 0);
+                Assert.AreEqual(location.Longitude, 0);
             });
         }
 
@@ -418,12 +338,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyLeftChatMember()");
             
             UserInfo leftChatMember = sendMessage.Result.LeftChatMember;
-            var id = sendMessage.Result.LeftChatMember.Id;
-            var firstName = sendMessage.Result.LeftChatMember.FirstName;
-            var lastName = sendMessage.Result.LeftChatMember.LastName;
-            var userName = sendMessage.Result.LeftChatMember.UserName;
-            var languageCode = sendMessage.Result.LeftChatMember.LanguageCode;
-
+            
             ConsoleUtlis.PrintResult(leftChatMember);
 
             Assert.Multiple(() =>
@@ -431,11 +346,11 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.True(sendMessage.Ok);
 
                 Assert.IsInstanceOf(typeof (UserInfo), leftChatMember);
-                Assert.AreEqual(id, 0);
-                Assert.IsNull(firstName);
-                Assert.IsNull(lastName);
-                Assert.IsNull(userName);
-                Assert.IsNull(languageCode);
+                Assert.AreEqual(leftChatMember.Id, 0);
+                Assert.IsNull(leftChatMember.FirstName);
+                Assert.IsNull(leftChatMember.LastName);
+                Assert.IsNull(leftChatMember.UserName);
+                Assert.IsNull(leftChatMember.LanguageCode);
             });
         }
     }

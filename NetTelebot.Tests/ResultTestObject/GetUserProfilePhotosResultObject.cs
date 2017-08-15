@@ -1,13 +1,12 @@
-﻿
-using NetTelebot.Result;
+﻿using NetTelebot.Result;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.ResultTestObject
 {
-    internal static class GetUpdatesResultObject
+    internal static class GetUserProfilePhotosResultObject
     {
         /// <summary>
-        /// Object represent this type <see cref="GetUpdatesResult"/>
+        /// Object represent this type <see cref="GetUserProfilePhotosResult"/>
         /// </summary>
         internal static JObject GetObject(bool ok, JArray result)
         {
@@ -18,6 +17,5 @@ namespace NetTelebot.Tests.ResultTestObject
 
             return getUpadtes;
         }
-
     }
 }
