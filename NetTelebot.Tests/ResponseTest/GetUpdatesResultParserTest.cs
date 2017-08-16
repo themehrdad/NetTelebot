@@ -27,10 +27,10 @@ namespace NetTelebot.Tests.ResponseTest
             const bool ok = true;
 
             var messageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatType);
-            dynamic result = UpdateInfoObject.GetObjectInArray(updateId, messageInfo);
+            dynamic result = UpdateInfoObject.GetObjectInArray(updateId, messageInfo: messageInfo  );
+
             dynamic getUpdates = GetUpdatesResultObject.GetObject(ok, result);
-            
-            var updateResult = new GetUpdatesResult(getUpdates.ToString());
+            GetUpdatesResult updateResult = new GetUpdatesResult(getUpdates.ToString());
 
             Assert.True(updateResult.Ok);
             Assert.AreEqual(updateResult.Result[0].UpdateId, updateId);

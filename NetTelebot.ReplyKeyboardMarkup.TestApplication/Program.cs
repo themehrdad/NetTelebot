@@ -26,6 +26,7 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
             mClient.UpdatesReceived += ClientUpdatesReceived;
             mClient.GetUpdatesError += ClientGetUpdatesError;
             mClient.StartCheckingUpdates();
+            
 
             Console.WriteLine("Bot start. For exit press any key");
             Console.ReadKey();
