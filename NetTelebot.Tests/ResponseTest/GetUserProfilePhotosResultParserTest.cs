@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace NetTelebot.Tests.ResponseTest
 {
     [TestFixture]
-    internal class GetUserProfilePhotosResultParserTest
+    internal static class GetUserProfilePhotosResultParserTest
     {
         /// <summary>
         /// Test for <see cref="GetUserProfilePhotosResult"/> parse field.
