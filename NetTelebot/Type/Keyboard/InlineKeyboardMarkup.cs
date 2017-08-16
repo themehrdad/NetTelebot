@@ -25,8 +25,8 @@ namespace NetTelebot.Type.Keyboard
         {
             JArray jArray = new JArray
             {
-                from KeyboardArray in keyboard
-                select GetJsonArray(KeyboardArray)
+                from keyboardArray in keyboard
+                select GetJsonArray(keyboardArray)
             };
 
             return jArray;
@@ -36,8 +36,8 @@ namespace NetTelebot.Type.Keyboard
         {
             JArray jArray = new JArray
             {
-                from KeyboardArray in keyboard
-                select InlineKeyboardButton.GetJson(KeyboardArray)
+                from keyboardArray in keyboard
+                select InlineKeyboardButton.GetJson(keyboardArray)
             };
 
             return jArray;

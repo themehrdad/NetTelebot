@@ -14,17 +14,19 @@ namespace NetTelebot.Result
             Parse(jsonText);
         }
 
+        private void Parse(string jsonText)
+        {
+            var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
+            Parse(jsonObject);
+        }
+
         private void Parse(JObject jsonObject)
         {
             Ok = jsonObject["ok"].Value<bool>();
             Result = new UserProfilePhotosInfo(jsonObject["result"].Value<JObject>());
         }
 
-        private void Parse(string jsonText)
-        {
-            var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
-            Parse(jsonObject);
-        }
+
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="GetUserProfilePhotosResult"/> is ok.

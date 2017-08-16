@@ -8,7 +8,7 @@ namespace NetTelebot.Tests.ResultTestObject
         /// <summary>
         /// Object represent this type <see cref="GetUserProfilePhotosResult"/>
         /// </summary>
-        internal static JObject GetObject(bool ok, JArray result)
+        internal static JObject GetObject(bool ok, JObject result)
         {
             dynamic getUpadtes = new JObject();
 
