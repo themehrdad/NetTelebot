@@ -70,8 +70,6 @@ namespace NetTelebot.Tests.RequestToMockTest
             Assert.Throws<Exception>(() => mBotBadResponse.SendMessage(123, "123", ParseMode.HTML, false, false, 123, new ForceReplyMarkup()));
         }
 
-       
-
         /// <summary>
         /// Forward the message test method <see cref="TelegramBotClient.ForwardMessage"/>.
         /// </summary>
@@ -482,6 +480,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             Assert.Throws<Exception>(() => mBotBadResponse.GetChat(123));
         }
 
+        //todo move common project
         internal static void PrintResult(IEnumerable<Request> request)
         {
             Console.WriteLine(request.FirstOrDefault()?.Body);

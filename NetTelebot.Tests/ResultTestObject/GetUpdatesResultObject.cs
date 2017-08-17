@@ -1,5 +1,4 @@
-﻿
-using NetTelebot.Result;
+﻿using NetTelebot.Result;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.ResultTestObject

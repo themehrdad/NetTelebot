@@ -25,7 +25,6 @@ namespace NetTelebot.Tests.ResponseTest
             const int chatId = 123;
             const ChatType chatType = ChatType.channel;
 
-
             JObject messageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatType);
 
             //check message

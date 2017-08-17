@@ -8,6 +8,7 @@ namespace NetTelebot.Tests.ResponseTest
     [TestFixture]
     internal static class GetUpdatesResultParserTest
     {
+        //todo add new type in UpdateInfo
         /// <summary>
         /// Test for <see cref="GetUpdatesResult"/> parse field.
         /// </summary>
@@ -27,7 +28,7 @@ namespace NetTelebot.Tests.ResponseTest
             const bool ok = true;
 
             var messageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatType);
-            dynamic result = UpdateInfoObject.GetObjectInArray(updateId, messageInfo: messageInfo  );
+            dynamic result = UpdateInfoObject.GetObjectInArray(updateId, messageInfo);
 
             dynamic getUpdates = GetUpdatesResultObject.GetObject(ok, result);
             GetUpdatesResult updateResult = new GetUpdatesResult(getUpdates.ToString());
