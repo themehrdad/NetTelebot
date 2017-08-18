@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mock4Net.Core;
 using NetTelebot.BotEnum;
+using NetTelebot.Tests.MockServer;
 using NetTelebot.Type;
 using NetTelebot.Type.Keyboard;
 using NUnit.Framework;

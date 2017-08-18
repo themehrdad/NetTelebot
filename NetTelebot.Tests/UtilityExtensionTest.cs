@@ -1,5 +1,6 @@
 ﻿using System;
 using NetTelebot.Extension;
+using NetTelebot.Tests.MockServer;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests
@@ -39,6 +40,12 @@ namespace NetTelebot.Tests
         {
             DateTime dateTime = new DateTime(2047, 07, 27);
             Assert.AreEqual(2447798400, dateTime.ToUnixTime());
+        }
+
+        [Test]
+        public static void ResponseStringTest()
+        {
+            Console.WriteLine(ResponseString.ExpectedBodyForGetUserProfilePhotos);
         }
     }
 }

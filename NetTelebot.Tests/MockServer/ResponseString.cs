@@ -1,9 +1,45 @@
-﻿namespace NetTelebot.Tests.MockServer
+﻿using Newtonsoft.Json.Linq;
+
+namespace NetTelebot.Tests.MockServer
 {
-    internal static class ResponseString
+    internal class ResponseString
     {
-        internal const string mExpectedBodyForSendMessageResult =
-            @"{ ok: ""true"", result: { message_id: 123, date: 0, chat: { id: 123, type: ""private"" }}}";
+        internal static string ExpectedBodyForSendMessageResult { get; } = new JObject(
+            new JProperty("ok", true),
+            new JProperty("result",
+                new JObject(
+                    new JProperty("message_id", 123),
+                    new JProperty("date", 0),
+                    new JProperty("chat",
+                        new JObject(
+                            new JProperty("id", 123),
+                            new JProperty("type", "private")))))).ToString();
+
+        //todo remade this
+        internal static string ExpectedBodyForGetUserProfilePhotos { get; } = new JObject(
+            new JProperty("ok", true),
+            new JProperty("result",
+                new JObject(
+                    new JProperty("total_count", 1),
+                    new JProperty("photos",
+                        new JArray(
+                            new JArray(
+                                new JObject(
+                                    new JProperty("file_id", 123),
+                                    new JProperty("width", 123),
+                                    new JProperty("height", 123)),
+                                new JObject(
+                                    new JProperty("file_id", 456),
+                                    new JProperty("width", 456),
+                                    new JProperty("height", 456)))))))).ToString();
+
+        internal static string ExpectedBodyForGetMe => mExpectedBodyForGetMe;
+
+        internal static string ExpectedBodyForGetChat => mExpectedBodyForGetChat;
+
+        internal static string ExpectedBodyForBooleanResult => mExpectedBodyForBooleanResult;
+
+        internal static string ExpectedBodyForBadResponse => mExpectedBodyForBadResponse;
 
         internal const string mExpectedBodyForGetUserProfilePhotos =
             @"{ ok: ""true"", result: { total_count: 1, photos: [[ { file_id: ""123"", width: 123, height: 123 }, { file_id: ""456"", width: 456, height: 456 } ]] }}";
