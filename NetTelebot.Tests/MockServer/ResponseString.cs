@@ -1,9 +1,26 @@
 ﻿using Newtonsoft.Json.Linq;
 
+
 namespace NetTelebot.Tests.MockServer
 {
+    /// <summary>
+    /// This class represent response string for <see cref="MockServer"/>
+    /// </summary>
     internal class ResponseString
     {
+        /// <summary>
+        /// The expected body for SendMessageResult.
+        /// Represent JSON string:
+        /// 
+        /// { "ok": true,
+        ///   "result": {
+        ///         "message_id": 123,
+        ///         "date": 0,
+        ///         "chat": {
+        ///             "id": 123,
+        ///             "type": "private"
+        ///         }}}
+        /// </summary>
         internal static string ExpectedBodyForSendMessageResult { get; } = new JObject(
             new JProperty("ok", true),
             new JProperty("result",
@@ -15,14 +32,33 @@ namespace NetTelebot.Tests.MockServer
                             new JProperty("id", 123),
                             new JProperty("type", "private")))))).ToString();
 
-        //todo remade this
+        /// <summary>
+        /// The expected body for GetUserProfilePhotos.
+        /// Represent JSON string:
+        /// 
+        /// { "ok": true,
+        ///   "result": {
+        ///         "total_count": 1,
+        ///         "photos": [[
+        ///         {
+        ///             "file_id": 123,
+        ///             "width": 123,
+        ///             "height": 123
+        ///         },
+        ///         {
+        ///             "file_id": 456,
+        ///             "width": 456,
+        ///             "height": 456
+        ///         }
+        ///         ]]}}
+        /// </summary>
         internal static string ExpectedBodyForGetUserProfilePhotos { get; } = new JObject(
             new JProperty("ok", true),
             new JProperty("result",
                 new JObject(
                     new JProperty("total_count", 1),
                     new JProperty("photos",
-                        new JArray(
+                        GetJarrayOfJarry(
                             new JArray(
                                 new JObject(
                                     new JProperty("file_id", 123),
@@ -31,28 +67,76 @@ namespace NetTelebot.Tests.MockServer
                                 new JObject(
                                     new JProperty("file_id", 456),
                                     new JProperty("width", 456),
-                                    new JProperty("height", 456)))))))).ToString();
+                                    new JProperty("height", 456))).ToString()))))).ToString();
 
-        internal static string ExpectedBodyForGetMe => mExpectedBodyForGetMe;
+        /// <summary>
+        /// Gets the expected body for GetMe.
+        /// Represent JSON string:
+        /// 
+        /// { "ok": true,
+        ///   "result": {
+        ///         "id": 123,
+        ///         "first_name": "FirstName",
+        ///         "username": "Username" }}
+        /// </summary>
+        internal static string ExpectedBodyForGetMe { get; } = new JObject(
+            new JProperty("ok", true),
+            new JProperty("result",
+                new JObject(
+                    new JProperty("id", 123),
+                    new JProperty("first_name", "FirstName"),
+                    new JProperty("username", "Username")))).ToString();
 
-        internal static string ExpectedBodyForGetChat => mExpectedBodyForGetChat;
+        /// <summary>
+        /// The expected body for GetChat.
+        /// Represent JSON string:
+        /// 
+        /// { "ok": true, 
+        ///   "result": { 
+        ///         "id": 123, 
+        ///         "type": "private", 
+        ///         "title": "TestTitle", 
+        ///         "username": "TestUsename", 
+        ///         "first_name": "TestFirsName", 
+        ///         "last_name": "TestLastName", 
+        ///         "all_members_are_administrators": true }}
+        /// </summary>
+        internal static string ExpectedBodyForGetChat { get; } = new JObject(
+            new JProperty("ok", true),
+            new JProperty("result",
+                new JObject(
+                    new JProperty("id", 123),
+                    new JProperty("type", "private"),
+                    new JProperty("title", "TestTitle"),
+                    new JProperty("username", "TestUsename"),
+                    new JProperty("first_name", "TestFirsName"),
+                    new JProperty("last_name", "TestLastName"),
+                    new JProperty("all_members_are_administrators", true)))).ToString();
 
-        internal static string ExpectedBodyForBooleanResult => mExpectedBodyForBooleanResult;
+        /// <summary>
+        /// The expected body for BooleanResult.
+        /// Represent JSON string:
+        /// 
+        /// { "ok": true, "result": true}
+        /// </summary>
+        internal static string ExpectedBodyForBooleanResult { get; } = new JObject(
+            new JProperty("ok", true),
+            new JProperty("result", true)).ToString();
+        
+        /// <summary>
+        /// The expected body for bad response.
+        /// Represent JSON string:
+        ///  
+        /// { "ok": false, "error_code": 401, "description": "Unauthorized" }
+        /// </summary>
+        internal static string ExpectedBodyForBadResponse { get; } = new JObject(
+            new JProperty("ok", false),
+            new JProperty("error_code", 401),
+            new JProperty("description", "Unauthorized")).ToString();
 
-        internal static string ExpectedBodyForBadResponse => mExpectedBodyForBadResponse;
-
-        internal const string mExpectedBodyForGetUserProfilePhotos =
-            @"{ ok: ""true"", result: { total_count: 1, photos: [[ { file_id: ""123"", width: 123, height: 123 }, { file_id: ""456"", width: 456, height: 456 } ]] }}";
-
-        internal const string mExpectedBodyForGetMe =
-            @"{ ok: ""true"", result: { id: ""123"", first_name: ""FirstName"", username: ""username"" }}";
-
-        internal const string mExpectedBodyForGetChat = @"{ ok: ""true"", result: { id: ""123"", type: ""private"",
-            title: ""TestTitle"", username: ""TestUsername"", first_name: ""TestFirstname"", last_name: ""TestLastName"",
-            all_members_are_administrators: ""true"" }}";
-
-        internal const string mExpectedBodyForBooleanResult = @"{ ok: ""true"", result: ""true"" }";
-
-        internal const string mExpectedBodyForBadResponse = @"{ ok: ""false"", error_code: 401, description: ""Unauthorized"")";
+        private static JArray GetJarrayOfJarry(string jArray)
+        {
+            return JArray.Parse($"[{jArray}]");
+        }
     }
 }
