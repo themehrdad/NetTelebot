@@ -1,7 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System;
+using NetTelebot.Tests.TypeTestObject;
+using NetTelebot.Tests.TypeTestObject.ResultTestObject;
+using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 
-
-namespace NetTelebot.Tests.MockServer
+namespace NetTelebot.Tests.MockServers
 {
     /// <summary>
     /// This class represent response string for <see cref="MockServer"/>
@@ -122,7 +125,44 @@ namespace NetTelebot.Tests.MockServer
         internal static string ExpectedBodyForBooleanResult { get; } = new JObject(
             new JProperty("ok", true),
             new JProperty("result", true)).ToString();
+
+#region Test UpdateInfoResponse
+
+        /** Test JSON in UpdateInfo = message **/
+        private static readonly JObject expectedBodyMessageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(123, 0, 123,
+            "private");
+
+        private static readonly JObject expectedBodyUpdateInfoWithMessage = UpdateInfoObject.GetObject(123, expectedBodyMessageInfo);
         
+        internal static string ExpectedBodyForGetUpdatesResultWithObjectMessage { get; } =
+            GetUpdatesResultObject.GetObject(true, new JArray(expectedBodyUpdateInfoWithMessage)).ToString();
+
+        /** End test JSON in UpdateInfo = message **/
+
+        /** Test JSON in UpdateInfo = edited_message **/
+        private static readonly JObject expectedBodyUpdateInfoWithEditedMessage = UpdateInfoObject.GetObject(123, editedMessage: expectedBodyMessageInfo);
+
+        internal static string ExpectedBodyForGetUpdatesResultWithObjectEditMessage { get; } =
+            GetUpdatesResultObject.GetObject(true, new JArray(expectedBodyUpdateInfoWithEditedMessage)).ToString();
+
+        /** End test JSON in UpdateInfo = edited_message **/
+
+        /** Test JSON in UpdateInfo = channel_post **/
+        private static readonly JObject expectedBodyUpdateInfoWithChannelPost = UpdateInfoObject.GetObject(123, channelPost: expectedBodyMessageInfo);
+
+        internal static string ExpectedBodyForGetUpdatesResultWithObjectChannelPost { get; } =
+            GetUpdatesResultObject.GetObject(true, new JArray(expectedBodyUpdateInfoWithChannelPost)).ToString();
+
+        /** End test JSON in UpdateInfo = channel_post **/
+
+        [Test]
+        public void PrintResult()
+        {
+            Console.WriteLine();
+        }
+
+#endregion
+
         /// <summary>
         /// The expected body for bad response.
         /// Represent JSON string:

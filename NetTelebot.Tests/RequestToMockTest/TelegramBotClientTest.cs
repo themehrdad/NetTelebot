@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mock4Net.Core;
 using NetTelebot.BotEnum;
-using NetTelebot.Tests.MockServer;
+using NetTelebot.Tests.MockServers;
 using NetTelebot.Type;
 using NetTelebot.Type.Keyboard;
 using NUnit.Framework;
@@ -23,13 +23,13 @@ namespace NetTelebot.Tests.RequestToMockTest
         [OneTimeSetUp]
         public static void OnStart()
         {
-            MockServer.MockServer.Start(mOkServerPort, mBadServerPort);
+            MockServer.Start(mOkServerPort, mBadServerPort);
         }
 
         [OneTimeTearDown]
         public static void OnStop()
         {
-            MockServer.MockServer.Stop();
+            MockServer.Stop();
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         public void GetMeTest()
         {
             mBotOkResponse.GetMe();
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getMe").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getMe").UsingPost());
           
             PrintResult(request);
 
@@ -55,7 +55,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             mBotOkResponse.SendMessage(123, "123", ParseMode.HTML, false, false, 123, new ForceReplyMarkup());
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
 
             PrintResult(request);
 
@@ -79,7 +79,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             mBotOkResponse.ForwardMessage(123, 123 ,123, true);
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/forwardMessage").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/forwardMessage").UsingPost());
 
             PrintResult(request);
 
@@ -101,7 +101,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             mBotOkResponse.SendPhoto(123, new ExistingFile { FileId = "123" }, "caption", false, 123, new ForceReplyMarkup());
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendPhoto").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendPhoto").UsingPost());
 
             PrintResult(request);
 
@@ -127,7 +127,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.SendAudio(123, new ExistingFile { FileId = "123" }, "caption", 123, "performer", 
                 "title", true, 123, new ForceReplyMarkup());
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendAudio").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendAudio").UsingPost());
 
             PrintResult(request);
 
@@ -155,7 +155,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             mBotOkResponse.SendDocument(123, new ExistingFile { FileId = "123"}, "caption", true, 123, new ForceReplyMarkup());
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendDocument").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendDocument").UsingPost());
 
             PrintResult(request);
             
@@ -180,7 +180,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             mBotOkResponse.SendSticker(123, new ExistingFile {FileId = "123"}, true, 123, new ForceReplyMarkup());
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendSticker").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendSticker").UsingPost());
 
             PrintResult(request);
             
@@ -205,7 +205,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.SendVideo(123, new ExistingFile {FileId = "123"}, 123, 123, 123, "caption", true, 123,
                 new ForceReplyMarkup());
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendVideo").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendVideo").UsingPost());
 
             PrintResult(request);
 
@@ -233,7 +233,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             mBotOkResponse.SendLocation(123, 1.0f, 1.0f, true, 123, new ForceReplyMarkup());
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendLocation").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendLocation").UsingPost());
 
             PrintResult(request);
             
@@ -257,7 +257,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             mBotOkResponse.SendContact(123, "123", "firstName", "lastName", true, 123, new ForceReplyMarkup());
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendContact").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendContact").UsingPost());
 
             PrintResult(request);
 
@@ -282,97 +282,97 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             //typing
             mBotOkResponse.SendChatAction(123, ChatActions.Typing);
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=typing");
 
-            MockServer.MockServer.ServerOkResponse.ResetRequestLogs();
+            MockServer.ServerOkResponse.ResetRequestLogs();
 
             //upload_photo
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_photo);
-            request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_photo");
 
-            MockServer.MockServer.ServerOkResponse.ResetRequestLogs();
+            MockServer.ServerOkResponse.ResetRequestLogs();
 
             //record_video
             mBotOkResponse.SendChatAction(123, ChatActions.Record_video);
-            request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=record_video");
 
-            MockServer.MockServer.ServerOkResponse.ResetRequestLogs();
+            MockServer.ServerOkResponse.ResetRequestLogs();
 
             //upload_video
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_video);
-            request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_video");
 
-            MockServer.MockServer.ServerOkResponse.ResetRequestLogs();
+            MockServer.ServerOkResponse.ResetRequestLogs();
 
             //record_audio
             mBotOkResponse.SendChatAction(123, ChatActions.Record_audio);
-            request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=record_audio");
 
-            MockServer.MockServer.ServerOkResponse.ResetRequestLogs();
+            MockServer.ServerOkResponse.ResetRequestLogs();
 
             //upload_audio
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_audio);
-            request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_audio");
 
-            MockServer.MockServer.ServerOkResponse.ResetRequestLogs();
+            MockServer.ServerOkResponse.ResetRequestLogs();
 
             //upload_document
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_document);
-            request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=upload_document");
 
-            MockServer.MockServer.ServerOkResponse.ResetRequestLogs();
+            MockServer.ServerOkResponse.ResetRequestLogs();
 
             //find_location
             mBotOkResponse.SendChatAction(123, ChatActions.Find_location);
-            request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=find_location");
 
-            MockServer.MockServer.ServerOkResponse.ResetRequestLogs();
+            MockServer.ServerOkResponse.ResetRequestLogs();
 
             //record_video_note
             mBotOkResponse.SendChatAction(123, ChatActions.Record_video_note);
-            request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
                 "action=record_video_note");
 
-            MockServer.MockServer.ServerOkResponse.ResetRequestLogs();
+            MockServer.ServerOkResponse.ResetRequestLogs();
 
             //upload_video_note
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_video_note);
-            request =MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
+            request =MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
@@ -391,7 +391,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             mBotOkResponse.GetUserProfilePhotos(123, 123, 10);
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUserProfilePhotos").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUserProfilePhotos").UsingPost());
 
             PrintResult(request);
 
@@ -412,7 +412,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             mBotOkResponse.KickChatMember(123, 123, new DateTime(2027, 07, 27));
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/kickChatMember").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/kickChatMember").UsingPost());
 
             PrintResult(request);
 
@@ -433,7 +433,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             mBotOkResponse.UnbanChatMember(123, 123);
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/unbanChatMember").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/unbanChatMember").UsingPost());
 
             PrintResult(request);
 
@@ -453,7 +453,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             mBotOkResponse.LeaveChat(123);
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/leaveChat").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/leaveChat").UsingPost());
 
             PrintResult(request);
 
@@ -471,7 +471,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             mBotOkResponse.GetChat(123);
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getChat").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getChat").UsingPost());
 
             PrintResult(request);
 

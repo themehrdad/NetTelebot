@@ -35,7 +35,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
 
             ConsoleUtlis.PrintResult(replyToMessage);
 
-            CommonAssert(replyToMessage);
+            CommonAsserts(replyToMessage);
         }
 
         /// <summary>
@@ -50,14 +50,13 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
 
             ConsoleUtlis.PrintResult(pinnedMessage);
 
-            CommonAssert(pinnedMessage);
+            CommonAsserts(pinnedMessage);
         }
 
-        public void CommonAssert<T>(T messageInfo) where T : MessageInfo
+        private static void CommonAsserts<T>(T messageInfo) where T : MessageInfo
         {
             Assert.Multiple(() =>
             {
-
                 //todo game
                 //todo Voice
                 //todo VideoNote

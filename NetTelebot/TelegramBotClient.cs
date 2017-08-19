@@ -127,7 +127,7 @@ namespace NetTelebot
 
         private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit)
         {
-            RestRequest request = new RestRequest(string.Format(getUpdatesUri, Token), Method.GET);
+            RestRequest request = new RestRequest(string.Format(getUpdatesUri, Token), Method.POST);
 
             if (offset.HasValue)
                 request.AddQueryParameter("offset", offset.Value.ToString());

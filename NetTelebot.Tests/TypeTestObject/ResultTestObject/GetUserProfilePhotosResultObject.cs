@@ -1,7 +1,7 @@
 ﻿using NetTelebot.Result;
 using Newtonsoft.Json.Linq;
 
-namespace NetTelebot.Tests.ResultTestObject
+namespace NetTelebot.Tests.TypeTestObject.ResultTestObject
 {
     internal static class GetUserProfilePhotosResultObject
     {

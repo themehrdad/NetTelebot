@@ -1,6 +1,6 @@
 ﻿using Mock4Net.Core;
 
-namespace NetTelebot.Tests.MockServer
+namespace NetTelebot.Tests.MockServers
 {
     internal static class MockServer
     {

@@ -1,12 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Mock4Net.Core;
+using NetTelebot.Result;
+using NetTelebot.Tests.MockServers;
+using NetTelebot.Type;
 using NUnit.Framework;
 using RestSharp;
 
 namespace NetTelebot.Tests.RequestToMockTest
 {
+    /// <summary>
+    /// Testing a chain consisting of private method in <see cref="TelegramBotClient"/> .ExecuteRequest(), 
+    /// parser in <see cref="GetUpdatesResult"/> and parser in <see cref="UpdateInfo"/>
+    /// 
+    /// Server responses are defined within the methods of the current query method is the same (is method GetUpdates <see href="https://core.telegram.org/bots/api#getupdates"/>)
+    /// </summary>
     [TestFixture]
     internal class TelegramBotGetUpdatesTest
     {
@@ -19,46 +27,51 @@ namespace NetTelebot.Tests.RequestToMockTest
         [OneTimeSetUp]
         public static void OnStart()
         {
-            MockServer.MockServer.Start(mOkServerPort, mBadServerPort);
+            MockServer.Start(mOkServerPort, mBadServerPort);
         }
 
         [OneTimeTearDown]
         public static void OnStop()
         {
-            MockServer.MockServer.Stop();
+            MockServer.Stop();
         }
 
-        /// <summary>
-        /// Sends the message test method <see cref="TelegramBotClient.SendMessage"/>.
-        /// </summary>
-        [Test, Ignore("In process")]
-        public void GetUpdatesTest()
+        [Test]
+        public void GetUpdatesWithMessageObjectTest()
         {
-            //todo added this
-            mBotOkResponse.GetUpdates(limit:1);
-
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates").UsingGet());
-
-            PrintResult(request);
-
-            /*Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "text=123&parse_mode=HTML&" +
-                "disable_web_page_preview=False&" +
-                "disable_notification=False&" +
-                "reply_to_message_id=123&" +
-                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");*/
-
-            //Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendMessage");
-            //Assert.Throws<Exception>(() => mBotBadResponse.SendMessage(123, "123", ParseMode.HTML, false, false, 123, new ForceReplyMarkup()));
+            StartTest(ResponseString.ExpectedBodyForGetUpdatesResultWithObjectMessage);
         }
 
-
-        internal static void PrintResult(IEnumerable<Request> request)
+        [Test]
+        public void GetUpdatesWithEditMessageObjectTest()
         {
-            Console.WriteLine(request.FirstOrDefault()?.Body);
-            Console.WriteLine(request.FirstOrDefault()?.Url);
+            StartTest(ResponseString.ExpectedBodyForGetUpdatesResultWithObjectEditMessage);
         }
 
+        [Test]
+        public void GetUpdatesWithChannelPostObjectTest()
+        {
+            StartTest(ResponseString.ExpectedBodyForGetUpdatesResultWithObjectChannelPost);
+        }
+
+        private void StartTest(string body)
+        {
+            MockServer.ServerOkResponse
+                .Given(
+                    Requests.WithUrl("/botToken/getUpdates").UsingPost()
+                )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(body)
+                );
+
+            mBotOkResponse.GetUpdates();
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates").UsingPost());
+            
+            Assert.AreEqual("/botToken/getUpdates", request.FirstOrDefault()?.Url);
+            Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
+
+        }
     }
 }

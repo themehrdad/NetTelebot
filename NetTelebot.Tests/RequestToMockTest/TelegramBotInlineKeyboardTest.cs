@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Mock4Net.Core;
+using NetTelebot.Tests.MockServers;
 using NetTelebot.Type.Keyboard;
 using NUnit.Framework;
 using RestSharp;
@@ -20,13 +21,13 @@ namespace NetTelebot.Tests.RequestToMockTest
         [OneTimeSetUp]
         public static void OnStart()
         {
-            MockServer.MockServer.Start(mServerPort);
+            MockServer.Start(mServerPort);
         }
 
         [OneTimeTearDown]
         public static void OnStop()
         {
-            MockServer.MockServer.Stop();
+            MockServer.Stop();
         }
 
         [Test]
@@ -73,7 +74,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             mBotOkResponse.SendMessage(123, "Test", replyMarkup: inlineKeyboardMarkup);
 
-            var request = MockServer.MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
 
             Assert.AreEqual(request.FirstOrDefault()?.Body,
                 "chat_id=123&" +
@@ -96,7 +97,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             TelegramBotClientTest.PrintResult(request);
 
-            MockServer.MockServer.ServerOkResponse.ResetRequestLogs();
+            MockServer.ServerOkResponse.ResetRequestLogs();
         }
     }
 }

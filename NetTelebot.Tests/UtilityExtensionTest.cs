@@ -1,6 +1,5 @@
 ﻿using System;
 using NetTelebot.Extension;
-using NetTelebot.Tests.MockServer;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests

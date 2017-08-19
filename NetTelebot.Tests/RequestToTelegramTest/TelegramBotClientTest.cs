@@ -112,21 +112,6 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             });
         }
 
-        /// <summary>
-        /// Test for method <see cref="TelegramBotClient.LeaveChat"/>.
-        /// </summary>
-        [Test, Ignore("Do not use. Leave bot from group")]
-        public void LeaveChatTest()
-        {
-            BooleanResult leaveChat = mTelegramBot.LeaveChat(mChatGroupId);
-
-            Assert.Multiple(() =>
-            {
-                Assert.True(leaveChat.Ok);
-                Assert.True(leaveChat.Result);
-            });
-        }
-
         [Test]
         public void GetChatFromGroupTest()
         {

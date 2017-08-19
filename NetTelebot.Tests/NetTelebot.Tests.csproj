@@ -71,8 +71,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="MockServer\MockServer.cs" />
-    <Compile Include="MockServer\ResponseString.cs" />
+    <Compile Include="MockServers\MockServer.cs" />
+    <Compile Include="MockServers\ResponseString.cs" />
     <Compile Include="NullReferenceExceptionTest\MessageInfoArrayTypeTest.cs" />
     <Compile Include="NullReferenceExceptionTest\MessageInfoSelfTypeTest.cs" />
     <Compile Include="NullReferenceExceptionTest\MessageInfoSimpleTypesTest.cs" />
@@ -90,12 +90,12 @@
     <Compile Include="RequestToMockTest\TelegramBotInlineKeyboardTest.cs" />
     <Compile Include="ResponseTest\UpdateInfoParserTest.cs" />
     <Compile Include="ResponseTest\UserProfilePhotosInfoParserTest.cs" />
-    <Compile Include="ResultTestObject\BooleanResultObject.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\BooleanResultObject.cs" />
     <Compile Include="RequestToMockTest\TelegramBotClientTest.cs" />
     <Compile Include="RequestToMockTest\TelegramBotKeyboardTest.cs" />
     <Compile Include="RequestToTelegramTest\TelegramBotClientTest.cs" />
-    <Compile Include="ResultTestObject\GetUpdatesResultObject.cs" />
-    <Compile Include="ResultTestObject\GetUserProfilePhotosResultObject.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\GetUpdatesResultObject.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\GetUserProfilePhotosResultObject.cs" />
     <Compile Include="TypeTestObject\AudioInfoObject.cs" />
     <Compile Include="TypeTestObject\CallbackQueryInfoObject.cs" />
     <Compile Include="TypeTestObject\ChatInfoObject.cs" />

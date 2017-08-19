@@ -1,7 +1,7 @@
 ﻿using NetTelebot.Result;
 using Newtonsoft.Json.Linq;
 
-namespace NetTelebot.Tests.ResultTestObject
+namespace NetTelebot.Tests.TypeTestObject.ResultTestObject
 {
     internal static class GetUpdatesResultObject
     {
@@ -17,6 +17,5 @@ namespace NetTelebot.Tests.ResultTestObject
 
             return getUpadtes;
         }
-
     }
 }
