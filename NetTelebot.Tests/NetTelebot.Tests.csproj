@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="MockServers\MockServer.cs" />
     <Compile Include="MockServers\ResponseString.cs" />
+    <Compile Include="MockServers\ResponseStringGetUpdatesResult.cs" />
     <Compile Include="NullReferenceExceptionTest\MessageInfoArrayTypeTest.cs" />
     <Compile Include="NullReferenceExceptionTest\MessageInfoSelfTypeTest.cs" />
     <Compile Include="NullReferenceExceptionTest\MessageInfoSimpleTypesTest.cs" />

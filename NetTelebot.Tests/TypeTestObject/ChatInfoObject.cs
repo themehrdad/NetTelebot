@@ -53,20 +53,26 @@ namespace NetTelebot.Tests.TypeTestObject
         {
             dynamic chat = new JObject();
 
-            chat.id = id;
-            chat.type = type;
-            chat.title = title;
-            chat.username = username;
-            chat.first_name = firstName;
-            chat.last_name = lastName;
-
+            if (id != null)
+                chat.id = id;
+            if (type != null)
+                chat.type = type;
+            if (title != null)
+                chat.title = title;
+            if (username != null)
+                chat.username = username;
+            if (firstName != null)
+                chat.first_name = firstName;
+            if (lastName != null)
+                chat.last_name = lastName;
             if (allMembersAreAdministrators != null)
                 chat.all_members_are_administrators = allMembersAreAdministrators;
             if (photo != null)
                 chat.photo = photo;
-
-            chat.description = description;
-            chat.invite_link = inviteLink;
+            if (description != null)
+                chat.description = description;
+            if (inviteLink != null)
+                chat.invite_link = inviteLink;
 
             return chat;
         }

@@ -41,6 +41,7 @@ namespace NetTelebot.Tests.TypeTestObject
         {
             dynamic messageInfo = new JObject();
 
+
             messageInfo.message_id = messageId;
             messageInfo.date = date;
             messageInfo.chat = ChatInfoObject.GetObject(chatId, chatType);

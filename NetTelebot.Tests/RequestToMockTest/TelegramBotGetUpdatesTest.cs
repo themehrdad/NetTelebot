@@ -21,8 +21,8 @@ namespace NetTelebot.Tests.RequestToMockTest
         private const int mOkServerPort = 8095;
         private const int mBadServerPort = 8096;
 
-        private readonly TelegramBotClient mBotOkResponse = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:" + mOkServerPort) };
-        private readonly TelegramBotClient mBotBadResponse = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:" + mBadServerPort) };
+        private static readonly TelegramBotClient mBotOkResponse = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:" + mOkServerPort) };
+        private static readonly TelegramBotClient mBotBadResponse = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:" + mBadServerPort) };
 
         [OneTimeSetUp]
         public static void OnStart()
@@ -37,24 +37,36 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         [Test]
-        public void GetUpdatesWithMessageObjectTest()
+        public static void GetUpdatesWithMessageObjectTest()
         {
-            StartTest(ResponseString.ExpectedBodyForGetUpdatesResultWithObjectMessage);
+            StartTest(ResponseStringGetUpdatesResult.ExpectedBodyWithObjectMessage);
         }
 
         [Test]
-        public void GetUpdatesWithEditMessageObjectTest()
+        public static void GetUpdatesWithEditMessageObjectTest()
         {
-            StartTest(ResponseString.ExpectedBodyForGetUpdatesResultWithObjectEditMessage);
+            StartTest(ResponseStringGetUpdatesResult.ExpectedBodyWithObjectEditMessage);
         }
 
         [Test]
-        public void GetUpdatesWithChannelPostObjectTest()
+        public static void GetUpdatesWithChannelPostObjectTest()
         {
-            StartTest(ResponseString.ExpectedBodyForGetUpdatesResultWithObjectChannelPost);
+            StartTest(ResponseStringGetUpdatesResult.ExpectedBodyWithObjectChannelPost);
         }
 
-        private void StartTest(string body)
+        [Test]
+        public static void GetUpdatesWithEditedChannelPostObjectTest()
+        {
+            StartTest(ResponseStringGetUpdatesResult.ExpectedBodyWithObjectEditedChannelPost);
+        }
+
+        [Test]
+        public static void GetUpdatesWithEditedCallbackQueryObjectTest()
+        {
+            StartTest(ResponseStringGetUpdatesResult.ExpectedBodyWithObjectCallbackQuery);
+        }
+
+        private static void StartTest(string body)
         {
             MockServer.ServerOkResponse
                 .Given(
@@ -71,7 +83,6 @@ namespace NetTelebot.Tests.RequestToMockTest
             
             Assert.AreEqual("/botToken/getUpdates", request.FirstOrDefault()?.Url);
             Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
-
         }
     }
 }
