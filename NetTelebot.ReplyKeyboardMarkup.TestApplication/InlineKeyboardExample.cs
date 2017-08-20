@@ -8,13 +8,32 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
         {
             InlineKeyboardButton buttonGetId = new InlineKeyboardButton
             {
-                Text = "Get ChatId",
+                Text = "Get this ChatId",
                 CallbackData = "/getId"
             };
 
-            InlineKeyboardButton[] line1 = {buttonGetId};
+            InlineKeyboardButton buttonForceReply = new InlineKeyboardButton
+            {
+                Text = "Get ForceReply",
+                CallbackData = "/reply"
+            };
 
-            InlineKeyboardButton[][] buttons = {line1};
+            InlineKeyboardButton buttonCalculate = new InlineKeyboardButton
+            {
+                Text = "Get calculator",
+                CallbackData = "/calculate"
+            };
+
+            InlineKeyboardButton removeButton = new InlineKeyboardButton
+            {
+                Text = "Remove calculator",
+                CallbackData = "/remove_calculate"
+            };
+
+            InlineKeyboardButton[] line1 = {buttonGetId, buttonForceReply};
+            InlineKeyboardButton[] line2 = {buttonCalculate, removeButton};
+
+            InlineKeyboardButton[][] buttons = {line1, line2};
 
             return new InlineKeyboardMarkup
             {

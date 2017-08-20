@@ -27,7 +27,7 @@ namespace NetTelebot.Tests.MockServers
 
         #region Message
 
-        private static readonly JObject expectedBodyUpdateInfoWithMessage = UpdateInfoObject.GetObject(123,
+        private static readonly JArray expectedBodyUpdateInfoWithMessage = UpdateInfoObject.GetObjectInArray(123,
             expectedBodyMessageInfo);
 
         /// <summary>
@@ -51,13 +51,13 @@ namespace NetTelebot.Tests.MockServers
         /// }
         /// </summary>
         internal static string ExpectedBodyWithObjectMessage { get; } =
-            GetUpdatesResultObject.GetObject(true, new JArray(expectedBodyUpdateInfoWithMessage)).ToString();
+            GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithMessage).ToString();
 
         #endregion
 
         #region EditedMessage
 
-        private static readonly JObject expectedBodyUpdateInfoWithEditedMessage = UpdateInfoObject.GetObject(123, editedMessage: expectedBodyMessageInfo);
+        private static readonly JArray expectedBodyUpdateInfoWithEditedMessage = UpdateInfoObject.GetObjectInArray(123, editedMessage: expectedBodyMessageInfo);
 
         /// <summary>
         /// Represent JSON string:
@@ -80,13 +80,13 @@ namespace NetTelebot.Tests.MockServers
         /// } 
         /// </summary>
         internal static string ExpectedBodyWithObjectEditMessage { get; } =
-            GetUpdatesResultObject.GetObject(true, new JArray(expectedBodyUpdateInfoWithEditedMessage)).ToString();
+            GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithEditedMessage).ToString();
         
         #endregion 
 
         #region ChannelPost
 
-        private static readonly JObject expectedBodyUpdateInfoWithChannelPost = UpdateInfoObject.GetObject(123,
+        private static readonly JArray expectedBodyUpdateInfoWithChannelPost = UpdateInfoObject.GetObjectInArray(123,
             channelPost: expectedBodyMessageInfo);
 
         /// <summary>
@@ -110,13 +110,13 @@ namespace NetTelebot.Tests.MockServers
         /// }
         /// </summary>
         internal static string ExpectedBodyWithObjectChannelPost { get; } =
-            GetUpdatesResultObject.GetObject(true, new JArray(expectedBodyUpdateInfoWithChannelPost)).ToString();
+            GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithChannelPost).ToString();
 
         #endregion
 
         #region EditedShannelPost
 
-        private static readonly JObject expectedBodyUpdateInfoWithEditedChannelPost = UpdateInfoObject.GetObject(123, editedChannelPost: expectedBodyMessageInfo);
+        private static readonly JArray expectedBodyUpdateInfoWithEditedChannelPost = UpdateInfoObject.GetObjectInArray(123, editedChannelPost: expectedBodyMessageInfo);
 
         /// <summary>
         /// Represent JSON string:
@@ -139,7 +139,7 @@ namespace NetTelebot.Tests.MockServers
         /// }
         /// </summary>
         internal static string ExpectedBodyWithObjectEditedChannelPost { get; } =
-            GetUpdatesResultObject.GetObject(true, new JArray(expectedBodyUpdateInfoWithEditedChannelPost)).ToString();
+            GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithEditedChannelPost).ToString();
 
         #endregion
 
@@ -151,7 +151,7 @@ namespace NetTelebot.Tests.MockServers
         private static readonly JObject callbackQueryInfo = CallbackQueryInfoObject.GetObject("123", expectedBodyUserInfo, expectedBodyMessageInfo, "123",
             "123", "TestData", "TestGameShortName");
 
-        private static readonly JObject expectedBodyUpdateInfoWithCallbackQuery = UpdateInfoObject.GetObject(123,
+        private static readonly JArray expectedBodyUpdateInfoWithCallbackQuery = UpdateInfoObject.GetObjectInArray(123,
             callbackQuery: callbackQueryInfo);
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace NetTelebot.Tests.MockServers
         /// }
         /// </summary>
         internal static string ExpectedBodyWithObjectCallbackQuery { get; } =
-            GetUpdatesResultObject.GetObject(true, new JArray(expectedBodyUpdateInfoWithCallbackQuery)).ToString();
+            GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithCallbackQuery).ToString();
 
         #endregion
     }

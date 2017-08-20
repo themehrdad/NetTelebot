@@ -18,16 +18,25 @@ namespace NetTelebot.Type
         {
             UpdateId = jsonObject["update_id"].Value<int>();
 
-            if (jsonObject["message"] != null)
-                Message = new MessageInfo(jsonObject["message"].Value<JObject>());
-            if (jsonObject["edited_message"] != null)
-                EditedMessage = new MessageInfo(jsonObject["edited_message"].Value<JObject>());
-            if (jsonObject["channel_post"] != null)
-                ChannelPost = new MessageInfo(jsonObject["channel_post"].Value<JObject>());
-            if (jsonObject["edited_channel_post"] != null)
-                EditedChannelPost = new MessageInfo(jsonObject["edited_channel_post"].Value<JObject>());
-            if (jsonObject["callback_query"] != null)
-                CallbackQuery = new CallbackQueryInfo(jsonObject["callback_query"].Value<JObject>());
+            Message = jsonObject["message"] != null
+                ? new MessageInfo(jsonObject["message"].Value<JObject>())
+                : MessageInfo.GetNewMessageInfo(MessageInfo.GetNewMessageInfo(), MessageInfo.GetNewMessageInfo());
+
+            EditedMessage = jsonObject["edited_message"] != null
+                ? new MessageInfo(jsonObject["edited_message"].Value<JObject>())
+                : MessageInfo.GetNewMessageInfo(MessageInfo.GetNewMessageInfo(), MessageInfo.GetNewMessageInfo());
+
+            ChannelPost = jsonObject["channel_post"] != null
+                ? new MessageInfo(jsonObject["channel_post"].Value<JObject>())
+                : MessageInfo.GetNewMessageInfo(MessageInfo.GetNewMessageInfo(), MessageInfo.GetNewMessageInfo());
+
+            EditedChannelPost = jsonObject["edited_channel_post"] != null
+                ? new MessageInfo(jsonObject["edited_channel_post"].Value<JObject>())
+                : MessageInfo.GetNewMessageInfo(MessageInfo.GetNewMessageInfo(), MessageInfo.GetNewMessageInfo());
+
+            CallbackQuery = jsonObject["callback_query"] != null
+                ? new CallbackQueryInfo(jsonObject["callback_query"].Value<JObject>())
+                : new CallbackQueryInfo();
         }
 
         /// <summary>
