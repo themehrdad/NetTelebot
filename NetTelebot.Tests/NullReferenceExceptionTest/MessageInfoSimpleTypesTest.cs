@@ -30,8 +30,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromForwardDateUnix()");
             
             var forwardDateUnix = sendMessage.Result.ForwardDateUnix;
-            var forwardDateString = sendMessage.Result.ForwardDateUnix.ToString();
-
+           
             ConsoleUtlis.PrintSimpleResult(forwardDateUnix);
 
             Assert.Multiple(() =>
@@ -40,7 +39,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 
                 Assert.IsInstanceOf(typeof (long), forwardDateUnix);
                 Assert.AreEqual(forwardDateUnix, 0);
-                Assert.AreEqual(forwardDateString, "0");
+                Assert.AreEqual(forwardDateUnix.ToString(), "0");
             });
         }
 
@@ -53,7 +52,6 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromEditDateUnix()");
             
             var editDateUnix = sendMessage.Result.EditDateUnix;
-            var editDateString = sendMessage.Result.EditDateUnix.ToString();
 
             ConsoleUtlis.PrintSimpleResult(editDateUnix);
 
@@ -63,7 +61,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 
                 Assert.IsInstanceOf(typeof (long), editDateUnix);
                 Assert.AreEqual(editDateUnix, 0);
-                Assert.AreEqual(editDateString, "0");
+                Assert.AreEqual(editDateUnix.ToString(), "0");
             });
         }
 
@@ -79,7 +77,6 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             SendMessageResult sendLocation = mTelegramBot.SendLocation(mChatId, latitude, longitude);
 
             var text = sendLocation.Result.Text;
-            var textToUpper = sendLocation.Result.Text.ToUpper();
 
             ConsoleUtlis.PrintSimpleResult(text);
 
@@ -89,7 +86,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
 
                 Assert.IsInstanceOf(typeof (string), text);
                 Assert.IsEmpty(text);
-                Assert.IsEmpty(textToUpper);
+                Assert.IsEmpty(text.ToUpper());
             });
         }
 
@@ -123,7 +120,6 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyCaption()");
             
             var caption = sendMessage.Result.Caption;
-            var captionLength = sendMessage.Result.Caption.Length;
 
             ConsoleUtlis.PrintSimpleResult(caption);
 
@@ -134,7 +130,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsInstanceOf(typeof (string), caption);
                 Assert.IsEmpty(caption);
                 Assert.AreEqual(caption, string.Empty);
-                Assert.AreEqual(captionLength, 0);
+                Assert.AreEqual(caption.Length, 0);
             });
         }
 
@@ -147,7 +143,6 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyNewChatTitle()");
             
             var newChatTitle = sendMessage.Result.NewChatTitle;
-            var newChatTitleLenth = sendMessage.Result.NewChatTitle.Length;
 
             ConsoleUtlis.PrintSimpleResult(newChatTitle);
 
@@ -158,7 +153,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsInstanceOf(typeof (string), newChatTitle);
                 Assert.IsEmpty(newChatTitle);
                 Assert.AreEqual(newChatTitle, string.Empty);
-                Assert.AreEqual(newChatTitleLenth, 0);
+                Assert.AreEqual(newChatTitle.Length, 0);
             });
         }
 
@@ -266,8 +261,6 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.AreEqual(migrateToChatId, 0);
             });
         }
-
-
 
         /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.MigrateFromChatId"/>

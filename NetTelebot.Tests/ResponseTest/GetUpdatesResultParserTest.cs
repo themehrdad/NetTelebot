@@ -1,7 +1,6 @@
 ﻿using NetTelebot.Result;
-using NetTelebot.Tests.ResultTestObject;
 using NetTelebot.Tests.TypeTestObject;
-using Newtonsoft.Json.Linq;
+using NetTelebot.Tests.TypeTestObject.ResultTestObject;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests.ResponseTest
@@ -9,6 +8,7 @@ namespace NetTelebot.Tests.ResponseTest
     [TestFixture]
     internal static class GetUpdatesResultParserTest
     {
+        //todo add new type in UpdateInfo
         /// <summary>
         /// Test for <see cref="GetUpdatesResult"/> parse field.
         /// </summary>
@@ -27,10 +27,10 @@ namespace NetTelebot.Tests.ResponseTest
             //field class GetUpadtesResult
             const bool ok = true;
 
-            JObject messageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatType);
+            var messageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatType);
             dynamic result = UpdateInfoObject.GetObjectInArray(updateId, messageInfo);
+
             dynamic getUpdates = GetUpdatesResultObject.GetObject(ok, result);
-            
             GetUpdatesResult updateResult = new GetUpdatesResult(getUpdates.ToString());
 
             Assert.True(updateResult.Ok);

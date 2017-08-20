@@ -1,6 +1,6 @@
 ﻿using Mock4Net.Core;
 
-namespace NetTelebot.Tests.MockServer
+namespace NetTelebot.Tests.MockServers
 {
     internal static class MockServer
     {
@@ -21,7 +21,7 @@ namespace NetTelebot.Tests.MockServer
                 .RespondWith(
                     Responses
                         .WithStatusCode(200)
-                        .WithBody(ResponseString.mExpectedBodyForBooleanResult)
+                        .WithBody(ResponseString.ExpectedBodyForBooleanResult)
                 );
 
             ServerOkResponse?
@@ -31,7 +31,7 @@ namespace NetTelebot.Tests.MockServer
                 .RespondWith(
                     Responses
                         .WithStatusCode(200)
-                        .WithBody(ResponseString.mExpectedBodyForSendMessageResult)
+                        .WithBody(ResponseString.ExpectedBodyForSendMessageResult)
                 );
 
             ServerOkResponse?
@@ -41,7 +41,7 @@ namespace NetTelebot.Tests.MockServer
                 .RespondWith(
                     Responses
                         .WithStatusCode(200)
-                        .WithBody(ResponseString.mExpectedBodyForSendMessageResult)
+                        .WithBody(ResponseString.ExpectedBodyForSendMessageResult)
                 );
 
             ServerOkResponse?
@@ -51,7 +51,7 @@ namespace NetTelebot.Tests.MockServer
                 .RespondWith(
                     Responses
                         .WithStatusCode(200)
-                        .WithBody(ResponseString.mExpectedBodyForGetUserProfilePhotos)
+                        .WithBody(ResponseString.ExpectedBodyForGetUserProfilePhotos)
                 );
 
             ServerOkResponse?
@@ -61,7 +61,7 @@ namespace NetTelebot.Tests.MockServer
                 .RespondWith(
                     Responses
                         .WithStatusCode(200)
-                        .WithBody(ResponseString.mExpectedBodyForBooleanResult)
+                        .WithBody(ResponseString.ExpectedBodyForBooleanResult)
                 );
 
             ServerOkResponse?
@@ -71,7 +71,7 @@ namespace NetTelebot.Tests.MockServer
                 .RespondWith(
                     Responses
                         .WithStatusCode(200)
-                        .WithBody(ResponseString.mExpectedBodyForBooleanResult)
+                        .WithBody(ResponseString.ExpectedBodyForBooleanResult)
                 );
 
             ServerOkResponse?
@@ -81,7 +81,7 @@ namespace NetTelebot.Tests.MockServer
                 .RespondWith(
                     Responses
                         .WithStatusCode(200)
-                        .WithBody(ResponseString.mExpectedBodyForGetMe)
+                        .WithBody(ResponseString.ExpectedBodyForGetMe)
                 );
 
             ServerOkResponse?
@@ -91,7 +91,7 @@ namespace NetTelebot.Tests.MockServer
                 .RespondWith(
                     Responses
                         .WithStatusCode(200)
-                        .WithBody(ResponseString.mExpectedBodyForBooleanResult)
+                        .WithBody(ResponseString.ExpectedBodyForBooleanResult)
                 );
 
             ServerOkResponse?
@@ -101,7 +101,7 @@ namespace NetTelebot.Tests.MockServer
                 .RespondWith(
                     Responses
                         .WithStatusCode(200)
-                        .WithBody(ResponseString.mExpectedBodyForGetChat)
+                        .WithBody(ResponseString.ExpectedBodyForGetChat)
                 );
 
             ServerBadResponse?
@@ -111,7 +111,7 @@ namespace NetTelebot.Tests.MockServer
                 .RespondWith(
                     Responses
                         .WithStatusCode(401)
-                        .WithBody(ResponseString.mExpectedBodyForBadResponse)
+                        .WithBody(ResponseString.ExpectedBodyForBadResponse)
                 );
         }
 

@@ -175,7 +175,7 @@ namespace NetTelebot.Type
                 : GetNewMessageInfo(GetNewMessageInfo(), GetNewMessageInfo());
         }
 
-        private static MessageInfo GetNewMessageInfo(MessageInfo pinned = null, MessageInfo reply = null)
+        internal static MessageInfo GetNewMessageInfo(MessageInfo pinned = null, MessageInfo reply = null)
         {
             return new MessageInfo
             {

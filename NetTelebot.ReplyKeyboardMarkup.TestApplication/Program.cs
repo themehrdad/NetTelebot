@@ -26,34 +26,63 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
             mClient.UpdatesReceived += ClientUpdatesReceived;
             mClient.GetUpdatesError += ClientGetUpdatesError;
             mClient.StartCheckingUpdates();
+            
 
             Console.WriteLine("Bot start. For exit press any key");
             Console.ReadKey();
         }
 
-        private static void EnableProxy()
+        private static void ClientUpdatesReceived(object sender, TelegramUpdateEventArgs e)
         {
-            WebProxy proxyObject = new WebProxy("http://192.168.1.254:3128/", true);
-            WebRequest.DefaultWebProxy = proxyObject;
+            foreach (var update in e.Updates)
+            {
+                if (update.Message.Text != null)
+                    ParseMessageInfo(e);
+                if (update.CallbackQuery.Message != null)
+                    ParseCallbackQuery(e);
+            }
         }
 
-        private static void ClientUpdatesReceived(object sender, TelegramUpdateEventArgs e)
+        private static void ParseCallbackQuery(TelegramUpdateEventArgs e)
+        {
+            foreach (UpdateInfo update in e.Updates.Where(update => update.CallbackQuery.Data.StartsWith("/")))
+            {
+                if (update.CallbackQuery.Data.Equals("/getId"))
+                    SendMessage(update.CallbackQuery.Message.Chat.Id,
+                        "This chat id is " + update.CallbackQuery.Message.Chat.Id);
+                else if (update.CallbackQuery.Data.Equals("/reply"))
+                    SendMessage(update.CallbackQuery.Message.Chat.Id, "Please reply this message",
+                        new ForceReplyMarkup());
+                else if (update.CallbackQuery.Data.Equals("/calculate"))
+                    SendMessage(update.CallbackQuery.Message.Chat.Id, "Please enter an arithmetic expression.",
+                        ReplyKeyboardMarkupExample.GetKeyboardMarkup());
+                else if (update.CallbackQuery.Data.Equals("/remove_calculate"))
+                    SendMessage(update.CallbackQuery.Message.Chat.Id, "Remove keyboard",
+                        new ReplyKeyboardRemove());
+            }
+        }
+
+        private static void ParseMessageInfo(TelegramUpdateEventArgs e)
         {
             if (ForceReplyExample.InterceptorOfResponseMessages(e))
                 return;
-
+            
             foreach (UpdateInfo update in e.Updates.Where(update => update.Message.Text.StartsWith("/")))
             {
                 if (update.Message.Text.Equals("/start"))
                 {
                     mClient.SendMessage(update.Message.Chat.Id,
-                        "Hello. I`m example bot. Type /calculate for exmple keyboard button and reply keyboard markup. " +
-                        "Type /reply for example force reply. Type /getId return chat_id", 
+                        "Hello. I`m example bot. " +
+                        "\nType /calculate for exmple keyboard button and reply keyboard markup. " +
+                        "\nType /reply for example force reply. " +
+                        "\nType /getId return chat_id." + 
+                        "\nOr press inline button.",
                         replyMarkup: InlineKeyboardExample.GetInlineKeyboard());
                 }
                 else if (update.Message.Text.Equals("/calculate"))
                 {
-                    SendMessage(update.Message.Chat.Id, "Please enter an arithmetic expression and press =", ReplyKeyboardMarkupExample.GetKeyboardMarkup());
+                    SendMessage(update.Message.Chat.Id, "Please enter an arithmetic expression and press =",
+                        ReplyKeyboardMarkupExample.GetKeyboardMarkup());
                 }
                 else if (update.Message.Text.Equals("/reply"))
                 {
@@ -78,6 +107,13 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
         internal static SendMessageResult SendMessage(long chat_id, string message, IReplyMarkup iReplyMarkup = null)
         {
             return mClient.SendMessage(chat_id, message, replyMarkup: iReplyMarkup);
-        }        
+        }
+
+        private static void EnableProxy()
+        {
+            WebProxy proxyObject = new WebProxy("http://192.168.1.254:3128/", true);
+            WebRequest.DefaultWebProxy = proxyObject;
+        }
+
     }
 }
