@@ -4,7 +4,6 @@ using NetTelebot.Type;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-//todo refact this
 namespace NetTelebot.Tests.ResponseTest
 {
     [TestFixture]
