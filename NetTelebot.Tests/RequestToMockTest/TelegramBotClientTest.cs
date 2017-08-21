@@ -9,7 +9,6 @@ using NetTelebot.Type.Keyboard;
 using NUnit.Framework;
 using RestSharp;
 
-//todo change actual => expected, expected => actual
 namespace NetTelebot.Tests.RequestToMockTest
 {
     [TestFixture]
@@ -44,8 +43,11 @@ namespace NetTelebot.Tests.RequestToMockTest
           
             PrintResult(request);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/getMe");
-            Assert.Throws<Exception> (() => mBotBadResponse.GetMe());
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("/botToken/getMe", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.GetMe());
+            });
         }
 
         /// <summary>
@@ -60,16 +62,21 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             PrintResult(request);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "text=123&parse_mode=HTML&" +
-                "disable_web_page_preview=False&" +
-                "disable_notification=False&" +
-                "reply_to_message_id=123&" +
-                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
-                   
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendMessage");
-            Assert.Throws<Exception>(() => mBotBadResponse.SendMessage(123, "123", ParseMode.HTML, false, false, 123, new ForceReplyMarkup()));
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                                "text=123&parse_mode=HTML&" +
+                                "disable_web_page_preview=False&" +
+                                "disable_notification=False&" +
+                                "reply_to_message_id=123&" +
+                                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D",
+                    request.FirstOrDefault()?.Body);
+
+                Assert.AreEqual("/botToken/sendMessage", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(
+                    () => mBotBadResponse.SendMessage(123, "123", ParseMode.HTML, false, false, 123,
+                        new ForceReplyMarkup()));
+            });
         }
 
         /// <summary>
@@ -84,14 +91,16 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             PrintResult(request);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "from_chat_id=123&" +
-                "disable_notification=True&" +
-                "message_id=123");
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                                "from_chat_id=123&" +
+                                "disable_notification=True&" +
+                                "message_id=123", request.FirstOrDefault()?.Body);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/forwardMessage");
-            Assert.Throws<Exception>(() => mBotBadResponse.ForwardMessage(123, 123, 123, true));
+                Assert.AreEqual("/botToken/forwardMessage", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.ForwardMessage(123, 123, 123, true));
+            });
         }
 
         /// <summary>
@@ -106,17 +115,20 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             PrintResult(request);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "photo=123&" +
-                "caption=caption&" +
-                "disable_notification=False&" +
-                "reply_to_message_id=123&" +
-                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                                "photo=123&" +
+                                "caption=caption&" +
+                                "disable_notification=False&" +
+                                "reply_to_message_id=123&" +
+                                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D",
+                    request.FirstOrDefault()?.Body);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendPhoto");
-            Assert.Throws<Exception>(() => mBotBadResponse.SendPhoto(123, new ExistingFile { FileId = "123" },
-                "caption", false, 123, new ForceReplyMarkup()));
+                Assert.AreEqual("/botToken/sendPhoto", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.SendPhoto(123, new ExistingFile {FileId = "123"},
+                    "caption", false, 123, new ForceReplyMarkup()));
+            });
         }
 
         /// <summary>
@@ -132,20 +144,24 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             PrintResult(request);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "audio=123&" +
-                "caption=caption&" +
-                "duration=123&" +
-                "performer=performer&" +
-                "title=title&" +
-                "disable_notification=True&" +
-                "reply_to_message_id=123&" +
-                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                                "audio=123&" +
+                                "caption=caption&" +
+                                "duration=123&" +
+                                "performer=performer&" +
+                                "title=title&" +
+                                "disable_notification=True&" +
+                                "reply_to_message_id=123&" +
+                                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D",
+                    request.FirstOrDefault()?.Body);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendAudio");
-            Assert.Throws<Exception>(() => mBotBadResponse.SendAudio(123, new ExistingFile { FileId = "123" }, "caption", 123, "performer",
-                "title", true, 123, new ForceReplyMarkup()));
+                Assert.AreEqual("/botToken/sendAudio", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(
+                    () => mBotBadResponse.SendAudio(123, new ExistingFile {FileId = "123"}, "caption", 123, "performer",
+                        "title", true, 123, new ForceReplyMarkup()));
+            });
         }
 
         /// <summary>
@@ -159,18 +175,21 @@ namespace NetTelebot.Tests.RequestToMockTest
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendDocument").UsingPost());
 
             PrintResult(request);
-            
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "document=123&" +
-                "caption=caption&" +
-                "disable_notification=True&" +
-                "reply_to_message_id=123&" +
-                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendDocument");
-            Assert.Throws<Exception>(() => mBotBadResponse.SendDocument(123, new ExistingFile { FileId = "123" },
-                "caption", true, 123, new ForceReplyMarkup()));
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                                "document=123&" +
+                                "caption=caption&" +
+                                "disable_notification=True&" +
+                                "reply_to_message_id=123&" +
+                                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D",
+                    request.FirstOrDefault()?.Body);
+
+                Assert.AreEqual("/botToken/sendDocument", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.SendDocument(123, new ExistingFile {FileId = "123"},
+                    "caption", true, 123, new ForceReplyMarkup()));
+            });
         }
 
         /// <summary>
@@ -184,17 +203,20 @@ namespace NetTelebot.Tests.RequestToMockTest
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendSticker").UsingPost());
 
             PrintResult(request);
-            
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "sticker=123&" +
-                "disable_notification=True&" +
-                "reply_to_message_id=123&" +
-                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendSticker");
-            Assert.Throws<Exception>(() => mBotBadResponse.SendSticker(123, new ExistingFile { FileId = "123" },
-                true, 123, new ForceReplyMarkup()));
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                                "sticker=123&" +
+                                "disable_notification=True&" +
+                                "reply_to_message_id=123&" +
+                                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D",
+                    request.FirstOrDefault()?.Body);
+
+                Assert.AreEqual("/botToken/sendSticker", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.SendSticker(123, new ExistingFile {FileId = "123"},
+                    true, 123, new ForceReplyMarkup()));
+            });
         }
 
         /// <summary>
@@ -210,20 +232,23 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             PrintResult(request);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "video=123&" +
-                "duration=123&" +
-                "width=123&" +
-                "height=123&" +
-                "caption=caption&" +
-                "disable_notification=True&" +
-                "reply_to_message_id=123&" +
-                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                            "video=123&" +
+                            "duration=123&" +
+                            "width=123&" +
+                            "height=123&" +
+                            "caption=caption&" +
+                            "disable_notification=True&" +
+                            "reply_to_message_id=123&" +
+                            "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D",
+                request.FirstOrDefault()?.Body);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendVideo");
-            Assert.Throws<Exception>(() => mBotBadResponse.SendVideo(123, new ExistingFile { FileId = "123" },
-                123, 123, 123, "caption", true, 123, new ForceReplyMarkup()));
+                Assert.AreEqual("/botToken/sendVideo", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.SendVideo(123, new ExistingFile {FileId = "123"},
+                    123, 123, 123, "caption", true, 123, new ForceReplyMarkup()));
+            });
         }
 
         /// <summary>
@@ -237,17 +262,21 @@ namespace NetTelebot.Tests.RequestToMockTest
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendLocation").UsingPost());
 
             PrintResult(request);
-            
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "latitude=1&" +
-                "longitude=1&" +
-                "disable_notification=True&" +
-                "reply_to_message_id=123&" +
-                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendLocation");
-            Assert.Throws<Exception>(() => mBotBadResponse.SendLocation(123, 1.0f, 1.0f, true, 123, new ForceReplyMarkup()));
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                                "latitude=1&" +
+                                "longitude=1&" +
+                                "disable_notification=True&" +
+                                "reply_to_message_id=123&" +
+                                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D",
+                    request.FirstOrDefault()?.Body);
+
+                Assert.AreEqual("/botToken/sendLocation", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(
+                    () => mBotBadResponse.SendLocation(123, 1.0f, 1.0f, true, 123, new ForceReplyMarkup()));
+            });
         }
 
         /// <summary>
@@ -263,20 +292,24 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             PrintResult(request);
 
-            Assert.AreEqual("chat_id=123&" +
-                            "latitude=0&" +
-                            "longitude=0&" +
-                            "title=TestTitle&address=TestAddress&" +
-                            "foursquare_id=TestFoursquareId&" +
-                            "disable_notification=True&" +
-                            "reply_to_message_id=123&" +
-                            "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D", request.FirstOrDefault()?.Body);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                                "latitude=0&" +
+                                "longitude=0&" +
+                                "title=TestTitle&address=TestAddress&" +
+                                "foursquare_id=TestFoursquareId&" +
+                                "disable_notification=True&" +
+                                "reply_to_message_id=123&" +
+                                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D",
+                    request.FirstOrDefault()?.Body);
 
-            Assert.AreEqual("/botToken/sendVenue", request.FirstOrDefault()?.Url);
-
-            Assert.Throws<Exception>(
-                () => mBotBadResponse.SendVenue(123, 0, 0, "TestTitle", "TestAddress", "TestFoursquareId", true, 123,
-                    new ForceReplyMarkup()));
+                Assert.AreEqual("/botToken/sendVenue", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(
+                    () =>
+                        mBotBadResponse.SendVenue(123, 0, 0, "TestTitle", "TestAddress", "TestFoursquareId", true, 123,
+                            new ForceReplyMarkup()));
+            });
         }
 
         /// <summary>
@@ -291,18 +324,23 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             PrintResult(request);
 
-            Assert.AreEqual(actual: request.FirstOrDefault()?.Body, 
-                expected:
-                "chat_id=123&" +
-                "phone_number=123&" +
-                "first_name=firstName&" +
-                "last_name=lastName&" +
-                "disable_notification=True&" +
-                "reply_to_message_id=123&" +
-                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D");
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                                "phone_number=123&" +
+                                "first_name=firstName&" +
+                                "last_name=lastName&" +
+                                "disable_notification=True&" +
+                                "reply_to_message_id=123&" +
+                                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D",
+                    request.FirstOrDefault()?.Body);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendContact");
-            Assert.Throws<Exception>(() => mBotBadResponse.SendContact(123, "123", "firstName", "lastName", true, 123, new ForceReplyMarkup()));
+                Assert.AreEqual("/botToken/sendContact", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(
+                    () =>
+                        mBotBadResponse.SendContact(123, "123", "firstName", "lastName", true, 123,
+                            new ForceReplyMarkup()));
+            });
         }
 
         /// <summary>
@@ -315,9 +353,8 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.SendChatAction(123, ChatActions.Typing);
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "action=typing");
+            Assert.AreEqual("chat_id=123&" +
+                            "action=typing", request.FirstOrDefault()?.Body);
 
             MockServer.ServerOkResponse.ResetRequestLogs();
 
@@ -325,9 +362,8 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_photo);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "action=upload_photo");
+            Assert.AreEqual("chat_id=123&" +
+                            "action=upload_photo", request.FirstOrDefault()?.Body);
 
             MockServer.ServerOkResponse.ResetRequestLogs();
 
@@ -335,9 +371,8 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.SendChatAction(123, ChatActions.Record_video);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "action=record_video");
+            Assert.AreEqual("chat_id=123&" +
+                            "action=record_video", request.FirstOrDefault()?.Body);
 
             MockServer.ServerOkResponse.ResetRequestLogs();
 
@@ -345,9 +380,8 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_video);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "action=upload_video");
+            Assert.AreEqual("chat_id=123&" +
+                            "action=upload_video", request.FirstOrDefault()?.Body);
 
             MockServer.ServerOkResponse.ResetRequestLogs();
 
@@ -355,9 +389,8 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.SendChatAction(123, ChatActions.Record_audio);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "action=record_audio");
+            Assert.AreEqual("chat_id=123&" +
+                            "action=record_audio", request.FirstOrDefault()?.Body);
 
             MockServer.ServerOkResponse.ResetRequestLogs();
 
@@ -365,9 +398,8 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_audio);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "action=upload_audio");
+            Assert.AreEqual("chat_id=123&" +
+                            "action=upload_audio", request.FirstOrDefault()?.Body);
 
             MockServer.ServerOkResponse.ResetRequestLogs();
 
@@ -375,9 +407,8 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_document);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "action=upload_document");
+            Assert.AreEqual("chat_id=123&" +
+                            "action=upload_document", request.FirstOrDefault()?.Body);
 
             MockServer.ServerOkResponse.ResetRequestLogs();
 
@@ -385,9 +416,8 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.SendChatAction(123, ChatActions.Find_location);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "action=find_location");
+            Assert.AreEqual("chat_id=123&" +
+                            "action=find_location", request.FirstOrDefault()?.Body);
 
             MockServer.ServerOkResponse.ResetRequestLogs();
 
@@ -395,9 +425,8 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.SendChatAction(123, ChatActions.Record_video_note);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "action=record_video_note");
+            Assert.AreEqual("chat_id=123&" +
+                            "action=record_video_note", request.FirstOrDefault()?.Body);
 
             MockServer.ServerOkResponse.ResetRequestLogs();
 
@@ -405,9 +434,8 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_video_note);
             request =MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
             PrintResult(request);
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "chat_id=123&" +
-                "action=upload_video_note");
+            Assert.AreEqual("chat_id=123&" +
+                            "action=upload_video_note", request.FirstOrDefault()?.Body);
 
 
             Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/sendChatAction");
@@ -426,13 +454,15 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             PrintResult(request);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
-                "user_id=123&" +
-                "offset=123&" +
-                "limit=10");
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("user_id=123&" +
+                                "offset=123&" +
+                                "limit=10", request.FirstOrDefault()?.Body);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/getUserProfilePhotos");
-            Assert.Throws<Exception>(() => mBotBadResponse.GetUserProfilePhotos(123, 123, 10));
+                Assert.AreEqual("/botToken/getUserProfilePhotos", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.GetUserProfilePhotos(123, 123, 10));
+            });
         }
 
         /// <summary>
@@ -447,13 +477,15 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             PrintResult(request);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Body, 
-                "chat_id=123&" +
-                "user_id=123&" +
-                "until_date=1816646400");
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                                "user_id=123&" +
+                                "until_date=1816646400", request.FirstOrDefault()?.Body);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/kickChatMember");
-            Assert.Throws<Exception>(() => mBotBadResponse.KickChatMember(123, 123, new DateTime(2027, 07, 27)));
+                Assert.AreEqual("/botToken/kickChatMember", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.KickChatMember(123, 123, new DateTime(2027, 07, 27)));
+            });
         }
 
         /// <summary>
@@ -468,12 +500,14 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             PrintResult(request);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Body, 
-                "chat_id=123&" +
-                "user_id=123");
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                                "user_id=123", request.FirstOrDefault()?.Body);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/unbanChatMember");
-            Assert.Throws<Exception>(() => mBotBadResponse.UnbanChatMember(123, 123));
+                Assert.AreEqual("/botToken/unbanChatMember", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.UnbanChatMember(123, 123));
+            });
         }
 
         /// <summary>
@@ -488,10 +522,13 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             PrintResult(request);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Body, "chat_id=123");
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123", request.FirstOrDefault()?.Body);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/leaveChat");
-            Assert.Throws<Exception>(() => mBotBadResponse.LeaveChat(123));
+                Assert.AreEqual("/botToken/leaveChat", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.LeaveChat(123));
+            });
         }
 
         /// <summary>
@@ -506,10 +543,13 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             PrintResult(request);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Body, "chat_id=123");
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123", request.FirstOrDefault()?.Body);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Url, "/botToken/getChat");
-            Assert.Throws<Exception>(() => mBotBadResponse.GetChat(123));
+                Assert.AreEqual("/botToken/getChat", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.GetChat(123));
+            });
         }
 
         //todo move common project

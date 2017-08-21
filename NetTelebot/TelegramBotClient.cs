@@ -99,7 +99,7 @@ namespace NetTelebot
         /// Gets maximum 100 messages sent to your bot, starting from update_id set by offset
         /// </summary>
         /// <param name="offset">First update_id to be downloaded</param>
-        /// <returns>Returns a class containing messages sent to your bot</returns>
+        /// <returns>On success, the sent <see cref="GetUpdatesResult"/> is returned.</returns>
         public GetUpdatesResult GetUpdates(int offset)
         {
             return GetUpdatesInternal(offset, null);
@@ -110,7 +110,7 @@ namespace NetTelebot
         /// </summary>
         /// <param name="offset">First update_id to be downloaded</param>
         /// <param name="limit">Maximum number of messages to receive. It cannot be more than 100</param>
-        /// <returns>Returns a class containing messages sent to your bot</returns>
+        /// <returns>On success, the sent <see cref="GetUpdatesResult"/> is returned.</returns>
         public GetUpdatesResult GetUpdates(int offset, byte limit)
         {
             return GetUpdatesInternal(offset, limit);
@@ -167,8 +167,9 @@ namespace NetTelebot
         /// <param name="disableWebPagePreview">Disables link previews for links in this message</param>
         /// <param name="disableNotification">Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
-        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
-        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
+        /// <param name="replyMarkup">Additional interface options. 
+        /// A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+        /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned.</returns>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendMessageTest()</remarks>
         public SendMessageResult SendMessage(object chatId, string text,
             ParseMode? parseMode = null,
@@ -202,7 +203,7 @@ namespace NetTelebot
         /// <param name="fromChatId">Unique identifier for the chat where the original message was sent — User or GroupChat id</param>
         /// <param name="messageId">Unique message identifier</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
-        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
+        /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned.</returns>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.ForwardMessageTest()</remarks>
         public SendMessageResult ForwardMessage(object chatId, int fromChatId, 
             int messageId,
@@ -227,8 +228,9 @@ namespace NetTelebot
         /// <param name="caption">Photo caption (may also be used when resending photos by file_id).</param>
         /// <param name="disableNotification">Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
-        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
-        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
+        /// <param name="replyMarkup">Additional interface options. 
+        /// A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+        /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned.</returns>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendPhotoTest()</remarks>
         public SendMessageResult SendPhoto(object chatId, IFile photo,
             string caption = null,
@@ -276,8 +278,9 @@ namespace NetTelebot
         /// <param name="title">Track name</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
-        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
-        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
+        /// <param name="replyMarkup">Additional interface options. 
+        /// A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
+        /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned.</returns>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendAudioTest()</remarks>
         public SendMessageResult SendAudio(object chatId, IFile audio,
             string caption = null,
@@ -322,7 +325,7 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+        /// Use this method to send general files. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
         /// See <see href="https://core.telegram.org/bots/api#senddocument">API</see>
         /// </summary>
         /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
@@ -332,7 +335,7 @@ namespace NetTelebot
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
-        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
+        /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned.</returns>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendDocumentTest()</remarks>
         public SendMessageResult SendDocument(object chatId, IFile document,
             string caption = null,
@@ -514,7 +517,8 @@ namespace NetTelebot
         /// <param name="foursquareId">Foursquare identifier of the venue</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
-        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an 
+        /// inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned</returns>
         public SendMessageResult SendVenue(object chatId, float latitude, float longitude, string title, string address, 
             string foursquareId = null,
@@ -633,8 +637,7 @@ namespace NetTelebot
         /// If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever</param>
         /// <returns>Returns True on success, false otherwise</returns>
         public BooleanResult KickChatMember(object chatId, int userId, DateTime untilDate)
-        {
-            
+        {   
             RestRequest request = new RestRequest(string.Format(kickChatMemberUri, Token), Method.POST);
 
             request.AddParameter("chat_id", chatId);
@@ -655,7 +658,6 @@ namespace NetTelebot
         /// <returns>Returns True on success, false otherwise</returns>
         public BooleanResult UnbanChatMember(object chatId, int userId)
         {
-
             RestRequest request = new RestRequest(string.Format(unbanChatMemberUri, Token), Method.POST);
 
             request.AddParameter("chat_id", chatId);
@@ -683,7 +685,7 @@ namespace NetTelebot
         /// Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). 
         /// </summary>
         /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)</param>
-        /// <returns>Returns a <see cref="ChatInfo"/> object on success.</returns>
+        /// <returns>Returns a <see cref="ChatInfoResult"/> object on success.</returns>
         public ChatInfoResult GetChat(object chatId)
         {
             RestRequest request = new RestRequest(string.Format(getChatUri, Token), Method.POST);
@@ -752,7 +754,7 @@ namespace NetTelebot
         /// <summary>
         /// Called when [updates received].
         /// </summary>
-        /// <param name="updates">The updates.</param>
+        /// <param name="updates">The updates</param>
         protected virtual void OnUpdatesReceived(UpdateInfo[] updates)
         {
             TelegramUpdateEventArgs args = new TelegramUpdateEventArgs(updates);
