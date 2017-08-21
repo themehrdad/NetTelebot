@@ -9,6 +9,7 @@ using NetTelebot.Type.Keyboard;
 using NUnit.Framework;
 using RestSharp;
 
+//todo change actual => expected, expected => actual
 namespace NetTelebot.Tests.RequestToMockTest
 {
     [TestFixture]
@@ -250,6 +251,35 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.SendVenue"/>.
+        /// </summary>
+        [Test]
+        public void SendVenueTest()
+        {
+            mBotOkResponse.SendVenue(123, 0, 0, "TestTitle", "TestAddress", "TestFoursquareId", true, 123,
+                new ForceReplyMarkup());
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendVenue").UsingPost());
+
+            PrintResult(request);
+
+            Assert.AreEqual("chat_id=123&" +
+                            "latitude=0&" +
+                            "longitude=0&" +
+                            "title=TestTitle&address=TestAddress&" +
+                            "foursquare_id=TestFoursquareId&" +
+                            "disable_notification=True&" +
+                            "reply_to_message_id=123&" +
+                            "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D", request.FirstOrDefault()?.Body);
+
+            Assert.AreEqual("/botToken/sendVenue", request.FirstOrDefault()?.Url);
+
+            Assert.Throws<Exception>(
+                () => mBotBadResponse.SendVenue(123, 0, 0, "TestTitle", "TestAddress", "TestFoursquareId", true, 123,
+                    new ForceReplyMarkup()));
+        }
+
+        /// <summary>
         /// Sends the sticker test method <see cref="TelegramBotClient.SendContact"/>.
         /// </summary>
         [Test]
@@ -261,7 +291,8 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             PrintResult(request);
 
-            Assert.AreEqual(request.FirstOrDefault()?.Body,
+            Assert.AreEqual(actual: request.FirstOrDefault()?.Body, 
+                expected:
                 "chat_id=123&" +
                 "phone_number=123&" +
                 "first_name=firstName&" +

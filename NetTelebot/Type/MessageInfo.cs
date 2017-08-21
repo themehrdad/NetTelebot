@@ -10,6 +10,7 @@ namespace NetTelebot.Type
     /// </summary>
     public class MessageInfo
     {
+        //todo description how and where tests. Remove path to test from comment and reremarks
         internal MessageInfo()
         {
         }
@@ -125,6 +126,11 @@ namespace NetTelebot.Type
                 ? new LocationInfo(jsonObject["location"].Value<JObject>())
                 : new LocationInfo();
 
+            //add parser test
+            Venue = jsonObject["venue"] != null
+                ? new VenueInfo(jsonObject["venue"].Value<JObject>())
+                : new VenueInfo {Location = new LocationInfo()};
+
             // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoNewChatMemberTest()
             NewChatMember = jsonObject["new_chat_member"] != null
                 ? new UserInfo(jsonObject["new_chat_member"].Value<JObject>())
@@ -182,18 +188,19 @@ namespace NetTelebot.Type
                 From = new UserInfo(),
                 Chat = new ChatInfo(),
                 ForwardFrom = new UserInfo(),
-                ForwardFromChat = new ChatInfo(),
+                ForwardFromChat = new ChatInfo{Photo = new ChatPhotoInfo()},
                 ReplyToMessage = reply,
                 Entities = new MessageEntityInfo[0],
                 Audio = new AudioInfo(),
-                Document = new DocumentInfo(),
+                Document = new DocumentInfo {Thumb = new PhotoSizeInfo()},
                 Photo = new PhotoSizeInfo[0],
-                Sticker = new StickerInfo(),
-                Video = new VideoInfo(),
-                Contact = new ContactInfo(),
-                Location = new LocationInfo(),
-                NewChatMember = new UserInfo(),
-                LeftChatMember = new UserInfo(),
+                Sticker = new StickerInfo {Thumb = new PhotoSizeInfo()},
+                Video = new VideoInfo {Thumb = new PhotoSizeInfo()},
+                Contact = new ContactInfo() ,
+                Location = new LocationInfo() ,
+                Venue = new VenueInfo {Location = new LocationInfo()},
+                NewChatMember = new UserInfo() ,
+                LeftChatMember = new UserInfo() ,
                 NewChatPhoto = new PhotoSizeInfo[0],
                 PinnedMessage = pinned
             };
@@ -342,7 +349,10 @@ namespace NetTelebot.Type
         /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyLocation() </remarks>
         public LocationInfo Location { get; private set; }
 
-        //todo add (Venue) Venue
+        /// <summary>
+        /// Optional. This object represents a venue.
+        /// </summary>
+        public VenueInfo Venue { get; private set; }
 
         /// <summary>
         /// Optional. A new member was added to the group, information about them (this member may be bot itself)  

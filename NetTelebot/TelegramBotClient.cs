@@ -17,6 +17,7 @@ using NetTelebot.Extension;
 
 namespace NetTelebot
 {
+    //todo add Description for test. Remove link from <remarks>
     /// <summary>
     /// The main class to use Telegram Bot API. Get an instance of this class and set the Token property and start calling methods.
     /// </summary>
@@ -150,7 +151,6 @@ namespace NetTelebot
         /// Gets information about your bot. You can call this method as a ping
         /// </summary>
         /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.GetMeTest()</remarks>
-        /// <remarks>Test NetTelebot.Tests.TelegramRealBotClientTest.GetMeTest()</remarks>
         public MeInfo GetMe()
         {
             RestRequest request = new RestRequest(string.Format(getMeUri, Token), Method.POST);
@@ -503,7 +503,44 @@ namespace NetTelebot
             return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
         }
 
-        //todo sendVenue (https://core.telegram.org/bots/api#sendvenue)
+        /// <summary>
+        /// Use this method to send information about a venue.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
+        /// <param name="latitude">Latitude of the venue</param>
+        /// <param name="longitude">Longitude of the venue</param>
+        /// <param name="title">Name of the venue</param>
+        /// <param name="address">Address of the venue</param>
+        /// <param name="foursquareId">Foursquare identifier of the venue</param>
+        /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.</param>
+        /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned</returns>
+        public SendMessageResult SendVenue(object chatId, float latitude, float longitude, string title, string address, 
+            string foursquareId = null,
+            bool? disableNotification = null,
+            int? replyToMessageId = null,
+            IReplyMarkup replyMarkup = null)
+        {
+            RestRequest request = new RestRequest(string.Format(sendVenueUri, Token), Method.POST);
+
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("latitude", latitude);
+            request.AddParameter("longitude", longitude);
+            request.AddParameter("title", title);
+            request.AddParameter("address", address);
+
+            if (!string.IsNullOrEmpty(foursquareId))
+                request.AddParameter("foursquare_id", foursquareId);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+            if (replyToMessageId != null)
+                request.AddParameter("reply_to_message_id", replyToMessageId);
+            if (replyMarkup != null)
+                request.AddParameter("reply_markup", replyMarkup.GetJson());
+
+            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
+        }
 
         /// <summary>
         /// Use this method to send phone contacts. See <see href="https://core.telegram.org/bots/api#sendcontact">API</see>

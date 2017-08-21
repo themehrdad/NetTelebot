@@ -84,6 +84,7 @@
     <Compile Include="Type\UserInfo.cs" />
     <Compile Include="Type\UserProfilePhotosInfo.cs" />
     <Compile Include="Extension\UtilityExtensions.cs" />
+    <Compile Include="Type\VenueInfo.cs" />
     <Compile Include="Type\VideoInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -300,6 +300,32 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Venue"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyVenue()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyLocation()");
+
+            VenueInfo venue = sendMessage.Result.Venue;
+
+            ConsoleUtlis.PrintResult(venue);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof(VenueInfo), venue);
+
+                Assert.AreEqual(0, venue.Location.Latitude);
+                Assert.AreEqual(0, venue.Location.Longitude);
+                Assert.IsNull(venue.Title);
+                Assert.IsNull(venue.Address);
+                Assert.IsNull(venue.FoursquareId);
+            });
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatMember"/>
         /// </summary>
         [Test]
