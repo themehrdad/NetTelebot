@@ -14,114 +14,36 @@ namespace NetTelebot.Tests.MockServers
             if (portBadResponse != null)
                 ServerBadResponse = FluentMockServer.Start(portBadResponse.Value);
 
-            ServerOkResponse?
-                .Given(
-                    Requests.WithUrl("/botToken/sendChatAction").UsingPost()
-                )
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(ResponseString.ExpectedBodyForBooleanResult)
-                );
+            AddNewRouter("/botToken/sendChatAction", ResponseString.ExpectedBodyForBooleanResult);
+            AddNewRouter("/botToken/send*", ResponseString.ExpectedBodyForSendMessageResult);
+            AddNewRouter("/botToken/forwardMessage", ResponseString.ExpectedBodyForSendMessageResult);
+            AddNewRouter("/botToken/getUserProfilePhotos", ResponseString.ExpectedBodyForGetUserProfilePhotos);
+            AddNewRouter("/botToken/kickChatMember", ResponseString.ExpectedBodyForBooleanResult);
+            AddNewRouter("/botToken/unbanChatMember", ResponseString.ExpectedBodyForBooleanResult);
+            AddNewRouter("/botToken/getMe", ResponseString.ExpectedBodyForGetMe);
+            AddNewRouter("/botToken/leaveChat", ResponseString.ExpectedBodyForBooleanResult);
+            AddNewRouter("/botToken/getChatMembersCount", ResponseString.ExpectedBodyForIntegerResult);
+            AddNewRouter("/botToken/getChat", ResponseString.ExpectedBodyForGetChat);
 
-            ServerOkResponse?
-                .Given(
-                    Requests.WithUrl("/botToken/send*").UsingPost()
-                )
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(ResponseString.ExpectedBodyForSendMessageResult)
-                );
+            AddNewRouter("/", ResponseString.ExpectedBodyForBadResponse, ServerBadResponse, 401);
+        }
 
-            ServerOkResponse?
-                .Given(
-                    Requests.WithUrl("/botToken/forwardMessage").UsingPost()
-                )
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(ResponseString.ExpectedBodyForSendMessageResult)
-                );
+        private static void AddNewRouter(string url, string responseString, FluentMockServer server = null, int? statusCode = null)
+        {
+            if (statusCode == null)
+                statusCode = 200;
 
-            ServerOkResponse?
-                .Given(
-                    Requests.WithUrl("/botToken/getUserProfilePhotos").UsingPost()
-                )
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(ResponseString.ExpectedBodyForGetUserProfilePhotos)
-                );
+            if (server == null)
+                server = ServerOkResponse;
 
-            ServerOkResponse?
+            server?
                 .Given(
-                    Requests.WithUrl("/botToken/kickChatMember").UsingPost()
+                    Requests.WithUrl(url).UsingPost()
                 )
                 .RespondWith(
                     Responses
-                        .WithStatusCode(200)
-                        .WithBody(ResponseString.ExpectedBodyForBooleanResult)
-                );
-
-            ServerOkResponse?
-                .Given(
-                    Requests.WithUrl("/botToken/unbanChatMember").UsingPost()
-                )
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(ResponseString.ExpectedBodyForBooleanResult)
-                );
-
-            ServerOkResponse?
-                .Given(
-                    Requests.WithUrl("/botToken/getMe").UsingPost()
-                )
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(ResponseString.ExpectedBodyForGetMe)
-                );
-
-            ServerOkResponse?
-                .Given(
-                    Requests.WithUrl("/botToken/leaveChat").UsingPost()
-                )
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(ResponseString.ExpectedBodyForBooleanResult)
-                );
-
-            ServerOkResponse?
-                .Given(
-                    Requests.WithUrl("/botToken/getChatMembersCount").UsingPost()
-                )
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(ResponseString.ExpectedBodyForIntegerResult)
-                );
-
-            ServerOkResponse?
-                .Given(
-                    Requests.WithUrl("/botToken/getChat").UsingPost()
-                )
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(ResponseString.ExpectedBodyForGetChat)
-                );
-
-            ServerBadResponse?
-                .Given(
-                    Requests.WithUrl("/*").UsingPost()
-                )
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(401)
-                        .WithBody(ResponseString.ExpectedBodyForBadResponse)
+                        .WithStatusCode((int) statusCode)
+                        .WithBody(responseString)
                 );
         }
 
