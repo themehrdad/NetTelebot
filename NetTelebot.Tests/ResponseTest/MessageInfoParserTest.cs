@@ -620,6 +620,33 @@ namespace NetTelebot.Tests.ResponseTest
         }
 
         /// <summary>
+        /// Test for <see cref="MessageInfo.Venue"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoVenueTest()
+        {
+            const float longitude = 1000;
+            const float latitude = 1000;
+            JObject locationInfo = LocationInfoObject.GetObject(longitude, latitude);
+
+            const string title = "TestTitle";
+            const string address = "TestAddress";
+            const string foursquareId = "TestfoursquareId";
+
+            dynamic messageInfoVenue = mMandatoryFieldsMessageInfo;
+
+            messageInfoVenue.venue = VenueInfoObject.GetObject(locationInfo, title, address, foursquareId);
+
+            MessageInfo messageInfo = new MessageInfo(messageInfoVenue);
+
+            Assert.AreEqual(longitude, messageInfo.Venue.Location.Latitude);
+            Assert.AreEqual(latitude, messageInfo.Venue.Location.Latitude);
+            Assert.AreEqual(title, messageInfo.Venue.Title);
+            Assert.AreEqual(address, messageInfo.Venue.Address);
+            Assert.AreEqual(foursquareId, messageInfo.Venue.FoursquareId);
+        }
+
+        /// <summary>
         /// Test for <see cref="MessageInfo.NewChatMember"/> parse field.
         /// </summary>
         [Test]
