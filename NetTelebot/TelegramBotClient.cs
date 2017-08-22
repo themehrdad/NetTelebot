@@ -17,7 +17,16 @@ using NetTelebot.Extension;
 
 namespace NetTelebot
 {
-    //todo add Description for test. Remove link from <remarks>
+    /* About tests
+     * After adding the class field, you need to add the following tests:
+     *  
+     * NetTelebot.Tests.RequestToMockTest.[ClassName]
+     * 
+     * [ClassName] = TelegramBotClientTest if you want to test the method
+     * [ClassName] = TelegramBotGetUpdatesTest if you are testing for updates
+     * [ClassName] = TelegramBotInlineKeyboardTest or TelegramBotKeyboardTest if you test keyboard
+     */
+
     /// <summary>
     /// The main class to use Telegram Bot API. Get an instance of this class and set the Token property and start calling methods.
     /// </summary>
@@ -150,7 +159,6 @@ namespace NetTelebot
         /// <summary>
         /// Gets information about your bot. You can call this method as a ping
         /// </summary>
-        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.GetMeTest()</remarks>
         public MeInfo GetMe()
         {
             RestRequest request = new RestRequest(string.Format(getMeUri, Token), Method.POST);
@@ -170,7 +178,6 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. 
         /// A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned.</returns>
-        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendMessageTest()</remarks>
         public SendMessageResult SendMessage(object chatId, string text,
             ParseMode? parseMode = null,
             bool? disableWebPagePreview = null,
@@ -204,7 +211,6 @@ namespace NetTelebot
         /// <param name="messageId">Unique message identifier</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
         /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned.</returns>
-        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.ForwardMessageTest()</remarks>
         public SendMessageResult ForwardMessage(object chatId, int fromChatId, 
             int messageId,
             bool? disableNotification = null)
@@ -231,7 +237,6 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. 
         /// A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned.</returns>
-        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendPhotoTest()</remarks>
         public SendMessageResult SendPhoto(object chatId, IFile photo,
             string caption = null,
             bool? disableNotification = null,
@@ -281,7 +286,6 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. 
         /// A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned.</returns>
-        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendAudioTest()</remarks>
         public SendMessageResult SendAudio(object chatId, IFile audio,
             string caption = null,
             int? duration = null,
@@ -336,7 +340,6 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned.</returns>
-        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendDocumentTest()</remarks>
         public SendMessageResult SendDocument(object chatId, IFile document,
             string caption = null,
             bool? disableNotification = null,
@@ -380,7 +383,6 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendStickerTest()</remarks>
         public SendMessageResult SendSticker(object chatId, IFile sticker,
             bool? disableNotification = null,
             int? replyToMessageId = null,
@@ -427,7 +429,6 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendVideoTest()</remarks>
         public SendMessageResult SendVideo(object chatId, IFile video,
             int? duration = null,
             int? width = null,
@@ -485,7 +486,6 @@ namespace NetTelebot
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendLocationTest()</remarks>
         public SendMessageResult SendLocation(object chatId, float latitude, float longitude,
             bool? disableNotification = null,
             int? replyToMessageId = null,
@@ -558,7 +558,6 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard,
         /// instructions to remove keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendContactTest()</remarks>
         public SendMessageResult SendContact(object chatId, string phoneNumber, string firstName,
             string lastName = null,
             bool? disableNotification = null,
@@ -591,7 +590,6 @@ namespace NetTelebot
         /// <param name="action">Type of action to broadcast. Choose one, depending on what the user is about to receive: 
         /// typing for text messages, upload_photo for photos, record_video or upload_video for videos, 
         /// record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.</param>
-        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.SendChatActionTest()</remarks>
         public BooleanResult SendChatAction(object chatId, ChatActions action)
         {
             RestRequest request = new RestRequest(string.Format(sendChatActionUri, Token), Method.POST);
@@ -609,7 +607,6 @@ namespace NetTelebot
         /// <param name="offset">Sequential number of the first photo to be returned. By default, all photos are returned.</param>
         /// <param name="limit">Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.</param>
         /// <returns><see cref="UserProfilePhotosInfo"/></returns>
-        /// <remarks>Test NetTelebot.Tests.TelegramMockBotClientTest.GetUserProfilePhotosTest()</remarks>
         public GetUserProfilePhotosResult GetUserProfilePhotos(int userId, int? offset = null, byte? limit = null)
         {
             RestRequest request = new RestRequest(string.Format(getUserProfilePhotosUri, Token), Method.POST);
