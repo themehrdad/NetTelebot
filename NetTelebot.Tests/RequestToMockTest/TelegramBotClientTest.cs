@@ -531,6 +531,24 @@ namespace NetTelebot.Tests.RequestToMockTest
             });
         }
 
+        [Test]
+        public void GetChatMembersCountTest()
+        {
+            mBotOkResponse.GetChatMembersCount(123);
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getChatMembersCount").UsingPost());
+
+            PrintResult(request);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123", request.FirstOrDefault()?.Body);
+
+                Assert.AreEqual("/botToken/getChatMembersCount", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.LeaveChat(123));
+            });
+        }
+
         /// <summary>
         /// Sends the sticker test method <see cref="TelegramBotClient.GetChat"/>.
         /// </summary>

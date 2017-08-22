@@ -123,6 +123,16 @@ namespace NetTelebot.Tests.MockServers
             new JProperty("result", true)).ToString();
 
         /// <summary>
+        /// The expected body for BooleanResult.
+        /// Represent JSON string:
+        /// 
+        /// { "ok": true, "result": 123}
+        /// </summary>
+        internal static string ExpectedBodyForIntegerResult { get; } = new JObject(
+            new JProperty("ok", true),
+            new JProperty("result", 123)).ToString();
+
+        /// <summary>
         /// The expected body for bad response.
         /// Represent JSON string:
         ///  

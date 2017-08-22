@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Result\ChatInfoResult.cs" />
+    <Compile Include="Result\IntegerResult.cs" />
     <Compile Include="Type\AudioInfo.cs" />
     <Compile Include="Result\BooleanResult.cs" />
     <Compile Include="BotEnum\ChatActions.cs" />

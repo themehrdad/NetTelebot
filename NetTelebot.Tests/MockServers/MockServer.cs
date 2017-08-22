@@ -96,6 +96,16 @@ namespace NetTelebot.Tests.MockServers
 
             ServerOkResponse?
                 .Given(
+                    Requests.WithUrl("/botToken/getChatMembersCount").UsingPost()
+                )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(ResponseString.ExpectedBodyForIntegerResult)
+                );
+
+            ServerOkResponse?
+                .Given(
                     Requests.WithUrl("/botToken/getChat").UsingPost()
                 )
                 .RespondWith(

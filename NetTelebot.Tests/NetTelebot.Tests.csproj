@@ -84,6 +84,7 @@
     <Compile Include="ResponseTest\CallbackQueryParserTest.cs" />
     <Compile Include="ResponseTest\GetUpdatesResultParserTest.cs" />
     <Compile Include="ResponseTest\GetUserProfilePhotosResultParserTest.cs" />
+    <Compile Include="ResponseTest\IntegerResultParserTest.cs" />
     <Compile Include="ResponseTest\MeInfoParserTest.cs" />
     <Compile Include="NullReferenceExceptionTest\MessageInfoClassTypeTest.cs" />
     <Compile Include="ResponseTest\MessageInfoParserTest.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="TypeTestObject\MessageEntityInfoObject.cs" />
     <Compile Include="TypeTestObject\MessageInfoObject.cs" />
     <Compile Include="TypeTestObject\PhotoSizeInfoObject.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\IntegerResultObject.cs" />
     <Compile Include="TypeTestObject\StickerInfoObject.cs" />
     <Compile Include="TypeTestObject\UpdateInfoObject.cs" />
     <Compile Include="TypeTestObject\UserInfoObject.cs" />

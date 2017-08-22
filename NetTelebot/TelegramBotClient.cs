@@ -24,7 +24,10 @@ namespace NetTelebot
      * 
      * [ClassName] = TelegramBotClientTest if you want to test the method
      * [ClassName] = TelegramBotGetUpdatesTest if you are testing for updates
-     * [ClassName] = TelegramBotInlineKeyboardTest or TelegramBotKeyboardTest if you test keyboard
+     * [ClassName] = TelegramBotInlineKeyboardTest or TelegramBotKeyboardTest if you test keyboard.
+     * 
+     * Also you can check how the written added methods work in the namespace classes NetTelebot.Tests.RequestToTelegramTest.
+     * There are requests to the telegram servers
      */
 
     /// <summary>
@@ -82,8 +85,8 @@ namespace NetTelebot
         private const string getChatMemberUri = "/bot{0}/getChatMember";
         private const string answerCallbackQueryUri = "/bot{0}/getChatMember";
 
-        private Timer updateTimer;
-        private int lastUpdateId;
+        private Timer mUpdateTimer;
+        private int mLastUpdateId;
 
         /// <summary>
         /// Occurs when [get updates error].
@@ -694,6 +697,22 @@ namespace NetTelebot
 
         //todo getChatAdministrators (https://core.telegram.org/bots/api#getchatadministrators)
         //todo getChatMembersCount (https://core.telegram.org/bots/api#getchatmemberscount)
+
+
+        /// <summary>
+        /// Use this method to get the number of members in a chat. Returns <see cref="IntegerResult"/> on success
+        /// </summary>
+        /// <param name="chatId"></param>
+        /// <returns></returns>
+        public IntegerResult GetChatMembersCount(object chatId)
+        {
+            RestRequest request = new RestRequest(string.Format(getChatMembersCountUri, Token), Method.POST);
+
+            request.AddParameter("chat_id", chatId);
+
+            return ExecuteRequest<IntegerResult>(request) as IntegerResult;
+        }
+
         //todo getChatMember (https://core.telegram.org/bots/api#getchatmember)
         //todo answerCallbackQuery (https://core.telegram.org/bots/api#answercallbackquery)
         //todo Inline mode methods (https://core.telegram.org/bots/api#inline-mode-methods)
@@ -704,13 +723,13 @@ namespace NetTelebot
         /// </summary>
         public void StartCheckingUpdates()
         {
-            if (updateTimer == null)
+            if (mUpdateTimer == null)
             {
-                updateTimer = new Timer(updateTimer_Callback, null, CheckInterval, Timeout.Infinite);
+                mUpdateTimer = new Timer(updateTimer_Callback, null, CheckInterval, Timeout.Infinite);
             }
             else
             {
-                updateTimer.Change(CheckInterval, Timeout.Infinite);
+                mUpdateTimer.Change(CheckInterval, Timeout.Infinite);
             }
         }
 
@@ -719,7 +738,7 @@ namespace NetTelebot
         /// </summary>
         public void StopCheckUpdates()
         {
-            updateTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            mUpdateTimer.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
         private void updateTimer_Callback(object state)
@@ -729,7 +748,7 @@ namespace NetTelebot
 
             try
             {
-                updates = lastUpdateId == 0 ? GetUpdates() : GetUpdates(lastUpdateId + 1);
+                updates = mLastUpdateId == 0 ? GetUpdates() : GetUpdates(mLastUpdateId + 1);
                 getUpdatesSuccess = true;
             }
             catch (Exception ex)
@@ -741,11 +760,11 @@ namespace NetTelebot
 
                 if (updates.Ok && updates.Result != null && updates.Result.Any())
                 {
-                    lastUpdateId = updates.Result.Last().UpdateId;
+                    mLastUpdateId = updates.Result.Last().UpdateId;
                     OnUpdatesReceived(updates.Result);
                 }
 
-            updateTimer.Change(CheckInterval, Timeout.Infinite);
+            mUpdateTimer.Change(CheckInterval, Timeout.Infinite);
         }
 
         /// <summary>
@@ -782,6 +801,9 @@ namespace NetTelebot
 
                 if (type == typeof(ChatInfoResult))
                     return new ChatInfoResult(response.Content);
+
+                if (type == typeof(IntegerResult))
+                    return new IntegerResult(response.Content);
             }
             
             throw new Exception(response.StatusDescription);
