@@ -7,7 +7,7 @@ namespace NetTelebot.Tests.MockServers
         internal static FluentMockServer ServerOkResponse { get; private set; }
         internal static FluentMockServer ServerBadResponse { get; private set; }
 
-        public static void Start(int? portOkResponse = null, int? portBadResponse = null)
+        internal static void Start(int? portOkResponse = null, int? portBadResponse = null)
         {
             if (portOkResponse != null)
                 ServerOkResponse = FluentMockServer.Start(portOkResponse.Value);
@@ -28,7 +28,7 @@ namespace NetTelebot.Tests.MockServers
             AddNewRouter("/", ResponseString.ExpectedBodyForBadResponse, ServerBadResponse, 401);
         }
 
-        private static void AddNewRouter(string url, string responseString, FluentMockServer server = null, int? statusCode = null)
+        internal static void AddNewRouter(string url, string responseString, FluentMockServer server = null, int? statusCode = null)
         {
             if (statusCode == null)
                 statusCode = 200;
@@ -47,7 +47,7 @@ namespace NetTelebot.Tests.MockServers
                 );
         }
 
-        public static void Stop()
+        internal static void Stop()
         {
             ServerOkResponse?.Stop();
             ServerBadResponse?.Stop();

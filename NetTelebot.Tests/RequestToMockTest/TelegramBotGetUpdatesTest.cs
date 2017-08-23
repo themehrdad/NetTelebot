@@ -27,7 +27,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         [OneTimeSetUp]
         public static void OnStart()
         {
-            MockServer.Start(mOkServerPort, mBadServerPort);
+            MockServer.Start(mOkServerPort, 8080);
         }
 
         [OneTimeTearDown]
@@ -66,21 +66,39 @@ namespace NetTelebot.Tests.RequestToMockTest
             StartTest(ResponseStringGetUpdatesResult.ExpectedBodyWithObjectCallbackQuery);
         }
 
+        [Test]
+        public static void UnhandledExceptionEventHandlerTest()
+        {
+            bool wasCalled = false;
+
+            TelegramBotClient telegramBot = new TelegramBotClient { RestClient = new RestClient("http://localhost:80") };
+
+            UnhandledExceptionEventHandler unhandledExceptionEventHandler = (s, e) =>
+            {
+                if (wasCalled) return;
+                wasCalled = true;
+            };
+
+            telegramBot.GetUpdatesError += unhandledExceptionEventHandler;
+            telegramBot.StartCheckingUpdates();
+
+            telegramBot.GetUpdatesError -= unhandledExceptionEventHandler;
+            telegramBot.StopCheckUpdates();
+
+            
+            Console.WriteLine("called {0}", wasCalled);
+            
+        }
+
         private static void StartTest(string body)
         {
-            MockServer.ServerOkResponse
-                .Given(
-                    Requests.WithUrl("/botToken/getUpdates").UsingPost()
-                )
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(body)
-                );
+            MockServer.AddNewRouter("/botToken/getUpdates", body);
 
             mBotOkResponse.GetUpdates();
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates").UsingPost());
             
+            Console.WriteLine(request.FirstOrDefault()?.Url);
+
             Assert.AreEqual("/botToken/getUpdates", request.FirstOrDefault()?.Url);
             Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
         }

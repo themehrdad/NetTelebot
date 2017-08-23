@@ -140,7 +140,11 @@ namespace NetTelebot
 
         private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit)
         {
+            if (Token == null)
+                throw new Exception("Token null");
+
             RestRequest request = new RestRequest(string.Format(getUpdatesUri, Token), Method.POST);
+
 
             if (offset.HasValue)
                 request.AddQueryParameter("offset", offset.Value.ToString());
@@ -725,7 +729,7 @@ namespace NetTelebot
         {
             if (mUpdateTimer == null)
             {
-                mUpdateTimer = new Timer(updateTimer_Callback, null, CheckInterval, Timeout.Infinite);
+                mUpdateTimer = new Timer(UpdateTimerCallback, null, CheckInterval, Timeout.Infinite);
             }
             else
             {
@@ -738,17 +742,20 @@ namespace NetTelebot
         /// </summary>
         public void StopCheckUpdates()
         {
-            mUpdateTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            mUpdateTimer?.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
-        private void updateTimer_Callback(object state)
+        private void UpdateTimerCallback(object state)
         {
             GetUpdatesResult updates = null;
             var getUpdatesSuccess = false;
 
             try
             {
-                updates = mLastUpdateId == 0 ? GetUpdates() : GetUpdates(mLastUpdateId + 1);
+                updates = mLastUpdateId == 0
+                    ? GetUpdates()
+                    : GetUpdates(mLastUpdateId + 1);
+
                 getUpdatesSuccess = true;
             }
             catch (Exception ex)
@@ -805,7 +812,7 @@ namespace NetTelebot
                 if (type == typeof(IntegerResult))
                     return new IntegerResult(response.Content);
             }
-            
+
             throw new Exception(response.StatusDescription);
         }
     }
