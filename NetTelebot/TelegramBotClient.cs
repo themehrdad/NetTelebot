@@ -135,14 +135,13 @@ namespace NetTelebot
         /// <returns>Returns a class containing messages sent to your bot</returns>
         public GetUpdatesResult GetUpdates(byte limit)
         {
+            CheckToken();
+
             return GetUpdatesInternal(null, limit);
         }
 
         private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit)
         {
-            if (Token == null)
-                throw new Exception("Token null");
-
             RestRequest request = new RestRequest(string.Format(getUpdatesUri, Token), Method.POST);
 
 
@@ -152,6 +151,13 @@ namespace NetTelebot
                 request.AddQueryParameter("limit", limit.Value.ToString());
 
             return ExecuteRequest<GetUpdatesResult>(request) as GetUpdatesResult;
+        }
+
+        private RestRequest NewRestRequest(string uri)
+        {
+            RestRequest request = new RestRequest(string.Format(uri, Token), Method.POST);
+
+            return request;
         }
 
         /// <summary>
@@ -168,9 +174,7 @@ namespace NetTelebot
         /// </summary>
         public MeInfo GetMe()
         {
-            RestRequest request = new RestRequest(string.Format(getMeUri, Token), Method.POST);
-
-            return ExecuteRequest<MeInfo>(request) as MeInfo;
+            return ExecuteRequest<MeInfo>(NewRestRequest(getMeUri)) as MeInfo;
         }
 
         /// <summary>
@@ -192,7 +196,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = new RestRequest(string.Format(sendMessageUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(sendMessageUri);
             
             request.AddParameter("chat_id", chatId);
             request.AddParameter("text", text);
@@ -222,7 +226,7 @@ namespace NetTelebot
             int messageId,
             bool? disableNotification = null)
         {
-            RestRequest request = new RestRequest(string.Format(forwardMessageUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(forwardMessageUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("from_chat_id", fromChatId);
             if (disableNotification.HasValue)
@@ -250,7 +254,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = new RestRequest(string.Format(sendPhotoUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(sendPhotoUri);
             request.AddParameter("chat_id", chatId);
             ExistingFile file = photo as ExistingFile;
             if (file != null)
@@ -302,7 +306,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = new RestRequest(string.Format(sendAudioUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(sendAudioUri);
             request.AddParameter("chat_id", chatId);
 
             ExistingFile file = audio as ExistingFile;
@@ -353,7 +357,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = new RestRequest(string.Format(sendDocumentUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(sendDocumentUri);
             request.AddParameter("chat_id", chatId);
 
             ExistingFile file = document as ExistingFile;
@@ -395,7 +399,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = new RestRequest(string.Format(sendStickerUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(sendStickerUri);
             request.AddParameter("chat_id", chatId);
 
             ExistingFile file = sticker as ExistingFile;
@@ -445,7 +449,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = new RestRequest(string.Format(sendVideoUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(sendVideoUri);
             request.AddParameter("chat_id", chatId);
 
             ExistingFile file = video as ExistingFile;
@@ -498,7 +502,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = new RestRequest(string.Format(sendLocationUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(sendLocationUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("latitude", latitude);
             request.AddParameter("longitude", longitude);
@@ -533,8 +537,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = new RestRequest(string.Format(sendVenueUri, Token), Method.POST);
-
+            RestRequest request = NewRestRequest(sendVenueUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("latitude", latitude);
             request.AddParameter("longitude", longitude);
@@ -571,7 +574,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = new RestRequest(string.Format(sendContactUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(sendContactUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("phone_number", phoneNumber);
             request.AddParameter("first_name", firstName);
@@ -599,7 +602,7 @@ namespace NetTelebot
         /// record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.</param>
         public BooleanResult SendChatAction(object chatId, ChatActions action)
         {
-            RestRequest request = new RestRequest(string.Format(sendChatActionUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(sendChatActionUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("action", action.ToString().ToLower());
 
@@ -616,7 +619,7 @@ namespace NetTelebot
         /// <returns><see cref="UserProfilePhotosInfo"/></returns>
         public GetUserProfilePhotosResult GetUserProfilePhotos(int userId, int? offset = null, byte? limit = null)
         {
-            RestRequest request = new RestRequest(string.Format(getUserProfilePhotosUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(getUserProfilePhotosUri);
 
             request.AddParameter("user_id", userId);
             if (offset.HasValue)
@@ -641,8 +644,8 @@ namespace NetTelebot
         /// If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever</param>
         /// <returns>Returns True on success, false otherwise</returns>
         public BooleanResult KickChatMember(object chatId, int userId, DateTime untilDate)
-        {   
-            RestRequest request = new RestRequest(string.Format(kickChatMemberUri, Token), Method.POST);
+        {
+            RestRequest request = NewRestRequest(kickChatMemberUri);
 
             request.AddParameter("chat_id", chatId);
             request.AddParameter("user_id", userId);
@@ -662,7 +665,7 @@ namespace NetTelebot
         /// <returns>Returns True on success, false otherwise</returns>
         public BooleanResult UnbanChatMember(object chatId, int userId)
         {
-            RestRequest request = new RestRequest(string.Format(unbanChatMemberUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(unbanChatMemberUri);
 
             request.AddParameter("chat_id", chatId);
             request.AddParameter("user_id", userId);
@@ -678,7 +681,7 @@ namespace NetTelebot
         /// <returns>Returns True on success, false otherwise</returns>
         public BooleanResult LeaveChat(object chatId)
         {
-            RestRequest request = new RestRequest(string.Format(leaveChatUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(leaveChatUri);
 
             request.AddParameter("chat_id", chatId);
 
@@ -692,7 +695,7 @@ namespace NetTelebot
         /// <returns>Returns a <see cref="ChatInfoResult"/> object on success.</returns>
         public ChatInfoResult GetChat(object chatId)
         {
-            RestRequest request = new RestRequest(string.Format(getChatUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(getChatUri);
 
             request.AddParameter("chat_id", chatId);
 
@@ -710,7 +713,7 @@ namespace NetTelebot
         /// <returns></returns>
         public IntegerResult GetChatMembersCount(object chatId)
         {
-            RestRequest request = new RestRequest(string.Format(getChatMembersCountUri, Token), Method.POST);
+            RestRequest request = NewRestRequest(getChatMembersCountUri);
 
             request.AddParameter("chat_id", chatId);
 
@@ -721,14 +724,21 @@ namespace NetTelebot
         //todo answerCallbackQuery (https://core.telegram.org/bots/api#answercallbackquery)
         //todo Inline mode methods (https://core.telegram.org/bots/api#inline-mode-methods)
 
+        private void CheckToken()
+        {
+            if (Token == null)
+                throw new Exception("Token is null");
+        }
 
         /// <summary>
         /// Checks new updates (sent messages to your bot) automatically. Set CheckInterval property and handle UpdatesReceived event.
         /// </summary>
         public void StartCheckingUpdates()
         {
+            CheckToken();
+
             if (mUpdateTimer == null)
-            {
+            { 
                 mUpdateTimer = new Timer(UpdateTimerCallback, null, CheckInterval, Timeout.Infinite);
             }
             else
@@ -742,7 +752,8 @@ namespace NetTelebot
         /// </summary>
         public void StopCheckUpdates()
         {
-            mUpdateTimer?.Change(Timeout.Infinite, Timeout.Infinite);
+            mUpdateTimer?.Dispose();
+            mUpdateTimer = null;
         }
 
         private void UpdateTimerCallback(object state)
@@ -771,7 +782,7 @@ namespace NetTelebot
                     OnUpdatesReceived(updates.Result);
                 }
 
-            mUpdateTimer.Change(CheckInterval, Timeout.Infinite);
+            mUpdateTimer?.Change(CheckInterval, Timeout.Infinite);
         }
 
         /// <summary>
@@ -787,6 +798,7 @@ namespace NetTelebot
         private object ExecuteRequest<T>(IRestRequest request) where T : class
         {
             IRestResponse response = RestClient.Execute(request);
+
             var type = typeof (T);
 
             if (response.StatusCode == HttpStatusCode.OK)
@@ -797,19 +809,19 @@ namespace NetTelebot
                 if (type == typeof (BooleanResult))
                     return new BooleanResult(response.Content);
 
-                if (type == typeof(MeInfo))
+                if (type == typeof (MeInfo))
                     return new MeInfo(response.Content);
 
                 if (type == typeof (GetUserProfilePhotosResult))
                     return new GetUserProfilePhotosResult(response.Content);
 
-                if (type == typeof(GetUpdatesResult))
+                if (type == typeof (GetUpdatesResult))
                     return new GetUpdatesResult(response.Content);
 
-                if (type == typeof(ChatInfoResult))
+                if (type == typeof (ChatInfoResult))
                     return new ChatInfoResult(response.Content);
 
-                if (type == typeof(IntegerResult))
+                if (type == typeof (IntegerResult))
                     return new IntegerResult(response.Content);
             }
 
