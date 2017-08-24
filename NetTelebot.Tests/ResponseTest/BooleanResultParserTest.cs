@@ -17,7 +17,7 @@ namespace NetTelebot.Tests.ResponseTest
            
             dynamic booleanResultObject = BooleanResultObject.GetObject(ok, result);
 
-            BooleanResult booleanResult = new BooleanResult(booleanResultObject);
+            BooleanResult booleanResult = new BooleanResult(booleanResultObject.ToString());
 
             Assert.True(booleanResult.Ok);
             Assert.True(booleanResult.Result);

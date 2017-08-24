@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Mock4Net.Core;
 using NetTelebot.Result;
 using NetTelebot.Tests.MockServers;
@@ -21,13 +22,22 @@ namespace NetTelebot.Tests.RequestToMockTest
         private const int mOkServerPort = 8095;
         private const int mBadServerPort = 8096;
 
-        private static readonly TelegramBotClient mBotOkResponse = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:" + mOkServerPort) };
-        private static readonly TelegramBotClient mBotBadResponse = new TelegramBotClient { Token = "Token", RestClient = new RestClient("http://localhost:" + mBadServerPort) };
+        private static readonly TelegramBotClient mBotOkResponse = new TelegramBotClient
+        {
+            Token = "Token",
+            RestClient = new RestClient("http://localhost:" + mOkServerPort)
+        };
+
+        private static readonly TelegramBotClient mBotBadResponse = new TelegramBotClient
+        {
+            Token = "Token",
+            RestClient = new RestClient("http://localhost:" + mBadServerPort)
+        };
 
         [OneTimeSetUp]
         public static void OnStart()
         {
-            MockServer.Start(mOkServerPort, mBadServerPort);
+            MockServer.Start(mOkServerPort, 8080);
         }
 
         [OneTimeTearDown]
@@ -68,19 +78,13 @@ namespace NetTelebot.Tests.RequestToMockTest
 
         private static void StartTest(string body)
         {
-            MockServer.ServerOkResponse
-                .Given(
-                    Requests.WithUrl("/botToken/getUpdates").UsingPost()
-                )
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(body)
-                );
+            MockServer.AddNewRouter("/botToken/getUpdates", body);
 
             mBotOkResponse.GetUpdates();
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates").UsingPost());
-            
+
+            Console.WriteLine(request.FirstOrDefault()?.Url);
+
             Assert.AreEqual("/botToken/getUpdates", request.FirstOrDefault()?.Url);
             Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
         }

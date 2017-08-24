@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NetTelebot.CommonUtils
 {
@@ -12,7 +10,6 @@ namespace NetTelebot.CommonUtils
             {
                 Console.WriteLine("Property name: " + properties.Name + ". Property value: " + properties.GetValue(result, null));
             }
-
         }
 
         public static void PrintResult<T>(T[] result) where T : class
@@ -21,7 +18,6 @@ namespace NetTelebot.CommonUtils
             {
                 Console.WriteLine("Property name: " + properties.Name + ". Property value: " + properties.GetValue(result, null));
             }
-
         }
 
 
@@ -31,7 +27,6 @@ namespace NetTelebot.CommonUtils
             {
                 Console.WriteLine("Property name: " + properties.Name + ". Property value: " + properties.GetValue(result, null));
             }
-
         }
 
         public static void PrintSimpleResult<T>(T result) where T : struct

@@ -77,6 +77,7 @@
     <Compile Include="NullReferenceExceptionTest\MessageInfoArrayTypeTest.cs" />
     <Compile Include="NullReferenceExceptionTest\MessageInfoSelfTypeTest.cs" />
     <Compile Include="NullReferenceExceptionTest\MessageInfoSimpleTypesTest.cs" />
+    <Compile Include="RequestToMockTest\TelegramBotExceptionTest.cs" />
     <Compile Include="RequestToMockTest\TelegramBotGetUpdatesTest.cs" />
     <Compile Include="RequestToTelegramTest\TelegramBotInlineKeyboardTest.cs" />
     <Compile Include="RequestToTelegramTest\TelegramBotKeyboardTest.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="ResponseTest\CallbackQueryParserTest.cs" />
     <Compile Include="ResponseTest\GetUpdatesResultParserTest.cs" />
     <Compile Include="ResponseTest\GetUserProfilePhotosResultParserTest.cs" />
+    <Compile Include="ResponseTest\IntegerResultParserTest.cs" />
     <Compile Include="ResponseTest\MeInfoParserTest.cs" />
     <Compile Include="NullReferenceExceptionTest\MessageInfoClassTypeTest.cs" />
     <Compile Include="ResponseTest\MessageInfoParserTest.cs" />
@@ -108,10 +110,12 @@
     <Compile Include="TypeTestObject\MessageEntityInfoObject.cs" />
     <Compile Include="TypeTestObject\MessageInfoObject.cs" />
     <Compile Include="TypeTestObject\PhotoSizeInfoObject.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\IntegerResultObject.cs" />
     <Compile Include="TypeTestObject\StickerInfoObject.cs" />
     <Compile Include="TypeTestObject\UpdateInfoObject.cs" />
     <Compile Include="TypeTestObject\UserInfoObject.cs" />
     <Compile Include="TypeTestObject\UserProfilePhotosInfoObject.cs" />
+    <Compile Include="TypeTestObject\VenueInfoObject.cs" />
     <Compile Include="TypeTestObject\VideoInfoObject.cs" />
     <Compile Include="UtilityExtensionTest.cs" />
   </ItemGroup>

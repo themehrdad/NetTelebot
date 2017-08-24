@@ -112,6 +112,10 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             });
         }
 
+        /// <summary>
+        /// Test for method <see cref="TelegramBotClient.GetChat"/>.
+        /// </summary>
+
         [Test]
         public void GetChatFromGroupTest()
         {
@@ -128,6 +132,22 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             });
         }
 
+        /// <summary>
+        /// Test for method <see cref="TelegramBotClient.GetChatMembersCount"/>.
+        /// </summary>
+        [Test]
+        public void GetChatMemberCountTest()
+        {
+            IntegerResult getChatMemberCount = mTelegramBot.GetChatMembersCount(mChatGroupId);
+
+            ConsoleUtlis.PrintResult(getChatMemberCount);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(getChatMemberCount.Ok);
+                Assert.AreEqual(3, getChatMemberCount.Result);
+            });
+        }
 
     }
 }

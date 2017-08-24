@@ -26,8 +26,6 @@ namespace NetTelebot.Result
             Result = new UserProfilePhotosInfo(jsonObject["result"].Value<JObject>());
         }
 
-
-
         /// <summary>
         /// Gets a value indicating whether this <see cref="GetUserProfilePhotosResult"/> is ok.
         /// </summary>

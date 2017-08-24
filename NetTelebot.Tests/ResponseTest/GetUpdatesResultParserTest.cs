@@ -8,7 +8,6 @@ namespace NetTelebot.Tests.ResponseTest
     [TestFixture]
     internal static class GetUpdatesResultParserTest
     {
-        //todo add new type in UpdateInfo
         /// <summary>
         /// Test for <see cref="GetUpdatesResult"/> parse field.
         /// </summary>

@@ -61,45 +61,44 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 //todo Voice
                 //todo VideoNote
                 //todo NewChatMembers;
-                //todo Venue
                 //todo Invoice
                 //todo SuceffulPayment
 
                 Assert.IsInstanceOf(typeof (MessageInfo), messageInfo);
 
-                Assert.AreEqual(messageInfo.MessageId, 0);
+                Assert.AreEqual(0, messageInfo.MessageId);
 
                 Assert.IsInstanceOf<UserInfo>(messageInfo.From);
-                Assert.AreEqual(messageInfo.From.Id, 0);
+                Assert.AreEqual(0, messageInfo.From.Id);
 
-                Assert.AreEqual(messageInfo.Date, DateTime.MinValue);
-                Assert.AreEqual(messageInfo.Date.Day, DateTime.MinValue.Day);
+                Assert.AreEqual(DateTime.MinValue, messageInfo.Date);
+                Assert.AreEqual(DateTime.MinValue.Day, messageInfo.Date.Day);
 
                 Assert.IsInstanceOf<ChatInfo>(messageInfo.Chat);
-                Assert.AreEqual(messageInfo.Chat.Id, 0);
+                Assert.AreEqual(0, messageInfo.Chat.Id);
 
                 Assert.IsInstanceOf<UserInfo>(messageInfo.ForwardFrom);
 
-                Assert.AreEqual(messageInfo.ForwardFromMessageId, 0);
+                Assert.AreEqual(0, messageInfo.ForwardFromMessageId);
 
                 Assert.IsInstanceOf<ChatInfo>(messageInfo.ForwardFromChat);
-                Assert.AreEqual(messageInfo.ForwardFromChat.Id, 0);
+                Assert.AreEqual(0, messageInfo.ForwardFromChat.Id);
 
-                Assert.AreEqual(messageInfo.ForwardDate, DateTime.MinValue);
-                Assert.AreEqual(messageInfo.ForwardDate.Day, DateTime.MinValue.Day);
+                Assert.AreEqual(DateTime.MinValue, messageInfo.ForwardDate);
+                Assert.AreEqual(DateTime.MinValue.Day, messageInfo.ForwardDate.Day);
 
                 Assert.IsInstanceOf<MessageInfo>(messageInfo.ReplyToMessage);
-                Assert.AreEqual(messageInfo.ReplyToMessage.Chat.Id, 0);
+                Assert.AreEqual(0, messageInfo.ReplyToMessage.Chat.Id);
 
-                Assert.AreEqual(messageInfo.EditDate, DateTime.MinValue);
-                Assert.AreEqual(messageInfo.EditDate.Day, DateTime.MinValue.Day);
+                Assert.AreEqual(DateTime.MinValue, messageInfo.EditDate);
+                Assert.AreEqual(DateTime.MinValue.Day, messageInfo.EditDate.Day);
 
                 Assert.IsNull(messageInfo.Text);
 
                 Assert.IsInstanceOf<MessageEntityInfo[]>(messageInfo.Entities);
 
                 Assert.IsInstanceOf<AudioInfo>(messageInfo.Audio);
-                Assert.AreEqual(messageInfo.Audio.Duration, 0);
+                Assert.AreEqual(0, messageInfo.Audio.Duration);
 
                 Assert.IsInstanceOf<DocumentInfo>(messageInfo.Document);
                 Assert.IsNull(messageInfo.Document.FileId);
@@ -118,16 +117,19 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsNull(messageInfo.Contact.UserId);
 
                 Assert.IsInstanceOf<LocationInfo>(messageInfo.Location);
-                Assert.AreEqual(messageInfo.Location.Latitude, 0);
+                Assert.AreEqual(0, messageInfo.Location.Latitude);
+
+                Assert.IsInstanceOf<VenueInfo>(messageInfo.Venue);
+                Assert.AreEqual(0, messageInfo.Venue.Location.Latitude);
 
                 Assert.IsInstanceOf<UserInfo>(messageInfo.NewChatMember);
-                Assert.AreEqual(messageInfo.NewChatMember.Id, 0);
+                Assert.AreEqual(0, messageInfo.NewChatMember.Id);
 
                 Assert.IsInstanceOf<UserInfo>(messageInfo.LeftChatMember);
-                Assert.AreEqual(messageInfo.LeftChatMember.Id, 0);
+                Assert.AreEqual(0, messageInfo.LeftChatMember.Id);
 
                 Assert.IsInstanceOf<UserInfo>(messageInfo.LeftChatMember);
-                Assert.AreEqual(messageInfo.LeftChatMember.Id, 0);
+                Assert.AreEqual(0, messageInfo.LeftChatMember.Id);
 
                 Assert.IsNull(messageInfo.NewChatTitle);
                 Assert.IsEmpty(messageInfo.NewChatPhoto);
@@ -135,11 +137,11 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsFalse(messageInfo.GroupChatCreated);
                 Assert.IsFalse(messageInfo.SuperGroupChatCreated);
                 Assert.IsFalse(messageInfo.ChannelChatCreated);
-                Assert.AreEqual(messageInfo.MigrateToChatId, 0);
-                Assert.AreEqual(messageInfo.MigrateFromChatId, 0);
+                Assert.AreEqual(0, messageInfo.MigrateToChatId);
+                Assert.AreEqual(0, messageInfo.MigrateFromChatId);
 
                 Assert.IsInstanceOf<MessageInfo>(messageInfo.PinnedMessage);
-                Assert.AreEqual(messageInfo.PinnedMessage.Chat.Id, 0);
+                Assert.AreEqual(0, messageInfo.PinnedMessage.Chat.Id);
 
             });
         }
