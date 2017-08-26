@@ -77,7 +77,7 @@
     <Compile Include="NullReferenceExceptionTest\MessageInfoArrayTypeTest.cs" />
     <Compile Include="NullReferenceExceptionTest\MessageInfoSelfTypeTest.cs" />
     <Compile Include="NullReferenceExceptionTest\MessageInfoSimpleTypesTest.cs" />
-    <Compile Include="RequestToMockTest\TelegramBotExceptionTest.cs" />
+    <Compile Include="RequestToMockTest\TelegramBotEventHandlerTest.cs" />
     <Compile Include="RequestToMockTest\TelegramBotGetUpdatesTest.cs" />
     <Compile Include="RequestToTelegramTest\TelegramBotInlineKeyboardTest.cs" />
     <Compile Include="RequestToTelegramTest\TelegramBotKeyboardTest.cs" />

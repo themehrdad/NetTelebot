@@ -135,13 +135,13 @@ namespace NetTelebot
         /// <returns>Returns a class containing messages sent to your bot</returns>
         public GetUpdatesResult GetUpdates(byte limit)
         {
-            CheckToken();
-
             return GetUpdatesInternal(null, limit);
         }
 
         private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit)
         {
+            CheckToken();
+
             RestRequest request = new RestRequest(string.Format(getUpdatesUri, Token), Method.POST);
 
 
@@ -798,6 +798,9 @@ namespace NetTelebot
         private object ExecuteRequest<T>(IRestRequest request) where T : class
         {
             IRestResponse response = RestClient.Execute(request);
+
+            if(response.ErrorException != null)
+                throw new Exception(response.ErrorMessage);
 
             var type = typeof (T);
 

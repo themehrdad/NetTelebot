@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using Mock4Net.Core;
 using NetTelebot.Result;
 using NetTelebot.Tests.MockServers;
@@ -37,13 +36,22 @@ namespace NetTelebot.Tests.RequestToMockTest
         [OneTimeSetUp]
         public static void OnStart()
         {
-            MockServer.Start(mOkServerPort, 8080);
+            MockServer.Start(mOkServerPort, mBadServerPort);
         }
 
         [OneTimeTearDown]
         public static void OnStop()
         {
             MockServer.Stop();
+        }
+
+        [Test]
+        public static void GetUpdatesWithNullTokenTest()
+        {
+            TelegramBotClient telegramBot = new TelegramBotClient();
+
+            Assert.Throws<Exception>(() => telegramBot.StartCheckingUpdates());
+            Assert.Throws<Exception>(() => telegramBot.GetUpdates());
         }
 
         [Test]
