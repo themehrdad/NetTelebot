@@ -7,7 +7,7 @@ using RestSharp;
 namespace NetTelebot.Tests.RequestToMockTest
 {
     [TestFixture]
-    internal class TelegramBotEventHandlerTest
+    internal static class TelegramBotEventHandlerTest
     {
         private const int mOkServerPort = 8097;
         private const int mBadServerPort = 8098;
@@ -45,8 +45,8 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             UnhandledExceptionEventHandler unhandledExceptionEventHandler = (s, e) =>
             {
-                if (wasCalled) return;
-                wasCalled = true;
+                if (!wasCalled)
+                    wasCalled = true;
             };
 
             mBotBadResponse.GetUpdatesError += unhandledExceptionEventHandler;
@@ -71,8 +71,8 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             EventHandler<TelegramUpdateEventArgs> telegramUpdateEventArgs = (s, e) =>
             {
-                if (wasCalled) return;
-                wasCalled = true;
+                if (!wasCalled)
+                    wasCalled = true;
             };
 
             mBotOkResponse.UpdatesReceived += telegramUpdateEventArgs;
