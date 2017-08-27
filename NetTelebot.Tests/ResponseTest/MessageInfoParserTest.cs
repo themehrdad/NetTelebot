@@ -7,6 +7,8 @@ using NUnit.Framework;
 
 namespace NetTelebot.Tests.ResponseTest
 {
+    //todo refact
+
     [TestFixture]
     internal static class MessageInfoParserTest
     {
@@ -501,18 +503,21 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoSticker);
 
-            //test MessageInfo.Sticker
-            Assert.AreEqual(messageInfo.Sticker.FileId, fileId);
-            Assert.AreEqual(messageInfo.Sticker.Width, width);
-            Assert.AreEqual(messageInfo.Sticker.Height, height);
-            Assert.AreEqual(messageInfo.Sticker.Emoji, emoji);
-            Assert.AreEqual(messageInfo.Sticker.FileSize, fileSize);
+            Assert.Multiple(() =>
+            {
+                //test MessageInfo.Sticker
+                Assert.AreEqual(fileId, messageInfo.Sticker.FileId);
+                Assert.AreEqual(width, messageInfo.Sticker.Width);
+                Assert.AreEqual(height, messageInfo.Sticker.Height);
+                Assert.AreEqual(emoji, messageInfo.Sticker.Emoji);
+                Assert.AreEqual(fileSize, messageInfo.Sticker.FileSize);
 
-            //test MessageInfo.Sticker.Thumb
-            Assert.AreEqual(messageInfo.Sticker.Thumb.FileId, fileId);
-            Assert.AreEqual(messageInfo.Sticker.Thumb.Width, width);
-            Assert.AreEqual(messageInfo.Sticker.Thumb.Height, height);
-            Assert.AreEqual(messageInfo.Sticker.Thumb.FileSize, fileSize);
+                //test MessageInfo.Sticker.Thumb
+                Assert.AreEqual(fileId, messageInfo.Sticker.Thumb.FileId);
+                Assert.AreEqual(width, messageInfo.Sticker.Thumb.Width);
+                Assert.AreEqual(height, messageInfo.Sticker.Thumb.Height);
+                Assert.AreEqual(fileSize, messageInfo.Sticker.Thumb.FileSize);
+            });
 
             Console.WriteLine(messageInfoSticker);
         }
@@ -537,21 +542,53 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoVideo);
 
-            //test MessageInfo.Video
-            Assert.AreEqual(messageInfo.Video.FileId, fileId);
-            Assert.AreEqual(messageInfo.Video.Width, width);
-            Assert.AreEqual(messageInfo.Video.Height, height);
-            Assert.AreEqual(messageInfo.Video.Duration, duration);
-            Assert.AreEqual(messageInfo.Video.MimeType, mimeType);
-            Assert.AreEqual(messageInfo.Video.FileSize, fileSize);
+            Assert.Multiple(() =>
+            {
+                //test MessageInfo.Video
+                Assert.AreEqual(fileId, messageInfo.Video.FileId);
+                Assert.AreEqual(width, messageInfo.Video.Width);
+                Assert.AreEqual(height, messageInfo.Video.Height);
+                Assert.AreEqual(duration, messageInfo.Video.Duration);
+                Assert.AreEqual(mimeType, messageInfo.Video.MimeType);
+                Assert.AreEqual(fileSize, messageInfo.Video.FileSize);
 
-            //test MessageInfo.Video.Thumb
-            Assert.AreEqual(messageInfo.Video.Thumb.FileId, fileId);
-            Assert.AreEqual(messageInfo.Video.Thumb.Width, width);
-            Assert.AreEqual(messageInfo.Video.Thumb.Height, height);
-            Assert.AreEqual(messageInfo.Video.Thumb.FileSize, fileSize);
+                //test MessageInfo.Video.Thumb
+                Assert.AreEqual(fileId, messageInfo.Video.Thumb.FileId);
+                Assert.AreEqual(width, messageInfo.Video.Thumb.Width);
+                Assert.AreEqual(height, messageInfo.Video.Thumb.Height);
+                Assert.AreEqual(fileSize, messageInfo.Video.Thumb.FileSize);
+            });
+         
 
             Console.WriteLine(messageInfoVideo);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Voice"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoVoiceTest()
+        {
+            const string fileId = "100";
+            const int duration = 100;
+            const string mimeType = "mimeTypeTest";
+            const int fileSize = 10;
+
+            dynamic messageInfoVoice = mMandatoryFieldsMessageInfo;
+
+            messageInfoVoice.voice = VoiceInfoObject.GetObject(fileId, duration, mimeType, fileSize);
+
+            MessageInfo messageInfo = new MessageInfo(messageInfoVoice);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(fileId, messageInfo.Voice.FileId);
+                Assert.AreEqual(duration, messageInfo.Voice.Duration);
+                Assert.AreEqual(mimeType, messageInfo.Voice.MimeType);
+                Assert.AreEqual(fileSize, messageInfo.Voice.FileSize);
+            });
+
+            Console.WriteLine(messageInfoVoice);
         }
 
         /// <summary>
@@ -568,6 +605,7 @@ namespace NetTelebot.Tests.ResponseTest
             //check MessageInfo with field [caption: TestCaption] 
             messageInfoCaption.caption = "TestCaption";
             messageInfo = new MessageInfo(messageInfoCaption);
+
             Assert.AreEqual(messageInfo.Caption, "TestCaption");
 
             Console.WriteLine(messageInfoCaption);
@@ -591,13 +629,16 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoContact);
 
-            //test MessageInfo.Contact
-            Assert.AreEqual(messageInfo.Contact.PhoneNumber, phoneNumber);
-            Assert.AreEqual(messageInfo.Contact.FirstName, firstName);
-            Assert.AreEqual(messageInfo.Contact.LastName, lastName);
-            Assert.AreEqual(messageInfo.Contact.UserId, userId);
 
-            Console.WriteLine(messageInfoContact);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(phoneNumber, messageInfo.Contact.PhoneNumber);
+                Assert.AreEqual(firstName, messageInfo.Contact.FirstName);
+                Assert.AreEqual(lastName, messageInfo.Contact.LastName);
+                Assert.AreEqual(userId, messageInfo.Contact.UserId);
+
+                Console.WriteLine(messageInfoContact);
+            });
         }
 
         /// <summary>
@@ -615,8 +656,11 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoLocation);
 
-            Assert.AreEqual(messageInfo.Location.Latitude, latitude);
-            Assert.AreEqual(messageInfo.Location.Longitude, longitude);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(latitude, messageInfo.Location.Latitude);
+                Assert.AreEqual(longitude, messageInfo.Location.Longitude);
+            });
         }
 
         /// <summary>
@@ -639,11 +683,14 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoVenue);
 
-            Assert.AreEqual(longitude, messageInfo.Venue.Location.Latitude);
-            Assert.AreEqual(latitude, messageInfo.Venue.Location.Latitude);
-            Assert.AreEqual(title, messageInfo.Venue.Title);
-            Assert.AreEqual(address, messageInfo.Venue.Address);
-            Assert.AreEqual(foursquareId, messageInfo.Venue.FoursquareId);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(longitude, messageInfo.Venue.Location.Latitude);
+                Assert.AreEqual(latitude, messageInfo.Venue.Location.Latitude);
+                Assert.AreEqual(title, messageInfo.Venue.Title);
+                Assert.AreEqual(address, messageInfo.Venue.Address);
+                Assert.AreEqual(foursquareId, messageInfo.Venue.FoursquareId);
+            }); 
         }
 
         /// <summary>
@@ -664,11 +711,14 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoUser);
 
-            Assert.AreEqual(messageInfo.NewChatMember.Id, id);
-            Assert.AreEqual(messageInfo.NewChatMember.FirstName, firstName);
-            Assert.AreEqual(messageInfo.NewChatMember.LastName, lastName);
-            Assert.AreEqual(messageInfo.NewChatMember.UserName, username);
-            Assert.AreEqual(messageInfo.NewChatMember.LanguageCode, languageCode);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(id, messageInfo.NewChatMember.Id);
+                Assert.AreEqual(firstName, messageInfo.NewChatMember.FirstName);
+                Assert.AreEqual(lastName, messageInfo.NewChatMember.LastName);
+                Assert.AreEqual(messageInfo.NewChatMember.UserName, username);
+                Assert.AreEqual(messageInfo.NewChatMember.LanguageCode, languageCode);
+            });
         }
 
         /// <summary>
@@ -689,11 +739,14 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoUser);
 
-            Assert.AreEqual(messageInfo.LeftChatMember.Id, id);
-            Assert.AreEqual(messageInfo.LeftChatMember.FirstName, firstName);
-            Assert.AreEqual(messageInfo.LeftChatMember.LastName, lastName);
-            Assert.AreEqual(messageInfo.LeftChatMember.UserName, username);
-            Assert.AreEqual(messageInfo.LeftChatMember.LanguageCode, languageCode);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(id, messageInfo.LeftChatMember.Id);
+                Assert.AreEqual(firstName, messageInfo.LeftChatMember.FirstName);
+                Assert.AreEqual(lastName, messageInfo.LeftChatMember.LastName);
+                Assert.AreEqual(username, messageInfo.LeftChatMember.UserName);
+                Assert.AreEqual(languageCode, messageInfo.LeftChatMember.LanguageCode);
+            });
         }
 
         /// <summary>
@@ -734,11 +787,13 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoNewChatPhoto);
 
-            //test MessageInfo.NewChatPhoto
-            Assert.AreEqual(messageInfo.NewChatPhoto[0].FileId, fileId);
-            Assert.AreEqual(messageInfo.NewChatPhoto[0].Width, width);
-            Assert.AreEqual(messageInfo.NewChatPhoto[0].Height, height);
-            Assert.AreEqual(messageInfo.NewChatPhoto[0].FileSize, fileSize);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(fileId, messageInfo.NewChatPhoto[0].FileId);
+                Assert.AreEqual(width, messageInfo.NewChatPhoto[0].Width);
+                Assert.AreEqual(height, messageInfo.NewChatPhoto[0].Height);
+                Assert.AreEqual(fileSize, messageInfo.NewChatPhoto[0].FileSize);
+            });
 
             Console.WriteLine(messageInfoNewChatPhoto);
         }

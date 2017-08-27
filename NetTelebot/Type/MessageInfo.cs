@@ -100,6 +100,10 @@ namespace NetTelebot.Type
                 ? new VideoInfo(jsonObject["video"].Value<JObject>())
                 : new VideoInfo {Thumb = new PhotoSizeInfo()};
 
+            Voice = jsonObject["voice"] != null
+                ? new VoiceInfo(jsonObject["voice"].Value<JObject>())
+                : new VoiceInfo();
+
             Caption = jsonObject["caption"] != null 
                 ? jsonObject["caption"].Value<string>() 
                 : string.Empty;
@@ -170,6 +174,7 @@ namespace NetTelebot.Type
                 Photo = new PhotoSizeInfo[0],
                 Sticker = new StickerInfo {Thumb = new PhotoSizeInfo()},
                 Video = new VideoInfo {Thumb = new PhotoSizeInfo()},
+                Voice = new VoiceInfo(),
                 Contact = new ContactInfo() ,
                 Location = new LocationInfo() ,
                 Venue = new VenueInfo {Location = new LocationInfo()},
@@ -284,7 +289,11 @@ namespace NetTelebot.Type
         /// </summary>
         public VideoInfo Video { get; private set; }
 
-        //todo add (Voice) Voice
+        /// <summary>
+        /// This object represents a voice note.
+        /// </summary>
+        public VoiceInfo Voice { get; private set;  }
+ 
         //todo add (VideoNote) VideoNote
         //todo add (Array of User) NewChatMembers
 

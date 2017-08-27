@@ -254,6 +254,30 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Voice"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyVoice()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyVoice");
+
+            VoiceInfo voice = sendMessage.Result.Voice;
+
+            ConsoleUtlis.PrintResult(voice);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof(VoiceInfo), voice);
+                Assert.IsNull(voice.FileId);
+                Assert.AreEqual(voice.Duration, 0);
+                Assert.IsNull(voice.MimeType);
+                Assert.AreEqual(voice.FileSize, 0);
+            });
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Contact"/>
         /// </summary>
         [Test]

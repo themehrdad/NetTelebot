@@ -117,6 +117,7 @@
     <Compile Include="TypeTestObject\UserProfilePhotosInfoObject.cs" />
     <Compile Include="TypeTestObject\VenueInfoObject.cs" />
     <Compile Include="TypeTestObject\VideoInfoObject.cs" />
+    <Compile Include="TypeTestObject\VoiceInfoObject.cs" />
     <Compile Include="UtilityExtensionTest.cs" />
   </ItemGroup>
   <ItemGroup>
