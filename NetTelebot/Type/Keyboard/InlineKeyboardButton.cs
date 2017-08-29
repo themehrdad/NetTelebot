@@ -69,7 +69,6 @@ namespace NetTelebot.Type.Keyboard
         /// </summary>
         public string SwitchInlineQueryCurrentChat { get; set; }
 
-        //todo add callback game (type?)
         /// <summary>
         /// Optional. 
         /// Description of the game that will be launched when the user presses the button.
