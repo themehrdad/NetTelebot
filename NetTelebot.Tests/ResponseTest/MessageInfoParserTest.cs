@@ -7,8 +7,6 @@ using NUnit.Framework;
 
 namespace NetTelebot.Tests.ResponseTest
 {
-    //todo refact
-
     [TestFixture]
     internal static class MessageInfoParserTest
     {
@@ -34,11 +32,14 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoUser);
 
-            Assert.AreEqual(messageInfo.From.Id, id);
-            Assert.AreEqual(messageInfo.From.FirstName, firstName);
-            Assert.AreEqual(messageInfo.From.LastName, lastName);
-            Assert.AreEqual(messageInfo.From.UserName, username);
-            Assert.AreEqual(messageInfo.From.LanguageCode, languageCode);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(id, messageInfo.From.Id);
+                Assert.AreEqual(firstName, messageInfo.From.FirstName);
+                Assert.AreEqual(lastName, messageInfo.From.LastName);
+                Assert.AreEqual(username, messageInfo.From.UserName);
+                Assert.AreEqual(languageCode, messageInfo.From.LanguageCode);
+            });
         }
 
         /// <summary>
@@ -59,11 +60,14 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoUser);
 
-            Assert.AreEqual(messageInfo.ForwardFrom.Id, id);
-            Assert.AreEqual(messageInfo.ForwardFrom.FirstName, firstName);
-            Assert.AreEqual(messageInfo.ForwardFrom.LastName, lastName);
-            Assert.AreEqual(messageInfo.ForwardFrom.UserName, username);
-            Assert.AreEqual(messageInfo.ForwardFrom.LanguageCode, languageCode);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(id, messageInfo.ForwardFrom.Id);
+                Assert.AreEqual(firstName, messageInfo.ForwardFrom.FirstName);
+                Assert.AreEqual(lastName, messageInfo.ForwardFrom.LastName);
+                Assert.AreEqual(username, messageInfo.ForwardFrom.UserName);
+                Assert.AreEqual(languageCode, messageInfo.ForwardFrom.LanguageCode);
+            });
         }
 
         /// <summary>
@@ -96,17 +100,20 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
-            Assert.AreEqual(messageInfo.ForwardFromChat.Id, id);
-            Assert.AreEqual(messageInfo.ForwardFromChat.Type, ChatType.channel);
-            Assert.AreEqual(messageInfo.ForwardFromChat.Title, title);
-            Assert.AreEqual(messageInfo.ForwardFromChat.Username, username);
-            Assert.AreEqual(messageInfo.ForwardFromChat.FirstName, firstName);
-            Assert.AreEqual(messageInfo.ForwardFromChat.LastName, lastName);
-            Assert.AreEqual(messageInfo.ForwardFromChat.AllMembersAreAdministrators, allMembersAreAdministrators);
-            Assert.AreEqual(messageInfo.ForwardFromChat.Photo.SmallFileId, "123456");
-            Assert.AreEqual(messageInfo.ForwardFromChat.Photo.BigFileId, "654321");
-            Assert.AreEqual(messageInfo.ForwardFromChat.Description, description);
-            Assert.AreEqual(messageInfo.ForwardFromChat.InviteLink, inviteLink);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(id, messageInfo.ForwardFromChat.Id, id);
+                Assert.AreEqual(ChatType.channel, messageInfo.ForwardFromChat.Type);
+                Assert.AreEqual(title, messageInfo.ForwardFromChat.Title, title);
+                Assert.AreEqual(username, messageInfo.ForwardFromChat.Username, username);
+                Assert.AreEqual(firstName, messageInfo.ForwardFromChat.FirstName, firstName);
+                Assert.AreEqual(lastName, messageInfo.ForwardFromChat.LastName, lastName);
+                Assert.AreEqual(allMembersAreAdministrators, messageInfo.ForwardFromChat.AllMembersAreAdministrators);
+                Assert.AreEqual("123456", messageInfo.ForwardFromChat.Photo.SmallFileId);
+                Assert.AreEqual("654321", messageInfo.ForwardFromChat.Photo.BigFileId);
+                Assert.AreEqual(description, messageInfo.ForwardFromChat.Description);
+                Assert.AreEqual(inviteLink, messageInfo.ForwardFromChat.InviteLink);
+            });
 
             Console.WriteLine(mandatoryMessageInfoFields);
 
@@ -121,12 +128,12 @@ namespace NetTelebot.Tests.ResponseTest
             //check MessageInfo witout field [forward_from_message_id]
             dynamic messageInfoForwardFromMessageId = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(messageInfoForwardFromMessageId);
-            Assert.AreEqual(messageInfo.ForwardFromMessageId, 0);
+            Assert.AreEqual(0, messageInfo.ForwardFromMessageId);
 
             //check MessageInfo with field [forward_from_message_id: 14881488] 
             messageInfoForwardFromMessageId.forward_from_message_id = 14881488;
             messageInfo = new MessageInfo(messageInfoForwardFromMessageId);
-            Assert.AreEqual(messageInfo.ForwardFromMessageId, 14881488);
+            Assert.AreEqual(14881488, messageInfo.ForwardFromMessageId);
 
             Console.WriteLine(messageInfoForwardFromMessageId);
         }
@@ -140,13 +147,13 @@ namespace NetTelebot.Tests.ResponseTest
             //check MessageInfo without field [forward_date]
             dynamic messageInfoForwardDateUnix = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(messageInfoForwardDateUnix);
-            Assert.AreEqual(messageInfo.ForwardDateUnix, 0);
-            Assert.AreEqual(messageInfo.ForwardDate, DateTime.MinValue);
+            Assert.AreEqual(0, messageInfo.ForwardDateUnix);
+            Assert.AreEqual(DateTime.MinValue, messageInfo.ForwardDate);
 
             //check MessageInfo with field [forward_date: 0] 
             messageInfoForwardDateUnix.forward_date = 0;
-            Assert.AreEqual(messageInfo.DateUnix, 0);
-            Assert.AreEqual(messageInfo.Date, new DateTime(1970, 1, 1).ToLocalTime());
+            Assert.AreEqual(0, messageInfo.DateUnix);
+            Assert.AreEqual(new DateTime(1970, 1, 1).ToLocalTime(), messageInfo.Date);
 
             Console.WriteLine(messageInfoForwardDateUnix);
         }
@@ -164,6 +171,7 @@ namespace NetTelebot.Tests.ResponseTest
             const string firstName = "TestFirstName";
             const string lastName = "TestLastName";
             const bool allMembersAreAdministrators = false;
+
             JObject photo = ChatPhotoInfoObject.GetObject("123456", "654321");
             const string description = "TestDescription";
             const string inviteLink = "TestLink";
@@ -179,19 +187,22 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
-            Assert.AreEqual(messageInfo.Chat.Id, id);
-            Assert.IsInstanceOf<long>(messageInfo.Chat.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(id, messageInfo.Chat.Id);
+                Assert.IsInstanceOf<long>(messageInfo.Chat.Id);
 
-            Assert.AreEqual(messageInfo.Chat.Type, ChatType.channel);
-            Assert.AreEqual(messageInfo.Chat.Title, title);
-            Assert.AreEqual(messageInfo.Chat.Username, username);
-            Assert.AreEqual(messageInfo.Chat.FirstName, firstName);
-            Assert.AreEqual(messageInfo.Chat.LastName, lastName);
-            Assert.AreEqual(messageInfo.Chat.AllMembersAreAdministrators, allMembersAreAdministrators);
-            Assert.AreEqual(messageInfo.Chat.Photo.SmallFileId, "123456");
-            Assert.AreEqual(messageInfo.Chat.Photo.BigFileId, "654321");
-            Assert.AreEqual(messageInfo.Chat.Description, description);
-            Assert.AreEqual(messageInfo.Chat.InviteLink, inviteLink);
+                Assert.AreEqual(ChatType.channel, messageInfo.Chat.Type);
+                Assert.AreEqual(title, messageInfo.Chat.Title, title);
+                Assert.AreEqual(username, messageInfo.Chat.Username, username);
+                Assert.AreEqual(firstName, messageInfo.Chat.FirstName, firstName);
+                Assert.AreEqual(lastName, messageInfo.Chat.LastName, lastName);
+                Assert.AreEqual(allMembersAreAdministrators, messageInfo.Chat.AllMembersAreAdministrators);
+                Assert.AreEqual("123456", messageInfo.Chat.Photo.SmallFileId);
+                Assert.AreEqual("654321", messageInfo.Chat.Photo.BigFileId);
+                Assert.AreEqual(description, messageInfo.Chat.Description);
+                Assert.AreEqual(inviteLink, messageInfo.Chat.InviteLink);
+            });
 
             Console.WriteLine(mandatoryMessageInfoFields);
         }
@@ -253,35 +264,35 @@ namespace NetTelebot.Tests.ResponseTest
             MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
             Assert.AreEqual(messageInfo.Chat.Id, id);
-            Assert.AreEqual(messageInfo.Chat.Type, ChatType.@private);
+            Assert.AreEqual(ChatType.@private, messageInfo.Chat.Type);
 
             //channel
             mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id, "channel");
             messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
             Assert.AreEqual(messageInfo.Chat.Id, id);
-            Assert.AreEqual(messageInfo.Chat.Type, ChatType.channel);
+            Assert.AreEqual(ChatType.channel, messageInfo.Chat.Type);
 
             //group
             mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id, "group");
             messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
             Assert.AreEqual(messageInfo.Chat.Id, id);
-            Assert.AreEqual(messageInfo.Chat.Type, ChatType.@group);
+            Assert.AreEqual(ChatType.@group, messageInfo.Chat.Type);
 
             //supergroup
             mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id, "supergroup");
             messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
             Assert.AreEqual(messageInfo.Chat.Id, id);
-            Assert.AreEqual(messageInfo.Chat.Type, ChatType.supergroup);
+            Assert.AreEqual(ChatType.supergroup, messageInfo.Chat.Type);
 
             //null
             mandatoryMessageInfoFields.chat = ChatInfoObject.GetObject(id, "grou");
             MessageInfo messageInfo2 = new MessageInfo(mandatoryMessageInfoFields);
 
-            Assert.AreEqual(messageInfo2.Chat.Id, id);
-            Assert.AreEqual(messageInfo2.Chat.Type, null);
+            Assert.AreEqual(id, messageInfo2.Chat.Id);
+            Assert.AreEqual(null, messageInfo2.Chat.Type);
         }
 
         /// <summary>
@@ -300,9 +311,12 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoReplyToMessage);
 
-            Assert.AreEqual(messageInfo.ReplyToMessage.MessageId, messageId);
-            Assert.AreEqual(messageInfo.ReplyToMessage.DateUnix, date);
-            Assert.AreEqual(messageInfo.ReplyToMessage.Chat.Id, chatId);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(messageId, messageInfo.ReplyToMessage.MessageId);
+                Assert.AreEqual(date, messageInfo.ReplyToMessage.DateUnix);
+                Assert.AreEqual(chatId, messageInfo.ReplyToMessage.Chat.Id);
+            });
 
             Console.WriteLine(messageInfoReplyToMessage);
         }
@@ -332,18 +346,22 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoEntities);
 
-            //test MessageInfo.Entities
-            Assert.AreEqual(messageInfo.Entities[0].Type, type);
-            Assert.AreEqual(messageInfo.Entities[0].Offset, offset);
-            Assert.AreEqual(messageInfo.Entities[0].Length, length);
-            Assert.AreEqual(messageInfo.Entities[0].Url, url);
 
-            //test MessageInfo.Entities.User
-            Assert.AreEqual(messageInfo.Entities[0].User.Id, id);
-            Assert.AreEqual(messageInfo.Entities[0].User.FirstName, firstName);
-            Assert.AreEqual(messageInfo.Entities[0].User.LastName, lastName);
-            Assert.AreEqual(messageInfo.Entities[0].User.UserName, username);
-            Assert.AreEqual(messageInfo.Entities[0].User.LanguageCode, languageCode);
+            Assert.Multiple(() =>
+            {
+                //test MessageInfo.Entities
+                Assert.AreEqual(type, messageInfo.Entities[0].Type);
+                Assert.AreEqual(offset, messageInfo.Entities[0].Offset);
+                Assert.AreEqual(length, messageInfo.Entities[0].Length);
+                Assert.AreEqual(url, messageInfo.Entities[0].Url);
+
+                //test MessageInfo.Entities.User
+                Assert.AreEqual(id, messageInfo.Entities[0].User.Id);
+                Assert.AreEqual(firstName, messageInfo.Entities[0].User.FirstName);
+                Assert.AreEqual(lastName, messageInfo.Entities[0].User.LastName);
+                Assert.AreEqual(username, messageInfo.Entities[0].User.UserName);
+                Assert.AreEqual(languageCode, messageInfo.Entities[0].User.LanguageCode);
+            });
 
             Console.WriteLine(messageInfoEntities);
         }
@@ -357,14 +375,18 @@ namespace NetTelebot.Tests.ResponseTest
             //check MessageInfo without field [edit_date]
             dynamic messageInfoEditDate = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(messageInfoEditDate);
-            Assert.AreEqual(messageInfo.EditDateUnix, 0);
-            Assert.AreEqual(messageInfo.EditDate, DateTime.MinValue);
+
+            Assert.AreEqual(0, messageInfo.EditDateUnix);
+            Assert.AreEqual(DateTime.MinValue, messageInfo.EditDate);
 
             //check MessageInfo with field [edit_date: 0] 
             messageInfoEditDate.edit_date = 0;
             messageInfo = new MessageInfo(messageInfoEditDate);
-            Assert.AreEqual(messageInfo.EditDateUnix, 0);
-            Assert.AreEqual(messageInfo.EditDate, new DateTime(1970, 1, 1).ToLocalTime());
+
+
+            Assert.AreEqual(0, messageInfo.EditDateUnix);
+            Assert.AreEqual(new DateTime(1970, 1, 1).ToLocalTime(), messageInfo.EditDate);
+
 
             Console.WriteLine(messageInfoEditDate);
         }
@@ -378,12 +400,12 @@ namespace NetTelebot.Tests.ResponseTest
             //check MessageInfo without field [text]
             dynamic messageInfoText = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(messageInfoText);
-            Assert.AreEqual(messageInfo.Text, string.Empty);
+            Assert.AreEqual(string.Empty, messageInfo.Text);
 
             //check MessageInfo with field [text: TestText] 
             messageInfoText.text = "TestText";
             messageInfo = new MessageInfo(messageInfoText);
-            Assert.AreEqual(messageInfo.Text, "TestText");
+            Assert.AreEqual("TestText", messageInfo.Text);
 
             Console.WriteLine(messageInfoText);
         }
@@ -408,14 +430,17 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoAudio);
 
-            //test MessageInfo.Audio
-            Assert.AreEqual(messageInfo.Audio.FileId, fileId);
-            Assert.AreEqual(messageInfo.Audio.Duration, duration);
-            Assert.AreEqual(messageInfo.Audio.Performer, performer);
-            Assert.AreEqual(messageInfo.Audio.Title, title);
-            Assert.AreEqual(messageInfo.Audio.MimeType, mimeType);
-            Assert.AreEqual(messageInfo.Audio.FileSize, fileSize);
-
+            Assert.Multiple(() =>
+            {
+                //test MessageInfo.Audio
+                Assert.AreEqual(fileId, messageInfo.Audio.FileId);
+                Assert.AreEqual(duration, messageInfo.Audio.Duration);
+                Assert.AreEqual(performer, messageInfo.Audio.Performer);
+                Assert.AreEqual(title, messageInfo.Audio.Title);
+                Assert.AreEqual(mimeType, messageInfo.Audio.MimeType);
+                Assert.AreEqual(fileSize, messageInfo.Audio.FileSize);
+            });
+                
             Console.WriteLine(messageInfoAudio);
         }
 
@@ -440,17 +465,20 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoDocument);
 
-            //test MessageInfo.Document
-            Assert.AreEqual(messageInfo.Document.FileId, fileId);
-            Assert.AreEqual(messageInfo.Document.FileName, fileName);
-            Assert.AreEqual(messageInfo.Document.MimeType, mimeType);
-            Assert.AreEqual(messageInfo.Document.FileSize, fileSize);
+            Assert.Multiple(() =>
+            {
+                //test MessageInfo.Document
+                Assert.AreEqual(fileId, messageInfo.Document.FileId);
+                Assert.AreEqual(fileName, messageInfo.Document.FileName);
+                Assert.AreEqual(mimeType, messageInfo.Document.MimeType);
+                Assert.AreEqual(fileSize, messageInfo.Document.FileSize);
 
-            //test MessageInfo.Document.Thumb
-            Assert.AreEqual(messageInfo.Document.Thumb.FileId, fileId);
-            Assert.AreEqual(messageInfo.Document.Thumb.Width, width);
-            Assert.AreEqual(messageInfo.Document.Thumb.Height, height);
-            Assert.AreEqual(messageInfo.Document.Thumb.FileSize, fileSize);
+                //test MessageInfo.Document.Thumb
+                Assert.AreEqual(fileId, messageInfo.Document.Thumb.FileId);
+                Assert.AreEqual(width, messageInfo.Document.Thumb.Width);
+                Assert.AreEqual(height, messageInfo.Document.Thumb.Height);
+                Assert.AreEqual(fileSize, messageInfo.Document.Thumb.FileSize);
+            });
 
 
             Console.WriteLine(messageInfoDocument);
@@ -475,11 +503,14 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoPhoto);
 
-            //test MessageInfo.Photo
-            Assert.AreEqual(messageInfo.Photo[0].FileId, fileId);
-            Assert.AreEqual(messageInfo.Photo[0].Width, width);
-            Assert.AreEqual(messageInfo.Photo[0].Height, height);
-            Assert.AreEqual(messageInfo.Photo[0].FileSize, fileSize);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(fileId, messageInfo.Photo[0].FileId);
+                Assert.AreEqual(width, messageInfo.Photo[0].Width);
+                Assert.AreEqual(height, messageInfo.Photo[0].Height);
+                Assert.AreEqual(fileSize, messageInfo.Photo[0].FileSize);
+            });
+
 
             Console.WriteLine(messageInfoPhoto);
         }
@@ -600,13 +631,13 @@ namespace NetTelebot.Tests.ResponseTest
             //check MessageInfo without field [caption]
             dynamic messageInfoCaption = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(messageInfoCaption);
-            Assert.AreEqual(messageInfo.Caption, string.Empty);
+            Assert.AreEqual(string.Empty, messageInfo.Caption);
 
             //check MessageInfo with field [caption: TestCaption] 
             messageInfoCaption.caption = "TestCaption";
             messageInfo = new MessageInfo(messageInfoCaption);
 
-            Assert.AreEqual(messageInfo.Caption, "TestCaption");
+            Assert.AreEqual("TestCaption", messageInfo.Caption);
 
             Console.WriteLine(messageInfoCaption);
         }
@@ -758,12 +789,12 @@ namespace NetTelebot.Tests.ResponseTest
             //check MessageInfo without field [new_chat_title]
             dynamic messageInfoNewChatTitle = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(messageInfoNewChatTitle);
-            Assert.AreEqual(messageInfo.NewChatTitle, string.Empty);
+            Assert.AreEqual(string.Empty, messageInfo.NewChatTitle);
 
             //check MessageInfo with field [new_chat_title: TestTitle] 
             messageInfoNewChatTitle.new_chat_title = "TestTitle";
             messageInfo = new MessageInfo(messageInfoNewChatTitle);
-            Assert.AreEqual(messageInfo.NewChatTitle, "TestTitle");
+            Assert.AreEqual("TestTitle", messageInfo.NewChatTitle);
 
             Console.WriteLine(messageInfoNewChatTitle);
         }
@@ -883,12 +914,12 @@ namespace NetTelebot.Tests.ResponseTest
             //check MessageInfo witout field [group_chat_created]
             dynamic messageInfoMigrateToChatId = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(messageInfoMigrateToChatId);
-            Assert.AreEqual(messageInfo.MigrateToChatId, 0);
+            Assert.AreEqual(0, messageInfo.MigrateToChatId);
 
             //check MessageInfo with field [group_chat_created: true] 
             messageInfoMigrateToChatId.migrate_to_chat_id = 14881488;
             messageInfo = new MessageInfo(messageInfoMigrateToChatId);
-            Assert.AreEqual(messageInfo.MigrateToChatId, 14881488);
+            Assert.AreEqual(14881488, messageInfo.MigrateToChatId);
 
             Console.WriteLine(messageInfoMigrateToChatId);
         }
@@ -902,12 +933,12 @@ namespace NetTelebot.Tests.ResponseTest
             //check MessageInfo witout field [group_chat_created]
             dynamic migrateFromChatId = mMandatoryFieldsMessageInfo;
             MessageInfo messageInfo = new MessageInfo(migrateFromChatId);
-            Assert.AreEqual(messageInfo.MigrateFromChatId, 0);
+            Assert.AreEqual(0, messageInfo.MigrateFromChatId);
 
             //check MessageInfo with field [group_chat_created: true] 
             migrateFromChatId.migrate_from_chat_id = 14881488;
             messageInfo = new MessageInfo(migrateFromChatId);
-            Assert.AreEqual(messageInfo.MigrateFromChatId, 14881488);
+            Assert.AreEqual(14881488, messageInfo.MigrateFromChatId);
 
             Console.WriteLine(migrateFromChatId);
         }
@@ -919,10 +950,10 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(mandatoryMessageInfoFields);
 
-            Assert.AreEqual(messageInfo.MessageId, -1147483648);
-            Assert.AreEqual(messageInfo.DateUnix, 0);
-            Assert.AreEqual(messageInfo.Date, new DateTime(1970, 1, 1).ToLocalTime());
-            Assert.AreEqual(messageInfo.Chat.Id, 1049413668);
+            Assert.AreEqual(-1147483648, messageInfo.MessageId);
+            Assert.AreEqual(0, messageInfo.DateUnix);
+            Assert.AreEqual(new DateTime(1970, 1, 1).ToLocalTime(), messageInfo.Date);
+            Assert.AreEqual(1049413668, messageInfo.Chat.Id);
             
 
             Console.WriteLine(mandatoryMessageInfoFields);
@@ -944,9 +975,9 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoPinnedMessage);
 
-            Assert.AreEqual(messageInfo.PinnedMessage.MessageId, messageId);
-            Assert.AreEqual(messageInfo.PinnedMessage.DateUnix, date);
-            Assert.AreEqual(messageInfo.PinnedMessage.Chat.Id, chatId);
+            Assert.AreEqual(messageId, messageInfo.PinnedMessage.MessageId);
+            Assert.AreEqual(date, messageInfo.PinnedMessage.DateUnix);
+            Assert.AreEqual(chatId, messageInfo.PinnedMessage.Chat.Id);
 
             Console.WriteLine(messageInfoPinnedMessage);
         }

@@ -800,10 +800,6 @@ namespace NetTelebot
         {
             IRestResponse response = RestClient.Execute(request);
 
-            //todo chek this
-            if(response.ErrorException != null)
-                throw new Exception(response.ErrorMessage);
-
             var type = typeof (T);
 
             if (response.StatusCode == HttpStatusCode.OK)
