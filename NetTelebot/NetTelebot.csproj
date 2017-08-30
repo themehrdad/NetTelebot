@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Result\ChatInfoResult.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Extension\UtilityExtensions.cs" />
     <Compile Include="Type\VenueInfo.cs" />
     <Compile Include="Type\VideoInfo.cs" />
+    <Compile Include="Type\VideoNoteInfo.cs" />
     <Compile Include="Type\VoiceInfo.cs" />
   </ItemGroup>
   <ItemGroup>

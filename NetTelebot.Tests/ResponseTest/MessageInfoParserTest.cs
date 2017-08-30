@@ -623,6 +623,46 @@ namespace NetTelebot.Tests.ResponseTest
         }
 
         /// <summary>
+        /// Test for <see cref="MessageInfo.VideoNote"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoVideoNoteTest()
+        {
+            const string fileId = "100";
+            const int length = 123;
+            const int duration = 100;
+            const int width = 1000;
+            const int height = 10000;
+            const int fileSize = 10;
+
+            dynamic messageInfoVoice = mMandatoryFieldsMessageInfo;
+
+            messageInfoVoice.video_note  = VideoNoteInfoObject.GetObject(
+                fileId, length, duration,
+                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), 
+                fileSize);
+
+            MessageInfo messageInfo = new MessageInfo(messageInfoVoice);
+
+            Assert.Multiple(() =>
+            {
+                //test MessageInfo.VideoNote
+                Assert.AreEqual(fileId, messageInfo.VideoNote.FileId);
+                Assert.AreEqual(length, messageInfo.VideoNote.Length);
+                Assert.AreEqual(duration, messageInfo.VideoNote.Duration);
+                Assert.AreEqual(fileSize, messageInfo.VideoNote.FileSize);
+
+                //test MessageInfo.VideoNote.Thumb
+                Assert.AreEqual(fileId, messageInfo.VideoNote.Thumb.FileId);
+                Assert.AreEqual(width, messageInfo.VideoNote.Thumb.Width);
+                Assert.AreEqual(height, messageInfo.VideoNote.Thumb.Height);
+                Assert.AreEqual(fileSize, messageInfo.VideoNote.Thumb.FileSize);
+            });
+
+            Console.WriteLine(messageInfoVoice);
+        }
+
+        /// <summary>
         /// Test for <see cref="MessageInfo.Caption"/> parse field.
         /// </summary>
         [Test]

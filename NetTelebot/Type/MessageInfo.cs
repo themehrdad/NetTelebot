@@ -104,6 +104,10 @@ namespace NetTelebot.Type
                 ? new VoiceInfo(jsonObject["voice"].Value<JObject>())
                 : new VoiceInfo();
 
+            VideoNote = jsonObject["video_note"] != null
+                ? new VideoNoteInfo(jsonObject["video_note"].Value<JObject>())
+                : new VideoNoteInfo {Thumb = new PhotoSizeInfo()};
+
             Caption = jsonObject["caption"] != null 
                 ? jsonObject["caption"].Value<string>() 
                 : string.Empty;
@@ -175,11 +179,12 @@ namespace NetTelebot.Type
                 Sticker = new StickerInfo {Thumb = new PhotoSizeInfo()},
                 Video = new VideoInfo {Thumb = new PhotoSizeInfo()},
                 Voice = new VoiceInfo(),
-                Contact = new ContactInfo() ,
-                Location = new LocationInfo() ,
+                VideoNote = new VideoNoteInfo {Thumb = new PhotoSizeInfo()},
+                Contact = new ContactInfo(),
+                Location = new LocationInfo(),
                 Venue = new VenueInfo {Location = new LocationInfo()},
-                NewChatMember = new UserInfo() ,
-                LeftChatMember = new UserInfo() ,
+                NewChatMember = new UserInfo(),
+                LeftChatMember = new UserInfo(),
                 NewChatPhoto = new PhotoSizeInfo[0],
                 PinnedMessage = pinned
             };
@@ -293,8 +298,12 @@ namespace NetTelebot.Type
         /// This object represents a voice note.
         /// </summary>
         public VoiceInfo Voice { get; private set;  }
- 
-        //todo add (VideoNote) VideoNote
+
+        /// <summary>
+        /// This object represents a video message (available in Telegram apps as of v.4.0).
+        /// </summary>
+        public VideoNoteInfo VideoNote { get; private set; }
+
         //todo add (Array of User) NewChatMembers
 
         /// <summary>

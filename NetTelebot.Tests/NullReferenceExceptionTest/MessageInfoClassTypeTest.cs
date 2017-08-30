@@ -278,6 +278,36 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.VideoNote"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyVideoNote()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyVideoNote");
+
+            VideoNoteInfo videoNote = sendMessage.Result.VideoNote;
+
+            ConsoleUtlis.PrintResult(videoNote);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof(VideoNoteInfo), videoNote);
+                Assert.IsNull(videoNote.FileId);
+                Assert.AreEqual(videoNote.Length, 0);
+                Assert.AreEqual(videoNote.Duration, 0);
+                Assert.AreEqual(videoNote.FileSize, 0);
+
+                Assert.IsInstanceOf(typeof(PhotoSizeInfo), videoNote.Thumb);
+                Assert.AreEqual(videoNote.Thumb.Width, 0);
+                Assert.AreEqual(videoNote.Thumb.Height, 0);
+                Assert.IsNull(videoNote.Thumb.FileId);
+                Assert.AreEqual(videoNote.Thumb.FileSize, 0);
+            });
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Contact"/>
         /// </summary>
         [Test]
