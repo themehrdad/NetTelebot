@@ -25,6 +25,7 @@ namespace NetTelebot
      * [ClassName] = TelegramBotClientTest if you want to test the method
      * [ClassName] = TelegramBotGetUpdatesTest if you are testing for updates
      * [ClassName] = TelegramBotInlineKeyboardTest or TelegramBotKeyboardTest if you test keyboard.
+     * [ClassName] = TelegramBotEventHandlerTest if you test event handler
      * 
      * Also you can check how the written added methods work in the namespace classes NetTelebot.Tests.RequestToTelegramTest.
      * There are requests to the telegram servers
@@ -135,13 +136,13 @@ namespace NetTelebot
         /// <returns>Returns a class containing messages sent to your bot</returns>
         public GetUpdatesResult GetUpdates(byte limit)
         {
-            CheckToken();
-
             return GetUpdatesInternal(null, limit);
         }
 
         private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit)
         {
+            CheckToken();
+
             RestRequest request = new RestRequest(string.Format(getUpdatesUri, Token), Method.POST);
 
 

@@ -87,6 +87,7 @@
     <Compile Include="Extension\UtilityExtensions.cs" />
     <Compile Include="Type\VenueInfo.cs" />
     <Compile Include="Type\VideoInfo.cs" />
+    <Compile Include="Type\VoiceInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
