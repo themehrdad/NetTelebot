@@ -19,38 +19,47 @@
         /// User is about to receive text message 
         /// </summary>
         Typing,
+
         /// <summary>
         /// User is about to receive photos
         /// </summary>
         Upload_photo,
+
         /// <summary>
         /// User is about to receive video
         /// </summary>
         Record_video,
+
         /// <summary>
         /// User is about to receive video
         /// </summary>
         Upload_video,
+
         /// <summary>
         /// User is about to receive audio files
         /// </summary>
         Record_audio,
+
         /// <summary>
         /// User is about to receive audio files
         /// </summary>
         Upload_audio,
+
         /// <summary>
         /// User is about to receive general files
         /// </summary>
         Upload_document,
+
         /// <summary>
         /// User is about to receive location data
         /// </summary>
         Find_location,
+
         /// <summary>
         /// User is about to receive video notes
         /// </summary>
         Record_video_note,
+
         /// <summary>
         /// User is about to receive video notes
         /// </summary>
