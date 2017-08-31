@@ -4,6 +4,7 @@ using NetTelebot.Tests.TypeTestObject;
 using NetTelebot.Type;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+#pragma warning disable 618
 
 namespace NetTelebot.Tests.ResponseTest
 {
@@ -660,6 +661,38 @@ namespace NetTelebot.Tests.ResponseTest
             });
 
             Console.WriteLine(messageInfoVoice);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.NewChatMembers"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoNewChatMembersTest()
+        {
+            const int id = 1000;
+            const string firstName = "TestName";
+            const string lastName = "testLastName";
+            const string username = "testUsername";
+            const string languageCode = "testLanguageCode";
+
+            dynamic messageInfoUser = mMandatoryFieldsMessageInfo;
+
+            JArray membersArray = new JArray(UserInfoObject.GetObject(id, firstName, lastName, username, languageCode));
+
+            messageInfoUser.new_chat_members = membersArray;
+
+            MessageInfo messageInfo = new MessageInfo(messageInfoUser);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(id, messageInfo.NewChatMembers[0].Id);
+                Assert.AreEqual(firstName, messageInfo.NewChatMembers[0].FirstName);
+                Assert.AreEqual(lastName, messageInfo.NewChatMembers[0].LastName);
+                Assert.AreEqual(messageInfo.NewChatMembers[0].UserName, username);
+                Assert.AreEqual(messageInfo.NewChatMembers[0].LanguageCode, languageCode);
+            });
+
+            Console.WriteLine(messageInfoUser);
         }
 
         /// <summary>

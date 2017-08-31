@@ -108,6 +108,10 @@ namespace NetTelebot.Type
                 ? new VideoNoteInfo(jsonObject["video_note"].Value<JObject>())
                 : new VideoNoteInfo {Thumb = new PhotoSizeInfo()};
 
+            NewChatMembers = jsonObject["new_chat_members"] != null
+                ? UserInfo.ParseArray(jsonObject["new_chat_members"].Value<JArray>())
+                : new UserInfo[0];
+
             Caption = jsonObject["caption"] != null 
                 ? jsonObject["caption"].Value<string>() 
                 : string.Empty;
@@ -305,6 +309,10 @@ namespace NetTelebot.Type
         public VideoNoteInfo VideoNote { get; private set; }
 
         //todo add (Array of User) NewChatMembers
+        /// <summary>
+        /// Optional. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
+        /// </summary>
+        public UserInfo[] NewChatMembers { get; private set; }
 
         /// <summary>
         /// Optional. Caption for the document, photo or video, 0-200 characters 
@@ -329,6 +337,9 @@ namespace NetTelebot.Type
         /// <summary>
         /// Optional. A new member was added to the group, information about them (this member may be bot itself)  
         /// </summary>
+        [Obsolete("See Introducing Bot API 3.0: " +
+                  "Replaced the field new_chat_member in Message with new_chat_members " +
+                  "(the old field will still be available for a while for compatibility purposes).")]
         public UserInfo NewChatMember { get; private set; }
 
         /// <summary>
