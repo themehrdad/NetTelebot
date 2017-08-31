@@ -403,7 +403,7 @@
         UGX,
 
         /// <summary>
-        ///  	United States Dollar
+        /// United States Dollar
         /// </summary>
         USD,
 
