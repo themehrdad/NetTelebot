@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using NUnit.Framework;
 using RestSharp;
+using RestSharp.Deserializers;
 
 namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
 {
@@ -11,10 +13,13 @@ namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
         [Test]
         public static void RunTest()
         {
-            Console.WriteLine(GetCurrenciesObject());
+            foreach (var keys in GetCurrenciesObject().Keys)
+            {
+                Console.WriteLine(keys);
+            }
         }
 
-        public static string GetCurrenciesObject()
+        public static Dictionary<string, string> GetCurrenciesObject()
         {
             RestClient RestClient = new RestClient("https://core.telegram.org");
 
@@ -23,9 +28,15 @@ namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
             IRestResponse response = RestClient.Execute(request);
 
             if (response.StatusCode == HttpStatusCode.OK)
-                return response.Content;
+                return DeserealizeString(response);
 
             throw new Exception(response.StatusDescription);
+        }
+
+        private static Dictionary<string, string> DeserealizeString(IRestResponse response)
+        {
+            JsonDeserializer deserial = new JsonDeserializer();
+            return deserial.Deserialize<Dictionary<string, string>>(response);
         }
     }
 }
