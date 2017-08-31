@@ -184,6 +184,7 @@ namespace NetTelebot.Type
                 Video = new VideoInfo {Thumb = new PhotoSizeInfo()},
                 Voice = new VoiceInfo(),
                 VideoNote = new VideoNoteInfo {Thumb = new PhotoSizeInfo()},
+                NewChatMembers = new UserInfo[0],
                 Contact = new ContactInfo(),
                 Location = new LocationInfo(),
                 Venue = new VenueInfo {Location = new LocationInfo()},
@@ -308,7 +309,6 @@ namespace NetTelebot.Type
         /// </summary>
         public VideoNoteInfo VideoNote { get; private set; }
 
-        //todo add (Array of User) NewChatMembers
         /// <summary>
         /// Optional. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
         /// </summary>

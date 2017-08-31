@@ -58,7 +58,6 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             Assert.Multiple(() =>
             {
                 //todo game
-                //todo NewChatMembers;
                 //todo Invoice
                 //todo SuceffulPayment
 
@@ -114,6 +113,9 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
 
                 Assert.IsInstanceOf<VideoNoteInfo>(messageInfo.VideoNote);
                 Assert.IsNull(messageInfo.VideoNote.FileId);
+
+                Assert.IsInstanceOf<UserInfo[]>(messageInfo.NewChatMembers);
+                Assert.IsEmpty(messageInfo.NewChatMembers);
 
                 Assert.IsNull(messageInfo.Caption);
 
