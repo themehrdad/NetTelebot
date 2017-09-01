@@ -51,7 +51,7 @@ namespace NetTelebot.Type
 
             ForwardFromChat = jsonObject["forward_from_chat"] != null
                 ? new ChatInfo(jsonObject["forward_from_chat"].Value<JObject>())
-                : new ChatInfo { Photo = new ChatPhotoInfo() };
+                : new ChatInfo {Photo = new ChatPhotoInfo()};
 
             if (jsonObject["forward_from_message_id"] != null)
                 ForwardFromMessageId = jsonObject["forward_from_message_id"].Value<int>();

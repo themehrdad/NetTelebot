@@ -145,7 +145,6 @@ namespace NetTelebot
 
             RestRequest request = new RestRequest(string.Format(getUpdatesUri, Token), Method.POST);
 
-
             if (offset.HasValue)
                 request.AddQueryParameter("offset", offset.Value.ToString());
             if (limit.HasValue)
@@ -800,29 +799,27 @@ namespace NetTelebot
         {
             IRestResponse response = RestClient.Execute(request);
 
-            var type = typeof (T);
-
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                if (type == typeof (SendMessageResult))
+                if (typeof(T) == typeof (SendMessageResult))
                     return new SendMessageResult(response.Content);
 
-                if (type == typeof (BooleanResult))
+                if (typeof(T) == typeof (BooleanResult))
                     return new BooleanResult(response.Content);
 
-                if (type == typeof (MeInfo))
+                if (typeof(T) == typeof (MeInfo))
                     return new MeInfo(response.Content);
 
-                if (type == typeof (GetUserProfilePhotosResult))
+                if (typeof(T) == typeof (GetUserProfilePhotosResult))
                     return new GetUserProfilePhotosResult(response.Content);
 
-                if (type == typeof (GetUpdatesResult))
+                if (typeof(T) == typeof (GetUpdatesResult))
                     return new GetUpdatesResult(response.Content);
 
-                if (type == typeof (ChatInfoResult))
+                if (typeof(T) == typeof (ChatInfoResult))
                     return new ChatInfoResult(response.Content);
 
-                if (type == typeof (IntegerResult))
+                if (typeof(T) == typeof (IntegerResult))
                     return new IntegerResult(response.Content);
             }
 
