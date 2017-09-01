@@ -75,7 +75,7 @@
         /// <summary>
         /// Brazilian Real
         /// </summary>
-        BPL,
+        BRL,
 
         /// <summary>
         /// Canadian Dollar
