@@ -406,7 +406,6 @@ namespace NetTelebot.Type
         /// </summary>
         public MessageInfo PinnedMessage { get; private set; }
 
-        //todo (Invoice) Invoice
         /// <summary>
         /// Optional. Message is an <see href="https://core.telegram.org/bots/api#payments">invoice </see> for a payment, information about the invoice. 
         /// </summary>
