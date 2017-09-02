@@ -2,6 +2,7 @@
 using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type;
+using NetTelebot.Type.Payment;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests.NullReferenceExceptionTest
@@ -431,6 +432,31 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsNull(leftChatMember.LastName);
                 Assert.IsNull(leftChatMember.UserName);
                 Assert.IsNull(leftChatMember.LanguageCode);
+            });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Invoice"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyInvoice()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyInvoice()");
+
+            InvoceInfo invoiceMessageInfo = sendMessage.Result.Invoice;
+
+            ConsoleUtlis.PrintResult(invoiceMessageInfo);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof(InvoceInfo), invoiceMessageInfo);
+                Assert.IsNull(invoiceMessageInfo.Title);
+                Assert.IsNull(invoiceMessageInfo.Description);
+                Assert.IsNull(invoiceMessageInfo.StartParameter);
+                Assert.IsNull(invoiceMessageInfo.Currency);
+                Assert.AreEqual(invoiceMessageInfo.TotalAmmount, 0);
             });
         }
     }

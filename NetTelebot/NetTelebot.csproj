@@ -47,7 +47,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BotEnum\Currencies.cs" />
+    <Compile Include="BotEnum\Currency.cs" />
     <Compile Include="Result\ChatInfoResult.cs" />
     <Compile Include="Result\IntegerResult.cs" />
     <Compile Include="Type\AudioInfo.cs" />
@@ -75,6 +75,7 @@
     <Compile Include="Type\MessageInfo.cs" />
     <Compile Include="Type\NewFile.cs" />
     <Compile Include="BotEnum\ParseMode.cs" />
+    <Compile Include="Type\Payment\InvoceInfo.cs" />
     <Compile Include="Type\PhotoSizeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Type\Keyboard\ReplyKeyboardHideMarkup.cs" />

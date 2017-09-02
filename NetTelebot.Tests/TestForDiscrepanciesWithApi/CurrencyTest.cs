@@ -10,7 +10,7 @@ using RestSharp.Deserializers;
 namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
 {
     [TestFixture]
-    internal static class CurrenciesTest
+    internal static class CurrencyTest
     {
         private static readonly RestClient mRestClient = new RestClient("https://core.telegram.org");
 
@@ -55,8 +55,8 @@ namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
 
         private static List<string> GetEnumList()
         {
-            return Enum.GetValues(typeof (Currencies))
-                .Cast<Currencies>()
+            return Enum.GetValues(typeof (Currency))
+                .Cast<Currency>()
                 .Select(v => v.ToString())
                 .ToList();
         }

@@ -10,7 +10,7 @@
     /// Note that for each currency except USD these limits depend on exchange rates and may change over time 
     /// (plan ahead for this when you implement limits in your code).
     /// </summary>
-    public enum Currencies
+    public enum Currency
     {
         /// <summary>
         /// United Arab Emirates Dirham
@@ -48,7 +48,7 @@
         AZN,
 
         /// <summary>
-        /// Bosnia & Herzegovina Convertible Mark
+        /// Bosnia And Herzegovina Convertible Mark
         /// </summary>
         BAM,
 

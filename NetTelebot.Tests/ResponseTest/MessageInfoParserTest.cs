@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using NetTelebot.BotEnum;
+using NetTelebot.Extension;
 using NetTelebot.Tests.TypeTestObject;
+using NetTelebot.Tests.TypeTestObject.PaymentTestObject;
 using NetTelebot.Type;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -1048,11 +1052,65 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoPinnedMessage);
 
-            Assert.AreEqual(messageId, messageInfo.PinnedMessage.MessageId);
-            Assert.AreEqual(date, messageInfo.PinnedMessage.DateUnix);
-            Assert.AreEqual(chatId, messageInfo.PinnedMessage.Chat.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(messageId, messageInfo.PinnedMessage.MessageId);
+                Assert.AreEqual(date, messageInfo.PinnedMessage.DateUnix);
+                Assert.AreEqual(chatId, messageInfo.PinnedMessage.Chat.Id);
+            });
 
             Console.WriteLine(messageInfoPinnedMessage);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Invoice"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoInvoiceTest()
+        {
+            const string title = "TestTitle";
+            const string description = "TestDescription";
+            const string startParameter = "TestStartParameter";
+            const string currency = "USD";
+            const int totalAmount = 123; 
+
+            dynamic messageInfoInvoice = mMandatoryFieldsMessageInfo;
+
+            messageInfoInvoice.invoice = InvoiceInfoObject.GetObject(title, description, startParameter,
+                currency, totalAmount);
+
+            MessageInfo messageInfo = new MessageInfo(messageInfoInvoice);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(title, messageInfo.Invoice.Title);
+                Assert.AreEqual(description, messageInfo.Invoice.Description);
+                Assert.AreEqual(startParameter, messageInfo.Invoice.StartParameter);
+                Assert.AreEqual(Currency.USD, messageInfo.Invoice.Currency);
+                Assert.AreEqual(totalAmount, messageInfo.Invoice.TotalAmmount);
+            });
+
+            Console.WriteLine(messageInfoInvoice);
+        }
+
+        [Test]
+        public static void MessageInfoInvoiceToEnumTest()
+        {
+            var enumStringList = Enum.GetValues(typeof(Currency))
+                .Cast<Currency>()
+                .Select(v => v.ToString())
+                .ToList();
+
+            var enumList = Enum.GetValues(typeof(Currency))
+                .Cast<Currency>()
+                .ToList(); 
+
+            for (var i = 0; i < enumStringList.Count; i++)
+            {
+                Assert.AreEqual(enumStringList[i].ToEnum<Currency>(), enumList[i]);
+                Console.WriteLine("Now equals {0} and {1}", enumStringList[i], enumList[i]);
+            }
+
         }
     }
 }

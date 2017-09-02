@@ -1,5 +1,6 @@
 ﻿using System;
 using NetTelebot.Extension;
+using NetTelebot.Type.Payment;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
@@ -165,6 +166,10 @@ namespace NetTelebot.Type
             PinnedMessage = jsonObject["pinned_message"] != null
                 ? new MessageInfo(jsonObject["pinned_message"].Value<JObject>())
                 : GetNewMessageInfo(GetNewMessageInfo(), GetNewMessageInfo());
+
+            Invoice = jsonObject["invoice"] != null
+                ? new InvoceInfo(jsonObject["invoice"].Value<JObject>())
+                : new InvoceInfo();
         }
 
         internal static MessageInfo GetNewMessageInfo(MessageInfo pinned = null, MessageInfo reply = null)
@@ -191,7 +196,8 @@ namespace NetTelebot.Type
                 NewChatMember = new UserInfo(),
                 LeftChatMember = new UserInfo(),
                 NewChatPhoto = new PhotoSizeInfo[0],
-                PinnedMessage = pinned
+                PinnedMessage = pinned,
+                Invoice = new InvoceInfo()
             };
         }
 
@@ -401,6 +407,11 @@ namespace NetTelebot.Type
         public MessageInfo PinnedMessage { get; private set; }
 
         //todo (Invoice) Invoice
+        /// <summary>
+        /// Optional. Message is an <see href="https://core.telegram.org/bots/api#payments">invoice </see> for a payment, information about the invoice. 
+        /// </summary>
+        public InvoceInfo Invoice { get; private set; }
+
         //todo (SuccessfulPayment) SuccessfulPayment
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using NetTelebot.BotEnum;
 
 namespace NetTelebot.Extension
 {
@@ -27,6 +28,20 @@ namespace NetTelebot.Extension
         public static long ToUnixTime(this DateTime dateTime)
         {
             return (long)(dateTime - baseDate).TotalSeconds;
+        }
+
+        /// <summary>
+        /// Converts a string to the specified in T enum type
+        /// </summary>
+        /// <param name="enumString">String value for conversion to an existing structure</param>
+        /// <typeparam name="T">Exiting structure</typeparam>
+        /// <returns>The value of the enumeration T from string. Null if constant in enumeration not exist</returns>
+        public static T? ToEnum<T>(this string enumString) where T:struct
+        {
+            if (Enum.IsDefined(typeof(T), enumString))
+                return (T) Enum.Parse(typeof (T), enumString, true);
+
+            return null;
         }
     }
 }

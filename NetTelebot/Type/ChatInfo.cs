@@ -43,6 +43,7 @@ namespace NetTelebot.Type
 
         private static ChatType? ParseChatType(string type)
         {
+            //todo use ToEnum extension
             if (type.Equals("private"))
                 return ChatType.@private;
             if (type.Equals("group"))
