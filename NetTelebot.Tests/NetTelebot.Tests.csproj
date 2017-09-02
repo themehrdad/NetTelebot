@@ -93,6 +93,8 @@
     <Compile Include="RequestToMockTest\TelegramBotInlineKeyboardTest.cs" />
     <Compile Include="ResponseTest\UpdateInfoParserTest.cs" />
     <Compile Include="ResponseTest\UserProfilePhotosInfoParserTest.cs" />
+    <Compile Include="TestForDiscrepanciesWithApi\CurrencyTest.cs" />
+    <Compile Include="TypeTestObject\PaymentTestObject\InvoiceInfoObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\BooleanResultObject.cs" />
     <Compile Include="RequestToMockTest\TelegramBotClientTest.cs" />
     <Compile Include="RequestToMockTest\TelegramBotKeyboardTest.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="TypeTestObject\UserProfilePhotosInfoObject.cs" />
     <Compile Include="TypeTestObject\VenueInfoObject.cs" />
     <Compile Include="TypeTestObject\VideoInfoObject.cs" />
+    <Compile Include="TypeTestObject\VideoNoteInfoObject.cs" />
     <Compile Include="TypeTestObject\VoiceInfoObject.cs" />
     <Compile Include="UtilityExtensionTest.cs" />
   </ItemGroup>
@@ -130,6 +133,7 @@
       <Name>NetTelebot.CommonUtils</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -88,5 +88,26 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.AreEqual(sendMessage.Result.NewChatPhoto.Length, 0);
             });
         }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatMembers"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyNewChatMembers()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyNewChatMember()");
+
+            var newChatMembers = sendMessage.Result.NewChatMembers;
+
+            ConsoleUtlis.PrintResult(newChatMembers);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof(UserInfo[]), newChatMembers);
+                Assert.AreEqual(sendMessage.Result.NewChatMembers.Length, 0);
+            });
+        }
     }
 }

@@ -2,6 +2,7 @@
 using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type;
+using NetTelebot.Type.Payment;
 using NUnit.Framework;
 
 
@@ -58,9 +59,6 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             Assert.Multiple(() =>
             {
                 //todo game
-                //todo VideoNote
-                //todo NewChatMembers;
-                //todo Invoice
                 //todo SuceffulPayment
 
                 Assert.IsInstanceOf(typeof (MessageInfo), messageInfo);
@@ -113,6 +111,12 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsInstanceOf<VoiceInfo>(messageInfo.Voice);
                 Assert.IsNull(messageInfo.Voice.FileId);
 
+                Assert.IsInstanceOf<VideoNoteInfo>(messageInfo.VideoNote);
+                Assert.IsNull(messageInfo.VideoNote.FileId);
+
+                Assert.IsInstanceOf<UserInfo[]>(messageInfo.NewChatMembers);
+                Assert.IsEmpty(messageInfo.NewChatMembers);
+
                 Assert.IsNull(messageInfo.Caption);
 
                 Assert.IsInstanceOf<ContactInfo>(messageInfo.Contact);
@@ -144,6 +148,9 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
 
                 Assert.IsInstanceOf<MessageInfo>(messageInfo.PinnedMessage);
                 Assert.AreEqual(0, messageInfo.PinnedMessage.Chat.Id);
+
+                Assert.IsInstanceOf<InvoceInfo>(messageInfo.Invoice);
+                Assert.AreEqual(0, messageInfo.Invoice.TotalAmmount);
 
             });
         }

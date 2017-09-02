@@ -1,5 +1,6 @@
 ﻿using System;
 using NetTelebot.Extension;
+using NetTelebot.Type.Payment;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
@@ -51,7 +52,7 @@ namespace NetTelebot.Type
 
             ForwardFromChat = jsonObject["forward_from_chat"] != null
                 ? new ChatInfo(jsonObject["forward_from_chat"].Value<JObject>())
-                : new ChatInfo { Photo = new ChatPhotoInfo() };
+                : new ChatInfo {Photo = new ChatPhotoInfo()};
 
             if (jsonObject["forward_from_message_id"] != null)
                 ForwardFromMessageId = jsonObject["forward_from_message_id"].Value<int>();
@@ -103,6 +104,14 @@ namespace NetTelebot.Type
             Voice = jsonObject["voice"] != null
                 ? new VoiceInfo(jsonObject["voice"].Value<JObject>())
                 : new VoiceInfo();
+
+            VideoNote = jsonObject["video_note"] != null
+                ? new VideoNoteInfo(jsonObject["video_note"].Value<JObject>())
+                : new VideoNoteInfo {Thumb = new PhotoSizeInfo()};
+
+            NewChatMembers = jsonObject["new_chat_members"] != null
+                ? UserInfo.ParseArray(jsonObject["new_chat_members"].Value<JArray>())
+                : new UserInfo[0];
 
             Caption = jsonObject["caption"] != null 
                 ? jsonObject["caption"].Value<string>() 
@@ -157,6 +166,10 @@ namespace NetTelebot.Type
             PinnedMessage = jsonObject["pinned_message"] != null
                 ? new MessageInfo(jsonObject["pinned_message"].Value<JObject>())
                 : GetNewMessageInfo(GetNewMessageInfo(), GetNewMessageInfo());
+
+            Invoice = jsonObject["invoice"] != null
+                ? new InvoceInfo(jsonObject["invoice"].Value<JObject>())
+                : new InvoceInfo();
         }
 
         internal static MessageInfo GetNewMessageInfo(MessageInfo pinned = null, MessageInfo reply = null)
@@ -175,13 +188,16 @@ namespace NetTelebot.Type
                 Sticker = new StickerInfo {Thumb = new PhotoSizeInfo()},
                 Video = new VideoInfo {Thumb = new PhotoSizeInfo()},
                 Voice = new VoiceInfo(),
-                Contact = new ContactInfo() ,
-                Location = new LocationInfo() ,
+                VideoNote = new VideoNoteInfo {Thumb = new PhotoSizeInfo()},
+                NewChatMembers = new UserInfo[0],
+                Contact = new ContactInfo(),
+                Location = new LocationInfo(),
                 Venue = new VenueInfo {Location = new LocationInfo()},
-                NewChatMember = new UserInfo() ,
-                LeftChatMember = new UserInfo() ,
+                NewChatMember = new UserInfo(),
+                LeftChatMember = new UserInfo(),
                 NewChatPhoto = new PhotoSizeInfo[0],
-                PinnedMessage = pinned
+                PinnedMessage = pinned,
+                Invoice = new InvoceInfo()
             };
         }
 
@@ -293,9 +309,16 @@ namespace NetTelebot.Type
         /// This object represents a voice note.
         /// </summary>
         public VoiceInfo Voice { get; private set;  }
- 
-        //todo add (VideoNote) VideoNote
-        //todo add (Array of User) NewChatMembers
+
+        /// <summary>
+        /// This object represents a video message (available in Telegram apps as of v.4.0).
+        /// </summary>
+        public VideoNoteInfo VideoNote { get; private set; }
+
+        /// <summary>
+        /// Optional. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
+        /// </summary>
+        public UserInfo[] NewChatMembers { get; private set; }
 
         /// <summary>
         /// Optional. Caption for the document, photo or video, 0-200 characters 
@@ -320,6 +343,9 @@ namespace NetTelebot.Type
         /// <summary>
         /// Optional. A new member was added to the group, information about them (this member may be bot itself)  
         /// </summary>
+        [Obsolete("See Introducing Bot API 3.0: " +
+                  "Replaced the field new_chat_member in Message with new_chat_members " +
+                  "(the old field will still be available for a while for compatibility purposes).")]
         public UserInfo NewChatMember { get; private set; }
 
         /// <summary>
@@ -380,7 +406,11 @@ namespace NetTelebot.Type
         /// </summary>
         public MessageInfo PinnedMessage { get; private set; }
 
-        //todo (Invoice) Invoice
+        /// <summary>
+        /// Optional. Message is an <see href="https://core.telegram.org/bots/api#payments">invoice </see> for a payment, information about the invoice. 
+        /// </summary>
+        public InvoceInfo Invoice { get; private set; }
+
         //todo (SuccessfulPayment) SuccessfulPayment
     }
 }

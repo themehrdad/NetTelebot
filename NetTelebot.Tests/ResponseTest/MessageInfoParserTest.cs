@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using NetTelebot.BotEnum;
+using NetTelebot.Extension;
 using NetTelebot.Tests.TypeTestObject;
+using NetTelebot.Tests.TypeTestObject.PaymentTestObject;
 using NetTelebot.Type;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+#pragma warning disable 618
 
 namespace NetTelebot.Tests.ResponseTest
 {
@@ -623,6 +628,78 @@ namespace NetTelebot.Tests.ResponseTest
         }
 
         /// <summary>
+        /// Test for <see cref="MessageInfo.VideoNote"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoVideoNoteTest()
+        {
+            const string fileId = "100";
+            const int length = 123;
+            const int duration = 100;
+            const int width = 1000;
+            const int height = 10000;
+            const int fileSize = 10;
+
+            dynamic messageInfoVoice = mMandatoryFieldsMessageInfo;
+
+            messageInfoVoice.video_note  = VideoNoteInfoObject.GetObject(
+                fileId, length, duration,
+                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), 
+                fileSize);
+
+            MessageInfo messageInfo = new MessageInfo(messageInfoVoice);
+
+            Assert.Multiple(() =>
+            {
+                //test MessageInfo.VideoNote
+                Assert.AreEqual(fileId, messageInfo.VideoNote.FileId);
+                Assert.AreEqual(length, messageInfo.VideoNote.Length);
+                Assert.AreEqual(duration, messageInfo.VideoNote.Duration);
+                Assert.AreEqual(fileSize, messageInfo.VideoNote.FileSize);
+
+                //test MessageInfo.VideoNote.Thumb
+                Assert.AreEqual(fileId, messageInfo.VideoNote.Thumb.FileId);
+                Assert.AreEqual(width, messageInfo.VideoNote.Thumb.Width);
+                Assert.AreEqual(height, messageInfo.VideoNote.Thumb.Height);
+                Assert.AreEqual(fileSize, messageInfo.VideoNote.Thumb.FileSize);
+            });
+
+            Console.WriteLine(messageInfoVoice);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.NewChatMembers"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoNewChatMembersTest()
+        {
+            const int id = 1000;
+            const string firstName = "TestName";
+            const string lastName = "testLastName";
+            const string username = "testUsername";
+            const string languageCode = "testLanguageCode";
+
+            dynamic messageInfoUser = mMandatoryFieldsMessageInfo;
+
+            JArray membersArray = new JArray(UserInfoObject.GetObject(id, firstName, lastName, username, languageCode));
+
+            messageInfoUser.new_chat_members = membersArray;
+
+            MessageInfo messageInfo = new MessageInfo(messageInfoUser);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(id, messageInfo.NewChatMembers[0].Id);
+                Assert.AreEqual(firstName, messageInfo.NewChatMembers[0].FirstName);
+                Assert.AreEqual(lastName, messageInfo.NewChatMembers[0].LastName);
+                Assert.AreEqual(messageInfo.NewChatMembers[0].UserName, username);
+                Assert.AreEqual(messageInfo.NewChatMembers[0].LanguageCode, languageCode);
+            });
+
+            Console.WriteLine(messageInfoUser);
+        }
+
+        /// <summary>
         /// Test for <see cref="MessageInfo.Caption"/> parse field.
         /// </summary>
         [Test]
@@ -975,11 +1052,65 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoPinnedMessage);
 
-            Assert.AreEqual(messageId, messageInfo.PinnedMessage.MessageId);
-            Assert.AreEqual(date, messageInfo.PinnedMessage.DateUnix);
-            Assert.AreEqual(chatId, messageInfo.PinnedMessage.Chat.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(messageId, messageInfo.PinnedMessage.MessageId);
+                Assert.AreEqual(date, messageInfo.PinnedMessage.DateUnix);
+                Assert.AreEqual(chatId, messageInfo.PinnedMessage.Chat.Id);
+            });
 
             Console.WriteLine(messageInfoPinnedMessage);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Invoice"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoInvoiceTest()
+        {
+            const string title = "TestTitle";
+            const string description = "TestDescription";
+            const string startParameter = "TestStartParameter";
+            const string currency = "USD";
+            const int totalAmount = 123; 
+
+            dynamic messageInfoInvoice = mMandatoryFieldsMessageInfo;
+
+            messageInfoInvoice.invoice = InvoiceInfoObject.GetObject(title, description, startParameter,
+                currency, totalAmount);
+
+            MessageInfo messageInfo = new MessageInfo(messageInfoInvoice);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(title, messageInfo.Invoice.Title);
+                Assert.AreEqual(description, messageInfo.Invoice.Description);
+                Assert.AreEqual(startParameter, messageInfo.Invoice.StartParameter);
+                Assert.AreEqual(Currency.USD, messageInfo.Invoice.Currency);
+                Assert.AreEqual(totalAmount, messageInfo.Invoice.TotalAmmount);
+            });
+
+            Console.WriteLine(messageInfoInvoice);
+        }
+
+        [Test]
+        public static void MessageInfoInvoiceToEnumTest()
+        {
+            var enumStringList = Enum.GetValues(typeof(Currency))
+                .Cast<Currency>()
+                .Select(v => v.ToString())
+                .ToList();
+
+            var enumList = Enum.GetValues(typeof(Currency))
+                .Cast<Currency>()
+                .ToList(); 
+
+            for (var i = 0; i < enumStringList.Count; i++)
+            {
+                Assert.AreEqual(enumStringList[i].ToEnum<Currency>(), enumList[i]);
+                Console.WriteLine("Now equals {0} and {1}", enumStringList[i], enumList[i]);
+            }
+
         }
     }
 }
