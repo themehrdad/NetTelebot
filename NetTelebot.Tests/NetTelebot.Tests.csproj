@@ -93,7 +93,9 @@
     <Compile Include="RequestToMockTest\TelegramBotInlineKeyboardTest.cs" />
     <Compile Include="ResponseTest\UpdateInfoParserTest.cs" />
     <Compile Include="ResponseTest\UserProfilePhotosInfoParserTest.cs" />
+    <Compile Include="TestForDiscrepanciesWithApi\CountriesTest.cs" />
     <Compile Include="TestForDiscrepanciesWithApi\CurrencyTest.cs" />
+    <Compile Include="TestForDiscrepanciesWithApi\RequestToUri.cs" />
     <Compile Include="TypeTestObject\PaymentTestObject\InvoiceInfoObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\BooleanResultObject.cs" />
     <Compile Include="RequestToMockTest\TelegramBotClientTest.cs" />

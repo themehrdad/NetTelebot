@@ -47,6 +47,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BotEnum\Countries.cs" />
     <Compile Include="BotEnum\Currency.cs" />
     <Compile Include="Result\ChatInfoResult.cs" />
     <Compile Include="Result\IntegerResult.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Type\Keyboard\ReplyKeyboardHideMarkup.cs" />
     <Compile Include="Type\Keyboard\ReplyKeyboardMarkup.cs" />
     <Compile Include="Result\SendMessageResult.cs" />
+    <Compile Include="Type\Payment\ShippingAddressInfo.cs" />
     <Compile Include="Type\StickerInfo.cs" />
     <Compile Include="TelegramBotClient.cs" />
     <Compile Include="Result\TelegramUpdateEventArgs.cs" />

@@ -1,56 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using NetTelebot.BotEnum;
 using NUnit.Framework;
 using RestSharp;
-using RestSharp.Deserializers;
 
 namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
 {
     [TestFixture]
-    internal static class CurrencyTest
+    internal  class CurrencyTest
     {
-        private static readonly RestClient mRestClient = new RestClient("https://core.telegram.org");
+        private static readonly List<string> mKeyList = GetCurrencyList();
 
         [Test, Timeout(30000)]
-        public static void ActualCurrenciesJsonEqulsEnumTest()
+        public void ActualCurrenciesJsonEqualsEnumTest()
         {
-            var listEnum = GetEnumList();
-            var keys = GetCurrenciesObject().Keys.ToList();
-            
-            Assert.AreEqual(listEnum, keys);
+            Assert.AreEqual(GetEnumList(), mKeyList);
         }
 
         [Test, Timeout(30000)]
-        public static void ComparsionWhenItemsSmallerTest()
+        public  void ComparsionWhenItemsSmallerTest()
         {
             var listEnum = GetEnumList();
-            var keys = GetCurrenciesObject().Keys.ToList();
+
             listEnum.Remove("RUB");
 
-            Assert.AreNotEqual(listEnum, keys);
+            Assert.AreNotEqual(listEnum, mKeyList);
 
             listEnum = GetEnumList();
-            keys.Remove("RUB");
+            mKeyList.Remove("RUB");
 
-            Assert.AreNotEqual(listEnum, keys);
+            Assert.AreNotEqual(listEnum, mKeyList);
         }
 
         [Test, Timeout(30000)]
-        public static void ComparsionWhenItemsMoreTest()
+        public void ComparsionWhenItemsMoreTest()
         {
             var listEnum = GetEnumList();
-            var keys = GetCurrenciesObject().Keys.ToList();
+            
             listEnum.Add("QWP");
 
-            Assert.AreNotEqual(listEnum, keys);
+            Assert.AreNotEqual(listEnum, mKeyList);
 
             listEnum = GetEnumList();
-            keys.Add("QWP");
+            mKeyList.Add("QWP");
 
-            Assert.AreNotEqual(listEnum, keys);
+            Assert.AreNotEqual(listEnum, mKeyList);
+        }
+
+        private static List<string> GetCurrencyList()
+        {
+            RequestToUri requestToUri = new RequestToUri(new RestClient("https://core.telegram.org"));
+
+            dynamic jobject = requestToUri.GetDeserealizeObject(UriConst.mCurencyUri);
+            var list = new List<string>();
+
+            foreach (dynamic keys in jobject)
+            {
+                list.Add(keys.Name.ToString());
+            }
+
+            return list;
         }
 
         private static List<string> GetEnumList()
@@ -59,35 +69,6 @@ namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
                 .Cast<Currency>()
                 .Select(v => v.ToString())
                 .ToList();
-        }
-
-        public static Dictionary<string, string> GetCurrenciesObject()
-        {
-            RestRequest request = NewRequest("/bots/payments/currencies.json");
-            RestResponse response = (RestResponse) NewResponse(request);
-            
-            return DeserealizeJson(response);
-        }
-
-        private static RestRequest NewRequest(string uri)
-        {
-            return new RestRequest(uri, Method.GET);
-        }
-
-        private static IRestResponse NewResponse(IRestRequest request)
-        {
-            IRestResponse response = mRestClient.Execute(request);
-
-            if (response.StatusCode == HttpStatusCode.OK)
-                return response;
-
-            throw new Exception(response.StatusDescription);
-        }
-
-        private static Dictionary<string, string> DeserealizeJson(IRestResponse response)
-        {
-            JsonDeserializer deserial = new JsonDeserializer();
-            return deserial.Deserialize<Dictionary<string, string>>(response);
-        }
+        }        
     }
 }
