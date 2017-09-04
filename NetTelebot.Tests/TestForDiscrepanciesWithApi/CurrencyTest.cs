@@ -10,13 +10,10 @@ namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
     [TestFixture]
     internal  class CurrencyTest
     {
-        private static readonly RequestToUri mRequestToUri =
-            new RequestToUri(new RestClient("https://core.telegram.org"));
-
-        private readonly List<string> mKeyList = mRequestToUri.GetObject("/bots/payments/currencies.json").Keys.ToList();
+        private static readonly List<string> mKeyList = GetCurrencyList();
 
         [Test, Timeout(30000)]
-        public void ActualCurrenciesJsonEqulsEnumTest()
+        public void ActualCurrenciesJsonEqualsEnumTest()
         {
             Assert.AreEqual(GetEnumList(), mKeyList);
         }
@@ -49,6 +46,21 @@ namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
             mKeyList.Add("QWP");
 
             Assert.AreNotEqual(listEnum, mKeyList);
+        }
+
+        private static List<string> GetCurrencyList()
+        {
+            RequestToUri requestToUri = new RequestToUri(new RestClient("https://core.telegram.org"));
+
+            dynamic jobject = requestToUri.GetDeserealizeObject(UriConst.mCurencyUri);
+            var list = new List<string>();
+
+            foreach (dynamic keys in jobject)
+            {
+                list.Add(keys.Name.ToString());
+            }
+
+            return list;
         }
 
         private static List<string> GetEnumList()

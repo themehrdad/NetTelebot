@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Net.Mime;
-using Newtonsoft.Json.Linq;
 using RestSharp;
-using RestSharp.Deserializers;
 
 namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
 {
@@ -17,12 +13,12 @@ namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
             mRestClient = restClient;
         }
 
-        internal Dictionary<string, string> GetObject(string uri)
+        internal dynamic GetDeserealizeObject(string uri)
         {
             RestRequest request = NewRequest(uri);
             RestResponse response = (RestResponse)NewResponse(request);
-            
-            return DeserealizeJson(response);
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject(response.Content);
         }
 
         private static RestRequest NewRequest(string uri)
@@ -39,14 +35,11 @@ namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
 
             throw new Exception(response.StatusDescription);
         }
+    }
 
-        private static Dictionary<string, string> DeserealizeJson(IRestResponse response)
-        {
-            JsonDeserializer deserial = new JsonDeserializer();
-
-           // deserial.Deserialize<List<Dictionary<string, string>>>(response);
-
-            return deserial.Deserialize<Dictionary<string, string>>(response);
-        }
+    internal static class UriConst
+    {
+        internal const string mCurencyUri = "/bots/payments/currencies.json";
+        internal const string mCountriesUri = "/mledoze/countries/master/countries.json";
     }
 }
