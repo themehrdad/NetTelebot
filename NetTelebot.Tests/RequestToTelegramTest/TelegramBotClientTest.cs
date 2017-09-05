@@ -166,6 +166,5 @@ namespace NetTelebot.Tests.RequestToTelegramTest
                 Assert.AreEqual(3, getChatMemberCount.Result);
             });
         }
-
     }
 }

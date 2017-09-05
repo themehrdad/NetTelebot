@@ -4,7 +4,6 @@ using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
-    ///todo create MeResult and rework MeInfo without ok an result property. Mark this as obsolete
     /// <summary>
     /// When caling <see cref="TelegramBotClient.GetMe"/>, method must return <see cref="UserInfo"/>. 
     /// See in <see href="https://core.telegram.org/bots/api#getme">API</see>>

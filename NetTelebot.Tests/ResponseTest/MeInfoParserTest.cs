@@ -23,7 +23,7 @@ namespace NetTelebot.Tests.ResponseTest
 
             dynamic meInfoObject = MeInfoObject.GetObject(ok, id, firstName, lastName, username, languageCode);
 
-            MeInfo meInfo = new MeInfo(meInfoObject);
+            MeInfo meInfo = new MeInfo(meInfoObject.ToString());
 
             Assert.AreEqual(meInfo.Ok, ok);
             Assert.AreEqual(meInfo.Id, id);
