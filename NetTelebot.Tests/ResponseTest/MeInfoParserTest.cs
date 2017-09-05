@@ -1,17 +1,18 @@
-﻿using NetTelebot.Tests.TypeTestObject;
+﻿using System;
+using NetTelebot.Tests.TypeTestObject;
 using NetTelebot.Type;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests.ResponseTest
 {
-    [TestFixture]
+    [TestFixture, Obsolete]
     internal static class MeInfoParserTest
     {
         /// <summary>
         /// Test for <see cref="MeInfo"/> parse field.
         /// </summary>
         [Test]
-        public static void MessageInfoFromTest()
+        public static void MeInfoTest()
         {
             const bool ok = true;
             const int id = 1000;

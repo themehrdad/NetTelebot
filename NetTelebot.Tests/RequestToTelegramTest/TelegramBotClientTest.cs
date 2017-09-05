@@ -1,4 +1,5 @@
-﻿using NetTelebot.BotEnum;
+﻿using System;
+using NetTelebot.BotEnum;
 using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type;
@@ -25,7 +26,7 @@ namespace NetTelebot.Tests.RequestToTelegramTest
         /// <summary>
         /// Test for method <see cref="TelegramBotClient.GetMe"/>.
         /// </summary>
-        [Test]
+        [Test, Obsolete]
         public void GetMeTest()
         {
             MeInfo getMe = mTelegramBot.GetMe();
@@ -36,6 +37,23 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             {
                 Assert.True(getMe.Ok);
                 Assert.AreEqual(getMe.FirstName, "NetTelebotTestedBot");
+            });
+        }
+
+        /// <summary>
+        /// Test for method <see cref="TelegramBotClient.GetsMe"/>.
+        /// </summary>
+        [Test]
+        public void GetsMeTest()
+        {
+            UserInfoResult getMe = mTelegramBot.GetsMe();
+
+            ConsoleUtlis.PrintResult(getMe.Result);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(getMe.Ok);
+                Assert.AreEqual(getMe.Result.FirstName, "NetTelebotTestedBot");
             });
         }
 

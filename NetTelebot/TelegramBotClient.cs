@@ -172,9 +172,18 @@ namespace NetTelebot
         /// <summary>
         /// Gets information about your bot. You can call this method as a ping
         /// </summary>
+        [Obsolete("Please use GetsMe method. This method will be removed at the following updates")]
         public MeInfo GetMe()
         {
             return ExecuteRequest<MeInfo>(NewRestRequest(getMeUri)) as MeInfo;
+        }
+
+        /// <summary>
+        /// Gets information about your bot. You can call this method as a ping
+        /// </summary>
+        public UserInfoResult GetsMe()
+        {
+            return ExecuteRequest<UserInfoResult>(NewRestRequest(getMeUri)) as UserInfoResult;
         }
 
         /// <summary>
@@ -809,6 +818,9 @@ namespace NetTelebot
 
                 if (typeof(T) == typeof (MeInfo))
                     return new MeInfo(response.Content);
+
+                if (typeof(T) == typeof(UserInfoResult))
+                    return new UserInfoResult(response.Content);
 
                 if (typeof(T) == typeof (GetUserProfilePhotosResult))
                     return new GetUserProfilePhotosResult(response.Content);

@@ -35,7 +35,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         /// <summary>
         /// Sends the message test method <see cref="TelegramBotClient.GetMe"/>.
         /// </summary>
-        [Test]
+        [Test, Obsolete]
         public void GetMeTest()
         {
             mBotOkResponse.GetMe();
@@ -47,6 +47,24 @@ namespace NetTelebot.Tests.RequestToMockTest
             {
                 Assert.AreEqual("/botToken/getMe", request.FirstOrDefault()?.Url);
                 Assert.Throws<Exception>(() => mBotBadResponse.GetMe());
+            });
+        }
+
+        /// <summary>
+        /// Sends the message test method <see cref="TelegramBotClient.GetMe"/>.
+        /// </summary>
+        [Test]
+        public void GetsMeTest()
+        {
+            mBotOkResponse.GetsMe();
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getMe").UsingPost());
+
+            PrintResult(request);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("/botToken/getMe", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.GetsMe());
             });
         }
 
