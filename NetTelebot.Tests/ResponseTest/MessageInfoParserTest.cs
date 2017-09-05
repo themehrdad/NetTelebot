@@ -492,20 +492,22 @@ namespace NetTelebot.Tests.ResponseTest
         /// <summary>
         /// Test for <see cref="MessageInfo.Game"/> parse field.
         /// </summary>
-        [Test, Ignore("In process")]
+        [Test]
         public static void MessageInfoGameTest()
         {
             const string title = "TestTitle";
             const string description = "TestDescription";
             const string text = "TestText";
 
+            //AnimationInfo field
             const string fileId = "100";
             const string mimeType = "mimeTypeTest";
             const string fileName = "testFleName";
             const int fileSize = 10;
-
             const int width = 100;
             const int height = 100;
+            JObject animation = AnimationInfoObject.GetObject(fileId,
+                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), fileName, mimeType, fileSize);
 
             //UserInfo field
             const int id = 123456;
@@ -513,40 +515,61 @@ namespace NetTelebot.Tests.ResponseTest
             const string lastName = "TestLastName";
             const string username = "TestUsername";
             const string languageCode = "TestLanguageCode";
-
+            JObject user = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+            
             //MessageEntityInfo field
             const string type = "TestType";
             const int offset = 123456;
             const int length = 123456;
-            JObject user = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
-
-            dynamic messageInfoGame = mMandatoryFieldsMessageInfo;
-
-            JObject animation = AnimationInfoObject.GetObject(fileId,
-                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), fileName, mimeType, fileSize);
+            const string url = "TestUrl";
+            JArray entities = new JArray(MessageEntityInfoObject.GetObject(type, offset, length, url, user));
 
             JArray photo = new JArray(PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize));
 
-            //JArray entities = new JArray(MessageEntityInfoObject.GetObject(type, offset, length, url, user));
+            dynamic messageInfoGame = mMandatoryFieldsMessageInfo;
 
-
-            //messageInfoGame.game = GameInfoObject.GetObject(title, description, photo, text, entities, animation);
+            messageInfoGame.game = GameInfoObject.GetObject(title, description, photo, text, entities, animation);
 
             MessageInfo messageInfo = new MessageInfo(messageInfoGame);
 
             Assert.Multiple(() =>
             {
-                //test MessageInfo.Document
-                Assert.AreEqual(fileId, messageInfo.Document.FileId);
-                Assert.AreEqual(fileName, messageInfo.Document.FileName);
-                Assert.AreEqual(mimeType, messageInfo.Document.MimeType);
-                Assert.AreEqual(fileSize, messageInfo.Document.FileSize);
+                //Game
+                Assert.AreEqual(title, messageInfo.Game.Title);
+                Assert.AreEqual(description, messageInfo.Game.Description);
+                Assert.AreEqual(text, messageInfo.Game.Text);
 
-                //test MessageInfo.Document.Thumb
-                Assert.AreEqual(fileId, messageInfo.Document.Thumb.FileId);
-                Assert.AreEqual(width, messageInfo.Document.Thumb.Width);
-                Assert.AreEqual(height, messageInfo.Document.Thumb.Height);
-                Assert.AreEqual(fileSize, messageInfo.Document.Thumb.FileSize);
+                //Game.Photo
+                Assert.AreEqual(fileId, messageInfo.Game.Photo[0].FileId);
+                Assert.AreEqual(width, messageInfo.Game.Photo[0].Width);
+                Assert.AreEqual(height, messageInfo.Game.Photo[0].Height);
+                Assert.AreEqual(fileSize, messageInfo.Game.Photo[0].FileSize);
+
+                //Game.Entities
+                Assert.AreEqual(type, messageInfo.Game.Entities[0].Type);
+                Assert.AreEqual(offset, messageInfo.Game.Entities[0].Offset);
+                Assert.AreEqual(length, messageInfo.Game.Entities[0].Length);
+                Assert.AreEqual(url, messageInfo.Game.Entities[0].Url);
+
+                //Game.Entites.User
+                Assert.AreEqual(id, messageInfo.Game.Entities[0].User.Id);
+                Assert.AreEqual(firstName, messageInfo.Game.Entities[0].User.FirstName);
+                Assert.AreEqual(lastName, messageInfo.Game.Entities[0].User.LastName);
+                Assert.AreEqual(username, messageInfo.Game.Entities[0].User.UserName);
+                Assert.AreEqual(languageCode, messageInfo.Game.Entities[0].User.LanguageCode);
+
+                //Game.Animation
+                Assert.AreEqual(fileId, messageInfo.Game.Animation.FileId);
+                Assert.AreEqual(fileName, messageInfo.Game.Animation.FileName);
+                Assert.AreEqual(mimeType, messageInfo.Game.Animation.MimeType);
+                Assert.AreEqual(fileSize, messageInfo.Game.Animation.FileSize);
+
+                //Game.Animation.Thumb
+                Assert.AreEqual(fileId, messageInfo.Game.Animation.Thumb.FileId);
+                Assert.AreEqual(height, messageInfo.Game.Animation.Thumb.Height);
+                Assert.AreEqual(width, messageInfo.Game.Animation.Thumb.Width);
+                Assert.AreEqual(fileSize, messageInfo.Game.Animation.Thumb.FileSize);
+
             });
 
 

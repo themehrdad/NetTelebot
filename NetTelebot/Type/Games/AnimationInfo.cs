@@ -2,7 +2,6 @@
 
 namespace NetTelebot.Type.Games
 {
-    //todo test
     /// <summary>
     /// You can provide an animation for your <see href="https://core.telegram.org/bots/api#game">game</see> 
     /// so that it looks stylish in chats (check out <see href="https://t.me/gamebot">Lumberjack</see> for an example). 
@@ -36,26 +35,26 @@ namespace NetTelebot.Type.Games
         /// <summary>
         /// Unique file identifier
         /// </summary>
-        public string FileId { get; set; }
+        public string FileId { get; private set; }
 
         /// <summary>
         /// Optional. Animation thumbnail as defined by sender
         /// </summary>
-        public PhotoSizeInfo Thumb { get; set; }
+        public PhotoSizeInfo Thumb { get; internal set; }
 
         /// <summary>
         /// Optional. Original animation filename as defined by sender
         /// </summary>
-        public string FileName { get; set; }
+        public string FileName { get; private set; }
 
         /// <summary>
         /// Optional. MIME type of the file as defined by sender
         /// </summary>
-        public string MimeType { get; set; }
+        public string MimeType { get; private set; }
 
         /// <summary>
         /// Optional. File size
         /// </summary>
-        public int FileSize { get; set; }
+        public int FileSize { get; private set; }
     }
 }

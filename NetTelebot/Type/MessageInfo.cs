@@ -92,7 +92,8 @@ namespace NetTelebot.Type
 
             Game = jsonObject["game"] != null
                 ? new GameInfo(jsonObject["game"].Value<JObject>())
-                : new GameInfo {Photo = new PhotoSizeInfo[0], Entities = new MessageEntityInfo[0], Animation = new AnimationInfo()};
+                : new GameInfo {Photo = new PhotoSizeInfo[0], Entities = new MessageEntityInfo[0],
+                    Animation = new AnimationInfo {Thumb = new PhotoSizeInfo()} };
 
             Photo = jsonObject["photo"] != null
                 ? PhotoSizeInfo.ParseArray(jsonObject["photo"].Value<JArray>())
@@ -193,6 +194,15 @@ namespace NetTelebot.Type
                 Entities = new MessageEntityInfo[0],
                 Audio = new AudioInfo(),
                 Document = new DocumentInfo {Thumb = new PhotoSizeInfo()},
+                Game  = new GameInfo
+                {
+                    Photo = new PhotoSizeInfo[0],
+                    Entities = new MessageEntityInfo[0],
+                    Animation = new AnimationInfo
+                    {
+                        Thumb = new PhotoSizeInfo()
+                    }
+                },
                 Photo = new PhotoSizeInfo[0],
                 Sticker = new StickerInfo {Thumb = new PhotoSizeInfo()},
                 Video = new VideoInfo {Thumb = new PhotoSizeInfo()},
