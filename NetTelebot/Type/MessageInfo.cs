@@ -1,5 +1,6 @@
 ﻿using System;
 using NetTelebot.Extension;
+using NetTelebot.Type.Games;
 using NetTelebot.Type.Payment;
 using Newtonsoft.Json.Linq;
 
@@ -89,6 +90,11 @@ namespace NetTelebot.Type
                 ? new DocumentInfo(jsonObject["document"].Value<JObject>())
                 : new DocumentInfo {Thumb = new PhotoSizeInfo()};
 
+            Game = jsonObject["game"] != null
+                ? new GameInfo(jsonObject["game"].Value<JObject>())
+                : new GameInfo {Photo = new PhotoSizeInfo[0], Entities = new MessageEntityInfo[0],
+                    Animation = new AnimationInfo {Thumb = new PhotoSizeInfo()} };
+
             Photo = jsonObject["photo"] != null
                 ? PhotoSizeInfo.ParseArray(jsonObject["photo"].Value<JArray>())
                 : new PhotoSizeInfo[0];
@@ -170,6 +176,10 @@ namespace NetTelebot.Type
             Invoice = jsonObject["invoice"] != null
                 ? new InvoceInfo(jsonObject["invoice"].Value<JObject>())
                 : new InvoceInfo();
+
+            SuccessfulPayment = jsonObject["successful_payment"] != null
+                ? new SuccessfulPaymentInfo(jsonObject["successful_payment"].Value<JObject>())
+                : new SuccessfulPaymentInfo {OrderInfo = new OrderInfo {ShippingAddress = new ShippingAddressInfo()} };
         }
 
         internal static MessageInfo GetNewMessageInfo(MessageInfo pinned = null, MessageInfo reply = null)
@@ -184,6 +194,15 @@ namespace NetTelebot.Type
                 Entities = new MessageEntityInfo[0],
                 Audio = new AudioInfo(),
                 Document = new DocumentInfo {Thumb = new PhotoSizeInfo()},
+                Game  = new GameInfo
+                {
+                    Photo = new PhotoSizeInfo[0],
+                    Entities = new MessageEntityInfo[0],
+                    Animation = new AnimationInfo
+                    {
+                        Thumb = new PhotoSizeInfo()
+                    }
+                },
                 Photo = new PhotoSizeInfo[0],
                 Sticker = new StickerInfo {Thumb = new PhotoSizeInfo()},
                 Video = new VideoInfo {Thumb = new PhotoSizeInfo()},
@@ -197,7 +216,15 @@ namespace NetTelebot.Type
                 LeftChatMember = new UserInfo(),
                 NewChatPhoto = new PhotoSizeInfo[0],
                 PinnedMessage = pinned,
-                Invoice = new InvoceInfo()
+                Invoice = new InvoceInfo(),
+                SuccessfulPayment = new SuccessfulPaymentInfo
+                {
+                    OrderInfo = new OrderInfo
+                    {
+                        ShippingAddress = new ShippingAddressInfo()
+                    }
+                }
+               
             };
         }
 
@@ -288,7 +315,10 @@ namespace NetTelebot.Type
         /// </summary>
         public DocumentInfo Document { get; private set; }
 
-        //todo add (Game) Game
+        /// <summary>
+        /// This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.
+        /// </summary>
+        public GameInfo Game { get; private set;  }
 
         /// <summary>
         /// Optional. Message is a photo, available sizes of the photo
@@ -411,6 +441,9 @@ namespace NetTelebot.Type
         /// </summary>
         public InvoceInfo Invoice { get; private set; }
 
-        //todo (SuccessfulPayment) SuccessfulPayment
+        /// <summary>
+        /// Optional. Message is a service message about a successful payment, information about the payment.
+        /// </summary>
+        public SuccessfulPaymentInfo SuccessfulPayment { get; private set; }
     }
 }

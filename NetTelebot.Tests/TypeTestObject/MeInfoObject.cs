@@ -1,8 +1,10 @@
-﻿using NetTelebot.Type;
+﻿using System;
+using NetTelebot.Type;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.TypeTestObject
 {
+    [Obsolete]
     internal static class MeInfoObject
     {
         /// <summary>

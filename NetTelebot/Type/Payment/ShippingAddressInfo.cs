@@ -4,7 +4,6 @@ using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type.Payment
 {
-    //todo added tests
     /// <summary>
     /// This object represents a shipping address.
     /// See <see href="https://core.telegram.org/bots/api#shippingaddress"></see>

@@ -2,6 +2,7 @@
 using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type;
+using NetTelebot.Type.Games;
 using NetTelebot.Type.Payment;
 using NUnit.Framework;
 
@@ -58,9 +59,6 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
         {
             Assert.Multiple(() =>
             {
-                //todo game
-                //todo SuceffulPayment
-
                 Assert.IsInstanceOf(typeof (MessageInfo), messageInfo);
 
                 Assert.AreEqual(0, messageInfo.MessageId);
@@ -100,6 +98,13 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsInstanceOf<DocumentInfo>(messageInfo.Document);
                 Assert.IsNull(messageInfo.Document.FileId);
 
+                Assert.IsInstanceOf(typeof(GameInfo), messageInfo.Game);
+                Assert.IsNull(messageInfo.Game.Title);
+                Assert.IsInstanceOf(typeof(PhotoSizeInfo[]), messageInfo.Game.Photo);
+                Assert.IsInstanceOf(typeof(MessageEntityInfo[]), messageInfo.Game.Entities);
+                Assert.IsInstanceOf(typeof(AnimationInfo), messageInfo.Game.Animation);
+                Assert.IsNull(messageInfo.Game.Animation.FileId);
+                
                 Assert.IsEmpty(messageInfo.Photo);
 
                 Assert.IsInstanceOf<StickerInfo>(messageInfo.Sticker);
@@ -152,6 +157,14 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsInstanceOf<InvoceInfo>(messageInfo.Invoice);
                 Assert.AreEqual(0, messageInfo.Invoice.TotalAmmount);
 
+                Assert.IsInstanceOf<SuccessfulPaymentInfo>(messageInfo.SuccessfulPayment);
+                Assert.AreEqual(0, messageInfo.SuccessfulPayment.TotalAmmount);
+
+                Assert.IsInstanceOf<OrderInfo>(messageInfo.SuccessfulPayment.OrderInfo);
+                Assert.IsNull(messageInfo.SuccessfulPayment.OrderInfo.Email);
+
+                Assert.IsInstanceOf<ShippingAddressInfo>(messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress);
+                Assert.IsNull(messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.City);
             });
         }
     }

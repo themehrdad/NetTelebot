@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using NetTelebot.BotEnum;
 using NetTelebot.Extension;
 using NetTelebot.Tests.TypeTestObject;
-using NetTelebot.Tests.TypeTestObject.PaymentTestObject;
+using NetTelebot.Tests.TypeTestObject.GameObject;
+using NetTelebot.Tests.TypeTestObject.PaymentObject;
 using NetTelebot.Type;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -487,6 +487,93 @@ namespace NetTelebot.Tests.ResponseTest
 
 
             Console.WriteLine(messageInfoDocument);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Game"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoGameTest()
+        {
+            const string title = "TestTitle";
+            const string description = "TestDescription";
+            const string text = "TestText";
+
+            //AnimationInfo field
+            const string fileId = "100";
+            const string mimeType = "mimeTypeTest";
+            const string fileName = "testFleName";
+            const int fileSize = 10;
+            const int width = 100;
+            const int height = 100;
+            JObject animation = AnimationInfoObject.GetObject(fileId,
+                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), fileName, mimeType, fileSize);
+
+            //UserInfo field
+            const int id = 123456;
+            const string firstName = "TestFirstName";
+            const string lastName = "TestLastName";
+            const string username = "TestUsername";
+            const string languageCode = "TestLanguageCode";
+            JObject user = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+            
+            //MessageEntityInfo field
+            const string type = "TestType";
+            const int offset = 123456;
+            const int length = 123456;
+            const string url = "TestUrl";
+            JArray entities = new JArray(MessageEntityInfoObject.GetObject(type, offset, length, url, user));
+
+            JArray photo = new JArray(PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize));
+
+            dynamic messageInfoGame = mMandatoryFieldsMessageInfo;
+
+            messageInfoGame.game = GameInfoObject.GetObject(title, description, photo, text, entities, animation);
+
+            MessageInfo messageInfo = new MessageInfo(messageInfoGame);
+
+            Assert.Multiple(() =>
+            {
+                //Game
+                Assert.AreEqual(title, messageInfo.Game.Title);
+                Assert.AreEqual(description, messageInfo.Game.Description);
+                Assert.AreEqual(text, messageInfo.Game.Text);
+
+                //Game.Photo
+                Assert.AreEqual(fileId, messageInfo.Game.Photo[0].FileId);
+                Assert.AreEqual(width, messageInfo.Game.Photo[0].Width);
+                Assert.AreEqual(height, messageInfo.Game.Photo[0].Height);
+                Assert.AreEqual(fileSize, messageInfo.Game.Photo[0].FileSize);
+
+                //Game.Entities
+                Assert.AreEqual(type, messageInfo.Game.Entities[0].Type);
+                Assert.AreEqual(offset, messageInfo.Game.Entities[0].Offset);
+                Assert.AreEqual(length, messageInfo.Game.Entities[0].Length);
+                Assert.AreEqual(url, messageInfo.Game.Entities[0].Url);
+
+                //Game.Entites.User
+                Assert.AreEqual(id, messageInfo.Game.Entities[0].User.Id);
+                Assert.AreEqual(firstName, messageInfo.Game.Entities[0].User.FirstName);
+                Assert.AreEqual(lastName, messageInfo.Game.Entities[0].User.LastName);
+                Assert.AreEqual(username, messageInfo.Game.Entities[0].User.UserName);
+                Assert.AreEqual(languageCode, messageInfo.Game.Entities[0].User.LanguageCode);
+
+                //Game.Animation
+                Assert.AreEqual(fileId, messageInfo.Game.Animation.FileId);
+                Assert.AreEqual(fileName, messageInfo.Game.Animation.FileName);
+                Assert.AreEqual(mimeType, messageInfo.Game.Animation.MimeType);
+                Assert.AreEqual(fileSize, messageInfo.Game.Animation.FileSize);
+
+                //Game.Animation.Thumb
+                Assert.AreEqual(fileId, messageInfo.Game.Animation.Thumb.FileId);
+                Assert.AreEqual(height, messageInfo.Game.Animation.Thumb.Height);
+                Assert.AreEqual(width, messageInfo.Game.Animation.Thumb.Width);
+                Assert.AreEqual(fileSize, messageInfo.Game.Animation.Thumb.FileSize);
+
+            });
+
+
+            Console.WriteLine(messageInfoGame);
         }
 
         /// <summary>
@@ -1108,6 +1195,92 @@ namespace NetTelebot.Tests.ResponseTest
             for (var i = 0; i < enumStringList.Count; i++)
             {
                 Assert.AreEqual(enumStringList[i].ToEnum<Currency>(), enumList[i]);
+                Console.WriteLine("Now equals {0} and {1}", enumStringList[i], enumList[i]);
+            }
+
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.SuccessfulPayment"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoSuccessfulPaymentTest()
+        {
+            //SuccessfulPaymentInfo field
+            const string currency = "USD";
+            const int totalAmount = 123;
+            const string invoicePayload = "TestInvoicePayload";
+            const string shippingOptionId = "TestShippingOptionId";
+            const string telegramPaymentChargeId = "TestTelegramPaymentChargeId";
+            const string providerPaymentChargeId = "TestProviderPaymentChargeId";
+
+            //OrderInfo fields
+            const string name = "TestName";
+            const string phoneNumber = "123456789";
+            const string email = "test@email";
+
+            //ShippingAddressInfo fields
+            const string countryCode = "US";
+            const string state = "TestState";
+            const string city = "TestCity";
+            const string streetLineOne = "TestStreetLineOne";
+            const string streetLineTwo = "TestStreetLineTwo";
+            const string postCode = "TestPostCode";
+
+            JObject shippingAddress = ShippingAddressInfoObject.GetObject(countryCode, state, city, streetLineOne,
+                streetLineTwo, postCode);
+
+            JObject orderInfo = OrderInfoObject.GetObject(name, phoneNumber, email, shippingAddress);
+
+            dynamic messageSuccessfulPayment = mMandatoryFieldsMessageInfo;
+
+            messageSuccessfulPayment.successful_payment = SuccessfulPaymentInfoObject.GetObject(currency, totalAmount,
+                invoicePayload, shippingOptionId, orderInfo, telegramPaymentChargeId, providerPaymentChargeId);
+
+            MessageInfo messageInfo = new MessageInfo(messageSuccessfulPayment);
+
+            Assert.Multiple(() =>
+            {
+                //SuccessfulPaymentInfo field
+                Assert.AreEqual(Currency.USD, messageInfo.SuccessfulPayment.Currency);
+                Assert.AreEqual(totalAmount, messageInfo.SuccessfulPayment.TotalAmmount);
+                Assert.AreEqual(invoicePayload, messageInfo.SuccessfulPayment.InvoicePayload);
+                Assert.AreEqual(shippingOptionId, messageInfo.SuccessfulPayment.ShippingOptionId);
+                Assert.AreEqual(telegramPaymentChargeId, messageInfo.SuccessfulPayment.TelegramPaymentChargeId);
+                Assert.AreEqual(providerPaymentChargeId, messageInfo.SuccessfulPayment.ProviderPaymentChargeId);
+
+                //OrderInfo fields
+                Assert.AreEqual(name, messageInfo.SuccessfulPayment.OrderInfo.Name);
+                Assert.AreEqual(phoneNumber, messageInfo.SuccessfulPayment.OrderInfo.PnoneNumber);
+                Assert.AreEqual(email, messageInfo.SuccessfulPayment.OrderInfo.Email);
+
+                //ShippingAddressInfo fields
+                Assert.AreEqual(Countries.US, messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.CountryCode);
+                Assert.AreEqual(state, messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.State);
+                Assert.AreEqual(city, messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.City);
+                Assert.AreEqual(streetLineOne, messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.StreetLineOne);
+                Assert.AreEqual(streetLineTwo, messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.StreetLineTwo);
+                Assert.AreEqual(postCode, messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.PostCode);
+            });
+
+            Console.WriteLine(messageSuccessfulPayment);
+        }
+
+        [Test]
+        public static void MessageInfoCountriesToEnumTest()
+        {
+            var enumStringList = Enum.GetValues(typeof(Countries))
+                .Cast<Countries>()
+                .Select(v => v.ToString())
+                .ToList();
+
+            var enumList = Enum.GetValues(typeof(Countries))
+                .Cast<Countries>()
+                .ToList();
+
+            for (var i = 0; i < enumStringList.Count; i++)
+            {
+                Assert.AreEqual(enumStringList[i].ToEnum<Countries>(), enumList[i]);
                 Console.WriteLine("Now equals {0} and {1}", enumStringList[i], enumList[i]);
             }
 

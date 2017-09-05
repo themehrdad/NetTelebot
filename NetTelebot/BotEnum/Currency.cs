@@ -1,6 +1,8 @@
 ﻿namespace NetTelebot.BotEnum
 {
     /// <summary>
+    /// Three-letter ISO 4217 currency code
+    /// 
     /// Telegram payments currently support the currencies enum below.
     /// If you're using Stripe as the payments provider, supported currencies may vary depending on the 
     /// country you have specified in your Stripe account (more info).
