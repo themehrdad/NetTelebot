@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using NetTelebot.Type.Payment;
+using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.TypeTestObject.PaymentTestObject
 {
@@ -6,7 +7,7 @@ namespace NetTelebot.Tests.TypeTestObject.PaymentTestObject
     {
         /// <summary>
         /// This object contains basic information about an invoice.
-        ///  See <see href="https://core.telegram.org/bots/api#invoice">API</see>
+        /// See <see href="https://core.telegram.org/bots/api#invoice">API</see>
         /// </summary>
         /// <param name="title">Product name</param>
         /// <param name="description">Product description</param>
@@ -14,7 +15,7 @@ namespace NetTelebot.Tests.TypeTestObject.PaymentTestObject
         /// <param name="currency">Three-letter ISO 4217 currency code</param>
         /// <param name="totalAmount">Total price in the smallest units of the currency (integer, not float/double).
         /// For example, for a price of US$ 1.45 pass amount = 145. </param>
-        /// <returns><see cref="NetTelebot.Type.Payment.InvoiceInfo"/></returns>
+        /// <returns><see cref="InvoceInfo"/></returns>
         internal static JObject GetObject(string title, string description, string startParameter,
             string currency, int totalAmount)
         {
@@ -25,7 +26,6 @@ namespace NetTelebot.Tests.TypeTestObject.PaymentTestObject
             audioInfo.start_parameter = startParameter;
             audioInfo.currency = currency;
             audioInfo.total_amount = totalAmount;
-
 
             return audioInfo;
         }

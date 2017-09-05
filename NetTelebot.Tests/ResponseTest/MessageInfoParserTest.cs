@@ -1112,5 +1112,91 @@ namespace NetTelebot.Tests.ResponseTest
             }
 
         }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.SuccessfulPayment"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoSuccessfulPaymentTest()
+        {
+            //SuccessfulPaymentInfo field
+            const string currency = "USD";
+            const int totalAmount = 123;
+            const string invoicePayload = "TestInvoicePayload";
+            const string shippingOptionId = "TestShippingOptionId";
+            const string telegramPaymentChargeId = "TestTelegramPaymentChargeId";
+            const string providerPaymentChargeId = "TestProviderPaymentChargeId";
+
+            //OrderInfo fields
+            const string name = "TestName";
+            const string phoneNumber = "123456789";
+            const string email = "test@email";
+
+            //ShippingAddressInfo fields
+            const string countryCode = "US";
+            const string state = "TestState";
+            const string city = "TestCity";
+            const string streetLineOne = "TestStreetLineOne";
+            const string streetLineTwo = "TestStreetLineTwo";
+            const string postCode = "TestPostCode";
+
+            JObject shippingAddress = ShippingAddressInfoObject.GetObject(countryCode, state, city, streetLineOne,
+                streetLineTwo, postCode);
+
+            JObject orderInfo = OrderInfoObject.GetObject(name, phoneNumber, email, shippingAddress);
+
+            dynamic messageSuccessfulPayment = mMandatoryFieldsMessageInfo;
+
+            messageSuccessfulPayment.successful_payment = SuccessfulPaymentInfoObject.GetObject(currency, totalAmount,
+                invoicePayload, shippingOptionId, orderInfo, telegramPaymentChargeId, providerPaymentChargeId);
+
+            MessageInfo messageInfo = new MessageInfo(messageSuccessfulPayment);
+
+            Assert.Multiple(() =>
+            {
+                //SuccessfulPaymentInfo field
+                Assert.AreEqual(Currency.USD, messageInfo.SuccessfulPayment.Currency);
+                Assert.AreEqual(totalAmount, messageInfo.SuccessfulPayment.TotalAmmount);
+                Assert.AreEqual(invoicePayload, messageInfo.SuccessfulPayment.InvoicePayload);
+                Assert.AreEqual(shippingOptionId, messageInfo.SuccessfulPayment.ShippingOptionId);
+                Assert.AreEqual(telegramPaymentChargeId, messageInfo.SuccessfulPayment.TelegramPaymentChargeId);
+                Assert.AreEqual(providerPaymentChargeId, messageInfo.SuccessfulPayment.ProviderPaymentChargeId);
+
+                //OrderInfo fields
+                Assert.AreEqual(name, messageInfo.SuccessfulPayment.OrderInfo.Name);
+                Assert.AreEqual(phoneNumber, messageInfo.SuccessfulPayment.OrderInfo.PnoneNumber);
+                Assert.AreEqual(email, messageInfo.SuccessfulPayment.OrderInfo.Email);
+
+                //ShippingAddressInfo fields
+                Assert.AreEqual(Countries.US, messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.CountryCode);
+                Assert.AreEqual(state, messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.State);
+                Assert.AreEqual(city, messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.City);
+                Assert.AreEqual(streetLineOne, messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.StreetLineOne);
+                Assert.AreEqual(streetLineTwo, messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.StreetLineTwo);
+                Assert.AreEqual(postCode, messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.PostCode);
+            });
+
+            Console.WriteLine(messageSuccessfulPayment);
+        }
+
+        [Test]
+        public static void MessageInfoCountriesToEnumTest()
+        {
+            var enumStringList = Enum.GetValues(typeof(Countries))
+                .Cast<Countries>()
+                .Select(v => v.ToString())
+                .ToList();
+
+            var enumList = Enum.GetValues(typeof(Countries))
+                .Cast<Countries>()
+                .ToList();
+
+            for (var i = 0; i < enumStringList.Count; i++)
+            {
+                Assert.AreEqual(enumStringList[i].ToEnum<Countries>(), enumList[i]);
+                Console.WriteLine("Now equals {0} and {1}", enumStringList[i], enumList[i]);
+            }
+
+        }
     }
 }

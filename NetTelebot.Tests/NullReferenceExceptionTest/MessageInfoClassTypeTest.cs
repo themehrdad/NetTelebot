@@ -459,5 +459,46 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.AreEqual(invoiceMessageInfo.TotalAmmount, 0);
             });
         }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.SuccessfulPayment"/>
+        /// </summary>
+        [Test]
+        public void TestAppealTo()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptySuccessfulPayment()");
+
+            SuccessfulPaymentInfo successfulPaymentInfo = sendMessage.Result.SuccessfulPayment;
+
+            ConsoleUtlis.PrintResult(successfulPaymentInfo);
+
+            Assert.Multiple(() =>
+            {
+                //SuccessfulPaymentInfo field
+                Assert.IsInstanceOf(typeof(SuccessfulPaymentInfo), successfulPaymentInfo);
+                Assert.IsNull(successfulPaymentInfo.Currency);
+                Assert.AreEqual(0, successfulPaymentInfo.TotalAmmount);
+                Assert.IsNull(successfulPaymentInfo.InvoicePayload);
+                Assert.IsNull(successfulPaymentInfo.ShippingOptionId);
+                Assert.IsNull(successfulPaymentInfo.TelegramPaymentChargeId);
+                Assert.IsNull(successfulPaymentInfo.ProviderPaymentChargeId);
+
+                //OrderInfo fields
+                Assert.IsInstanceOf(typeof(OrderInfo), successfulPaymentInfo.OrderInfo);
+                Assert.IsNull(successfulPaymentInfo.OrderInfo.Name);
+                Assert.IsNull(successfulPaymentInfo.OrderInfo.PnoneNumber);
+                Assert.IsNull(successfulPaymentInfo.OrderInfo.Email);
+
+                //ShippingAddressInfo fields
+                Assert.IsInstanceOf(typeof(ShippingAddressInfo), successfulPaymentInfo.OrderInfo.ShippingAddress);
+                Assert.IsNull(successfulPaymentInfo.OrderInfo.ShippingAddress.CountryCode);
+                Assert.IsNull(successfulPaymentInfo.OrderInfo.ShippingAddress.State);
+                Assert.IsNull(successfulPaymentInfo.OrderInfo.ShippingAddress.City);
+                Assert.IsNull(successfulPaymentInfo.OrderInfo.ShippingAddress.StreetLineOne);
+                Assert.IsNull(successfulPaymentInfo.OrderInfo.ShippingAddress.StreetLineTwo);
+                Assert.IsNull(successfulPaymentInfo.OrderInfo.ShippingAddress.PostCode);
+            });
+        }
+
     }
 }

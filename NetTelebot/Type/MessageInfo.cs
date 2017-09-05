@@ -170,6 +170,10 @@ namespace NetTelebot.Type
             Invoice = jsonObject["invoice"] != null
                 ? new InvoceInfo(jsonObject["invoice"].Value<JObject>())
                 : new InvoceInfo();
+
+            SuccessfulPayment = jsonObject["successful_payment"] != null
+                ? new SuccessfulPaymentInfo(jsonObject["successful_payment"].Value<JObject>())
+                : new SuccessfulPaymentInfo {OrderInfo = new OrderInfo {ShippingAddress = new ShippingAddressInfo()} };
         }
 
         internal static MessageInfo GetNewMessageInfo(MessageInfo pinned = null, MessageInfo reply = null)
@@ -197,7 +201,15 @@ namespace NetTelebot.Type
                 LeftChatMember = new UserInfo(),
                 NewChatPhoto = new PhotoSizeInfo[0],
                 PinnedMessage = pinned,
-                Invoice = new InvoceInfo()
+                Invoice = new InvoceInfo(),
+                SuccessfulPayment = new SuccessfulPaymentInfo
+                {
+                    OrderInfo = new OrderInfo
+                    {
+                        ShippingAddress = new ShippingAddressInfo()
+                    }
+                }
+               
             };
         }
 
@@ -411,6 +423,9 @@ namespace NetTelebot.Type
         /// </summary>
         public InvoceInfo Invoice { get; private set; }
 
-        //todo (SuccessfulPayment) SuccessfulPayment
+        /// <summary>
+        /// Optional. Message is a service message about a successful payment, information about the payment.
+        /// </summary>
+        public SuccessfulPaymentInfo SuccessfulPayment { get; private set; }
     }
 }

@@ -59,7 +59,6 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
             Assert.Multiple(() =>
             {
                 //todo game
-                //todo SuceffulPayment
 
                 Assert.IsInstanceOf(typeof (MessageInfo), messageInfo);
 
@@ -152,6 +151,14 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsInstanceOf<InvoceInfo>(messageInfo.Invoice);
                 Assert.AreEqual(0, messageInfo.Invoice.TotalAmmount);
 
+                Assert.IsInstanceOf<SuccessfulPaymentInfo>(messageInfo.SuccessfulPayment);
+                Assert.AreEqual(0, messageInfo.SuccessfulPayment.TotalAmmount);
+
+                Assert.IsInstanceOf<OrderInfo>(messageInfo.SuccessfulPayment.OrderInfo);
+                Assert.IsNull(messageInfo.SuccessfulPayment.OrderInfo.Email);
+
+                Assert.IsInstanceOf<ShippingAddressInfo>(messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress);
+                Assert.IsNull(messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.City);
             });
         }
     }

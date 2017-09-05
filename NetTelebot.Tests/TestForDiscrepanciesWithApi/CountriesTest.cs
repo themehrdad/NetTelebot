@@ -12,7 +12,7 @@ namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
     {
         
         [Test, Timeout(30000)]
-        public void ActualCountriesJsonEqualsWithEnumTest()
+        public static void ActualCountriesJsonEqualsWithEnumTest()
         {
             Assert.AreEqual(GetCountriesList(), GetCountriesEnumList());
         }
