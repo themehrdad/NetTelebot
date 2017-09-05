@@ -1,5 +1,6 @@
 ﻿using System;
 using NetTelebot.Extension;
+using NetTelebot.Type.Games;
 using NetTelebot.Type.Payment;
 using Newtonsoft.Json.Linq;
 
@@ -88,6 +89,10 @@ namespace NetTelebot.Type
             Document = jsonObject["document"] != null
                 ? new DocumentInfo(jsonObject["document"].Value<JObject>())
                 : new DocumentInfo {Thumb = new PhotoSizeInfo()};
+
+            Game = jsonObject["game"] != null
+                ? new GameInfo(jsonObject["game"].Value<JObject>())
+                : new GameInfo {Photo = new PhotoSizeInfo[0], Entities = new MessageEntityInfo[0], Animation = new AnimationInfo()};
 
             Photo = jsonObject["photo"] != null
                 ? PhotoSizeInfo.ParseArray(jsonObject["photo"].Value<JArray>())
@@ -300,7 +305,10 @@ namespace NetTelebot.Type
         /// </summary>
         public DocumentInfo Document { get; private set; }
 
-        //todo add (Game) Game
+        /// <summary>
+        /// This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.
+        /// </summary>
+        public GameInfo Game { get; private set;  }
 
         /// <summary>
         /// Optional. Message is a photo, available sizes of the photo

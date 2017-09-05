@@ -1,7 +1,7 @@
 ﻿using NetTelebot.Type.Payment;
 using Newtonsoft.Json.Linq;
 
-namespace NetTelebot.Tests.TypeTestObject.PaymentTestObject
+namespace NetTelebot.Tests.TypeTestObject.PaymentObject
 {
     internal static class SuccessfulPaymentInfoObject
     {

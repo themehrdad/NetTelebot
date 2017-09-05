@@ -96,10 +96,12 @@
     <Compile Include="TestForDiscrepanciesWithApi\CountriesTest.cs" />
     <Compile Include="TestForDiscrepanciesWithApi\CurrencyTest.cs" />
     <Compile Include="TestForDiscrepanciesWithApi\RequestToUri.cs" />
-    <Compile Include="TypeTestObject\PaymentTestObject\InvoiceInfoObject.cs" />
-    <Compile Include="TypeTestObject\PaymentTestObject\OrderInfoObject.cs" />
-    <Compile Include="TypeTestObject\PaymentTestObject\ShippingAddressInfoObject.cs" />
-    <Compile Include="TypeTestObject\PaymentTestObject\SuccessfulPaymentInfoObject.cs" />
+    <Compile Include="TypeTestObject\GameObject\AnimationInfoObject.cs" />
+    <Compile Include="TypeTestObject\GameObject\GameInfoObject.cs" />
+    <Compile Include="TypeTestObject\PaymentObject\InvoiceInfoObject.cs" />
+    <Compile Include="TypeTestObject\PaymentObject\OrderInfoObject.cs" />
+    <Compile Include="TypeTestObject\PaymentObject\ShippingAddressInfoObject.cs" />
+    <Compile Include="TypeTestObject\PaymentObject\SuccessfulPaymentInfoObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\BooleanResultObject.cs" />
     <Compile Include="RequestToMockTest\TelegramBotClientTest.cs" />
     <Compile Include="RequestToMockTest\TelegramBotKeyboardTest.cs" />

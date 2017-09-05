@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using NetTelebot.BotEnum;
 using NetTelebot.Extension;
 using NetTelebot.Tests.TypeTestObject;
-using NetTelebot.Tests.TypeTestObject.PaymentTestObject;
+using NetTelebot.Tests.TypeTestObject.GameObject;
+using NetTelebot.Tests.TypeTestObject.PaymentObject;
 using NetTelebot.Type;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -487,6 +487,70 @@ namespace NetTelebot.Tests.ResponseTest
 
 
             Console.WriteLine(messageInfoDocument);
+        }
+
+        /// <summary>
+        /// Test for <see cref="MessageInfo.Game"/> parse field.
+        /// </summary>
+        [Test, Ignore("In process")]
+        public static void MessageInfoGameTest()
+        {
+            const string title = "TestTitle";
+            const string description = "TestDescription";
+            const string text = "TestText";
+
+            const string fileId = "100";
+            const string mimeType = "mimeTypeTest";
+            const string fileName = "testFleName";
+            const int fileSize = 10;
+
+            const int width = 100;
+            const int height = 100;
+
+            //UserInfo field
+            const int id = 123456;
+            const string firstName = "TestFirstName";
+            const string lastName = "TestLastName";
+            const string username = "TestUsername";
+            const string languageCode = "TestLanguageCode";
+
+            //MessageEntityInfo field
+            const string type = "TestType";
+            const int offset = 123456;
+            const int length = 123456;
+            JObject user = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            dynamic messageInfoGame = mMandatoryFieldsMessageInfo;
+
+            JObject animation = AnimationInfoObject.GetObject(fileId,
+                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), fileName, mimeType, fileSize);
+
+            JArray photo = new JArray(PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize));
+
+            //JArray entities = new JArray(MessageEntityInfoObject.GetObject(type, offset, length, url, user));
+
+
+            //messageInfoGame.game = GameInfoObject.GetObject(title, description, photo, text, entities, animation);
+
+            MessageInfo messageInfo = new MessageInfo(messageInfoGame);
+
+            Assert.Multiple(() =>
+            {
+                //test MessageInfo.Document
+                Assert.AreEqual(fileId, messageInfo.Document.FileId);
+                Assert.AreEqual(fileName, messageInfo.Document.FileName);
+                Assert.AreEqual(mimeType, messageInfo.Document.MimeType);
+                Assert.AreEqual(fileSize, messageInfo.Document.FileSize);
+
+                //test MessageInfo.Document.Thumb
+                Assert.AreEqual(fileId, messageInfo.Document.Thumb.FileId);
+                Assert.AreEqual(width, messageInfo.Document.Thumb.Width);
+                Assert.AreEqual(height, messageInfo.Document.Thumb.Height);
+                Assert.AreEqual(fileSize, messageInfo.Document.Thumb.FileSize);
+            });
+
+
+            Console.WriteLine(messageInfoGame);
         }
 
         /// <summary>
