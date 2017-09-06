@@ -53,14 +53,13 @@ See more examples in the project [wiki](https://github.com/themehrdad/NetTelebot
 
 ## Plans
 
-On the nearest release (1.10)
-- [ ] More tests (coverage ~ 100%)
-- [x] Add ReplyKeyboardRemove 
-- [x] Add InlineKeyboardMarkup
-- [x] Add InlineKeyboardButton
-- [ ] Add CallbackGame
-- [x] Remove obsolete class and interface
-- [ ] In class MessageInfo add fields marked in todo
+On the nearest release (1.0.11)
+- [ ] In class TelegramBotClient add fields marked in todo (except inline mode methods)
+- [ ] In class UpdateInfo add fields marked in todo
+- [ ] Delete classes, tests and methods marked as obsolete
+- [ ] Net.Commands and Net.Commands.TestApplication remove from repository
+- [ ] To divide the project NetTelebot.ReplyKeyboardMarkup.TestApplication on
+ReplyKeyboardMarkup and InlineKeyboardMarkup.
 
 For the project
 - [ ] Full support API Telegrams
