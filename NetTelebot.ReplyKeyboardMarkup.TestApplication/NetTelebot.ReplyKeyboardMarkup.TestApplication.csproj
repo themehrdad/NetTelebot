@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ForceReplyExample.cs" />
+    <Compile Include="ReplyKeyboardMarkupExample.cs" />
+    <Compile Include="InlineKeyboardExample.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

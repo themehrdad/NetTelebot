@@ -1,4 +1,5 @@
-﻿using NetTelebot.Type;
+﻿
+using NetTelebot.Type;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -14,16 +15,16 @@ namespace NetTelebot.Result
             Parse(jsonText);
         }
 
-        private void Parse(JObject jsonObject)
-        {
-            Ok = jsonObject["ok"].Value<bool>();
-            Result = new MessageInfo(jsonObject["result"].Value<JObject>());
-        }
-
         private void Parse(string jsonText)
         {
             JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
+        }
+
+        private void Parse(JObject jsonObject)
+        {
+            Ok = jsonObject["ok"].Value<bool>();
+            Result = new MessageInfo(jsonObject["result"].Value<JObject>());
         }
 
         /// <summary>
@@ -37,9 +38,7 @@ namespace NetTelebot.Result
         /// <summary>
         /// Gets the result.
         /// </summary>
-        /// <value>
-        /// The result is instance of the <see cref="MessageInfo"/> class
-        /// </value>
+        /// <returns><see cref="MessageInfo"/></returns>
         public MessageInfo Result { get; private set; }
     }
 }

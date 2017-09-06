@@ -1,5 +1,5 @@
 ﻿using NetTelebot.BotEnum;
-using NetTelebot.Interface;
+using NetTelebot.Extension;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type 
@@ -8,7 +8,7 @@ namespace NetTelebot.Type
     /// This object represents a chat. 
     /// See <see href="https://core.telegram.org/bots/api#chat">API</see>
     /// </summary>
-    public class ChatInfo : IConversationSource 
+    public class ChatInfo
     {
         internal ChatInfo()
         {
@@ -22,7 +22,7 @@ namespace NetTelebot.Type
         private void Parse(JObject jsonObject)
         {
             Id = jsonObject["id"].Value<long>();
-            Type = ParseChatType(jsonObject["type"].Value<string>());
+            Type = jsonObject["type"].Value<string>().ToEnum<ChatType>();
             
             if (jsonObject["title"] != null)
                 Title = jsonObject["title"].Value<string>();
@@ -40,20 +40,6 @@ namespace NetTelebot.Type
                 Description = jsonObject["description"].Value<string>();
             if (jsonObject["invite_link"] != null)
                 InviteLink = jsonObject["invite_link"].Value<string>();
-        }
-
-        private static ChatType? ParseChatType(string type)
-        {
-            if (type.Equals("private"))
-                return ChatType.@private;
-            if (type.Equals("group"))
-                return ChatType.group;
-            if (type.Equals("supergroup"))
-                return ChatType.supergroup;
-            if (type.Equals("channel"))
-                return ChatType.channel;
-
-            return null;
         }
         
         /// <summary>

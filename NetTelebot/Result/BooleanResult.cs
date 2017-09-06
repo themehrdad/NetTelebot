@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Result
@@ -11,11 +12,6 @@ namespace NetTelebot.Result
         internal BooleanResult(string jsonText)
         {
             Parse(jsonText);
-        }
-
-        internal BooleanResult(JObject jsonObject)
-        {
-            Parse(jsonObject);
         }
 
         private void Parse(JObject jsonObject)

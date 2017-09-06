@@ -32,22 +32,22 @@ namespace NetTelebot.Type
         /// <summary>
         /// Unique identifier for this file
         /// </summary>
-        public string FileId { get; set; }
+        public string FileId { get; private set; }
 
         /// <summary>
         /// Sticker width
         /// </summary>
-        public int Width { get; set; }
+        public int Width { get; private set; }
 
         /// <summary>
         /// Sticker height
         /// </summary>
-        public int Height { get; set; }
+        public int Height { get; private set; }
 
         /// <summary>
         /// Optional. Sticker thumbnail in .webp or .jpg format
         /// </summary>
-        public PhotoSizeInfo Thumb { get; set; }
+        public PhotoSizeInfo Thumb { get; internal set; }
 
         /// <summary>
         /// Optional. Emoji associated with the sticker

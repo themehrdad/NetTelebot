@@ -44,8 +44,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BotEnum\Countries.cs" />
+    <Compile Include="BotEnum\Currency.cs" />
+    <Compile Include="Result\ChatInfoResult.cs" />
+    <Compile Include="Result\IntegerResult.cs" />
+    <Compile Include="Result\UserInfoResult.cs" />
     <Compile Include="Type\AudioInfo.cs" />
     <Compile Include="Result\BooleanResult.cs" />
     <Compile Include="BotEnum\ChatActions.cs" />
@@ -55,25 +61,34 @@
     <Compile Include="Type\ContactInfo.cs" />
     <Compile Include="Type\DocumentInfo.cs" />
     <Compile Include="Type\ExistingFile.cs" />
+    <Compile Include="Type\CallbackQueryInfo.cs" />
+    <Compile Include="Type\Games\AnimationInfo.cs" />
+    <Compile Include="Type\Games\GameInfo.cs" />
     <Compile Include="Type\Keyboard\ForceReplyMarkup.cs" />
     <Compile Include="Result\GetUpdatesResult.cs" />
     <Compile Include="Result\GetUserProfilePhotosResult.cs" />
-    <Compile Include="Type\GroupChatInfo.cs" />
-    <Compile Include="Interface\IConversationSource.cs" />
     <Compile Include="Interface\IFile.cs" />
     <Compile Include="Interface\IReplyMarkup.cs" />
+    <Compile Include="Type\Keyboard\InlineKeyboardButton.cs" />
     <Compile Include="Type\Keyboard\KeyboardButton.cs" />
+    <Compile Include="Type\Keyboard\InlineKeyboardMarkup.cs" />
+    <Compile Include="Type\Keyboard\ReplyKeyboardRemove.cs" />
     <Compile Include="Type\LocationInfo.cs" />
     <Compile Include="Type\MeInfo.cs" />
     <Compile Include="Type\MessageEntityInfo.cs" />
     <Compile Include="Type\MessageInfo.cs" />
     <Compile Include="Type\NewFile.cs" />
     <Compile Include="BotEnum\ParseMode.cs" />
+    <Compile Include="Type\Payment\InvoceInfo.cs" />
+    <Compile Include="Type\Payment\OrderInfo.cs" />
+    <Compile Include="Type\Payment\SuccessfulPaymentInfo.cs" />
+    <Compile Include="Type\Payment\SuccessfulPaymentInfoObject.cs" />
     <Compile Include="Type\PhotoSizeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Type\Keyboard\ReplyKeyboardHideMarkup.cs" />
     <Compile Include="Type\Keyboard\ReplyKeyboardMarkup.cs" />
     <Compile Include="Result\SendMessageResult.cs" />
+    <Compile Include="Type\Payment\ShippingAddressInfo.cs" />
     <Compile Include="Type\StickerInfo.cs" />
     <Compile Include="TelegramBotClient.cs" />
     <Compile Include="Result\TelegramUpdateEventArgs.cs" />
@@ -81,7 +96,10 @@
     <Compile Include="Type\UserInfo.cs" />
     <Compile Include="Type\UserProfilePhotosInfo.cs" />
     <Compile Include="Extension\UtilityExtensions.cs" />
+    <Compile Include="Type\VenueInfo.cs" />
     <Compile Include="Type\VideoInfo.cs" />
+    <Compile Include="Type\VideoNoteInfo.cs" />
+    <Compile Include="Type\VoiceInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -6,7 +6,7 @@ using NetTelebot.CommonUtils;
 
 namespace NetTelebot.Commands.TestApplication
 {
-    public partial class FormMain : Form, IWindowsCredential
+    public partial class FormMain : Form
     {
         private const string mBotName = "NetTelebotBot";
 
@@ -14,7 +14,7 @@ namespace NetTelebot.Commands.TestApplication
 
         public FormMain()
         {
-            var token = GetTelegramCredential(mBotName).Token;
+            var token = WindowsCredential.GetTelegramCredential(mBotName).Token;
 
             mBot = new CalculatorBot(token);
             mBot.MessageReceived += Bot_MessageReceived;
@@ -44,11 +44,6 @@ namespace NetTelebot.Commands.TestApplication
         {
             mBot.Stop();
             txtLog.Text += Resources.BotStop;
-        }
-
-        public TelegramCredentials GetTelegramCredential(string botAlias)
-        {
-            return new WindowsCredential().GetTelegramCredential(botAlias);
         }
     }
 }

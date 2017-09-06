@@ -40,5 +40,45 @@ namespace NetTelebot.Tests
             DateTime dateTime = new DateTime(2047, 07, 27);
             Assert.AreEqual(2447798400, dateTime.ToUnixTime());
         }
+
+        [Test]
+        public static void ToEnumCheckExistValueTest()
+        {
+            Assert.AreEqual("AAA".ToEnum<TestStruct>(), TestStruct.AAA);
+            Assert.AreEqual("BBB".ToEnum<TestStruct>(), TestStruct.BBB);
+            Assert.AreEqual("ccc".ToEnum<TestStruct>(), TestStruct.ccc);
+            Assert.AreEqual("eEe".ToEnum<TestStruct>(), TestStruct.eEe);
+        }
+
+        [Test]
+        public static void ToEnumCheckEmptyValueTest()
+        {
+            Assert.AreEqual("aAAa".ToEnum<TestStruct>(), null);
+        }
+
+
+        private enum TestStruct
+        {
+            /// <summary>
+            /// The private
+            /// </summary>
+            AAA,
+
+            /// <summary>
+            /// The group
+            /// </summary>
+            BBB,
+
+            /// <summary>
+            /// The supergroup
+            /// </summary>
+            ccc,
+
+            /// <summary>
+            /// The channel
+            /// </summary>
+            eEe
+        }
+
     }
 }

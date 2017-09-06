@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
@@ -53,5 +54,10 @@ namespace NetTelebot.Type
         /// About <see href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language tag</see>
         /// </summary>
         public string LanguageCode { get; private set; }
+
+        internal static UserInfo[] ParseArray(JArray jsonArray)
+        {
+            return jsonArray.Cast<JObject>().Select(jobject => new UserInfo(jobject)).ToArray();
+        }
     }
 }

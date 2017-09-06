@@ -40,10 +40,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CredentialManagement, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CredentialManagement.1.0.2\lib\net35\CredentialManagement.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mock4Net.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Mock4Net.Core.1.0.0-v20150608-4f463ad\lib\net45\Mock4Net.Core.dll</HintPath>
@@ -75,18 +71,46 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="MockServerObject\MockServer.cs" />
-    <Compile Include="MockServerObject\ResponseString.cs" />
-    <Compile Include="ParserTest\BooleanResultParserTest.cs" />
-    <Compile Include="ParserTest\MeInfoParserTest.cs" />
-    <Compile Include="MessageInfoNullRefExcTest.cs" />
-    <Compile Include="ParserTest\MessageInfoParserTest.cs" />
+    <Compile Include="MockServers\MockServer.cs" />
+    <Compile Include="MockServers\ResponseString.cs" />
+    <Compile Include="MockServers\ResponseStringGetUpdatesResult.cs" />
+    <Compile Include="NullReferenceExceptionTest\MessageInfoArrayTypeTest.cs" />
+    <Compile Include="NullReferenceExceptionTest\MessageInfoSelfTypeTest.cs" />
+    <Compile Include="NullReferenceExceptionTest\MessageInfoSimpleTypesTest.cs" />
+    <Compile Include="RequestToMockTest\TelegramBotEventHandlerTest.cs" />
+    <Compile Include="RequestToMockTest\TelegramBotGetUpdatesTest.cs" />
+    <Compile Include="RequestToTelegramTest\TelegramBotInlineKeyboardTest.cs" />
+    <Compile Include="RequestToTelegramTest\TelegramBotKeyboardTest.cs" />
+    <Compile Include="ResponseTest\BooleanResultParserTest.cs" />
+    <Compile Include="ResponseTest\CallbackQueryParserTest.cs" />
+    <Compile Include="ResponseTest\GetUpdatesResultParserTest.cs" />
+    <Compile Include="ResponseTest\GetUserProfilePhotosResultParserTest.cs" />
+    <Compile Include="ResponseTest\IntegerResultParserTest.cs" />
+    <Compile Include="ResponseTest\MeInfoParserTest.cs" />
+    <Compile Include="NullReferenceExceptionTest\MessageInfoClassTypeTest.cs" />
+    <Compile Include="ResponseTest\MessageInfoParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResultTestObject\BooleanResultObect.cs" />
-    <Compile Include="RequestTest\TelegramMockBotClientTest.cs" />
-    <Compile Include="RequestTest\TelegramMockBotKeyboardTest.cs" />
-    <Compile Include="TelegramRealBotClientTest.cs" />
+    <Compile Include="RequestToMockTest\TelegramBotInlineKeyboardTest.cs" />
+    <Compile Include="ResponseTest\UpdateInfoParserTest.cs" />
+    <Compile Include="ResponseTest\UserInfoParserTest.cs" />
+    <Compile Include="ResponseTest\UserProfilePhotosInfoParserTest.cs" />
+    <Compile Include="TestForDiscrepanciesWithApi\CountriesTest.cs" />
+    <Compile Include="TestForDiscrepanciesWithApi\CurrencyTest.cs" />
+    <Compile Include="TestForDiscrepanciesWithApi\RequestToUri.cs" />
+    <Compile Include="TypeTestObject\GameObject\AnimationInfoObject.cs" />
+    <Compile Include="TypeTestObject\GameObject\GameInfoObject.cs" />
+    <Compile Include="TypeTestObject\PaymentObject\InvoiceInfoObject.cs" />
+    <Compile Include="TypeTestObject\PaymentObject\OrderInfoObject.cs" />
+    <Compile Include="TypeTestObject\PaymentObject\ShippingAddressInfoObject.cs" />
+    <Compile Include="TypeTestObject\PaymentObject\SuccessfulPaymentInfoObject.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\BooleanResultObject.cs" />
+    <Compile Include="RequestToMockTest\TelegramBotClientTest.cs" />
+    <Compile Include="RequestToMockTest\TelegramBotKeyboardTest.cs" />
+    <Compile Include="RequestToTelegramTest\TelegramBotClientTest.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\GetUpdatesResultObject.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\GetUserProfilePhotosResultObject.cs" />
     <Compile Include="TypeTestObject\AudioInfoObject.cs" />
+    <Compile Include="TypeTestObject\CallbackQueryInfoObject.cs" />
     <Compile Include="TypeTestObject\ChatInfoObject.cs" />
     <Compile Include="TypeTestObject\ChatPhotoInfoObject.cs" />
     <Compile Include="TypeTestObject\ContactInfoObject.cs" />
@@ -96,17 +120,27 @@
     <Compile Include="TypeTestObject\MessageEntityInfoObject.cs" />
     <Compile Include="TypeTestObject\MessageInfoObject.cs" />
     <Compile Include="TypeTestObject\PhotoSizeInfoObject.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\IntegerResultObject.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\UserInfoResultObject.cs" />
     <Compile Include="TypeTestObject\StickerInfoObject.cs" />
+    <Compile Include="TypeTestObject\UpdateInfoObject.cs" />
     <Compile Include="TypeTestObject\UserInfoObject.cs" />
+    <Compile Include="TypeTestObject\UserProfilePhotosInfoObject.cs" />
+    <Compile Include="TypeTestObject\VenueInfoObject.cs" />
     <Compile Include="TypeTestObject\VideoInfoObject.cs" />
+    <Compile Include="TypeTestObject\VideoNoteInfoObject.cs" />
+    <Compile Include="TypeTestObject\VoiceInfoObject.cs" />
     <Compile Include="UtilityExtensionTest.cs" />
-    <Compile Include="Utils\TelegramBotGroupChat.cs" />
-    <Compile Include="Utils\TelegramBotSuperGroupChat.cs" />
-    <Compile Include="Utils\WindowsCredential.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetTelebot.CommonUtils\NetTelebot.CommonUtils.csproj">
+      <Project>{58c5212e-1ff1-47e4-a131-a872e46e3a4c}</Project>
+      <Name>NetTelebot.CommonUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Choose>

@@ -22,7 +22,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.Commands.TestApp
 		{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E} = {E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{4A41CC2C-8882-4FB4-BFF8-3B4ED14421A9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example Project", "Example Project", "{4A41CC2C-8882-4FB4-BFF8-3B4ED14421A9}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.ReplyKeyboardMarkup.TestApplication", "NetTelebot.ReplyKeyboardMarkup.TestApplication\NetTelebot.ReplyKeyboardMarkup.TestApplication.csproj", "{A6F3D4C3-6628-47FF-94E7-09B87337B1C5}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -31,6 +34,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.ReplyKeyboardMar
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.CommonUtils", "NetTelebot.CommonUtils\NetTelebot.CommonUtils.csproj", "{58C5212E-1FF1-47E4-A131-A872E46E3A4C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DE1029C8-2258-4098-BDFD-EBF6E2CD491C}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Coomon Project", "Coomon Project", "{0F3ADE71-52CB-412A-886C-7C4E11EF03F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +80,6 @@ Global
 		{E1A9C0A0-0CB9-4C6D-9B4A-44C94D10C88E} = {4A41CC2C-8882-4FB4-BFF8-3B4ED14421A9}
 		{CF6021EF-9C18-4B53-AAC2-E75611F37263} = {4A41CC2C-8882-4FB4-BFF8-3B4ED14421A9}
 		{A6F3D4C3-6628-47FF-94E7-09B87337B1C5} = {4A41CC2C-8882-4FB4-BFF8-3B4ED14421A9}
-		{58C5212E-1FF1-47E4-A131-A872E46E3A4C} = {4A41CC2C-8882-4FB4-BFF8-3B4ED14421A9}
+		{58C5212E-1FF1-47E4-A131-A872E46E3A4C} = {0F3ADE71-52CB-412A-886C-7C4E11EF03F3}
 	EndGlobalSection
 EndGlobal

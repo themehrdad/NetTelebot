@@ -1,20 +1,25 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using NetTelebot.Extension;
+using NetTelebot.Type.Games;
+using NetTelebot.Type.Payment;
 using Newtonsoft.Json.Linq;
-
-#if DEBUG
-[assembly: InternalsVisibleTo("NetTelebot.Tests")]
-#endif
 
 namespace NetTelebot.Type
 {
+    /* About tests
+     * After adding the class field, you need to add the following tests:
+     *  
+     * 1) NetTelebot.Tests.ResponseTest.MessageInfoParserTest - this is a test for the correspondence of the received json object to the fields of the class
+     * 2) NetTelebot.Tests.NullReferenceExceptionTest.[ClassName] - depending on the type of object added.
+     */
+
     /// <summary>
     /// This object represents a message. 
     /// API <link href="https://core.telegram.org/bots/api#message"></link>
     /// </summary>
     public class MessageInfo
     {
+
         internal MessageInfo()
         {
         }
@@ -30,218 +35,196 @@ namespace NetTelebot.Type
         /// <param name="jsonObject">The json object.</param>
         private void Parse(JObject jsonObject)
         {
-            // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             MessageId = jsonObject["message_id"].Value<int>();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoFromTest()
             From = jsonObject["from"] != null
                 ? new UserInfo(jsonObject["from"].Value<JObject>())
                 : new UserInfo();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             DateUnix = jsonObject["date"].Value<int>();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MandatoryFieldsMessageInfoTest()
             Date = DateUnix.ToDateTime();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoChatTest()
             Chat = new ChatInfo(jsonObject["chat"].Value<JObject>());
 
-            // Test NetTelebot.Tests.MesageInfoParserTest.MessageInfoForwardFromTest()
             ForwardFrom = jsonObject["forward_from"] != null
                 ? new UserInfo(jsonObject["forward_from"].Value<JObject>())
                 : new UserInfo();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromChatTest()
             ForwardFromChat = jsonObject["forward_from_chat"] != null
                 ? new ChatInfo(jsonObject["forward_from_chat"].Value<JObject>())
-                : new ChatInfo { Photo = new ChatPhotoInfo() };
+                : new ChatInfo {Photo = new ChatPhotoInfo()};
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardFromMessageIdTest()
             if (jsonObject["forward_from_message_id"] != null)
                 ForwardFromMessageId = jsonObject["forward_from_message_id"].Value<int>();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoForwardDateUnixTest()
             if (jsonObject["forward_date"]!=null)
             {
                 ForwardDateUnix = jsonObject["forward_date"].Value<int>();
                 ForwardDate = ForwardDateUnix.ToDateTime();
             }
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoReplyToMessageTest()
             ReplyToMessage = jsonObject["reply_to_message"] != null
                 ? new MessageInfo(jsonObject["reply_to_message"].Value<JObject>())
-                : MessageInfoWithNullField();
+                : GetNewMessageInfo(GetNewMessageInfo(), GetNewMessageInfo());
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoEditDateTest()
             if (jsonObject["edit_date"] != null)
             {
                 EditDateUnix = jsonObject["edit_date"].Value<int>();
                 EditDate = EditDateUnix.ToDateTime();
             }
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoTextTest()
             Text = jsonObject["text"] != null 
                 ? jsonObject["text"].Value<string>() 
                 : string.Empty;
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoEntitiesTest()
             Entities = jsonObject["entities"] != null
                 ? MessageEntityInfo.ParseArray(jsonObject["entities"].Value<JArray>())
                 : new MessageEntityInfo[0];
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoAudioTest()
             Audio = jsonObject["audio"] != null 
                 ? new AudioInfo(jsonObject["audio"].Value<JObject>()) 
                 : new AudioInfo();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoDocumentTest()
             Document = jsonObject["document"] != null
                 ? new DocumentInfo(jsonObject["document"].Value<JObject>())
                 : new DocumentInfo {Thumb = new PhotoSizeInfo()};
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoPhotoTest()
+            Game = jsonObject["game"] != null
+                ? new GameInfo(jsonObject["game"].Value<JObject>())
+                : new GameInfo {Photo = new PhotoSizeInfo[0], Entities = new MessageEntityInfo[0],
+                    Animation = new AnimationInfo {Thumb = new PhotoSizeInfo()} };
+
             Photo = jsonObject["photo"] != null
                 ? PhotoSizeInfo.ParseArray(jsonObject["photo"].Value<JArray>())
                 : new PhotoSizeInfo[0];
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoStickerTest()
             Sticker = jsonObject["sticker"] != null
                 ? new StickerInfo(jsonObject["sticker"].Value<JObject>())
                 : new StickerInfo {Thumb = new PhotoSizeInfo()};
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoVideoTest()
             Video = jsonObject["video"] != null
                 ? new VideoInfo(jsonObject["video"].Value<JObject>())
                 : new VideoInfo {Thumb = new PhotoSizeInfo()};
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoCaptionTest()
+            Voice = jsonObject["voice"] != null
+                ? new VoiceInfo(jsonObject["voice"].Value<JObject>())
+                : new VoiceInfo();
+
+            VideoNote = jsonObject["video_note"] != null
+                ? new VideoNoteInfo(jsonObject["video_note"].Value<JObject>())
+                : new VideoNoteInfo {Thumb = new PhotoSizeInfo()};
+
+            NewChatMembers = jsonObject["new_chat_members"] != null
+                ? UserInfo.ParseArray(jsonObject["new_chat_members"].Value<JArray>())
+                : new UserInfo[0];
+
             Caption = jsonObject["caption"] != null 
                 ? jsonObject["caption"].Value<string>() 
                 : string.Empty;
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoContactTest()
             Contact = jsonObject["contact"] != null
                 ? new ContactInfo(jsonObject["contact"].Value<JObject>())
                 : new ContactInfo();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoLocationTest()
             Location = jsonObject["location"] != null
                 ? new LocationInfo(jsonObject["location"].Value<JObject>())
                 : new LocationInfo();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoNewChatMemberTest()
+            Venue = jsonObject["venue"] != null
+                ? new VenueInfo(jsonObject["venue"].Value<JObject>())
+                : new VenueInfo {Location = new LocationInfo()};
+
             NewChatMember = jsonObject["new_chat_member"] != null
                 ? new UserInfo(jsonObject["new_chat_member"].Value<JObject>())
                 : new UserInfo();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoLeftChatMemberTest()
             LeftChatMember = jsonObject["left_chat_member"] != null
                 ? new UserInfo(jsonObject["left_chat_member"].Value<JObject>())
                 : new UserInfo();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoNewChatTitleTest()
             NewChatTitle = jsonObject["new_chat_title"] != null
                 ? jsonObject["new_chat_title"].Value<string>()
                 : string.Empty;
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoNewChatPhotoTest()
             NewChatPhoto = jsonObject["new_chat_photo"] != null
                 ? PhotoSizeInfo.ParseArray(jsonObject["new_chat_photo"].Value<JArray>())
                 : new PhotoSizeInfo[0];
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoDeleteChatPhotoTest()
             if (jsonObject["delete_chat_photo"] != null)
                 DeleteChatPhoto = true;
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoGroupChatPhotoTest()
             if (jsonObject["group_chat_created"] != null)
                 GroupChatCreated = true;
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoSuperGroupChatPhotoTest()
             if (jsonObject["supergroup_chat_created"] != null)
                 SuperGroupChatCreated = true;
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoChannelChatCreatedTest()
             if (jsonObject["channel_chat_created"] != null)
                 ChannelChatCreated = true;
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoMigrateToChatIdTest()
             if (jsonObject["migrate_to_chat_id"] != null)
                 MigrateToChatId = jsonObject["migrate_to_chat_id"].Value<int>();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoMigrateFromChatIdTest()
             if (jsonObject["migrate_from_chat_id"] != null)
                 MigrateFromChatId = jsonObject["migrate_from_chat_id"].Value<int>();
 
-            // Test NetTelebot.Tests.MessageInfoParserTest.MessageInfoPinnedMessageTest()
             PinnedMessage = jsonObject["pinned_message"] != null
                 ? new MessageInfo(jsonObject["pinned_message"].Value<JObject>())
-                : MessageInfoWithNullField();
+                : GetNewMessageInfo(GetNewMessageInfo(), GetNewMessageInfo());
+
+            Invoice = jsonObject["invoice"] != null
+                ? new InvoceInfo(jsonObject["invoice"].Value<JObject>())
+                : new InvoceInfo();
+
+            SuccessfulPayment = jsonObject["successful_payment"] != null
+                ? new SuccessfulPaymentInfo(jsonObject["successful_payment"].Value<JObject>())
+                : new SuccessfulPaymentInfo {OrderInfo = new OrderInfo {ShippingAddress = new ShippingAddressInfo()} };
         }
 
-        private static MessageInfo MessageInfoWithNullField()
+        internal static MessageInfo GetNewMessageInfo(MessageInfo pinned = null, MessageInfo reply = null)
         {
             return new MessageInfo
             {
                 From = new UserInfo(),
                 Chat = new ChatInfo(),
                 ForwardFrom = new UserInfo(),
-                ForwardFromChat = new ChatInfo(),
-
-                ReplyToMessage = new MessageInfo
-                {
-                    From = new UserInfo(),
-                    Chat = new ChatInfo(),
-                    ForwardFrom = new UserInfo(),
-                    ForwardFromChat = new ChatInfo(),
-                    ReplyToMessage = new MessageInfo(),
-                    Entities = new MessageEntityInfo[0],
-                    Audio = new AudioInfo(),
-                    Document = new DocumentInfo(),
-                    Photo = new PhotoSizeInfo[0],
-                    Sticker = new StickerInfo(),
-                    Video = new VideoInfo(),
-                    Contact = new ContactInfo(),
-                    Location = new LocationInfo(),
-                    NewChatMember = new UserInfo(),
-                    LeftChatMember = new UserInfo(),
-                    NewChatPhoto = new PhotoSizeInfo[0],
-                    PinnedMessage = new MessageInfo()
-                },
-
+                ForwardFromChat = new ChatInfo{Photo = new ChatPhotoInfo()},
+                ReplyToMessage = reply,
                 Entities = new MessageEntityInfo[0],
                 Audio = new AudioInfo(),
-                Document = new DocumentInfo(),
+                Document = new DocumentInfo {Thumb = new PhotoSizeInfo()},
+                Game  = new GameInfo
+                {
+                    Photo = new PhotoSizeInfo[0],
+                    Entities = new MessageEntityInfo[0],
+                    Animation = new AnimationInfo
+                    {
+                        Thumb = new PhotoSizeInfo()
+                    }
+                },
                 Photo = new PhotoSizeInfo[0],
-                Sticker = new StickerInfo(),
-                Video = new VideoInfo(),
+                Sticker = new StickerInfo {Thumb = new PhotoSizeInfo()},
+                Video = new VideoInfo {Thumb = new PhotoSizeInfo()},
+                Voice = new VoiceInfo(),
+                VideoNote = new VideoNoteInfo {Thumb = new PhotoSizeInfo()},
+                NewChatMembers = new UserInfo[0],
                 Contact = new ContactInfo(),
                 Location = new LocationInfo(),
+                Venue = new VenueInfo {Location = new LocationInfo()},
                 NewChatMember = new UserInfo(),
                 LeftChatMember = new UserInfo(),
                 NewChatPhoto = new PhotoSizeInfo[0],
-
-                PinnedMessage = new MessageInfo
+                PinnedMessage = pinned,
+                Invoice = new InvoceInfo(),
+                SuccessfulPayment = new SuccessfulPaymentInfo
                 {
-                    From = new UserInfo(),
-                    Chat = new ChatInfo(),
-                    ForwardFrom = new UserInfo(),
-                    ForwardFromChat = new ChatInfo(),
-                    ReplyToMessage = new MessageInfo(),
-                    Entities = new MessageEntityInfo[0],
-                    Audio = new AudioInfo(),
-                    Document = new DocumentInfo(),
-                    Photo = new PhotoSizeInfo[0],
-                    Sticker = new StickerInfo(),
-                    Video = new VideoInfo(),
-                    Contact = new ContactInfo(),
-                    Location = new LocationInfo(),
-                    NewChatMember = new UserInfo(),
-                    LeftChatMember = new UserInfo(),
-                    NewChatPhoto = new PhotoSizeInfo[0],
-                    PinnedMessage = new MessageInfo()
+                    OrderInfo = new OrderInfo
+                    {
+                        ShippingAddress = new ShippingAddressInfo()
+                    }
                 }
+               
             };
         }
 
@@ -263,19 +246,16 @@ namespace NetTelebot.Type
         /// <summary>
         /// Date the message was sent in <see cref="DateTime"/>
         /// </summary>
-        /// <remarks>This extension, not the available API type <seealso cref="UtilityExtensions.ToDateTime"/> </remarks>
         public DateTime Date { get; private set; }
 
         /// <summary>
-        /// Conversation the message belongs to — user in case of a private message, GroupChat in case of a group.
-        /// To support the old version of the library, the chat object is equal to the old value.
+        /// Conversation the message belongs to
         /// </summary>
         public ChatInfo Chat { get; private set; }
 
         /// <summary>
         /// Optional. For forwarded messages, sender of the original message.
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyForwardFrom() </remarks>
         public UserInfo ForwardFrom { get; private set; }
 
         /// <summary>
@@ -286,144 +266,141 @@ namespace NetTelebot.Type
         /// <summary>
         /// Optional. For forwarded channel posts, identifier of the original message in the channel 
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyForwardFromMessageId() </remarks>
         public int ForwardFromMessageId { get; private set; }
 
         /// <summary>
         /// Optional. For forwarded messages, date the original message was sent in Unix time
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromForwardDateUnix() </remarks>
         public long ForwardDateUnix { get; private set; }
 
         /// <summary>
         /// Optional. For forwarded messages, date the original message was sent in <see cref="DateTime"/>
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromForwardDate() </remarks>
         /// <remarks> This extension, not the available API type <seealso cref="UtilityExtensions.ToDateTime"/> </remarks>
         public DateTime ForwardDate { get; private set; }
 
         /// <summary>
         /// Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromReplyToMessage() </remarks>
         public MessageInfo ReplyToMessage { get; private set; }
 
         /// <summary>
         /// Optional. Date the message was last edited in Unix time
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromEditDateUnix() </remarks>
         public long EditDateUnix { get; private set; }
 
         /// <summary>
         /// Optional. Date the message was last edited 
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromEditDate() </remarks>
         /// <remarks> This extension, not the available API type <seealso cref="UtilityExtensions.ToDateTime"/> </remarks>
         public DateTime EditDate { get; private set; }
 
         /// <summary>
         /// Optional. For text messages, the actual UTF-8 text of the message 
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyText() </remarks>
         public string Text { get; private set; }
 
         /// <summary>
         /// Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyEntities() </remarks>
         public MessageEntityInfo[] Entities { get; private set; }
 
         /// <summary>
         /// Optional. Message is an audio file, information about the file TestAppealToTheEmptyAudio()
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyAudio() </remarks>
         public AudioInfo Audio { get; private set; }
 
         /// <summary>
         /// Optional. Message is a general file, information about the file TestAppealToTheEmptyDocument()
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyDocument() </remarks>
         public DocumentInfo Document { get; private set; }
 
-        //todo add (Game) Game
+        /// <summary>
+        /// This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.
+        /// </summary>
+        public GameInfo Game { get; private set;  }
 
         /// <summary>
         /// Optional. Message is a photo, available sizes of the photo
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyPhoto() </remarks>
         public PhotoSizeInfo[] Photo { get; private set; }
 
         /// <summary>
         /// Optional. Message is a sticker, information about the sticker 
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptySticker() </remarks>
-        /// <remarks> Parser test: NetTelebot.Tests.MessageInfoParserTest.MessageInfoStickerTest() </remarks>
         public StickerInfo Sticker { get; private set; }
 
         /// <summary>
         /// Optional. Message is a video, information about the video 
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyVideo() </remarks>
         public VideoInfo Video { get; private set; }
 
-        //todo add (Voice) Voice
-        //todo add (VideoNote) VideoNote
-        //todo add (Array of User) NewChatMembers
+        /// <summary>
+        /// This object represents a voice note.
+        /// </summary>
+        public VoiceInfo Voice { get; private set;  }
+
+        /// <summary>
+        /// This object represents a video message (available in Telegram apps as of v.4.0).
+        /// </summary>
+        public VideoNoteInfo VideoNote { get; private set; }
+
+        /// <summary>
+        /// Optional. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
+        /// </summary>
+        public UserInfo[] NewChatMembers { get; private set; }
 
         /// <summary>
         /// Optional. Caption for the document, photo or video, 0-200 characters 
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyCaption() </remarks>
         public string Caption { get; private set; }
 
         /// <summary>
         /// Optional. Message is a shared contact, information about the contact TestAppealToTheEmptyContact()
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyContact() </remarks>
         public ContactInfo Contact { get; private set; }
 
         /// <summary>
         /// Optional. Message is a shared location, information about the location 
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyLocation() </remarks>
         public LocationInfo Location { get; private set; }
 
-        //todo add (Venue) Venue
+        /// <summary>
+        /// Optional. This object represents a venue.
+        /// </summary>
+        public VenueInfo Venue { get; private set; }
 
         /// <summary>
         /// Optional. A new member was added to the group, information about them (this member may be bot itself)  
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyNewChatMember() </remarks>
+        [Obsolete("See Introducing Bot API 3.0: " +
+                  "Replaced the field new_chat_member in Message with new_chat_members " +
+                  "(the old field will still be available for a while for compatibility purposes).")]
         public UserInfo NewChatMember { get; private set; }
 
         /// <summary>
         /// Optional. A member was removed from the group, information about them (this member may be bot itself) 
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyLeftChatMember() </remarks>
         public UserInfo LeftChatMember { get; private set; }
 
         /// <summary>
         /// Optional. A group title was changed to this value 
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyNewChatTitle() </remarks>
         public string NewChatTitle { get; private set; }
 
         /// <summary>
         /// Optional. A group photo was change to this value TestAppealToTheEmptyNewChatPhoto()
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyNewChatPhoto() </remarks>
         public PhotoSizeInfo[] NewChatPhoto { get; private set; }
 
         /// <summary>
         /// Optional. Informs that the group photo was deleted TestAppealToTheEmptyDeleteChatPhoto()
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheEmptyDeleteChatPhoto() </remarks>
         public bool DeleteChatPhoto { get; private set; }
 
         /// <summary>
         /// Optional. Informs that the group has been created TestAppealToTheGroupChatCreated()
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToTheGroupChatCreated() </remarks>
         public bool GroupChatCreated { get; private set; }
 
         /// <summary>
@@ -431,7 +408,6 @@ namespace NetTelebot.Type
         /// because bot can’t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very
         /// first message in a directly created supergroup. 
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToSuperGroupChatCreated() </remarks>
         public bool SuperGroupChatCreated { get; private set;  }
 
         /// <summary>
@@ -439,7 +415,6 @@ namespace NetTelebot.Type
         /// because bot can’t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very
         /// first message in a channel. TestAppealToChannelChatCreated()
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToChannelChatCreated() </remarks>
         public bool ChannelChatCreated { get; private set; }
 
         /// <summary>
@@ -447,7 +422,6 @@ namespace NetTelebot.Type
         /// programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision
         /// float type are safe for storing this identifier. 
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateToChatId() </remarks>
         public int MigrateToChatId { get; private set; }
 
         /// <summary>
@@ -455,16 +429,21 @@ namespace NetTelebot.Type
         /// programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision
         /// float type are safe for storing this identifier. 
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.TestAppealToMigrateFromChatId() </remarks>
         public int MigrateFromChatId { get; private set; }
 
         /// <summary>
         /// Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
         /// </summary>
-        /// <remarks> Test NullReferenceException: NetTelebot.Tests.estAppealToMigrateFromPinnedMessage() </remarks>
         public MessageInfo PinnedMessage { get; private set; }
 
-        //todo (Invoice) Invoice
-        //todo (SuccessfulPayment) SuccessfulPayment
+        /// <summary>
+        /// Optional. Message is an <see href="https://core.telegram.org/bots/api#payments">invoice </see> for a payment, information about the invoice. 
+        /// </summary>
+        public InvoceInfo Invoice { get; private set; }
+
+        /// <summary>
+        /// Optional. Message is a service message about a successful payment, information about the payment.
+        /// </summary>
+        public SuccessfulPaymentInfo SuccessfulPayment { get; private set; }
     }
 }

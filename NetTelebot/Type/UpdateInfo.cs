@@ -1,11 +1,11 @@
 ﻿using System.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
     /// <summary>
-    /// Represents an incoming message to your bot.
+    /// This object represents an incoming update.
+    /// At most one of the optional parameters can be present in any given update.
     /// </summary>
     public class UpdateInfo
     {
@@ -17,39 +17,78 @@ namespace NetTelebot.Type
         private void Parse(JObject jsonObject)
         {
             UpdateId = jsonObject["update_id"].Value<int>();
-            if (jsonObject["message"] != null)
-                Message = new MessageInfo(jsonObject["message"].Value<JObject>());
+
+            Message = jsonObject["message"] != null
+                ? new MessageInfo(jsonObject["message"].Value<JObject>())
+                : MessageInfo.GetNewMessageInfo(MessageInfo.GetNewMessageInfo(), MessageInfo.GetNewMessageInfo());
+
+            EditedMessage = jsonObject["edited_message"] != null
+                ? new MessageInfo(jsonObject["edited_message"].Value<JObject>())
+                : MessageInfo.GetNewMessageInfo(MessageInfo.GetNewMessageInfo(), MessageInfo.GetNewMessageInfo());
+
+            ChannelPost = jsonObject["channel_post"] != null
+                ? new MessageInfo(jsonObject["channel_post"].Value<JObject>())
+                : MessageInfo.GetNewMessageInfo(MessageInfo.GetNewMessageInfo(), MessageInfo.GetNewMessageInfo());
+
+            EditedChannelPost = jsonObject["edited_channel_post"] != null
+                ? new MessageInfo(jsonObject["edited_channel_post"].Value<JObject>())
+                : MessageInfo.GetNewMessageInfo(MessageInfo.GetNewMessageInfo(), MessageInfo.GetNewMessageInfo());
+
+            CallbackQuery = jsonObject["callback_query"] != null
+                ? new CallbackQueryInfo(jsonObject["callback_query"].Value<JObject>())
+                : new CallbackQueryInfo();
         }
 
         /// <summary>
-        /// The update‘s unique identifier.
+        /// Parses the array.
+        /// </summary>
+        /// <param name="jsonArray">The json array</param>
+        public static UpdateInfo[] ParseArray(JArray jsonArray)
+        {
+            return jsonArray.Cast<JObject>().Select(jobject => new UpdateInfo(jobject)).ToArray();
+        }
+
+        /// <summary>
+        /// The update‘s unique identifier. 
+        /// Update identifiers start from a certain positive number and increase sequentially. 
+        /// This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order.
         /// </summary>
         public int UpdateId { get; private set; }
-        
+
         /// <summary>
+        /// Optional. 
         /// New incoming message of any kind — text, photo, sticker, etc.
         /// </summary>
         public MessageInfo Message { get; private set; }
 
         /// <summary>
-        /// Parses the array.
+        /// Optional. 
+        /// New version of a message that is known to the bot and was edited
         /// </summary>
-        /// <param name="jsonText">The json text.</param>
-        /// <returns></returns>
-        public static UpdateInfo[] ParseArray(string jsonText)
-        {
-            JArray jsonArray = (JArray)JsonConvert.DeserializeObject(jsonText);
-            return ParseArray(jsonArray);
-        }
+        public MessageInfo EditedMessage { get; private set; }
 
         /// <summary>
-        /// Parses the array.
+        /// Optional. 
+        /// New incoming channel post of any kind — text, photo, sticker, etc.
         /// </summary>
-        /// <param name="jsonArray">The json array.</param>
-        /// <returns></returns>
-        public static UpdateInfo[] ParseArray(JArray jsonArray)
-        {
-            return jsonArray.Cast<JObject>().Select(jobject => new UpdateInfo(jobject)).ToArray();
-        }
+        public MessageInfo ChannelPost { get; private set; }
+
+        /// <summary>
+        /// Optional. 
+        /// New version of a channel post that is known to the bot and was edited
+        /// </summary>
+        public MessageInfo EditedChannelPost { get; private set;  }
+
+        //todo InlineQuery => InlineQuery
+        //todo ChosenInlineResult => ChosenInline_Result
+
+        /// <summary>
+        /// Optional. 
+        /// New incoming callback query
+        /// </summary>
+        public CallbackQueryInfo CallbackQuery { get; private set;  }
+
+        //todo ShippingQuery => ChippingQuery
+        //todo PreCheckoutQuery => PreCheckoutQuery
     }
 }

@@ -8,7 +8,7 @@ Telegram bot API implementation on .NET framework
 | --- | --- | --- |
 | **Build** |<a href="https://teamcity.nesterov.tk/viewType.html?buildTypeId=NetTelebotGithubRepository_BuildTestDebug&guest=1"><img src="https://teamcity.nesterov.tk/app/rest/builds/buildType:(id:NetTelebotGithubRepository_BuildTestDebug)/statusIcon"> [![Build status](https://ci.appveyor.com/api/projects/status/xrdhuq2v0piigwfq?svg=true)](https://ci.appveyor.com/project/vertigra/nettelebot-2-0) | [![Build status](https://ci.appveyor.com/api/projects/status/1be8bona8ow83whb/branch/master?svg=true)](https://ci.appveyor.com/project/vertigra/nettelebot/branch/master) |
 | **Coverage** | [![Coverage Status](https://coveralls.io/repos/github/vertigra/NetTelebot-2.0/badge.svg)](https://coveralls.io/github/vertigra/NetTelebot-2.0) | [![Coverage Status](https://coveralls.io/repos/github/themehrdad/NetTelebot/badge.svg)](https://coveralls.io/github/themehrdad/NetTelebot) |
-| **Quality** | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d1d114894a7345999ecff230bdbd9bdb)](https://www.codacy.com/app/vertigra/NetTelebot-2.0?utm_source=github.com&utm_medium=referral&utm_content=vertigra/NetTelebot-2.0&utm_campaign=badger) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/275548e27e784897ab704a7349ed6b37)](https://www.codacy.com/app/vertigra/NetTelebot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=themehrdad/NetTelebot&amp;utm_campaign=Badge_Grade) | 
+| **Quality** | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d1d114894a7345999ecff230bdbd9bdb)](https://www.codacy.com/app/vertigra/NetTelebot-2.0?utm_source=github.com&utm_medium=referral&utm_content=vertigra/NetTelebot-2.0&utm_campaign=badger) [![BCH compliance](https://bettercodehub.com/edge/badge/vertigra/NetTelebot-2.0?branch=master)](https://bettercodehub.com/) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/275548e27e784897ab704a7349ed6b37)](https://www.codacy.com/app/vertigra/NetTelebot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=themehrdad/NetTelebot&amp;utm_campaign=Badge_Grade) [![BCH compliance](https://bettercodehub.com/edge/badge/themehrdad/NetTelebot?branch=master)](https://bettercodehub.com/) | 
 
 **Net-Telebot-2.0** is development repository.  
 **Net-Telebot** is release repository.  
@@ -55,15 +55,15 @@ See more examples in the project [wiki](https://github.com/themehrdad/NetTelebot
 
 On the nearest release (1.10)
 - [ ] More tests (coverage ~ 100%)
-- [ ] Add ReplyKeyboardRemove 
-- [ ] Add InlineKeyboardMarkup
-- [ ] Add InlineKeyboardButton
+- [x] Add ReplyKeyboardRemove 
+- [x] Add InlineKeyboardMarkup
+- [x] Add InlineKeyboardButton
 - [ ] Add CallbackGame
-- [ ] Remove obsolete class and interface
+- [x] Remove obsolete class and interface
 - [ ] In class MessageInfo add fields marked in todo
 
-On the project
-* Full support API Telegrams
+For the project
+- [ ] Full support API Telegrams
 
 More details [here](https://github.com/vertigra/NetTelebot-2.0/projects/1)
 

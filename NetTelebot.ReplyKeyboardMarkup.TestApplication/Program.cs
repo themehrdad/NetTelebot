@@ -1,27 +1,32 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using NetTelebot.CommonUtils;
+using NetTelebot.Interface;
 using NetTelebot.Result;
 using NetTelebot.Type;
 using NetTelebot.Type.Keyboard;
 
 namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
 {
-    internal class Program
+    internal static class Program
     {
         private static TelegramBotClient mClient;
 
         private static void Main()
         {
-            mClient = new TelegramBotClient()
-            {
-                Token = new WindowsCredential().GetTelegramCredential("NetTelebotBot").Token,
+            //EnableProxy();
+
+            mClient = new TelegramBotClient
+            {    
+                Token = WindowsCredential.GetTelegramCredential("NetTelebotBot").Token,
                 CheckInterval = 1000
             };
 
             mClient.UpdatesReceived += ClientUpdatesReceived;
             mClient.GetUpdatesError += ClientGetUpdatesError;
             mClient.StartCheckingUpdates();
+            
 
             Console.WriteLine("Bot start. For exit press any key");
             Console.ReadKey();
@@ -29,20 +34,68 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
 
         private static void ClientUpdatesReceived(object sender, TelegramUpdateEventArgs e)
         {
+            foreach (var update in e.Updates)
+            {
+                if (update.Message.Text != null)
+                    ParseMessageInfo(e);
+                if (update.CallbackQuery.Message != null)
+                    ParseCallbackQuery(e);
+            }
+        }
+
+        private static void ParseCallbackQuery(TelegramUpdateEventArgs e)
+        {
+            foreach (UpdateInfo update in e.Updates.Where(update => update.CallbackQuery.Data.StartsWith("/")))
+            {
+                if (update.CallbackQuery.Data.Equals("/getId"))
+                    SendMessage(update.CallbackQuery.Message.Chat.Id,
+                        "This chat id is " + update.CallbackQuery.Message.Chat.Id);
+                else if (update.CallbackQuery.Data.Equals("/reply"))
+                    SendMessage(update.CallbackQuery.Message.Chat.Id, "Please reply this message",
+                        new ForceReplyMarkup());
+                else if (update.CallbackQuery.Data.Equals("/calculate"))
+                    SendMessage(update.CallbackQuery.Message.Chat.Id, "Please enter an arithmetic expression.",
+                        ReplyKeyboardMarkupExample.GetKeyboardMarkup());
+                else if (update.CallbackQuery.Data.Equals("/remove_calculate"))
+                    SendMessage(update.CallbackQuery.Message.Chat.Id, "Remove keyboard",
+                        new ReplyKeyboardRemove());
+            }
+        }
+
+        private static void ParseMessageInfo(TelegramUpdateEventArgs e)
+        {
+            if (ForceReplyExample.InterceptorOfResponseMessages(e))
+                return;
+            
             foreach (UpdateInfo update in e.Updates.Where(update => update.Message.Text.StartsWith("/")))
             {
                 if (update.Message.Text.Equals("/start"))
                 {
-                    mClient.SendMessage(update.Message.Chat.Id, "Hello. I`m calculator bot. Type \"/calculate\" to start the calculation");
+                    mClient.SendMessage(update.Message.Chat.Id,
+                        "Hello. I`m example bot. " +
+                        "\nType /calculate for exmple keyboard button and reply keyboard markup. " +
+                        "\nType /reply for example force reply. " +
+                        "\nType /getId return chat_id." + 
+                        "\nOr press inline button.",
+                        replyMarkup: InlineKeyboardExample.GetInlineKeyboard());
                 }
                 else if (update.Message.Text.Equals("/calculate"))
                 {
-                    mClient.SendMessage(update.Message.Chat.Id, "Please enter an arithmetic expression and press =", replyMarkup:GetKeyboardMarkup());
+                    SendMessage(update.Message.Chat.Id, "Please enter an arithmetic expression and press =",
+                        ReplyKeyboardMarkupExample.GetKeyboardMarkup());
+                }
+                else if (update.Message.Text.Equals("/reply"))
+                {
+                    SendMessage(update.Message.Chat.Id, "Please reply this message", new ForceReplyMarkup());
+                }
+                else if (update.Message.Text.Equals("/getId"))
+                {
+                    SendMessage(update.Message.Chat.Id, "This chat id is " + update.Message.Chat.Id);
                 }
                 else
                 {
                     mClient.SendMessage(update.Message.Chat.Id, "Unknow command");
-                } 
+                }
             }
         }
 
@@ -51,49 +104,16 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
             Console.WriteLine("Error occured: {0}", ((Exception)e.ExceptionObject).Message);
         }
 
-        private static ReplyKeyboardMarkup GetKeyboardMarkup()
+        internal static SendMessageResult SendMessage(long chat_id, string message, IReplyMarkup iReplyMarkup = null)
         {
-            KeyboardButton[] line1 =
-{
-                new KeyboardButton {Text = "1"},
-                new KeyboardButton {Text = "2"},
-                new KeyboardButton {Text = "3"},
-                new KeyboardButton {Text = "+"}
-            };
-
-            KeyboardButton[] line2 =
-            {
-                new KeyboardButton {Text = "4"},
-                new KeyboardButton {Text = "5"},
-                new KeyboardButton {Text = "6"},
-                new KeyboardButton {Text = "-"}
-            };
-
-            KeyboardButton[] line3 =
-            {
-                new KeyboardButton {Text = "7"},
-                new KeyboardButton {Text = "8"},
-                new KeyboardButton {Text = "9"},
-                new KeyboardButton {Text = "/"},
-            };
-
-            KeyboardButton[] line4 =
-            {
-                new KeyboardButton {Text = "."},
-                new KeyboardButton {Text = "0"},
-                new KeyboardButton {Text = "="},
-                new KeyboardButton {Text = "*"}
-            };
-
-            KeyboardButton[][] buttons = { line1, line2, line3, line4 };
-
-            ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup
-            {
-                Keyboard = buttons,
-                ResizeKeyboard = true
-            };
-
-            return keyboard;
+            return mClient.SendMessage(chat_id, message, replyMarkup: iReplyMarkup);
         }
+
+        private static void EnableProxy()
+        {
+            WebProxy proxyObject = new WebProxy("http://192.168.1.254:3128/", true);
+            WebRequest.DefaultWebProxy = proxyObject;
+        }
+
     }
 }
