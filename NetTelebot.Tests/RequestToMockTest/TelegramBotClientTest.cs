@@ -264,8 +264,40 @@ namespace NetTelebot.Tests.RequestToMockTest
                 request.FirstOrDefault()?.Body);
 
                 Assert.AreEqual("/botToken/sendVideo", request.FirstOrDefault()?.Url);
+
                 Assert.Throws<Exception>(() => mBotBadResponse.SendVideo(123, new ExistingFile {FileId = "123"},
                     123, 123, 123, "caption", true, 123, new ForceReplyMarkup()));
+            });
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.SendVideoNote"/>.
+        /// </summary>
+        [Test]
+        public void SendVideoNoteTest()
+        {
+            mBotOkResponse.SendVideoNote(123, new ExistingFile { FileId = "123" }, 123, 123, true, 123,
+                new ForceReplyMarkup());
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendVideoNote").UsingPost());
+
+            PrintResult(request);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                                "video_note=123&" +
+                                "duration=123&" +
+                                "length=123&" +
+                                "disable_notification=True&" +
+                                "reply_to_message_id=123&" +
+                                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D",
+                request.FirstOrDefault()?.Body);
+
+                Assert.AreEqual("/botToken/sendVideoNote", request.FirstOrDefault()?.Url);
+
+                Assert.Throws<Exception>(() => mBotBadResponse.SendVideoNote(123, new ExistingFile { FileId = "123" },
+                    123, 123, true, 123, new ForceReplyMarkup()));
             });
         }
 
