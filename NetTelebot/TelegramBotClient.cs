@@ -189,7 +189,7 @@ namespace NetTelebot
         /// <summary>
         /// Use this method to send text messages. See <see href="https://core.telegram.org/bots/api#sendmessage">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="text">Text of the message to be sent</param>
         /// <param name="parseMode">Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message</param>
         /// <param name="disableWebPagePreview">Disables link previews for links in this message</param>
@@ -226,7 +226,7 @@ namespace NetTelebot
         /// <summary>
         /// Use this method to forward messages of any kind. See <see href="https://core.telegram.org/bots/api#forwardmessage">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="fromChatId">Unique identifier for the chat where the original message was sent — User or GroupChat id</param>
         /// <param name="messageId">Unique message identifier</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
@@ -248,7 +248,7 @@ namespace NetTelebot
         /// <summary>
         /// Use this method to send photos. See <see href="https://core.telegram.org/bots/api#sendphoto">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="photo">Photo to send. You can either pass a file_id as String to resend a photo that is already on the Telegram servers (using ExistingFile class),
         /// or upload a new photo using multipart/form-data. (Using NewFile class)</param>
         /// <param name="caption">Photo caption (may also be used when resending photos by file_id).</param>
@@ -294,7 +294,7 @@ namespace NetTelebot
         /// Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
         /// See <see href="https://core.telegram.org/bots/api#sendaudio">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="audio">Audio file to send. You can either pass a file_id as String to resend an audio that is already on the Telegram servers,
         /// or upload a new audio file using multipart/form-data.</param>
         /// <param name="caption">Audio caption, 0-200 characters</param>
@@ -352,7 +352,7 @@ namespace NetTelebot
         /// Use this method to send general files. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
         /// See <see href="https://core.telegram.org/bots/api#senddocument">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="document">File to send. You can either pass a file_id as String to resend a file that is already on the Telegram servers,
         /// or upload a new file using multipart/form-data.</param>
         /// <param name="caption">Document caption (may also be used when resending documents by file_id), 0-200 characters</param>
@@ -396,7 +396,7 @@ namespace NetTelebot
         /// <summary>
         /// Use this method to send .webp stickers. See <see href="https://core.telegram.org/bots/api#sendsticker">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="sticker">Sticker to send. You can either pass a file_id as String to resend a sticker that is 
         /// already on the Telegram servers, or upload a new sticker using multipart/form-data.</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
@@ -438,7 +438,7 @@ namespace NetTelebot
         /// Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). 
         /// Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future. See <see href="https://core.telegram.org/bots/api#sendvideo"></see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="video">Video to send. You can either pass a file_id as String to resend a video that is already on the Telegram servers,
         /// or upload a new video file using multipart/form-data.</param>
         /// <param name="duration">Optional. Duration of sent video in seconds</param>
@@ -493,13 +493,64 @@ namespace NetTelebot
         }
 
         //todo sendVoice (https://core.telegram.org/bots/api#sendvoice)
-        //todo sendVideonote (https://core.telegram.org/bots/api#sendvideonote)
+
+        /// <summary>
+        /// As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long.
+        /// Use this method to send video messages.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
+        /// <param name="videoNote">Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) 
+        /// or upload a new video using multipart/form-data. 
+        /// Sending video notes by a URL is currently unsupported</param>
+        /// <param name="duration">Optional. Duration of sent video in seconds</param>
+        /// <param name="length">Optional. Video width and height</param>
+        /// <param name="disableNotification">Optional. Sends the message silently. Users will receive a notification with no sound.</param>
+        /// <param name="replyToMessageId">Optional. If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Optional. Additional interface options. 
+        /// A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.</param>
+        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned</returns>
+        public SendMessageResult SendVideoNote(object chatId, IFile videoNote,
+            int? duration = null,
+            int? length = null,
+            bool? disableNotification = null,
+            int? replyToMessageId = null,
+            IReplyMarkup replyMarkup = null)
+        {
+            RestRequest request = NewRestRequest(sendVideoNoteUri);
+            request.AddParameter("chat_id", chatId);
+
+            ExistingFile file = videoNote as ExistingFile;
+
+            if (file != null)
+            {
+                ExistingFile existingFile = file;
+                request.AddParameter("video_note", existingFile.FileId);
+            }
+            else
+            {
+                NewFile newFile = (NewFile) videoNote;
+                request.AddFile("video_note", newFile.FileContent, newFile.FileName);
+            }
+
+            if (duration != null)
+                request.AddParameter("duration", duration);
+            if (length != null)
+                request.AddParameter("length", length);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+            if (replyToMessageId != null)
+                request.AddParameter("reply_to_message_id", replyToMessageId);
+            if (replyMarkup != null)
+                request.AddParameter("reply_markup", replyMarkup.GetJson());
+
+            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
+        }
 
         /// <summary>
         /// Use this method to send point on the map.
         /// See <see href="https://core.telegram.org/bots/api#sendlocation">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="latitude">Latitude of location</param>
         /// <param name="longitude">Longitude of location</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
@@ -605,7 +656,7 @@ namespace NetTelebot
         /// The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
         /// See <see href="https://core.telegram.org/bots/api#sendchataction">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="action">Type of action to broadcast. Choose one, depending on what the user is about to receive: 
         /// typing for text messages, upload_photo for photos, record_video or upload_video for videos, 
         /// record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.</param>
@@ -669,7 +720,7 @@ namespace NetTelebot
         /// The bot must be an administrator for this to work.
         /// See <see href="https://core.telegram.org/bots/api#unbanchatmember">API</see> 
         /// </summary>
-        /// <param name="chatId">Unique identifier for the target group or username of the target supergroup or channel</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="userId">Unique identifier of the target user</param>
         /// <returns>Returns True on success, false otherwise</returns>
         public BooleanResult UnbanChatMember(object chatId, int userId)
