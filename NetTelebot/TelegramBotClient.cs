@@ -499,13 +499,15 @@ namespace NetTelebot
         /// Use this method to send video messages.
         /// </summary>
         /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
-        /// <param name="videoNote">Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. 
+        /// <param name="videoNote">Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) 
+        /// or upload a new video using multipart/form-data. 
         /// Sending video notes by a URL is currently unsupported</param>
         /// <param name="duration">Optional. Duration of sent video in seconds</param>
         /// <param name="length">Optional. Video width and height</param>
         /// <param name="disableNotification">Optional. Sends the message silently. Users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">Optional. If the message is a reply, ID of the original message</param>
-        /// <param name="replyMarkup">Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.</param>
+        /// <param name="replyMarkup">Optional. Additional interface options. 
+        /// A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="MessageInfo"/> is returned</returns>
         public SendMessageResult SendVideoNote(object chatId, IFile videoNote,
             int? duration = null,
