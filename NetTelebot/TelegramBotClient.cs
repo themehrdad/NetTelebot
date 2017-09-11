@@ -754,9 +754,7 @@ namespace NetTelebot
         }
 
         //todo getChatAdministrators (https://core.telegram.org/bots/api#getchatadministrators)
-        //todo getChatMembersCount (https://core.telegram.org/bots/api#getchatmemberscount)
-
-
+      
         /// <summary>
         /// Use this method to get the number of members in a chat. Returns <see cref="IntegerResult"/> on success
         /// </summary>
