@@ -74,7 +74,6 @@
     <Compile Include="Type\Keyboard\InlineKeyboardMarkup.cs" />
     <Compile Include="Type\Keyboard\ReplyKeyboardRemove.cs" />
     <Compile Include="Type\LocationInfo.cs" />
-    <Compile Include="Type\MeInfo.cs" />
     <Compile Include="Type\MessageEntityInfo.cs" />
     <Compile Include="Type\MessageInfo.cs" />
     <Compile Include="Type\NewFile.cs" />

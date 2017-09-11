@@ -1,8 +1,6 @@
-﻿using System;
-using NetTelebot.BotEnum;
+﻿using NetTelebot.BotEnum;
 using NetTelebot.CommonUtils;
 using NetTelebot.Result;
-using NetTelebot.Type;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests.RequestToTelegramTest
@@ -21,23 +19,6 @@ namespace NetTelebot.Tests.RequestToTelegramTest
 
             mChatGroupId = new TelegramBot().GetGroupChatId();
             mChatSuperGroupId = new TelegramBot().GetSuperGroupChatId();
-        }
-
-        /// <summary>
-        /// Test for method <see cref="TelegramBotClient.GetMe"/>.
-        /// </summary>
-        [Test, Obsolete]
-        public void GetMeTest()
-        {
-            MeInfo getMe = mTelegramBot.GetMe();
-
-            ConsoleUtlis.PrintResult(getMe);
-
-            Assert.Multiple(() =>
-            {
-                Assert.True(getMe.Ok);
-                Assert.AreEqual(getMe.FirstName, "NetTelebotTestedBot");
-            });
         }
 
         /// <summary>
