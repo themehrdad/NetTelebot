@@ -91,7 +91,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         [Test]
         public void SendPhotoTest()
         {
-            mBotOkResponse.SendPhoto(123, new ExistingFile { FileId = "123" }, "caption", false, 123, new ForceReplyMarkup());
+            mBotOkResponse.SendPhoto(123, new ExistingFile { FileId = "123", Url = "url"}, "caption", false, 123, new ForceReplyMarkup());
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendPhoto").UsingPost());
 
