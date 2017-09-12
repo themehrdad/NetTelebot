@@ -620,7 +620,7 @@ namespace NetTelebot
         /// The file can then be downloaded via the link https://api.telegram.org/file/botToken/file_path, where file_path is taken from the response. 
         /// It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
         /// </summary>
-        /// <param name="fileId"> 	File identifier to get info about</param>
+        /// <param name="fileId">File identifier to get info about</param>
         /// <returns>On success, a <see cref="FileInfo"/> is returned.</returns>
         public FileInfoResult GetFile(string fileId)
         {
