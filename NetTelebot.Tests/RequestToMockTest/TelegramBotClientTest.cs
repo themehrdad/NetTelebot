@@ -590,7 +590,19 @@ namespace NetTelebot.Tests.RequestToMockTest
         [Test]
         public void GetFileTest()
         {
-            //todo
+            mBotOkResponse.GetFile("jksdfjlskdjlaf");
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getFile").UsingPost());
+
+            PrintResult(request);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("file_id=jksdfjlskdjlaf", request.FirstOrDefault()?.Body);
+
+                Assert.AreEqual("/botToken/getFile", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.GetFile("jksdfjlskdjlaf"));
+            });
         }
 
         //todo move common project

@@ -24,6 +24,7 @@ namespace NetTelebot.Tests.MockServers
             AddNewRouter("/botToken/leaveChat", ResponseString.ExpectedBodyForBooleanResult);
             AddNewRouter("/botToken/getChatMembersCount", ResponseString.ExpectedBodyForIntegerResult);
             AddNewRouter("/botToken/getChat", ResponseString.ExpectedBodyForGetChat);
+            AddNewRouter("/botToken/getFile", ResponseString.ExpectedBodyForGetFile);
 
             AddNewRouter("/", ResponseString.ExpectedBodyForBadResponse, ServerBadResponse, 401);
         }
