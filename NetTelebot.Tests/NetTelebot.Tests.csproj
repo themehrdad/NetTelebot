@@ -83,10 +83,10 @@
     <Compile Include="RequestToTelegramTest\TelegramBotKeyboardTest.cs" />
     <Compile Include="ResponseTest\BooleanResultParserTest.cs" />
     <Compile Include="ResponseTest\CallbackQueryParserTest.cs" />
+    <Compile Include="ResponseTest\FileInfoResultParser.cs" />
     <Compile Include="ResponseTest\GetUpdatesResultParserTest.cs" />
     <Compile Include="ResponseTest\GetUserProfilePhotosResultParserTest.cs" />
     <Compile Include="ResponseTest\IntegerResultParserTest.cs" />
-    <Compile Include="ResponseTest\MeInfoParserTest.cs" />
     <Compile Include="NullReferenceExceptionTest\MessageInfoClassTypeTest.cs" />
     <Compile Include="ResponseTest\MessageInfoParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -97,6 +97,7 @@
     <Compile Include="TestForDiscrepanciesWithApi\CountriesTest.cs" />
     <Compile Include="TestForDiscrepanciesWithApi\CurrencyTest.cs" />
     <Compile Include="TestForDiscrepanciesWithApi\RequestToUri.cs" />
+    <Compile Include="TypeTestObject\FileInfoObject.cs" />
     <Compile Include="TypeTestObject\GameObject\AnimationInfoObject.cs" />
     <Compile Include="TypeTestObject\GameObject\GameInfoObject.cs" />
     <Compile Include="TypeTestObject\PaymentObject\InvoiceInfoObject.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="RequestToMockTest\TelegramBotClientTest.cs" />
     <Compile Include="RequestToMockTest\TelegramBotKeyboardTest.cs" />
     <Compile Include="RequestToTelegramTest\TelegramBotClientTest.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\FileInfoResultObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\GetUpdatesResultObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\GetUserProfilePhotosResultObject.cs" />
     <Compile Include="TypeTestObject\AudioInfoObject.cs" />
@@ -116,7 +118,6 @@
     <Compile Include="TypeTestObject\ContactInfoObject.cs" />
     <Compile Include="TypeTestObject\DocumentInfoObject.cs" />
     <Compile Include="TypeTestObject\LocationInfoObject.cs" />
-    <Compile Include="TypeTestObject\MeInfoObject.cs" />
     <Compile Include="TypeTestObject\MessageEntityInfoObject.cs" />
     <Compile Include="TypeTestObject\MessageInfoObject.cs" />
     <Compile Include="TypeTestObject\PhotoSizeInfoObject.cs" />

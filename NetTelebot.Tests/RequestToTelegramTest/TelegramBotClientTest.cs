@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using NetTelebot.BotEnum;
 using NetTelebot.CommonUtils;
 using NetTelebot.Result;
@@ -21,23 +22,6 @@ namespace NetTelebot.Tests.RequestToTelegramTest
 
             mChatGroupId = new TelegramBot().GetGroupChatId();
             mChatSuperGroupId = new TelegramBot().GetSuperGroupChatId();
-        }
-
-        /// <summary>
-        /// Test for method <see cref="TelegramBotClient.GetMe"/>.
-        /// </summary>
-        [Test, Obsolete]
-        public void GetMeTest()
-        {
-            MeInfo getMe = mTelegramBot.GetMe();
-
-            ConsoleUtlis.PrintResult(getMe);
-
-            Assert.Multiple(() =>
-            {
-                Assert.True(getMe.Ok);
-                Assert.AreEqual(getMe.FirstName, "NetTelebotTestedBot");
-            });
         }
 
         /// <summary>
@@ -166,5 +150,64 @@ namespace NetTelebot.Tests.RequestToTelegramTest
                 Assert.AreEqual(3, getChatMemberCount.Result);
             });
         }
+
+        [Test]
+        public void SendPhotoAsFileTest()
+        {
+            NewFile photo = new NewFile
+            {
+                FileContent = File.ReadAllBytes(GetProjectPath() + @"\Images\Logo\logo-500.png"),
+                FileName = "logo-500.png"
+            };
+
+            SendMessageResult sendMessage = mTelegramBot.SendPhoto("@telebotTestChannel", photo);
+
+            Assert.AreEqual("AgADAgADaagxG-_buUmX76y6cGpluPA7Sw0ABJFnmSfjBBfrk5QPAAEC", sendMessage.Result.Photo[0].FileId);
+        }
+
+        [Test]
+        public void SendPhotoAsFileIdTest()
+        {
+            ExistingFile existing = new ExistingFile
+            {
+                FileId = "AgADAgADaagxG-_buUmX76y6cGpluPA7Sw0ABJFnmSfjBBfrk5QPAAEC"
+            };
+
+            SendMessageResult sendMessage = mTelegramBot.SendPhoto("@telebotTestChannel", existing);
+
+            Console.WriteLine(sendMessage.Result.Photo[0].FileId);
+
+            Assert.AreEqual("AgADAgADaagxG-_buUmX76y6cGpluPA7Sw0ABJFnmSfjBBfrk5QPAAEC", sendMessage.Result.Photo[0].FileId);
+        }
+
+        [Test]
+        public void SendPhotoAsUrlTest()
+        {
+            ExistingFile existing = new ExistingFile
+            {
+                Url = "https://proglib.io/wp-content/uploads/2017/07/telegram-bot-na-Python-s-ispolzovaniem-tolko-requests.jpg"
+            };
+
+            SendMessageResult sendMessage = mTelegramBot.SendPhoto("@telebotTestChannel", existing);
+
+            Assert.AreEqual("AgADBAADEsg4GwoeZAcwyq9C0fVhKANXvRkABDMpTvt2GGzZ-2UEAAEC", sendMessage.Result.Photo[0].FileId);
+        }
+
+        [Test]
+        public void GetFileTest()
+        {
+            const string fileId = "AgADBAADEsg4GwoeZAcwyq9C0fVhKANXvRkABDMpTvt2GGzZ-2UEAAEC";
+            FileInfoResult sendMessage = mTelegramBot.GetFile(fileId);
+
+            Assert.True(sendMessage.Ok);
+            Assert.AreEqual(fileId, sendMessage.Result.FileId);
+        }
+
+        private static string GetProjectPath()
+        {
+            return  AppDomain.CurrentDomain.BaseDirectory.Replace(@"\NetTelebot.Tests\bin\Debug", string.Empty);
+        }
+
+
     }
 }

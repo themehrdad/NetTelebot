@@ -1,7 +1,6 @@
 ﻿using NetTelebot.Result;
 using NetTelebot.Tests.TypeTestObject;
 using NetTelebot.Tests.TypeTestObject.ResultTestObject;
-using NetTelebot.Type;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 

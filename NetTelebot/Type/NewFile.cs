@@ -14,6 +14,7 @@ namespace NetTelebot.Type
         /// The content of the file.
         /// </value>
         public byte[] FileContent { get; set; }
+
         /// <summary>
         /// Gets or sets the name of the file.
         /// </summary>

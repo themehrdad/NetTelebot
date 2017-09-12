@@ -172,15 +172,6 @@ namespace NetTelebot
         /// <summary>
         /// Gets information about your bot. You can call this method as a ping
         /// </summary>
-        [Obsolete("Please use GetsMe method. This method will be removed at the following updates")]
-        public MeInfo GetMe()
-        {
-            return ExecuteRequest<MeInfo>(NewRestRequest(getMeUri)) as MeInfo;
-        }
-
-        /// <summary>
-        /// Gets information about your bot. You can call this method as a ping
-        /// </summary>
         public UserInfoResult GetsMe()
         {
             return ExecuteRequest<UserInfoResult>(NewRestRequest(getMeUri)) as UserInfoResult;
@@ -265,17 +256,8 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendPhotoUri);
             request.AddParameter("chat_id", chatId);
-            ExistingFile file = photo as ExistingFile;
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("photo", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)photo;
-                request.AddFile("photo", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(photo, request, "photo");
+
             if (!string.IsNullOrEmpty(caption))
                 request.AddParameter("caption", caption);
             if (disableNotification.HasValue)
@@ -317,18 +299,7 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendAudioUri);
             request.AddParameter("chat_id", chatId);
-
-            ExistingFile file = audio as ExistingFile;
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("audio", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)audio;
-                request.AddFile("audio", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(audio, request, "audio");
 
             if (!string.IsNullOrEmpty(caption))
                 request.AddParameter("caption", caption);
@@ -368,18 +339,7 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendDocumentUri);
             request.AddParameter("chat_id", chatId);
-
-            ExistingFile file = document as ExistingFile;
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("document", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)document;
-                request.AddFile("document", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(document, request, "document");
 
             if (!string.IsNullOrEmpty(caption))
                 request.AddParameter("caption", caption);
@@ -410,19 +370,7 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendStickerUri);
             request.AddParameter("chat_id", chatId);
-
-            ExistingFile file = sticker as ExistingFile;
-
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("sticker", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)sticker;
-                request.AddFile("sticker", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(sticker, request, "sticker");
 
             if (disableNotification.HasValue)
                 request.AddParameter("disable_notification", disableNotification.Value);
@@ -460,19 +408,7 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendVideoUri);
             request.AddParameter("chat_id", chatId);
-
-            ExistingFile file = video as ExistingFile;
-
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("video", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)video;
-                request.AddFile("video", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(video, request, "video");
 
             if (duration != null)
                 request.AddParameter("duration", duration);
@@ -518,19 +454,7 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendVideoNoteUri);
             request.AddParameter("chat_id", chatId);
-
-            ExistingFile file = videoNote as ExistingFile;
-
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("video_note", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile) videoNote;
-                request.AddFile("video_note", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(videoNote, request, "video_note");
 
             if (duration != null)
                 request.AddParameter("duration", duration);
@@ -690,7 +614,21 @@ namespace NetTelebot
             return ExecuteRequest<GetUserProfilePhotosResult>(request) as GetUserProfilePhotosResult;
         }
 
-        //todo getFile (https://core.telegram.org/bots/api#getfile)
+        /// <summary>
+        /// Use this method to get basic info about a file and prepare it for downloading.
+        /// For the moment, bots can download files of up to 20MB in size. 
+        /// The file can then be downloaded via the link https://api.telegram.org/file/botToken/file_path, where file_path is taken from the response. 
+        /// It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
+        /// </summary>
+        /// <param name="fileId">File identifier to get info about</param>
+        /// <returns>On success, a <see cref="FileInfo"/> is returned.</returns>
+        public FileInfoResult GetFile(string fileId)
+        {
+            RestRequest request = NewRestRequest(getFileUri);
+
+            request.AddParameter("file_id", fileId);
+            return ExecuteRequest<FileInfoResult>(request) as FileInfoResult;
+        }
 
         /// <summary>
         /// Use this method to kick a user from a group, a supergroup or a channel. 
@@ -763,9 +701,7 @@ namespace NetTelebot
         }
 
         //todo getChatAdministrators (https://core.telegram.org/bots/api#getchatadministrators)
-        //todo getChatMembersCount (https://core.telegram.org/bots/api#getchatmemberscount)
-
-
+      
         /// <summary>
         /// Use this method to get the number of members in a chat. Returns <see cref="IntegerResult"/> on success
         /// </summary>
@@ -816,6 +752,27 @@ namespace NetTelebot
             mUpdateTimer = null;
         }
 
+        private static RestRequest AddFile(IFile iFile, RestRequest request, string name)
+        {
+            ExistingFile file = iFile as ExistingFile;
+
+            if (file?.FileId != null)
+            {
+                request.AddParameter(name, file.FileId);
+            }
+            else if(file?.Url != null)
+            {
+                request.AddParameter(name, file.Url);
+            }
+            else
+            {
+                NewFile newFile = (NewFile)iFile;
+                request.AddFile(name, newFile.FileContent, newFile.FileName);
+            }
+
+            return request;
+        }
+
         private void UpdateTimerCallback(object state)
         {
             GetUpdatesResult updates = null;
@@ -864,11 +821,8 @@ namespace NetTelebot
                 if (typeof(T) == typeof (SendMessageResult))
                     return new SendMessageResult(response.Content);
 
-                if (typeof(T) == typeof (BooleanResult))
+                if (typeof (T) == typeof (BooleanResult))
                     return new BooleanResult(response.Content);
-
-                if (typeof(T) == typeof (MeInfo))
-                    return new MeInfo(response.Content);
 
                 if (typeof(T) == typeof(UserInfoResult))
                     return new UserInfoResult(response.Content);
@@ -884,6 +838,9 @@ namespace NetTelebot
 
                 if (typeof(T) == typeof (IntegerResult))
                     return new IntegerResult(response.Content);
+
+                if(typeof(T) == typeof(FileInfoResult))
+                    return new FileInfoResult(response.Content);
             }
 
             throw new Exception(response.StatusDescription);

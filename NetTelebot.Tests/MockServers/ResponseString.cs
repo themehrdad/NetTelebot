@@ -133,6 +133,24 @@ namespace NetTelebot.Tests.MockServers
             new JProperty("result", 123)).ToString();
 
         /// <summary>
+        /// Expected body for GetFile.
+        /// Represent JSON string:
+        /// 
+        /// { "ok": true,
+        ///   "result": {
+        ///         "file_id": "sdfslkajdflksadjf",
+        ///         "file_size": 123456789123456789,
+        ///         "file_path": "/file/path/to/file" }}
+        /// </summary>
+        internal static string ExpectedBodyForGetFile { get; } = new JObject(
+            new JProperty("ok", true),
+            new JProperty("result",
+                new JObject(
+                    new JProperty("file_id", "sdfslkajdflksadjf"),
+                    new JProperty("file_size", 1234567),
+                    new JProperty("file_path", "/file/path/to/file")))).ToString();
+
+        /// <summary>
         /// The expected body for bad response.
         /// Represent JSON string:
         ///  

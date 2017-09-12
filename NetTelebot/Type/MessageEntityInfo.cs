@@ -9,10 +9,6 @@ namespace NetTelebot.Type
     /// </summary>
     public class MessageEntityInfo
     {
-        internal MessageEntityInfo()
-        {  
-        }
-
         internal MessageEntityInfo(JObject jsonObject)
         {
             Parse(jsonObject);

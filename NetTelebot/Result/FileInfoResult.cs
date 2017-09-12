@@ -1,28 +1,30 @@
-﻿using Newtonsoft.Json;
+﻿using NetTelebot.Type;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Result
 {
     /// <summary>
-    /// When calling method returned <see cref="int"/> in result field on TelegramBotClient class, this object will be returned.
+    /// When calling method returned <see cref="FileInfo"/> in result field on TelegramBotClient class, this object will be returned.
     /// </summary>
-    public class IntegerResult
+    public class FileInfoResult
     {
-        internal IntegerResult(string jsonText)
+        internal FileInfoResult(string jsonText)
         {
             Parse(jsonText);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
-            Ok = jsonObject["ok"].Value<bool>();
-            Result = jsonObject["result"].Value<int>();
+            
         }
 
         private void Parse(string jsonText)
         {
             JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
+        }
+
+        private void Parse(JObject jsonObject)
+        {
+            Ok = jsonObject["ok"].Value<bool>();
+            Result = new FileInfo(jsonObject["result"].Value<JObject>());
         }
 
         /// <summary>
@@ -36,6 +38,10 @@ namespace NetTelebot.Result
         /// <summary>
         /// Gets the result.
         /// </summary>
-        public int Result { get; private set; }
+        /// <value>
+        /// The result.
+        /// </value>
+        public FileInfo Result { get; private set;  }
+
     }
 }

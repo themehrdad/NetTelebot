@@ -1,5 +1,4 @@
 ﻿using System;
-using NetTelebot.BotEnum;
 
 namespace NetTelebot.Extension
 {

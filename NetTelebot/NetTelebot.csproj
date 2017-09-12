@@ -50,6 +50,7 @@
     <Compile Include="BotEnum\Countries.cs" />
     <Compile Include="BotEnum\Currency.cs" />
     <Compile Include="Result\ChatInfoResult.cs" />
+    <Compile Include="Result\FileInfoResult.cs" />
     <Compile Include="Result\IntegerResult.cs" />
     <Compile Include="Result\UserInfoResult.cs" />
     <Compile Include="Type\AudioInfo.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Type\DocumentInfo.cs" />
     <Compile Include="Type\ExistingFile.cs" />
     <Compile Include="Type\CallbackQueryInfo.cs" />
+    <Compile Include="Type\FileInfo.cs" />
     <Compile Include="Type\Games\AnimationInfo.cs" />
     <Compile Include="Type\Games\GameInfo.cs" />
     <Compile Include="Type\Keyboard\ForceReplyMarkup.cs" />
@@ -74,7 +76,6 @@
     <Compile Include="Type\Keyboard\InlineKeyboardMarkup.cs" />
     <Compile Include="Type\Keyboard\ReplyKeyboardRemove.cs" />
     <Compile Include="Type\LocationInfo.cs" />
-    <Compile Include="Type\MeInfo.cs" />
     <Compile Include="Type\MessageEntityInfo.cs" />
     <Compile Include="Type\MessageInfo.cs" />
     <Compile Include="Type\NewFile.cs" />
@@ -82,7 +83,6 @@
     <Compile Include="Type\Payment\InvoceInfo.cs" />
     <Compile Include="Type\Payment\OrderInfo.cs" />
     <Compile Include="Type\Payment\SuccessfulPaymentInfo.cs" />
-    <Compile Include="Type\Payment\SuccessfulPaymentInfoObject.cs" />
     <Compile Include="Type\PhotoSizeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Type\Keyboard\ReplyKeyboardHideMarkup.cs" />
