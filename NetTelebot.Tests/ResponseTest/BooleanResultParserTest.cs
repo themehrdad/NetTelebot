@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NetTelebot.Tests.ResponseTest
 {
-    [TestFixture]
     internal static class BooleanResultParserTest
     {
         /// <summary>
