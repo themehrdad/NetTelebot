@@ -162,10 +162,13 @@ namespace NetTelebot.Tests.RequestToTelegramTest
 
             SendMessageResult sendMessage = mTelegramBot.SendPhoto("@telebotTestChannel", photo);
 
-            Assert.NotNull(sendMessage.Result.Photo[0].FileId);
-            Assert.NotNull(sendMessage.Result.Photo[0].FileSize);
-            Assert.NotNull(sendMessage.Result.Photo[0].Height);
-            Assert.NotNull(sendMessage.Result.Photo[0].Width);
+            Assert.Multiple(() =>
+            {
+                Assert.NotNull(sendMessage.Result.Photo[0].FileId);
+                Assert.NotNull(sendMessage.Result.Photo[0].FileSize);
+                Assert.NotNull(sendMessage.Result.Photo[0].Height);
+                Assert.NotNull(sendMessage.Result.Photo[0].Width);
+            });
         }
 
         [Test]
