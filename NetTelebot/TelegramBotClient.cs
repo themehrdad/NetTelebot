@@ -256,17 +256,8 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendPhotoUri);
             request.AddParameter("chat_id", chatId);
-            ExistingFile file = photo as ExistingFile;
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("photo", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)photo;
-                request.AddFile("photo", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(photo, request, "photo");
+
             if (!string.IsNullOrEmpty(caption))
                 request.AddParameter("caption", caption);
             if (disableNotification.HasValue)
@@ -308,18 +299,7 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendAudioUri);
             request.AddParameter("chat_id", chatId);
-
-            ExistingFile file = audio as ExistingFile;
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("audio", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)audio;
-                request.AddFile("audio", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(audio, request, "audio");
 
             if (!string.IsNullOrEmpty(caption))
                 request.AddParameter("caption", caption);
@@ -359,18 +339,7 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendDocumentUri);
             request.AddParameter("chat_id", chatId);
-
-            ExistingFile file = document as ExistingFile;
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("document", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)document;
-                request.AddFile("document", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(document, request, "document");
 
             if (!string.IsNullOrEmpty(caption))
                 request.AddParameter("caption", caption);
@@ -401,19 +370,7 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendStickerUri);
             request.AddParameter("chat_id", chatId);
-
-            ExistingFile file = sticker as ExistingFile;
-
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("sticker", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)sticker;
-                request.AddFile("sticker", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(sticker, request, "sticker");
 
             if (disableNotification.HasValue)
                 request.AddParameter("disable_notification", disableNotification.Value);
@@ -451,19 +408,7 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendVideoUri);
             request.AddParameter("chat_id", chatId);
-
-            ExistingFile file = video as ExistingFile;
-
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("video", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)video;
-                request.AddFile("video", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(video, request, "video");
 
             if (duration != null)
                 request.AddParameter("duration", duration);
@@ -509,19 +454,7 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendVideoNoteUri);
             request.AddParameter("chat_id", chatId);
-
-            ExistingFile file = videoNote as ExistingFile;
-
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("video_note", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile) videoNote;
-                request.AddFile("video_note", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(videoNote, request, "video_note");
 
             if (duration != null)
                 request.AddParameter("duration", duration);
@@ -803,6 +736,27 @@ namespace NetTelebot
         {
             mUpdateTimer?.Dispose();
             mUpdateTimer = null;
+        }
+
+        private static RestRequest AddFile(IFile iFile, RestRequest request, string name)
+        {
+            ExistingFile file = iFile as ExistingFile;
+
+            if (file?.FileId != null)
+            {
+                request.AddParameter(name, file.FileId);
+            }
+            else if(file?.Url != null)
+            {
+                request.AddParameter(name, file.Url);
+            }
+            else
+            {
+                NewFile newFile = (NewFile)iFile;
+                request.AddFile(name, newFile.FileContent, newFile.FileName);
+            }
+
+            return request;
         }
 
         private void UpdateTimerCallback(object state)
