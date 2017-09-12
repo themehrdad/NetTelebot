@@ -614,7 +614,21 @@ namespace NetTelebot
             return ExecuteRequest<GetUserProfilePhotosResult>(request) as GetUserProfilePhotosResult;
         }
 
-        //todo getFile (https://core.telegram.org/bots/api#getfile)
+        /// <summary>
+        /// Use this method to get basic info about a file and prepare it for downloading.
+        /// For the moment, bots can download files of up to 20MB in size. 
+        /// The file can then be downloaded via the link https://api.telegram.org/file/botToken/file_path, where file_path is taken from the response. 
+        /// It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
+        /// </summary>
+        /// <param name="fileId"> 	File identifier to get info about</param>
+        /// <returns>On success, a <see cref="FileInfo"/> is returned.</returns>
+        public FileInfoResult GetFile(string fileId)
+        {
+            RestRequest request = NewRestRequest(getFileUri);
+
+            request.AddParameter("file_id", fileId);
+            return ExecuteRequest<FileInfoResult>(request) as FileInfoResult;
+        }
 
         /// <summary>
         /// Use this method to kick a user from a group, a supergroup or a channel. 
@@ -824,6 +838,9 @@ namespace NetTelebot
 
                 if (typeof(T) == typeof (IntegerResult))
                     return new IntegerResult(response.Content);
+
+                if(typeof(T) == typeof(FileInfoResult))
+                    return new FileInfoResult(response.Content);
             }
 
             throw new Exception(response.StatusDescription);

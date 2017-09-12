@@ -193,9 +193,21 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             Assert.AreEqual("AgADBAADEsg4GwoeZAcwyq9C0fVhKANXvRkABDMpTvt2GGzZ-2UEAAEC", sendMessage.Result.Photo[0].FileId);
         }
 
+        [Test]
+        public void GetFileTest()
+        {
+            const string fileId = "AgADBAADEsg4GwoeZAcwyq9C0fVhKANXvRkABDMpTvt2GGzZ-2UEAAEC";
+            FileInfoResult sendMessage = mTelegramBot.GetFile(fileId);
+
+            Assert.True(sendMessage.Ok);
+            Assert.AreEqual(fileId, sendMessage.Result.FileId);
+        }
+
         private static string GetProjectPath()
         {
             return  AppDomain.CurrentDomain.BaseDirectory.Replace(@"\NetTelebot.Tests\bin\Debug", string.Empty);
         }
+
+
     }
 }

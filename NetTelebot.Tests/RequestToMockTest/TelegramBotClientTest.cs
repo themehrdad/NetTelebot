@@ -584,6 +584,15 @@ namespace NetTelebot.Tests.RequestToMockTest
             });
         }
 
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.GetChat"/>.
+        /// </summary>
+        [Test]
+        public void GetFileTest()
+        {
+            //todo
+        }
+
         //todo move common project
         internal static void PrintResult(IEnumerable<Request> request)
         {
