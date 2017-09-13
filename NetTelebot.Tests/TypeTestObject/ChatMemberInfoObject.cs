@@ -19,7 +19,8 @@ namespace NetTelebot.Tests.TypeTestObject
         /// <param name="canInviteUsers">Optional. Administrators only. True, if the administrator can invite new users to the chat</param>
         /// <param name="canRestrictMembers">Optional. Administrators only. True, if the administrator can restrict, ban or unban chat members</param>
         /// <param name="canPinMessages">Optional. Administrators only. True, if the administrator can pin messages, supergroups only</param>
-        /// <param name="canPromoteMembers">Optional. Administrators only. True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by the user)</param>
+        /// <param name="canPromoteMembers">Optional. Administrators only. True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, 
+        /// directly or indirectly (promoted by administrators that were appointed by the user)</param>
         /// <param name="canSendMessages">Optional. Restricted only. True, if the user can send text messages, contacts, locations and venues</param>
         /// <param name="canSendMediaMessages">Optional. Restricted only. True, if the user can send audios, documents, photos, videos, video notes and voice notes, implies can_send_messages</param>
         /// <param name="canSendOtherMessages">Optional. Restricted only. True, if the user can send animations, games, stickers and use inline bots, implies can_send_media_messages</param>

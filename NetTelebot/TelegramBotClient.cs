@@ -706,7 +706,7 @@ namespace NetTelebot
         /// <param name="chatId"></param>
         /// <returns>On success, returns an Array of <see cref="ChatMemberInfo"/> objects that contains information about all chat
         /// administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.</returns>
-        public ChatMemberInfoResult getChatAdministrators(object chatId)
+        public ChatMemberInfoResult GetChatAdministrators(object chatId)
         {
             RestRequest request = NewRestRequest(getChatAdministratorsUri);
 

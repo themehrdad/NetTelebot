@@ -6,7 +6,7 @@ namespace NetTelebot.Result
     /// <summary>
     /// When calling method returned <see cref="bool"/> in result field on TelegramBotClient class, this object will be returned.
     /// </summary>
-    internal class BooleanResult
+    public class BooleanResult
     {
         internal BooleanResult(string jsonText)
         {
