@@ -1,28 +1,29 @@
-﻿using Newtonsoft.Json;
+﻿using NetTelebot.Type;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Result
 {
     /// <summary>
-    /// When calling method returned <see cref="bool"/> in result field on TelegramBotClient class, this object will be returned.
+    /// When calling method returned <see cref="ChatMemberInfo"/> in result field on TelegramBotClient class, this object will be returned.
     /// </summary>
-    internal class BooleanResult
+    public class ChatMemberInfoResult
     {
-        internal BooleanResult(string jsonText)
+        internal ChatMemberInfoResult(string jsonText)
         {
             Parse(jsonText);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
-            Ok = jsonObject["ok"].Value<bool>();
-            Result = jsonObject["result"].Value<bool>();
         }
 
         private void Parse(string jsonText)
         {
             JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
+        }
+
+        private void Parse(JObject jsonObject)
+        {
+            Ok = jsonObject["ok"].Value<bool>();
+            Result = ChatMemberInfo.ParseArray(jsonObject["result"].Value<JArray>());
         }
 
         /// <summary>
@@ -36,9 +37,6 @@ namespace NetTelebot.Result
         /// <summary>
         /// Gets the result.
         /// </summary>
-        /// <value>
-        ///  <c>true</c> if ok; otherwise, <c>false</c>.
-        /// </value>
-        public bool Result { get; private set; }
+        public ChatMemberInfo[] Result { get; private set; }
     }
 }

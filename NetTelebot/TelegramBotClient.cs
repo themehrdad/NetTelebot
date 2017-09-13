@@ -700,8 +700,21 @@ namespace NetTelebot
             return ExecuteRequest<ChatInfoResult>(request) as ChatInfoResult;
         }
 
-        //todo getChatAdministrators (https://core.telegram.org/bots/api#getchatadministrators)
-      
+        /// <summary>
+        /// Use this method to get a list of administrators in a chat. 
+        /// </summary>
+        /// <param name="chatId"></param>
+        /// <returns>On success, returns an Array of <see cref="ChatMemberInfo"/> objects that contains information about all chat
+        /// administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.</returns>
+        public ChatMemberInfoResult getChatAdministrators(object chatId)
+        {
+            RestRequest request = NewRestRequest(getChatAdministratorsUri);
+
+            request.AddParameter("chat_id", chatId);
+
+            return ExecuteRequest<ChatMemberInfoResult>(request) as ChatMemberInfoResult;
+        }
+
         /// <summary>
         /// Use this method to get the number of members in a chat. Returns <see cref="IntegerResult"/> on success
         /// </summary>
@@ -841,6 +854,9 @@ namespace NetTelebot
 
                 if(typeof(T) == typeof(FileInfoResult))
                     return new FileInfoResult(response.Content);
+
+                if(typeof(T) == typeof(ChatMemberInfoResult))
+                    return new ChatMemberInfoResult(response.Content);
             }
 
             throw new Exception(response.StatusDescription);

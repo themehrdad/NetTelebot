@@ -97,6 +97,7 @@
     <Compile Include="TestForDiscrepanciesWithApi\CountriesTest.cs" />
     <Compile Include="TestForDiscrepanciesWithApi\CurrencyTest.cs" />
     <Compile Include="TestForDiscrepanciesWithApi\RequestToUri.cs" />
+    <Compile Include="TypeTestObject\ChatMemberInfoObject.cs" />
     <Compile Include="TypeTestObject\FileInfoObject.cs" />
     <Compile Include="TypeTestObject\GameObject\AnimationInfoObject.cs" />
     <Compile Include="TypeTestObject\GameObject\GameInfoObject.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="RequestToMockTest\TelegramBotClientTest.cs" />
     <Compile Include="RequestToMockTest\TelegramBotKeyboardTest.cs" />
     <Compile Include="RequestToTelegramTest\TelegramBotClientTest.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\ChatMemberInfoResultObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\FileInfoResultObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\GetUpdatesResultObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\GetUserProfilePhotosResultObject.cs" />

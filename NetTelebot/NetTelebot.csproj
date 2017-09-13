@@ -49,7 +49,9 @@
   <ItemGroup>
     <Compile Include="BotEnum\Countries.cs" />
     <Compile Include="BotEnum\Currency.cs" />
+    <Compile Include="BotEnum\Status.cs" />
     <Compile Include="Result\ChatInfoResult.cs" />
+    <Compile Include="Result\ChatMemberInfoResult.cs" />
     <Compile Include="Result\FileInfoResult.cs" />
     <Compile Include="Result\IntegerResult.cs" />
     <Compile Include="Result\UserInfoResult.cs" />
@@ -57,6 +59,7 @@
     <Compile Include="Result\BooleanResult.cs" />
     <Compile Include="BotEnum\ChatActions.cs" />
     <Compile Include="Type\ChatInfo.cs" />
+    <Compile Include="Type\ChatMemberInfo.cs" />
     <Compile Include="Type\ChatPhotoInfo.cs" />
     <Compile Include="BotEnum\ChatType.cs" />
     <Compile Include="Type\ContactInfo.cs" />
