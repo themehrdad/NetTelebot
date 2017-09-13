@@ -83,7 +83,8 @@
     <Compile Include="RequestToTelegramTest\TelegramBotKeyboardTest.cs" />
     <Compile Include="ResponseTest\BooleanResultParserTest.cs" />
     <Compile Include="ResponseTest\CallbackQueryParserTest.cs" />
-    <Compile Include="ResponseTest\FileInfoResultParser.cs" />
+    <Compile Include="ResponseTest\ChatMemberInfoResultParserTest.cs" />
+    <Compile Include="ResponseTest\FileInfoResultParserTest.cs" />
     <Compile Include="ResponseTest\GetUpdatesResultParserTest.cs" />
     <Compile Include="ResponseTest\GetUserProfilePhotosResultParserTest.cs" />
     <Compile Include="ResponseTest\IntegerResultParserTest.cs" />

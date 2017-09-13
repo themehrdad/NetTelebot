@@ -19,7 +19,7 @@ namespace NetTelebot.Type
         private void Parse(JObject jsonObject)
         {
             User = jsonObject["user"] != null
-                ? new UserInfo(jsonObject["from"].Value<JObject>())
+                ? new UserInfo(jsonObject["user"].Value<JObject>())
                 : new UserInfo();
             Status = jsonObject["status"].Value<string>().ToEnum<Status>();
 
@@ -53,7 +53,7 @@ namespace NetTelebot.Type
                 CanSendMediaMessages = jsonObject["can_send_media_messages"].Value<bool>();
             if (jsonObject["can_send_other_messages"] != null)
                 CanSendOtherMessages = jsonObject["can_send_other_messages"].Value<bool>();
-            if (jsonObject["can_add_web_page_previews  "] != null)
+            if (jsonObject["can_add_web_page_previews"] != null)
                 CanAddWebPagePreviews = jsonObject["can_add_web_page_previews"].Value<bool>();
         }
 
@@ -86,7 +86,7 @@ namespace NetTelebot.Type
         /// <summary>
         /// Restictred and kicked only. Date when restrictions will be lifted for this user.
         /// </summary>
-        public DateTime UntilDate { get; set; }
+        public DateTime UntilDate { get; private set; }
 
         /// <summary>
         /// Optional. 

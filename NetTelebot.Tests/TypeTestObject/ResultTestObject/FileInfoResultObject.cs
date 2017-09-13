@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.TypeTestObject.ResultTestObject
 {
-    class FileInfoResultObject
+    internal static class FileInfoResultObject
     {
         /// <summary>
         /// Object represent this type <see cref="FileInfoResult"/>
