@@ -30,9 +30,9 @@ namespace NetTelebot.Tests.ResponseTest
                 true, true, true, true, true, true, true, true, true, true, true);
 
 
-            dynamic fileInfoResultObject = ChatMemberInfoResultObject.GetObject(true, new JArray(chatMember));
+            dynamic chatMemberResultObject = ChatMemberInfoResultObject.GetObject(true, new JArray(chatMember));
 
-            ChatMemberInfoResult chatMemberInfoResult = new ChatMemberInfoResult(fileInfoResultObject.ToString());
+            ChatMemberInfoResult chatMemberInfoResult = new ChatMemberInfoResult(chatMemberResultObject.ToString());
 
             Assert.Multiple(() =>
             {
@@ -59,6 +59,69 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.True(chatMemberInfoResult.Result[0].CanSendOtherMessages);
                 Assert.True(chatMemberInfoResult.Result[0].CanAddWebPagePreviews);
             });
+        }
+
+        /// <summary>
+        /// Test for <see cref="Status"/>.
+        /// </summary>
+        [Test]
+        public static void StatusEnumTest()
+        {
+            const int id = 1000;
+            const string firstName = "TestName";
+            const string lastName = "testLastName";
+            const string username = "testUsername";
+            const string languageCode = "testLanguageCode";
+            JObject userObject = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            const string statusCreator = "creator";
+            const string statusAdministrator = "administrator";
+            const string statusKicked = "kicked";
+            const string statusLeft = "left";
+            const string statusMember = "member";
+            const string statusRestricted = "restricted";
+            
+            //status creator
+            JObject chatMember = ChatMemberInfoObject.GetObject(userObject, statusCreator);
+            dynamic fileInfoResultObject = ChatMemberInfoResultObject.GetObject(true, new JArray(chatMember));
+            ChatMemberInfoResult chatMemberInfoResult = new ChatMemberInfoResult(fileInfoResultObject.ToString());
+
+            Assert.AreEqual(Status.creator, chatMemberInfoResult.Result[0].Status);
+
+            //status administrator
+            chatMember = ChatMemberInfoObject.GetObject(userObject, statusAdministrator);
+            fileInfoResultObject = ChatMemberInfoResultObject.GetObject(true, new JArray(chatMember));
+            chatMemberInfoResult = new ChatMemberInfoResult(fileInfoResultObject.ToString());
+
+            Assert.AreEqual(Status.administrator, chatMemberInfoResult.Result[0].Status);
+
+            //status kicked
+            chatMember = ChatMemberInfoObject.GetObject(userObject, statusKicked);
+            fileInfoResultObject = ChatMemberInfoResultObject.GetObject(true, new JArray(chatMember));
+            chatMemberInfoResult = new ChatMemberInfoResult(fileInfoResultObject.ToString());
+
+            Assert.AreEqual(Status.kicked, chatMemberInfoResult.Result[0].Status);
+
+            //status left
+            chatMember = ChatMemberInfoObject.GetObject(userObject, statusLeft);
+            fileInfoResultObject = ChatMemberInfoResultObject.GetObject(true, new JArray(chatMember));
+            chatMemberInfoResult = new ChatMemberInfoResult(fileInfoResultObject.ToString());
+            
+            Assert.AreEqual(Status.left, chatMemberInfoResult.Result[0].Status);
+
+            //status member
+            chatMember = ChatMemberInfoObject.GetObject(userObject, statusMember);
+            fileInfoResultObject = ChatMemberInfoResultObject.GetObject(true, new JArray(chatMember));
+            chatMemberInfoResult = new ChatMemberInfoResult(fileInfoResultObject.ToString());
+
+            Assert.AreEqual(Status.member, chatMemberInfoResult.Result[0].Status);
+
+            //status restricted
+            chatMember = ChatMemberInfoObject.GetObject(userObject, statusRestricted);
+            fileInfoResultObject = ChatMemberInfoResultObject.GetObject(true, new JArray(chatMember));
+            chatMemberInfoResult = new ChatMemberInfoResult(fileInfoResultObject.ToString());
+
+            Assert.AreEqual(Status.restricted, chatMemberInfoResult.Result[0].Status);
         }
     }
 }

@@ -27,29 +27,55 @@ namespace NetTelebot.Tests.TypeTestObject
         /// <param name="canAddWebPagePreviews">Optional. Restricted only. True, if user may add web page previews to his messages, implies can_send_media_messages</param>
         /// <returns><see cref="ChatMemberInfo"/>
         /// </returns>
-        internal static JObject GetObject(JObject user, string status, int untilDateUnix, bool canBeEdited,
-            bool canChangeInfo, bool canPostMessages, bool canEditMessages, bool canDeleteMessages, bool canInviteUsers,
-            bool canRestrictMembers, bool canPinMessages, bool canPromoteMembers, bool canSendMessages, 
-            bool canSendMediaMessages, bool canSendOtherMessages, bool canAddWebPagePreviews)
+        internal static JObject GetObject(JObject user, string status, 
+            int? untilDateUnix = null, 
+            bool? canBeEdited = null,
+            bool? canChangeInfo = null, 
+            bool? canPostMessages = null, 
+            bool? canEditMessages = null, 
+            bool? canDeleteMessages = null, 
+            bool? canInviteUsers = null,
+            bool? canRestrictMembers = null,
+            bool? canPinMessages = null, 
+            bool? canPromoteMembers = null, 
+            bool? canSendMessages = null, 
+            bool? canSendMediaMessages = null, 
+            bool? canSendOtherMessages = null, 
+            bool? canAddWebPagePreviews= null)
         {
             dynamic chatMemberInfo = new JObject();
 
             chatMemberInfo.user = user;
             chatMemberInfo.status = status;
-            chatMemberInfo.until_date = untilDateUnix;
-            chatMemberInfo.can_be_edited = canBeEdited;
-            chatMemberInfo.can_change_info = canChangeInfo;
-            chatMemberInfo.can_post_messages = canPostMessages;
-            chatMemberInfo.can_edit_messages = canEditMessages;
-            chatMemberInfo.can_delete_messages = canDeleteMessages;
-            chatMemberInfo.can_invite_users = canInviteUsers;
-            chatMemberInfo.can_restrict_members = canRestrictMembers;
-            chatMemberInfo.can_pin_messages = canPinMessages;
-            chatMemberInfo.can_promote_members = canPromoteMembers;
-            chatMemberInfo.can_send_messages = canSendMessages;
-            chatMemberInfo.can_send_media_messages = canSendMediaMessages;
-            chatMemberInfo.can_send_other_messages = canSendOtherMessages;
-            chatMemberInfo.can_add_web_page_previews = canAddWebPagePreviews;
+
+            if (untilDateUnix != null)
+                chatMemberInfo.until_date = untilDateUnix;
+            if (canBeEdited != null)
+                chatMemberInfo.can_be_edited = canBeEdited;
+            if (canChangeInfo != null)
+                chatMemberInfo.can_change_info = canChangeInfo;
+            if (canPostMessages != null)
+                chatMemberInfo.can_post_messages = canPostMessages;
+            if (canEditMessages != null)
+                chatMemberInfo.can_edit_messages = canEditMessages;
+            if (canDeleteMessages != null)
+                chatMemberInfo.can_delete_messages = canDeleteMessages;
+            if (canInviteUsers != null)
+                chatMemberInfo.can_invite_users = canInviteUsers;
+            if (canRestrictMembers != null)
+                chatMemberInfo.can_restrict_members = canRestrictMembers;
+            if (canPinMessages != null)
+                chatMemberInfo.can_pin_messages = canPinMessages;
+            if (canPromoteMembers != null)
+                chatMemberInfo.can_promote_members = canPromoteMembers;
+            if (canSendMessages != null)
+                chatMemberInfo.can_send_messages = canSendMessages;
+            if (canSendMediaMessages != null)
+                chatMemberInfo.can_send_media_messages = canSendMediaMessages;
+            if (canSendOtherMessages != null)
+                chatMemberInfo.can_send_other_messages = canSendOtherMessages;
+            if (canAddWebPagePreviews != null)
+                chatMemberInfo.can_add_web_page_previews = canAddWebPagePreviews;
 
             return chatMemberInfo;
         }
