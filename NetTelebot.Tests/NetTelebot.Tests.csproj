@@ -83,7 +83,9 @@
     <Compile Include="RequestToTelegramTest\TelegramBotKeyboardTest.cs" />
     <Compile Include="ResponseTest\BooleanResultParserTest.cs" />
     <Compile Include="ResponseTest\CallbackQueryParserTest.cs" />
-    <Compile Include="ResponseTest\FileInfoResultParser.cs" />
+    <Compile Include="ResponseTest\ChatMemberInfoResultParserTest.cs" />
+    <Compile Include="ResponseTest\ChatMembersInfoResultParserTest.cs" />
+    <Compile Include="ResponseTest\FileInfoResultParserTest.cs" />
     <Compile Include="ResponseTest\GetUpdatesResultParserTest.cs" />
     <Compile Include="ResponseTest\GetUserProfilePhotosResultParserTest.cs" />
     <Compile Include="ResponseTest\IntegerResultParserTest.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="TestForDiscrepanciesWithApi\CountriesTest.cs" />
     <Compile Include="TestForDiscrepanciesWithApi\CurrencyTest.cs" />
     <Compile Include="TestForDiscrepanciesWithApi\RequestToUri.cs" />
+    <Compile Include="TypeTestObject\ChatMemberInfoObject.cs" />
     <Compile Include="TypeTestObject\FileInfoObject.cs" />
     <Compile Include="TypeTestObject\GameObject\AnimationInfoObject.cs" />
     <Compile Include="TypeTestObject\GameObject\GameInfoObject.cs" />
@@ -108,6 +111,8 @@
     <Compile Include="RequestToMockTest\TelegramBotClientTest.cs" />
     <Compile Include="RequestToMockTest\TelegramBotKeyboardTest.cs" />
     <Compile Include="RequestToTelegramTest\TelegramBotClientTest.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\ChatMemberInfoResultObject.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\ChatMembersInfoResultObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\FileInfoResultObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\GetUpdatesResultObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\GetUserProfilePhotosResultObject.cs" />

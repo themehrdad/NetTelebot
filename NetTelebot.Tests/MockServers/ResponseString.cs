@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using NetTelebot.Tests.TypeTestObject;
+using NetTelebot.Tests.TypeTestObject.ResultTestObject;
+using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.MockServers
 {
@@ -23,13 +25,8 @@ namespace NetTelebot.Tests.MockServers
         internal static string ExpectedBodyForSendMessageResult { get; } = new JObject(
             new JProperty("ok", true),
             new JProperty("result",
-                new JObject(
-                    new JProperty("message_id", 123),
-                    new JProperty("date", 0),
-                    new JProperty("chat",
-                        new JObject(
-                            new JProperty("id", 123),
-                            new JProperty("type", "private")))))).ToString();
+                new JObject(MessageInfoObject.GetMandatoryFieldsMessageInfo(123, 0, 123, "private").Properties())))
+            .ToString();
 
         /// <summary>
         /// The expected body for GetUserProfilePhotos.
@@ -59,14 +56,9 @@ namespace NetTelebot.Tests.MockServers
                     new JProperty("photos",
                         GetJarrayOfJarry(
                             new JArray(
-                                new JObject(
-                                    new JProperty("file_id", 123),
-                                    new JProperty("width", 123),
-                                    new JProperty("height", 123)),
-                                new JObject(
-                                    new JProperty("file_id", 456),
-                                    new JProperty("width", 456),
-                                    new JProperty("height", 456))).ToString()))))).ToString();
+                                new JObject(PhotoSizeInfoObject.GetObject("123", 123, 123, 123).Properties()),
+                                new JObject(PhotoSizeInfoObject.GetObject("123", 123, 123, 123).Properties())).ToString())))))
+            .ToString();
 
         /// <summary>
         /// Gets the expected body for GetMe.
@@ -82,10 +74,8 @@ namespace NetTelebot.Tests.MockServers
             new JProperty("ok", true),
             new JProperty("result",
                 new JObject(
-                    new JProperty("id", 123),
-                    new JProperty("first_name", "FirstName"),
-                    new JProperty("username", "Username")))).ToString();
-
+                    UserInfoObject.GetObject(123, "FirstName", "LastName", "Username", "languageCode")))).ToString();
+                    
         /// <summary>
         /// The expected body for GetChat.
         /// Represent JSON string:
@@ -104,13 +94,8 @@ namespace NetTelebot.Tests.MockServers
             new JProperty("ok", true),
             new JProperty("result",
                 new JObject(
-                    new JProperty("id", 123),
-                    new JProperty("type", "private"),
-                    new JProperty("title", "TestTitle"),
-                    new JProperty("username", "TestUsename"),
-                    new JProperty("first_name", "TestFirsName"),
-                    new JProperty("last_name", "TestLastName"),
-                    new JProperty("all_members_are_administrators", true)))).ToString();
+                    ChatInfoObject.GetObject(123, "private", "Title", "Username", "FirstName", "LastName", true,
+                        description: "description").Properties()))).ToString();
 
         /// <summary>
         /// The expected body for BooleanResult.
@@ -119,9 +104,8 @@ namespace NetTelebot.Tests.MockServers
         /// { "ok": true, "result": true}
         /// </summary>
         internal static string ExpectedBodyForBooleanResult { get; } = new JObject(
-            new JProperty("ok", true),
-            new JProperty("result", true)).ToString();
-
+            BooleanResultObject.GetObject(true, true)).ToString();
+            
         /// <summary>
         /// The expected body for BooleanResult.
         /// Represent JSON string:
@@ -129,8 +113,7 @@ namespace NetTelebot.Tests.MockServers
         /// { "ok": true, "result": 123}
         /// </summary>
         internal static string ExpectedBodyForIntegerResult { get; } = new JObject(
-            new JProperty("ok", true),
-            new JProperty("result", 123)).ToString();
+            IntegerResultObject.GetObject(true, 123).Properties()).ToString();
 
         /// <summary>
         /// Expected body for GetFile.
@@ -146,9 +129,56 @@ namespace NetTelebot.Tests.MockServers
             new JProperty("ok", true),
             new JProperty("result",
                 new JObject(
-                    new JProperty("file_id", "sdfslkajdflksadjf"),
-                    new JProperty("file_size", 1234567),
-                    new JProperty("file_path", "/file/path/to/file")))).ToString();
+                    FileInfoObject.GetObject("fileId", 123456, "file/path").Properties()))).ToString();
+
+        /// <summary>
+        /// Expected body forGetChatAdministrators.
+        /// Represent JSON string:
+        /// 
+        /// { "ok": true,
+        ///   "result": [{
+        ///      "user": {
+        ///        "id": 123,
+        ///        "first_name": "FirstName",
+        ///        "last_name": "LastName",
+        ///        "username": "UserName",
+        ///        "language_code": "LanguageCode"
+        ///      },
+        ///      "status": "member"
+        ///    }]}
+        /// </summary>
+        internal static string ExpectedBodyForGetChatAdministrators { get; } = new JObject(
+            new JProperty("ok", true),
+            new JProperty("result",
+                new JArray(
+                    new JObject(
+                        ChatMemberInfoObject.GetObject(
+                            UserInfoObject.GetObject(123, "FirstName", "LastName", "UserName", "LanguageCode"), "member")
+                            .Properties())))).ToString();
+
+        /// <summary>
+        /// Expected body forGetChatAdministrators.
+        /// Represent JSON string:
+        /// 
+        /// { "ok": true,
+        ///   "result": {
+        ///      "user": {
+        ///        "id": 123,
+        ///        "first_name": "FirstName",
+        ///        "last_name": "LastName",
+        ///        "username": "UserName",
+        ///        "language_code": "LanguageCode"
+        ///      },
+        ///      "status": "member"
+        ///    }}
+        /// </summary>
+        internal static string ExpectedBodyForGetChatMember { get; } = new JObject(
+           new JProperty("ok", true),
+           new JProperty("result",
+                   new JObject(
+                       ChatMemberInfoObject.GetObject(
+                           UserInfoObject.GetObject(123, "FirstName", "LastName", "UserName", "LanguageCode"), "member")
+                           .Properties()))).ToString();
 
         /// <summary>
         /// The expected body for bad response.

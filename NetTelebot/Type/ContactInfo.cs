@@ -11,7 +11,6 @@ namespace NetTelebot.Type
         {
         }
 
-        
         internal ContactInfo(JObject jsonObject)
         {
             Parse(jsonObject);

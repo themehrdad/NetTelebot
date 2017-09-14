@@ -43,25 +43,28 @@ namespace NetTelebot.Tests.ResponseTest
 
             CallbackQueryInfo callbackQuery = new CallbackQueryInfo(callbackQueryInfo);
 
-            //UserInfo field
-            Assert.AreEqual(callbackQuery.From.Id, id);
-            Assert.AreEqual(callbackQuery.From.FirstName, firstName);
-            Assert.AreEqual(callbackQuery.From.LastName, lastName);
-            Assert.AreEqual(callbackQuery.From.UserName, username);
-            Assert.AreEqual(callbackQuery.From.LanguageCode, languageCode);
+            Assert.Multiple(() =>
+            {
+                //UserInfo field
+                Assert.AreEqual(id, callbackQuery.From.Id);
+                Assert.AreEqual(firstName, callbackQuery.From.FirstName);
+                Assert.AreEqual(lastName, callbackQuery.From.LastName);
+                Assert.AreEqual(username, callbackQuery.From.UserName);
+                Assert.AreEqual(languageCode, callbackQuery.From.LanguageCode);
 
-            //MessageInfo field
-            Assert.AreEqual(callbackQuery.Message.MessageId, messageId);
-            Assert.AreEqual(callbackQuery.Message.DateUnix, date);
-            Assert.AreEqual(callbackQuery.Message.Chat.Id, chatId);
-            Assert.AreEqual(callbackQuery.Message.Chat.Type, chatType);
+                //MessageInfo field
+                Assert.AreEqual(messageId, callbackQuery.Message.MessageId);
+                Assert.AreEqual(date, callbackQuery.Message.DateUnix);
+                Assert.AreEqual(chatId, callbackQuery.Message.Chat.Id);
+                Assert.AreEqual(chatType, callbackQuery.Message.Chat.Type);
 
-            //CallbackQueryInfo field
-            Assert.AreEqual(callbackQuery.Id, idСallback);
-            Assert.AreEqual(callbackQuery.InlineMessageId, inlineMessageId);
-            Assert.AreEqual(callbackQuery.ChatInstance, chatInstance);
-            Assert.AreEqual(callbackQuery.Data, data);
-            Assert.AreEqual(callbackQuery.GameShortName, gameShortName);
+                //CallbackQueryInfo field
+                Assert.AreEqual(idСallback, callbackQuery.Id);
+                Assert.AreEqual(inlineMessageId, callbackQuery.InlineMessageId);
+                Assert.AreEqual(chatInstance, callbackQuery.ChatInstance);
+                Assert.AreEqual(data, callbackQuery.Data);
+                Assert.AreEqual(gameShortName, callbackQuery.GameShortName);
+            });
         }
     }
 }

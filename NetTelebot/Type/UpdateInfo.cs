@@ -43,7 +43,7 @@ namespace NetTelebot.Type
         /// Parses the array.
         /// </summary>
         /// <param name="jsonArray">The json array</param>
-        public static UpdateInfo[] ParseArray(JArray jsonArray)
+        internal static UpdateInfo[] ParseArray(JArray jsonArray)
         {
             return jsonArray.Cast<JObject>().Select(jobject => new UpdateInfo(jobject)).ToArray();
         }

@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace NetTelebot.Tests.ResponseTest
 {
     [TestFixture]
-    internal static class FileInfoResultParser
+    internal static class FileInfoResultParserTest
     {
         /// <summary>
         /// Test for <see cref="FileInfoResult"/> parse field.
@@ -19,7 +19,7 @@ namespace NetTelebot.Tests.ResponseTest
             const string fileId = "fileId";
             const int fileSize = 123456;
             const string filePath = "/file/path";
-            
+
 
             JObject fileInfo = FileInfoObject.GetObject(fileId, fileSize, filePath);
 

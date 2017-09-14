@@ -700,13 +700,26 @@ namespace NetTelebot
             return ExecuteRequest<ChatInfoResult>(request) as ChatInfoResult;
         }
 
-        //todo getChatAdministrators (https://core.telegram.org/bots/api#getchatadministrators)
-      
         /// <summary>
-        /// Use this method to get the number of members in a chat. Returns <see cref="IntegerResult"/> on success
+        /// Use this method to get a list of administrators in a chat. 
         /// </summary>
         /// <param name="chatId"></param>
-        /// <returns></returns>
+        /// <returns>On success, returns an Array of <see cref="ChatMemberInfo"/> objects that contains information about all chat
+        /// administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.</returns>
+        public ChatMembersInfoResult GetChatAdministrators(object chatId)
+        {
+            RestRequest request = NewRestRequest(getChatAdministratorsUri);
+
+            request.AddParameter("chat_id", chatId);
+
+            return ExecuteRequest<ChatMembersInfoResult>(request) as ChatMembersInfoResult;
+        }
+
+        /// <summary>
+        /// Use this method to get the number of members in a chat. 
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)</param>
+        /// <returns>Returns <see cref="IntegerResult"/> on success</returns>
         public IntegerResult GetChatMembersCount(object chatId)
         {
             RestRequest request = NewRestRequest(getChatMembersCountUri);
@@ -716,7 +729,22 @@ namespace NetTelebot
             return ExecuteRequest<IntegerResult>(request) as IntegerResult;
         }
 
-        //todo getChatMember (https://core.telegram.org/bots/api#getchatmember)
+        /// <summary>
+        /// Use this method to get information about a member of a chat. 
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)</param>
+        /// <param name="userId">Unique identifier of the target user</param>
+        /// <returns>Returns a <see cref="ChatMemberInfo"/> object on success.</returns>
+        public ChatMemberInfoResult GetChatMember(object chatId, int userId)
+        {
+            RestRequest request = NewRestRequest(getChatMemberUri);
+
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("user_id", userId);
+
+            return ExecuteRequest<ChatMemberInfoResult>(request) as ChatMemberInfoResult;
+        }
+
         //todo answerCallbackQuery (https://core.telegram.org/bots/api#answercallbackquery)
         //todo Inline mode methods (https://core.telegram.org/bots/api#inline-mode-methods)
 
@@ -841,6 +869,12 @@ namespace NetTelebot
 
                 if(typeof(T) == typeof(FileInfoResult))
                     return new FileInfoResult(response.Content);
+
+                if(typeof(T) == typeof(ChatMembersInfoResult))
+                    return new ChatMembersInfoResult(response.Content);
+
+                if (typeof(T) == typeof(ChatMemberInfoResult))
+                    return new ChatMemberInfoResult(response.Content);
             }
 
             throw new Exception(response.StatusDescription);
