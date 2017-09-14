@@ -52,6 +52,7 @@
     <Compile Include="BotEnum\Status.cs" />
     <Compile Include="Result\ChatInfoResult.cs" />
     <Compile Include="Result\ChatMemberInfoResult.cs" />
+    <Compile Include="Result\ChatMembersInfoResult.cs" />
     <Compile Include="Result\FileInfoResult.cs" />
     <Compile Include="Result\IntegerResult.cs" />
     <Compile Include="Result\UserInfoResult.cs" />

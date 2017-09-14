@@ -6,7 +6,7 @@ namespace NetTelebot.Tests.TypeTestObject.ResultTestObject
     internal static class ChatMemberInfoResultObject
     {
         /// <summary>
-        /// Object represent this type <see cref="ChatMemberInfoResult"/>
+        /// Object represent this type <see cref="ChatMembersInfoResult"/>
         /// </summary>
         internal static JObject GetObject(bool ok, JArray result)
         {

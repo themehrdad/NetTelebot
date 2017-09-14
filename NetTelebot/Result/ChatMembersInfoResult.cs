@@ -5,25 +5,25 @@ using Newtonsoft.Json.Linq;
 namespace NetTelebot.Result
 {
     /// <summary>
-    /// When calling method returned <see cref="ChatMemberInfo"/> in result field on TelegramBotClient class, this object will be returned.
+    /// When calling method returned array of <see cref="ChatMemberInfo"/> in result field on TelegramBotClient class, this object will be returned.
     /// </summary>
-    public class ChatMemberInfoResult
+    public class ChatMembersInfoResult
     {
-        internal ChatMemberInfoResult(string jsonText)
+        internal ChatMembersInfoResult(string jsonText)
         {
             Parse(jsonText);
         }
 
         private void Parse(string jsonText)
         {
-            JObject jsonObject = (JObject) JsonConvert.DeserializeObject(jsonText);
+            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }
 
         private void Parse(JObject jsonObject)
         {
             Ok = jsonObject["ok"].Value<bool>();
-            Result = new ChatMemberInfo(jsonObject["result"].Value<JObject>());
+            Result = ChatMemberInfo.ParseArray(jsonObject["result"].Value<JArray>());
         }
 
         /// <summary>
@@ -37,6 +37,6 @@ namespace NetTelebot.Result
         /// <summary>
         /// Gets the result.
         /// </summary>
-        public ChatMemberInfo Result { get; private set; }
+        public ChatMemberInfo[] Result { get; private set; }
     }
 }

@@ -225,33 +225,54 @@ namespace NetTelebot.Tests.RequestToTelegramTest
         /// Test for method <see cref="TelegramBotClient.GetChatAdministrators"/>.
         /// </summary>
         [Test]
-        public void GetChatAdministrator()
+        public void GetChatAdministratorTest()
         {
-            ChatMemberInfoResult chatAdministrators = mTelegramBot.GetChatAdministrators("@telebotTestChannel");
+            ChatMembersInfoResult chatAdministrators = mTelegramBot.GetChatAdministrators("@telebotTestChannel");
 
+            UserInfo user = mTelegramBot.GetsMe().Result;
+            ChatMemberInfo result = chatAdministrators.Result[0];
+
+            CheckChatMember(user, result);
+        }
+
+        /// <summary>
+        /// Test for method <see cref="TelegramBotClient.GetChatMember"/>.
+        /// </summary>
+        [Test]
+        public void GetChatMembersTest()
+        {
+            UserInfo user = mTelegramBot.GetsMe().Result;
+
+            ChatMemberInfoResult chatMember = mTelegramBot.GetChatMember("@telebotTestChannel", user.Id);
+
+            ChatMemberInfo result = chatMember.Result;
+
+            CheckChatMember(user, result);
+        }
+
+        private static void CheckChatMember(UserInfo expectedUser, ChatMemberInfo actualMember)
+        {
             Assert.Multiple(() =>
             {
-                Assert.True(chatAdministrators.Ok);
+                Assert.AreEqual(expectedUser.Id, actualMember.User.Id);
+                Assert.AreEqual(expectedUser.UserName, actualMember.User.UserName);
+                Assert.AreEqual(expectedUser.FirstName, actualMember.User.FirstName);
+                Assert.AreEqual(expectedUser.LastName, actualMember.User.LastName);
 
-                Assert.AreEqual(mTelegramBot.GetsMe().Result.UserName, chatAdministrators.Result[0].User.UserName);
-                Assert.AreEqual(mTelegramBot.GetsMe().Result.FirstName, chatAdministrators.Result[0].User.FirstName);
-                Assert.AreEqual(mTelegramBot.GetsMe().Result.LastName, chatAdministrators.Result[0].User.LastName);
-                Assert.AreEqual(mTelegramBot.GetsMe().Result.Id, chatAdministrators.Result[0].User.Id);
-
-                Assert.False(chatAdministrators.Result[0].CanBeEdited);
-                Assert.True(chatAdministrators.Result[0].CanChangeInfo);
-                Assert.True(chatAdministrators.Result[0].CanPostMessages);
-                Assert.True(chatAdministrators.Result[0].CanEditMessages);
-                Assert.True(chatAdministrators.Result[0].CanDeleteMessages);
-                Assert.True(chatAdministrators.Result[0].CanInviteUsers);
-                Assert.True(chatAdministrators.Result[0].CanEditMessages);
-                Assert.True(chatAdministrators.Result[0].CanRestrictMembers);
-                Assert.False(chatAdministrators.Result[0].CanPinMessages);
-                Assert.False(chatAdministrators.Result[0].CanPromoteMembers);
-                Assert.False(chatAdministrators.Result[0].CanSendMessages);
-                Assert.False(chatAdministrators.Result[0].CanSendMediaMessages);
-                Assert.False(chatAdministrators.Result[0].CanSendOtherMessages);
-                Assert.False(chatAdministrators.Result[0].CanAddWebPagePreviews);
+                Assert.False(actualMember.CanBeEdited);
+                Assert.True(actualMember.CanChangeInfo);
+                Assert.True(actualMember.CanPostMessages);
+                Assert.True(actualMember.CanEditMessages);
+                Assert.True(actualMember.CanDeleteMessages);
+                Assert.True(actualMember.CanInviteUsers);
+                Assert.True(actualMember.CanEditMessages);
+                Assert.True(actualMember.CanRestrictMembers);
+                Assert.False(actualMember.CanPinMessages);
+                Assert.False(actualMember.CanPromoteMembers);
+                Assert.False(actualMember.CanSendMessages);
+                Assert.False(actualMember.CanSendMediaMessages);
+                Assert.False(actualMember.CanSendOtherMessages);
+                Assert.False(actualMember.CanAddWebPagePreviews);
             });
         }
 
