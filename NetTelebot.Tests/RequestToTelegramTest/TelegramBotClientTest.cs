@@ -151,6 +151,9 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             });
         }
 
+        /// <summary>
+        /// Test for method <see cref="TelegramBotClient.SendPhoto"/> with new file.
+        /// </summary>
         [Test]
         public void SendPhotoAsFileTest()
         {
@@ -171,6 +174,9 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             });
         }
 
+        /// <summary>
+        /// Test for method <see cref="TelegramBotClient.SendPhoto"/> with ExitingFile.
+        /// </summary>
         [Test]
         public void SendPhotoAsFileIdTest()
         {
@@ -186,6 +192,9 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             Assert.AreEqual("AgADAgADaagxG-_buUmX76y6cGpluPA7Sw0ABJFnmSfjBBfrk5QPAAEC", sendMessage.Result.Photo[0].FileId);
         }
 
+        /// <summary>
+        /// Test for method <see cref="TelegramBotClient.SendPhoto"/> with photo by url.
+        /// </summary>
         [Test]
         public void SendPhotoAsUrlTest()
         {
@@ -199,6 +208,9 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             Assert.AreEqual("AgADBAADEsg4GwoeZAcwyq9C0fVhKANXvRkABDMpTvt2GGzZ-2UEAAEC", sendMessage.Result.Photo[0].FileId);
         }
 
+        /// <summary>
+        /// Test for method <see cref="TelegramBotClient.GetFile"/> with new file.
+        /// </summary>
         [Test]
         public void GetFileTest()
         {
@@ -207,6 +219,40 @@ namespace NetTelebot.Tests.RequestToTelegramTest
 
             Assert.True(sendMessage.Ok);
             Assert.AreEqual(fileId, sendMessage.Result.FileId);
+        }
+
+        /// <summary>
+        /// Test for method <see cref="TelegramBotClient.GetChatAdministrators"/>.
+        /// </summary>
+        [Test]
+        public void GetChatAdministrator()
+        {
+            ChatMemberInfoResult chatAdministrators = mTelegramBot.GetChatAdministrators("@telebotTestChannel");
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(chatAdministrators.Ok);
+
+                Assert.AreEqual(mTelegramBot.GetsMe().Result.UserName, chatAdministrators.Result[0].User.UserName);
+                Assert.AreEqual(mTelegramBot.GetsMe().Result.FirstName, chatAdministrators.Result[0].User.FirstName);
+                Assert.AreEqual(mTelegramBot.GetsMe().Result.LastName, chatAdministrators.Result[0].User.LastName);
+                Assert.AreEqual(mTelegramBot.GetsMe().Result.Id, chatAdministrators.Result[0].User.Id);
+
+                Assert.False(chatAdministrators.Result[0].CanBeEdited);
+                Assert.True(chatAdministrators.Result[0].CanChangeInfo);
+                Assert.True(chatAdministrators.Result[0].CanPostMessages);
+                Assert.True(chatAdministrators.Result[0].CanEditMessages);
+                Assert.True(chatAdministrators.Result[0].CanDeleteMessages);
+                Assert.True(chatAdministrators.Result[0].CanInviteUsers);
+                Assert.True(chatAdministrators.Result[0].CanEditMessages);
+                Assert.True(chatAdministrators.Result[0].CanRestrictMembers);
+                Assert.False(chatAdministrators.Result[0].CanPinMessages);
+                Assert.False(chatAdministrators.Result[0].CanPromoteMembers);
+                Assert.False(chatAdministrators.Result[0].CanSendMessages);
+                Assert.False(chatAdministrators.Result[0].CanSendMediaMessages);
+                Assert.False(chatAdministrators.Result[0].CanSendOtherMessages);
+                Assert.False(chatAdministrators.Result[0].CanAddWebPagePreviews);
+            });
         }
 
         private static string GetProjectPath()

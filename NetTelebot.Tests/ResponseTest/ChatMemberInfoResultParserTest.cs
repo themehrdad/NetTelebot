@@ -47,7 +47,7 @@ namespace NetTelebot.Tests.ResponseTest
                     chatMemberInfoResult.Result[0].UntilDate);
                 Assert.True(chatMemberInfoResult.Result[0].CanBeEdited);
                 Assert.True(chatMemberInfoResult.Result[0].CanChangeInfo);
-                Assert.True(chatMemberInfoResult.Result[0].СanPostMessages);
+                Assert.True(chatMemberInfoResult.Result[0].CanPostMessages);
                 Assert.True(chatMemberInfoResult.Result[0].CanEditMessages);
                 Assert.True(chatMemberInfoResult.Result[0].CanDeleteMessages);
                 Assert.True(chatMemberInfoResult.Result[0].CanInviteUsers);

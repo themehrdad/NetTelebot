@@ -34,7 +34,7 @@ namespace NetTelebot.Type
             if (jsonObject["can_change_info"] != null)
                 CanChangeInfo = jsonObject["can_change_info"].Value<bool>();
             if (jsonObject["can_post_messages"] != null)
-                СanPostMessages = jsonObject["can_post_messages"].Value<bool>();
+                CanPostMessages = jsonObject["can_post_messages"].Value<bool>();
             if (jsonObject["can_edit_messages"] != null)
                 CanEditMessages = jsonObject["can_edit_messages"].Value<bool>();
             if (jsonObject["can_delete_messages"] != null)
@@ -104,7 +104,7 @@ namespace NetTelebot.Type
         /// Optional. 
         /// Administrators only. True, if the administrator can post in the channel, channels only
         /// </summary>
-        public bool СanPostMessages { get; private set; }
+        public bool CanPostMessages { get; private set; }
 
         /// <summary>
         /// Optional. 
