@@ -605,6 +605,29 @@ namespace NetTelebot.Tests.RequestToMockTest
             });
         }
 
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.GetChatAdministrators"/>.
+        /// </summary>
+        [Test]
+        public void GetChatAdministratorsTest()
+        {
+            mBotOkResponse.GetChatAdministrators("testChatId");
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getChatAdministrators").UsingPost());
+
+            PrintResult(request);
+            
+                Assert.Multiple(() =>
+                {
+                    Assert.AreEqual("chat_id=testChatId", request.FirstOrDefault()?.Body);
+
+                    Assert.AreEqual("/botToken/getChatAdministrators", request.FirstOrDefault()?.Url);
+                    Assert.Throws<Exception>(() => mBotBadResponse.GetChatAdministrators("testChatId"));
+                });
+        }
+
+
+
         //todo move common project
         internal static void PrintResult(IEnumerable<Request> request)
         {
