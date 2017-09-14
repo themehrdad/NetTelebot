@@ -3,12 +3,12 @@ using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.TypeTestObject.ResultTestObject
 {
-    internal static class ChatMemberInfoResultObject
+    internal static class ChatMembersInfoResultObject
     {
         /// <summary>
-        /// Object represent this type <see cref="ChatMemberInfoResult"/>
+        /// Object represent this type <see cref="ChatMembersInfoResult"/>
         /// </summary>
-        internal static JObject GetObject(bool ok, JObject result)
+        internal static JObject GetObject(bool ok, JArray result)
         {
             dynamic chatMemberInfo = new JObject();
 

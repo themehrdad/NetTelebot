@@ -626,7 +626,26 @@ namespace NetTelebot.Tests.RequestToMockTest
                 });
         }
 
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.GetChatMember"/>.
+        /// </summary>
+        [Test]
+        public void GetChatMemberTest()
+        {
+            mBotOkResponse.GetChatMember("testChatId", 123456);
 
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getChatMember").UsingPost());
+
+            PrintResult(request);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=testChatId&user_id=123456", request.FirstOrDefault()?.Body);
+
+                Assert.AreEqual("/botToken/getChatMember", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.GetChatMember("testChatId", 123456));
+            });
+        }
 
         //todo move common project
         internal static void PrintResult(IEnumerable<Request> request)

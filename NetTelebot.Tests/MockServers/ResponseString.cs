@@ -155,7 +155,31 @@ namespace NetTelebot.Tests.MockServers
                         ChatMemberInfoObject.GetObject(
                             UserInfoObject.GetObject(123, "FirstName", "LastName", "UserName", "LanguageCode"), "member")
                             .Properties())))).ToString();
-        
+
+        /// <summary>
+        /// Expected body forGetChatAdministrators.
+        /// Represent JSON string:
+        /// 
+        /// { "ok": true,
+        ///   "result": {
+        ///      "user": {
+        ///        "id": 123,
+        ///        "first_name": "FirstName",
+        ///        "last_name": "LastName",
+        ///        "username": "UserName",
+        ///        "language_code": "LanguageCode"
+        ///      },
+        ///      "status": "member"
+        ///    }}
+        /// </summary>
+        internal static string ExpectedBodyForGetChatMember { get; } = new JObject(
+           new JProperty("ok", true),
+           new JProperty("result",
+                   new JObject(
+                       ChatMemberInfoObject.GetObject(
+                           UserInfoObject.GetObject(123, "FirstName", "LastName", "UserName", "LanguageCode"), "member")
+                           .Properties()))).ToString();
+
         /// <summary>
         /// The expected body for bad response.
         /// Represent JSON string:
