@@ -428,7 +428,44 @@ namespace NetTelebot
             return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
         }
 
-        //todo sendVoice (https://core.telegram.org/bots/api#sendvoice)
+        /// <summary>
+        /// Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. 
+        /// For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document).
+        /// On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
+        /// <param name="voice">Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), 
+        /// pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data</param>
+        /// <param name="caption">Voice message caption, 0-200 characters </param>
+        /// <param name="duration">Duration of the voice message in seconds </param>
+        /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.</param>
+        /// <returns></returns>
+        public SendMessageResult SendVoice(object chatId, IFile voice, 
+            string caption = null,
+            int? duration = null,
+            bool? disableNotification = null,
+            int? replyToMessageId = null,
+            IReplyMarkup replyMarkup = null)
+        {
+            RestRequest request = NewRestRequest(sendVoiceUri);
+            request.AddParameter("chat_id", chatId);
+            request = AddFile(voice, request, "voice");
+
+            if (!string.IsNullOrEmpty(caption))
+                request.AddParameter("caption", caption);
+            if (duration != null)
+                request.AddParameter("duration", duration);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+            if (replyToMessageId != null)
+                request.AddParameter("reply_to_message_id", replyToMessageId);
+            if (replyMarkup != null)
+                request.AddParameter("reply_markup", replyMarkup.GetJson());
+
+            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
+        }
 
         /// <summary>
         /// As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long.
