@@ -84,7 +84,7 @@ namespace NetTelebot
         private const string getChatAdministratorsUri = "/bot{0}/getChatAdministrators";
         private const string getChatMembersCountUri = "/bot{0}/getChatMembersCount";
         private const string getChatMemberUri = "/bot{0}/getChatMember";
-        private const string answerCallbackQueryUri = "/bot{0}/getChatMember";
+        private const string answerCallbackQueryUri = "/bot{0}/answerCallbackQuery";
 
         private Timer mUpdateTimer;
         private int mLastUpdateId;
@@ -428,7 +428,44 @@ namespace NetTelebot
             return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
         }
 
-        //todo sendVoice (https://core.telegram.org/bots/api#sendvoice)
+        /// <summary>
+        /// Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. 
+        /// For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document).
+        /// On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
+        /// <param name="voice">Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), 
+        /// pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data</param>
+        /// <param name="caption">Voice message caption, 0-200 characters </param>
+        /// <param name="duration">Duration of the voice message in seconds </param>
+        /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.</param>
+        /// <returns></returns>
+        public SendMessageResult SendVoice(object chatId, IFile voice, 
+            string caption = null,
+            int? duration = null,
+            bool? disableNotification = null,
+            int? replyToMessageId = null,
+            IReplyMarkup replyMarkup = null)
+        {
+            RestRequest request = NewRestRequest(sendVoiceUri);
+            request.AddParameter("chat_id", chatId);
+            request = AddFile(voice, request, "voice");
+
+            if (!string.IsNullOrEmpty(caption))
+                request.AddParameter("caption", caption);
+            if (duration != null)
+                request.AddParameter("duration", duration);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+            if (replyToMessageId != null)
+                request.AddParameter("reply_to_message_id", replyToMessageId);
+            if (replyMarkup != null)
+                request.AddParameter("reply_markup", replyMarkup.GetJson());
+
+            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
+        }
 
         /// <summary>
         /// As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long.
@@ -745,7 +782,45 @@ namespace NetTelebot
             return ExecuteRequest<ChatMemberInfoResult>(request) as ChatMemberInfoResult;
         }
 
-        //todo answerCallbackQuery (https://core.telegram.org/bots/api#answercallbackquery)
+        /// <summary>
+        /// Use this method to send answers to callback queries sent from inline keyboards. 
+        /// The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. 
+        /// 
+        /// Note: Alternatively, the user can be redirected to the specified Game URL. 
+        /// For this option to work, you must first create a game for your bot via @Botfather and accept the terms. 
+        /// Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
+        /// </summary>
+        /// <param name="callbackQueryId">Unique identifier for the query to be answered</param>
+        /// <param name="text">Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters</param>
+        /// <param name="showAlert">If true, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to false.</param>
+        /// <param name="url">URL that will be opened by the user's client. If you have created a Game and accepted the conditions via @Botfather, 
+        /// specify the URL that opens your game – note that this will only work if the query comes from a callback_game button. 
+        /// Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.</param>
+        /// <param name="cacheTime">The maximum amount of time in seconds that the result of the callback query may be cached client-side. 
+        /// Telegram apps will support caching starting in version 3.14. Defaults to 0.</param>
+        /// <returns>On success, True is returned.</returns>
+        public BooleanResult AswerCallbackQuery(string callbackQueryId, 
+            string text = null, 
+            bool? showAlert = null,
+            string url = null,
+            int? cacheTime = null)
+        {
+            RestRequest request = NewRestRequest(answerCallbackQueryUri);
+
+            request.AddParameter("callback_query_id", callbackQueryId);
+
+            if (!string.IsNullOrEmpty(text))
+                request.AddParameter("text", text);
+            if (showAlert.HasValue)
+                request.AddParameter("show_alert", showAlert.Value);
+            if (!string.IsNullOrEmpty(url))
+                request.AddParameter("url", url);
+            if (cacheTime != null)
+                request.AddParameter("cache_time", cacheTime);
+
+            return ExecuteRequest<BooleanResult>(request) as BooleanResult;
+        }
+
         //todo Inline mode methods (https://core.telegram.org/bots/api#inline-mode-methods)
 
         private void CheckToken()
