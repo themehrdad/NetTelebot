@@ -661,6 +661,33 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.GetChatAdministrators"/>.
+        /// </summary>
+        [Test]
+        public void AnswerCallbackQuery()
+        {
+            mBotOkResponse.AswerCallbackQuery("testCallbackQueryId", "TestText", true, "TestUrl", 123);
+
+            var request =
+                MockServer.ServerOkResponse.SearchLogsFor(
+                    Requests.WithUrl("/botToken/answerCallbackQuery").UsingPost());
+
+            PrintResult(request);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("callback_query_id=testCallbackQueryId&" +
+                                "text=TestText&" +
+                                "show_alert=True&" +
+                                "url=TestUrl&" +
+                                "cache_time=123", request.FirstOrDefault()?.Body);
+
+                Assert.AreEqual("/botToken/answerCallbackQuery", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.AswerCallbackQuery("testCallbackQueryId", "TestText", true, "TestUrl", 123));
+            });
+        }
+
+        /// <summary>
         /// Sends the sticker test method <see cref="TelegramBotClient.GetChatMember"/>.
         /// </summary>
         [Test]

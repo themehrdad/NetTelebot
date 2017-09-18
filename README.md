@@ -54,7 +54,7 @@ See more examples in the project [wiki](https://github.com/themehrdad/NetTelebot
 ## Plans
 
 On the nearest release (1.0.11)
-- [ ] In class TelegramBotClient add fields marked in todo (except inline mode methods)
+- [x] In class TelegramBotClient add fields marked in todo (except inline mode methods)
 - [ ] In class UpdateInfo add fields marked in todo
 - [x] Delete classes, tests and methods marked as obsolete
 - [x] Net.Commands and Net.Commands.TestApplication remove from repository
