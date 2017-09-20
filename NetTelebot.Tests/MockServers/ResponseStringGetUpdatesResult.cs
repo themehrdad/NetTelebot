@@ -1,6 +1,9 @@
-﻿using NetTelebot.Tests.TypeTestObject;
+﻿using System;
+using NetTelebot.Tests.TypeTestObject;
+using NetTelebot.Tests.TypeTestObject.PaymentObject;
 using NetTelebot.Tests.TypeTestObject.ResultTestObject;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 
 namespace NetTelebot.Tests.MockServers
 {
@@ -20,15 +23,18 @@ namespace NetTelebot.Tests.MockServers
         ///  }
         ///}
         /// </summary>
-        private static readonly JObject expectedBodyMessageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(123, 0,
+        private static readonly JObject mExpectedBodyMessageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(123, 0,
             123, "private");
+
+        private static readonly JObject mExpectedBodyUserInfo = UserInfoObject.GetObject(123, "TestFirstName",
+            "TestFirstName", "TestUserName", "TestLanguageCode");
 
         #endregion
 
         #region Message
 
         private static readonly JArray expectedBodyUpdateInfoWithMessage = UpdateInfoObject.GetObjectInArray(123,
-            expectedBodyMessageInfo);
+            mExpectedBodyMessageInfo);
 
         /// <summary>
         /// Represent JSON string:
@@ -57,7 +63,7 @@ namespace NetTelebot.Tests.MockServers
 
         #region EditedMessage
 
-        private static readonly JArray expectedBodyUpdateInfoWithEditedMessage = UpdateInfoObject.GetObjectInArray(123, editedMessage: expectedBodyMessageInfo);
+        private static readonly JArray expectedBodyUpdateInfoWithEditedMessage = UpdateInfoObject.GetObjectInArray(123, editedMessage: mExpectedBodyMessageInfo);
 
         /// <summary>
         /// Represent JSON string:
@@ -87,7 +93,7 @@ namespace NetTelebot.Tests.MockServers
         #region ChannelPost
 
         private static readonly JArray expectedBodyUpdateInfoWithChannelPost = UpdateInfoObject.GetObjectInArray(123,
-            channelPost: expectedBodyMessageInfo);
+            channelPost: mExpectedBodyMessageInfo);
 
         /// <summary>
         /// Represent JSON string:
@@ -116,7 +122,7 @@ namespace NetTelebot.Tests.MockServers
 
         #region EditedShannelPost
 
-        private static readonly JArray expectedBodyUpdateInfoWithEditedChannelPost = UpdateInfoObject.GetObjectInArray(123, editedChannelPost: expectedBodyMessageInfo);
+        private static readonly JArray expectedBodyUpdateInfoWithEditedChannelPost = UpdateInfoObject.GetObjectInArray(123, editedChannelPost: mExpectedBodyMessageInfo);
 
         /// <summary>
         /// Represent JSON string:
@@ -145,10 +151,7 @@ namespace NetTelebot.Tests.MockServers
 
         #region CallbackQuery
 
-        private static readonly JObject expectedBodyUserInfo = UserInfoObject.GetObject(123, "TestFirstName",
-            "TestFirstName", "TestUserName", "TestLanguageCode");
-        
-        private static readonly JObject callbackQueryInfo = CallbackQueryInfoObject.GetObject("123", expectedBodyUserInfo, expectedBodyMessageInfo, "123",
+        private static readonly JObject callbackQueryInfo = CallbackQueryInfoObject.GetObject("123", mExpectedBodyUserInfo, mExpectedBodyMessageInfo, "123",
             "123", "TestData", "TestGameShortName");
 
         private static readonly JArray expectedBodyUpdateInfoWithCallbackQuery = UpdateInfoObject.GetObjectInArray(123,
@@ -191,6 +194,32 @@ namespace NetTelebot.Tests.MockServers
         internal static string ExpectedBodyWithObjectCallbackQuery { get; } =
             GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithCallbackQuery).ToString();
 
+        #endregion
+
+        #region ShippingQuery
+
+        private static readonly JObject shippingAddress = ShippingAddressInfoObject.GetObject("countryCode", "state", "city",
+            "streetLineOne", "streetLineTwo", "postCode");
+
+        private static readonly JObject shippinqQuery =
+            ShippingQueryInfoObject.GetObject("123", mExpectedBodyUserInfo, "TestInvoicePayload", shippingAddress);
+
+        private static readonly JArray expectedBodyUpdateInfoWithShippinqQuery
+            = UpdateInfoObject.GetObjectInArray(123, shippingQuery: shippinqQuery);
+
+        /// <summary>
+        /// Represent JSON string:
+        /// 
+        /// </summary>
+        internal static string ExpectedBodyWithObjectShippingQuery { get; } =
+             GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithShippinqQuery).ToString();
+
+        [Test]
+        public static void Test()
+        {
+            //todo check this
+            Console.WriteLine(ExpectedBodyWithObjectShippingQuery);
+        }
         #endregion
     }
 }

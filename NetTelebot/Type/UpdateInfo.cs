@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using NetTelebot.Type.Payment;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
@@ -37,6 +38,10 @@ namespace NetTelebot.Type
             CallbackQuery = jsonObject["callback_query"] != null
                 ? new CallbackQueryInfo(jsonObject["callback_query"].Value<JObject>())
                 : new CallbackQueryInfo();
+
+            ShippingQuery = jsonObject["shipping_query"] != null
+                ? new ShippingQueryInfo(jsonObject["shipping_query"].Value<JObject>())
+                : new ShippingQueryInfo();
         }
 
         /// <summary>
@@ -88,7 +93,11 @@ namespace NetTelebot.Type
         /// </summary>
         public CallbackQueryInfo CallbackQuery { get; private set;  }
 
-        //todo ShippingQuery => ChippingQuery
+        /// <summary>
+        /// This object contains information about an incoming shipping query.
+        /// </summary>
+        public ShippingQueryInfo ShippingQuery { get; private set;  }
+
         //todo PreCheckoutQuery => PreCheckoutQuery
     }
 }

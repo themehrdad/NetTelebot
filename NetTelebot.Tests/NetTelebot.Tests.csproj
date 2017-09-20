@@ -106,6 +106,7 @@
     <Compile Include="TypeTestObject\PaymentObject\InvoiceInfoObject.cs" />
     <Compile Include="TypeTestObject\PaymentObject\OrderInfoObject.cs" />
     <Compile Include="TypeTestObject\PaymentObject\ShippingAddressInfoObject.cs" />
+    <Compile Include="TypeTestObject\PaymentObject\ShippingQueryInfoObject.cs" />
     <Compile Include="TypeTestObject\PaymentObject\SuccessfulPaymentInfoObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\BooleanResultObject.cs" />
     <Compile Include="RequestToMockTest\TelegramBotClientTest.cs" />
