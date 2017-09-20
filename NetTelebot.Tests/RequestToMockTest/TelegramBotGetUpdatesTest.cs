@@ -87,7 +87,6 @@ namespace NetTelebot.Tests.RequestToMockTest
         [Test]
         public static void GetUpdatesWithShippingQueryTest()
         {
-            //todo check this
             StartTest(ResponseStringGetUpdatesResult.ExpectedBodyWithObjectShippingQuery);
         }
 

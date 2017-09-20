@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.TypeTestObject.PaymentObject
 {
-    internal class ShippingQueryInfoObject
+    internal static class ShippingQueryInfoObject
     {
         /// <summary>
         /// This object contains information about an incoming shipping query.

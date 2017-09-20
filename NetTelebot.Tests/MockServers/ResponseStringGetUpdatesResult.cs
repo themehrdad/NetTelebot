@@ -210,16 +210,36 @@ namespace NetTelebot.Tests.MockServers
         /// <summary>
         /// Represent JSON string:
         /// 
+        /// {
+        ///  "ok": true,
+        ///  "result": [
+        ///    {
+        ///      "update_id": 123,
+        ///      "shipping_query": {
+        ///        "id": "123",
+        ///        "from": {
+        ///          "id": 123,
+        ///          "first_name": "TestFirstName",
+        ///          "last_name": "TestFirstName",
+        ///          "username": "TestUserName",
+        ///          "language_code": "TestLanguageCode"
+        ///        },
+        ///        "invoice_payload": "TestInvoicePayload",
+        ///        "shipping_address": {
+        ///          "country_code": "countryCode",
+        ///          "state": "state",
+        ///          "city": "city",
+        ///          "street_line1": "streetLineOne",
+        ///          "street_line2": "streetLineTwo",
+        ///          "post_code": "postCode"
+        ///        }
+        ///      }
+        ///    }
+        ///  ]
+        /// }
         /// </summary>
         internal static string ExpectedBodyWithObjectShippingQuery { get; } =
              GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithShippinqQuery).ToString();
-
-        [Test]
-        public static void Test()
-        {
-            //todo check this
-            Console.WriteLine(ExpectedBodyWithObjectShippingQuery);
-        }
         #endregion
     }
 }

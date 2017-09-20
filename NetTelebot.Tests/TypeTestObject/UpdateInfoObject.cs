@@ -88,7 +88,8 @@ namespace NetTelebot.Tests.TypeTestObject
             JObject shippingQuery = null,
             JObject preCheckoutQuery = null)
         {
-            JObject objects = GetObject(updateId, message, editedMessage, channelPost, editedChannelPost, callbackQuery, shippingQuery, preCheckoutQuery);
+            JObject objects = GetObject(updateId, message, editedMessage, channelPost, editedChannelPost,
+                inlineQuery, chosenInlineResult, callbackQuery, shippingQuery, preCheckoutQuery);
             return new JArray(objects);
         }
     }

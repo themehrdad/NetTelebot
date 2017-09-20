@@ -4,6 +4,7 @@ namespace NetTelebot.Type.Payment
 {
     /// <summary>
     /// This object contains information about an incoming shipping query.
+    /// See <see href="https://core.telegram.org/bots/api#shippingquery">API</see>
     /// </summary>
     public class ShippingQueryInfo
     {
