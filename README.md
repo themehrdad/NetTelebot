@@ -70,6 +70,3 @@ More details [here](https://github.com/vertigra/NetTelebot-2.0/projects/1)
 
 The logo is provided by the site [icons8.com](https://icons8.com/)
 
-## License
-
-Usage is provided under the [MIT License](http://http//opensource.org/licenses/mit-license.php).
