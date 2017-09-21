@@ -86,6 +86,7 @@
     <Compile Include="BotEnum\ParseMode.cs" />
     <Compile Include="Type\Payment\InvoceInfo.cs" />
     <Compile Include="Type\Payment\OrderInfo.cs" />
+    <Compile Include="Type\Payment\PreCheckoutQueryInfo.cs" />
     <Compile Include="Type\Payment\ShippingQueryInfo.cs" />
     <Compile Include="Type\Payment\SuccessfulPaymentInfo.cs" />
     <Compile Include="Type\PhotoSizeInfo.cs" />

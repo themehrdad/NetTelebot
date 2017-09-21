@@ -6,6 +6,7 @@ namespace NetTelebot.Type.Payment
 {
     /// <summary>
     /// This object contains basic information about an invoice.
+    /// See <see href="https://core.telegram.org/bots/api#invoice">API</see>
     /// </summary>
     public class InvoceInfo
     {

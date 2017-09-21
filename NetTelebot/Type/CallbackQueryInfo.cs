@@ -7,6 +7,7 @@ namespace NetTelebot.Type
     /// If the button that originated the query was attached to a message sent by the bot, the field message will be present. 
     /// If the button was attached to a message sent via the bot (in inline mode), the field inline_message_id will be present. 
     /// Exactly one of the fields data or game_short_name will be present.
+    /// See <see href="https://core.telegram.org/bots/api#callbackquery">API</see>
     /// </summary>
     public class CallbackQueryInfo
     {
@@ -15,11 +16,6 @@ namespace NetTelebot.Type
         }
 
         internal CallbackQueryInfo(JObject jsonObject)
-        {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
         {
             Id = jsonObject["id"].Value<string>();
             From = new UserInfo(jsonObject["from"].Value<JObject>());
