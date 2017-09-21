@@ -1,9 +1,7 @@
-﻿using System;
-using NetTelebot.Tests.TypeTestObject;
+﻿using NetTelebot.Tests.TypeTestObject;
 using NetTelebot.Tests.TypeTestObject.PaymentObject;
 using NetTelebot.Tests.TypeTestObject.ResultTestObject;
 using Newtonsoft.Json.Linq;
-using NUnit.Framework;
 
 namespace NetTelebot.Tests.MockServers
 {
