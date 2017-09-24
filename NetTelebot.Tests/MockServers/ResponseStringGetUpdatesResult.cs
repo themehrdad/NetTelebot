@@ -24,9 +24,13 @@ namespace NetTelebot.Tests.MockServers
         private static readonly JObject mExpectedBodyMessageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(123, 0,
             123, "private");
 
+        //todo added JSON
         private static readonly JObject mExpectedBodyUserInfo = UserInfoObject.GetObject(123, "TestFirstName",
             "TestFirstName", "TestUserName", "TestLanguageCode");
 
+        //todo added JSON
+        private static readonly JObject mShippingAddress = ShippingAddressInfoObject.GetObject("countryCode", "state", "city",
+            "streetLineOne", "streetLineTwo", "postCode");
         #endregion
 
         #region Message
@@ -195,12 +199,8 @@ namespace NetTelebot.Tests.MockServers
         #endregion
 
         #region ShippingQuery
-
-        private static readonly JObject shippingAddress = ShippingAddressInfoObject.GetObject("countryCode", "state", "city",
-            "streetLineOne", "streetLineTwo", "postCode");
-
         private static readonly JObject shippinqQuery =
-            ShippingQueryInfoObject.GetObject("123", mExpectedBodyUserInfo, "TestInvoicePayload", shippingAddress);
+            ShippingQueryInfoObject.GetObject("123", mExpectedBodyUserInfo, "TestInvoicePayload", mShippingAddress);
 
         private static readonly JArray expectedBodyUpdateInfoWithShippinqQuery
             = UpdateInfoObject.GetObjectInArray(123, shippingQuery: shippinqQuery);
@@ -238,6 +238,10 @@ namespace NetTelebot.Tests.MockServers
         /// </summary>
         internal static string ExpectedBodyWithObjectShippingQuery { get; } =
              GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithShippinqQuery).ToString();
+        #endregion
+
+        #region PreCheckoutQuery
+        //todo
         #endregion
     }
 }
