@@ -13,7 +13,7 @@ namespace NetTelebot.Tests.ResponseTest
     internal static class UpdateInfoParserTest
     {
         /// <summary>
-        /// Test for <see cref="UpdateInfo"/> parse field.
+        /// Test for <see cref="UpdateInfo"/> parse field with incoming <see cref="MessageInfo"/>.
         /// </summary>
         [Test]
         public static void UpdateInfoTest()
@@ -66,7 +66,7 @@ namespace NetTelebot.Tests.ResponseTest
         }
 
         [Test]
-        public static void CallbackQueryUpdateInfoTest()
+        public static void CallbackQueryTest()
         {
             //field class UpdateInfo
             const int updateId = 123;
@@ -124,7 +124,7 @@ namespace NetTelebot.Tests.ResponseTest
         }
 
         [Test]
-        public static void ShippingQueryUpdateInfoTest()
+        public static void ShippingQueryTest()
         {
             //field class UpdateInfo
             const int updateId = 123;
@@ -152,10 +152,10 @@ namespace NetTelebot.Tests.ResponseTest
             JObject shippingAddress = ShippingAddressInfoObject.GetObject(countryCode, state, city, streetLineOne,
                 streetLineTwo, postCode);
 
-            dynamic shippingQueryInfo = ShippingQueryInfoObject.GetObject(idShippingQuery, userInfo, invoicePayload,
+            JObject shippingQueryInfo = ShippingQueryInfoObject.GetObject(idShippingQuery, userInfo, invoicePayload,
                 shippingAddress);
 
-            dynamic updateInfoObject = UpdateInfoObject.GetObject(updateId, shippingQuery: shippingQueryInfo);
+            JObject updateInfoObject = UpdateInfoObject.GetObject(updateId, shippingQuery: shippingQueryInfo);
 
             UpdateInfo updateInfo = new UpdateInfo(updateInfoObject);
 
@@ -178,6 +178,80 @@ namespace NetTelebot.Tests.ResponseTest
             Assert.AreEqual(streetLineOne, updateInfo.ShippingQuery.ShippingAddress.StreetLineOne);
             Assert.AreEqual(streetLineTwo, updateInfo.ShippingQuery.ShippingAddress.StreetLineTwo);
             Assert.AreEqual(postCode, updateInfo.ShippingQuery.ShippingAddress.PostCode);
+        }
+
+        [Test]
+        public static void PreCheckoutQueryTest()
+        { 
+            //field class UserInfo
+            const int id = 123;
+            const string firstName = "TestFirstName";
+            const string lastName = "TestLastName";
+            const string username = " TestUserName";
+            const string languageCode = "TestLanguageCode";
+            JObject userInfo = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            //field class ShippingAddressInfo
+            const string countryCode = "AW";
+            const string state = "TestState";
+            const string city = "TestCity";
+            const string streetLineOne = "TestStreetLineOne";
+            const string streetLineTwo = "TestStreetLineTwo";
+            const string postCode = "TestPostCode";
+
+            JObject shippingAddress = ShippingAddressInfoObject.GetObject(countryCode, state, city, streetLineOne,
+               streetLineTwo, postCode);
+
+            //field class OrederInfo
+            const string name = "TestName";
+            const string phoneNumber = "TestPhoneNumber";
+            const string email = "TestEmail";
+            const int totalAmmount = 123;
+            const string shippingOptionId = "TestShippingId";
+
+
+            JObject orderInfo = OrderInfoObject.GetObject(name, phoneNumber, email, shippingAddress);
+
+            //field class PreCheckoutQueryInfo
+            const string preCheckoutId = "TestId";
+            const string currency = "USD";
+            const string invoicePayload = "TestInvoicePayload";
+
+            JObject preCheckoutQueryInfo = PreCheckoutQueryInfoObject.GetObject(
+                preCheckoutId, userInfo, currency, totalAmmount, invoicePayload, shippingOptionId, orderInfo);
+
+            //field class UpdateInfo
+            const int updateId = 123;
+
+            JObject updateInfoObject = UpdateInfoObject.GetObject(updateId, preCheckoutQuery: preCheckoutQueryInfo);
+
+            UpdateInfo updateInfo = new UpdateInfo(updateInfoObject);
+
+            //filed PreCheckoutQuery
+            Assert.AreEqual(updateId, updateInfo.UpdateId);
+            Assert.AreEqual(preCheckoutId, updateInfo.PreCheckoutQuery.Id);
+            Assert.AreEqual(invoicePayload, updateInfo.PreCheckoutQuery.InvoicePayload);
+            Assert.AreEqual(shippingOptionId, updateInfo.PreCheckoutQuery.ShippingOptionId);
+
+            //filed From
+            Assert.AreEqual(id, updateInfo.PreCheckoutQuery.From.Id);
+            Assert.AreEqual(firstName, updateInfo.PreCheckoutQuery.From.FirstName);
+            Assert.AreEqual(lastName, updateInfo.PreCheckoutQuery.From.LastName);
+            Assert.AreEqual(username, updateInfo.PreCheckoutQuery.From.UserName);
+            Assert.AreEqual(languageCode, updateInfo.PreCheckoutQuery.From.LanguageCode);
+
+            //field OrderInfo
+            Assert.AreEqual(name, updateInfo.PreCheckoutQuery.OrderInfo.Name);
+            Assert.AreEqual(phoneNumber, updateInfo.PreCheckoutQuery.OrderInfo.PnoneNumber);
+            Assert.AreEqual(email, updateInfo.PreCheckoutQuery.OrderInfo.Email);
+
+            //field ShippingAddress
+            Assert.AreEqual(countryCode.ToEnum<Countries>(), updateInfo.PreCheckoutQuery.OrderInfo.ShippingAddress.CountryCode);
+            Assert.AreEqual(state, updateInfo.PreCheckoutQuery.OrderInfo.ShippingAddress.State);
+            Assert.AreEqual(city, updateInfo.PreCheckoutQuery.OrderInfo.ShippingAddress.City);
+            Assert.AreEqual(streetLineOne, updateInfo.PreCheckoutQuery.OrderInfo.ShippingAddress.StreetLineOne);
+            Assert.AreEqual(streetLineTwo, updateInfo.PreCheckoutQuery.OrderInfo.ShippingAddress.StreetLineTwo);
+            Assert.AreEqual(postCode, updateInfo.PreCheckoutQuery.OrderInfo.ShippingAddress.PostCode);
         }
     }
 }
