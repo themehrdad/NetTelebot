@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using NetTelebot.Type.InlineMode;
 using NetTelebot.Type.Payment;
 using Newtonsoft.Json.Linq;
 
@@ -35,6 +36,10 @@ namespace NetTelebot.Type
             EditedChannelPost = jsonObject["edited_channel_post"] != null
                 ? new MessageInfo(jsonObject["edited_channel_post"].Value<JObject>())
                 : MessageInfo.GetNewMessageInfo(MessageInfo.GetNewMessageInfo(), MessageInfo.GetNewMessageInfo());
+
+            ChosenInlineResult = jsonObject["chosen_inline_result"] != null
+                ? new ChosenInlineResultInfo(jsonObject["chosen_inline_result"].Value<JObject>())
+                : new ChosenInlineResultInfo();
 
             CallbackQuery = jsonObject["callback_query"] != null
                 ? new CallbackQueryInfo(jsonObject["callback_query"].Value<JObject>())
@@ -91,7 +96,14 @@ namespace NetTelebot.Type
         public MessageInfo EditedChannelPost { get; private set;  }
 
         //todo InlineQuery => InlineQuery
-        //todo ChosenInlineResult => ChosenInline_Result
+
+        //todo need test
+        /// <summary>
+        /// Optional. 
+        /// The result of an inline query that was chosen by a user and sent to their chat partner. 
+        /// Please see our documentation on the <see href="https://core.telegram.org/bots/inline#collecting-feedback">feedback collecting</see> for details on how to enable these updates for your bot.
+        /// </summary>
+        public ChosenInlineResultInfo ChosenInlineResult { get; private set; }
 
         /// <summary>
         /// Optional. 
@@ -105,7 +117,6 @@ namespace NetTelebot.Type
         /// </summary>
         public ShippingQueryInfo ShippingQuery { get; private set;  }
 
-        //todo need test for this
         /// <summary>
         /// Optional. 
         /// New incoming pre-checkout query. Contains full information about checkout
