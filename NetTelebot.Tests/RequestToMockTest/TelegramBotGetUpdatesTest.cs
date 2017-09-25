@@ -84,6 +84,18 @@ namespace NetTelebot.Tests.RequestToMockTest
             StartTest(ResponseStringGetUpdatesResult.ExpectedBodyWithObjectCallbackQuery);
         }
 
+        [Test]
+        public static void GetUpdatesWithShippingQueryTest()
+        {
+            StartTest(ResponseStringGetUpdatesResult.ExpectedBodyWithObjectShippingQuery);
+        }
+
+        [Test]
+        public static void GetUpdatesWithPreCheckoutQueryTest()
+        {
+            StartTest(ResponseStringGetUpdatesResult.ExpectedBodyWithObjectPreCheckoutQuery);
+        }
+
         private static void StartTest(string body)
         {
             MockServer.AddNewRouter("/botToken/getUpdates", body);

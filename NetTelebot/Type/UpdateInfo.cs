@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using NetTelebot.Type.Payment;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
@@ -6,6 +7,7 @@ namespace NetTelebot.Type
     /// <summary>
     /// This object represents an incoming update.
     /// At most one of the optional parameters can be present in any given update.
+    /// See <see href="https://core.telegram.org/bots/api#update">API</see>
     /// </summary>
     public class UpdateInfo
     {
@@ -37,6 +39,14 @@ namespace NetTelebot.Type
             CallbackQuery = jsonObject["callback_query"] != null
                 ? new CallbackQueryInfo(jsonObject["callback_query"].Value<JObject>())
                 : new CallbackQueryInfo();
+
+            ShippingQuery = jsonObject["shipping_query"] != null
+                ? new ShippingQueryInfo(jsonObject["shipping_query"].Value<JObject>())
+                : new ShippingQueryInfo();
+
+            PreCheckoutQuery = jsonObject["pre_checkout_query"] != null
+                ? new PreCheckoutQueryInfo(jsonObject["pre_checkout_query"].Value<JObject>())
+                : new PreCheckoutQueryInfo();
         }
 
         /// <summary>
@@ -51,7 +61,8 @@ namespace NetTelebot.Type
         /// <summary>
         /// The update‘s unique identifier. 
         /// Update identifiers start from a certain positive number and increase sequentially. 
-        /// This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order.
+        /// This ID becomes especially handy if you’re using Webhooks, since it allows you to 
+        /// ignore repeated updates or to restore the correct update sequence, should they get out of order.
         /// </summary>
         public int UpdateId { get; private set; }
 
@@ -88,7 +99,17 @@ namespace NetTelebot.Type
         /// </summary>
         public CallbackQueryInfo CallbackQuery { get; private set;  }
 
-        //todo ShippingQuery => ChippingQuery
-        //todo PreCheckoutQuery => PreCheckoutQuery
+        /// <summary>
+        /// Optional. 
+        /// New incoming shipping query. Only for invoices with flexible price
+        /// </summary>
+        public ShippingQueryInfo ShippingQuery { get; private set;  }
+
+        //todo need test for this
+        /// <summary>
+        /// Optional. 
+        /// New incoming pre-checkout query. Contains full information about checkout
+        /// </summary>
+        public PreCheckoutQueryInfo PreCheckoutQuery { get; private set; }
     }
 }

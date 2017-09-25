@@ -47,9 +47,9 @@ namespace NetTelebot.Tests.TypeTestObject
             if (editedChannelPost != null)
                 updateInfo.edited_channel_post = editedChannelPost;
             if (inlineQuery != null)
-                updateInfo.inline_query = editedChannelPost;
+                updateInfo.inline_query = inlineQuery;
             if (chosenInlineResult != null)
-                updateInfo.chosen_inline_result = editedChannelPost;
+                updateInfo.chosen_inline_result = chosenInlineResult;
             if (callbackQuery != null)
                 updateInfo.callback_query = callbackQuery;
             if (shippingQuery != null)
@@ -88,7 +88,8 @@ namespace NetTelebot.Tests.TypeTestObject
             JObject shippingQuery = null,
             JObject preCheckoutQuery = null)
         {
-            JObject objects = GetObject(updateId, message, editedMessage, channelPost, editedChannelPost, callbackQuery);
+            JObject objects = GetObject(updateId, message, editedMessage, channelPost, editedChannelPost,
+                inlineQuery, chosenInlineResult, callbackQuery, shippingQuery, preCheckoutQuery);
             return new JArray(objects);
         }
     }

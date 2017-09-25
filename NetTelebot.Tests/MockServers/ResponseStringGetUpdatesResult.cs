@@ -1,6 +1,9 @@
-﻿using NetTelebot.Tests.TypeTestObject;
+﻿using System;
+using NetTelebot.Tests.TypeTestObject;
+using NetTelebot.Tests.TypeTestObject.PaymentObject;
 using NetTelebot.Tests.TypeTestObject.ResultTestObject;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 
 namespace NetTelebot.Tests.MockServers
 {
@@ -17,18 +20,44 @@ namespace NetTelebot.Tests.MockServers
         ///  "chat": {
         ///    "id": 123,
         ///    "type": "private"
-        ///  }
-        ///}
+        /// }
         /// </summary>
-        private static readonly JObject expectedBodyMessageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(123, 0,
+        private static readonly JObject mExpectedBodyMessageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(123, 0,
             123, "private");
 
+        /// <summary>
+        /// Represent JSON string:
+        /// 
+        /// {
+        ///   "id": 123,
+        ///   "first_name": "TestFirstName",
+        ///   "last_name": "TestFirstName",
+        ///   "username": "TestUserName",
+        ///   "language_code": "TestLanguageCode"
+        /// }
+        /// </summary>
+        private static readonly JObject mExpectedBodyUserInfo = UserInfoObject.GetObject(123, "TestFirstName",
+            "TestFirstName", "TestUserName", "TestLanguageCode");
+
+        /// <summary>
+        /// Represent JSON string:
+        /// 
+        /// {
+        ///   "id": 123,
+        ///   "first_name": "TestFirstName",
+        ///   "last_name": "TestFirstName",
+        ///   "username": "TestUserName",
+        ///   "language_code": "TestLanguageCode"
+        /// }
+        /// </summary>
+        private static readonly JObject mShippingAddress = ShippingAddressInfoObject.GetObject("countryCode", "state", "city",
+            "streetLineOne", "streetLineTwo", "postCode");
         #endregion
 
         #region Message
 
         private static readonly JArray expectedBodyUpdateInfoWithMessage = UpdateInfoObject.GetObjectInArray(123,
-            expectedBodyMessageInfo);
+            mExpectedBodyMessageInfo);
 
         /// <summary>
         /// Represent JSON string:
@@ -57,7 +86,7 @@ namespace NetTelebot.Tests.MockServers
 
         #region EditedMessage
 
-        private static readonly JArray expectedBodyUpdateInfoWithEditedMessage = UpdateInfoObject.GetObjectInArray(123, editedMessage: expectedBodyMessageInfo);
+        private static readonly JArray expectedBodyUpdateInfoWithEditedMessage = UpdateInfoObject.GetObjectInArray(123, editedMessage: mExpectedBodyMessageInfo);
 
         /// <summary>
         /// Represent JSON string:
@@ -87,7 +116,7 @@ namespace NetTelebot.Tests.MockServers
         #region ChannelPost
 
         private static readonly JArray expectedBodyUpdateInfoWithChannelPost = UpdateInfoObject.GetObjectInArray(123,
-            channelPost: expectedBodyMessageInfo);
+            channelPost: mExpectedBodyMessageInfo);
 
         /// <summary>
         /// Represent JSON string:
@@ -116,7 +145,7 @@ namespace NetTelebot.Tests.MockServers
 
         #region EditedShannelPost
 
-        private static readonly JArray expectedBodyUpdateInfoWithEditedChannelPost = UpdateInfoObject.GetObjectInArray(123, editedChannelPost: expectedBodyMessageInfo);
+        private static readonly JArray expectedBodyUpdateInfoWithEditedChannelPost = UpdateInfoObject.GetObjectInArray(123, editedChannelPost: mExpectedBodyMessageInfo);
 
         /// <summary>
         /// Represent JSON string:
@@ -145,10 +174,7 @@ namespace NetTelebot.Tests.MockServers
 
         #region CallbackQuery
 
-        private static readonly JObject expectedBodyUserInfo = UserInfoObject.GetObject(123, "TestFirstName",
-            "TestFirstName", "TestUserName", "TestLanguageCode");
-        
-        private static readonly JObject callbackQueryInfo = CallbackQueryInfoObject.GetObject("123", expectedBodyUserInfo, expectedBodyMessageInfo, "123",
+        private static readonly JObject callbackQueryInfo = CallbackQueryInfoObject.GetObject("123", mExpectedBodyUserInfo, mExpectedBodyMessageInfo, "123",
             "123", "TestData", "TestGameShortName");
 
         private static readonly JArray expectedBodyUpdateInfoWithCallbackQuery = UpdateInfoObject.GetObjectInArray(123,
@@ -192,5 +218,111 @@ namespace NetTelebot.Tests.MockServers
             GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithCallbackQuery).ToString();
 
         #endregion
+
+        #region ShippingQuery
+
+        private static readonly JObject shippinqQuery =
+            ShippingQueryInfoObject.GetObject("123", mExpectedBodyUserInfo, "TestInvoicePayload", mShippingAddress);
+
+        private static readonly JArray expectedBodyUpdateInfoWithShippinqQuery
+            = UpdateInfoObject.GetObjectInArray(123, shippingQuery: shippinqQuery);
+
+        /// <summary>
+        /// Represent JSON string:
+        /// 
+        /// {
+        ///  "ok": true,
+        ///  "result": [
+        ///    {
+        ///      "update_id": 123,
+        ///      "shipping_query": {
+        ///        "id": "123",
+        ///        "from": {
+        ///          "id": 123,
+        ///          "first_name": "TestFirstName",
+        ///          "last_name": "TestFirstName",
+        ///          "username": "TestUserName",
+        ///          "language_code": "TestLanguageCode"
+        ///        },
+        ///        "invoice_payload": "TestInvoicePayload",
+        ///        "shipping_address": {
+        ///          "country_code": "countryCode",
+        ///          "state": "state",
+        ///          "city": "city",
+        ///          "street_line1": "streetLineOne",
+        ///          "street_line2": "streetLineTwo",
+        ///          "post_code": "postCode"
+        ///        }
+        ///      }
+        ///    }
+        ///  ]
+        /// }
+        /// </summary>
+        internal static string ExpectedBodyWithObjectShippingQuery { get; } =
+             GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithShippinqQuery).ToString();
+        #endregion
+
+        #region PreCheckoutQuery
+
+        private static readonly JObject orderInfo = OrderInfoObject.GetObject("TestName", "TestPhoneNumber", "TestEmail",
+            mShippingAddress);
+
+        private static readonly JObject preCheckoutQuery =
+            PreCheckoutQueryInfoObject.GetObject("TestId", mExpectedBodyUserInfo, "USD", 123, "TestInvoicePayload", "TestShippingOptionId", orderInfo);
+
+        private static readonly JArray expectedBodyUpdateInfoWithPreCheckoutQuery
+            = UpdateInfoObject.GetObjectInArray(123, preCheckoutQuery:preCheckoutQuery);
+
+        /// <summary>
+        /// Represent JSON string:
+        /// 
+        ///  {
+        ///  "ok": true,
+        ///  "result": [
+        ///    {
+        ///      "update_id": 123,
+        ///      "pre_checkout_query": {
+        ///        "id": "TestId",
+        ///        "from": {
+        ///          "id": 123,
+        ///          "first_name": "TestFirstName",
+        ///          "last_name": "TestFirstName",
+        ///          "username": "TestUserName",
+        ///          "language_code": "TestLanguageCode"
+        ///        },
+        ///        "currency": "USD",
+        ///        "total_amount": 123,
+        ///        "invoice_payload": "TestInvoicePayload",
+        ///        "shipping_option_id": "TestShippingOptionId",
+        ///        "order_info": {
+        ///          "name": "TestName",
+        ///          "phone_number": "TestPhoneNumber",
+        ///          "email": "TestEmail",
+        ///          "shipping_address": {
+        ///            "country_code": "countryCode",
+        ///            "state": "state",
+        ///            "city": "city",
+        ///            "street_line1": "streetLineOne",
+        ///            "street_line2": "streetLineTwo",
+        ///            "post_code": "postCode"
+        ///          }
+        ///        }
+        ///      }
+        ///    }
+        ///  ]
+        /// }
+        ///</summary>
+        internal static string ExpectedBodyWithObjectPreCheckoutQuery { get; } =
+             GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithPreCheckoutQuery).ToString();
+        #endregion
+
+        /// <summary>
+        /// Print JSON. Not test.
+        /// </summary>
+        [Test]
+        public static void TestPrint()
+        {
+            Console.WriteLine(ExpectedBodyWithObjectPreCheckoutQuery);
+        }
     }
 }

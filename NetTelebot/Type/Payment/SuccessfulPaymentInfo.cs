@@ -6,6 +6,7 @@ namespace NetTelebot.Type.Payment
 {
     /// <summary>
     /// This object contains basic information about a successful payment.
+    /// See <see href="https://core.telegram.org/bots/api#successfulpayment">API</see>
     /// </summary>
     public class SuccessfulPaymentInfo
     {
