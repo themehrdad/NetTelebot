@@ -17,6 +17,7 @@ namespace NetTelebot.Type
             Parse(jsonObject);
         }
 
+        //todo check NullReferenceException 
         private void Parse(JObject jsonObject)
         {
             UpdateId = jsonObject["update_id"].Value<int>();
@@ -39,19 +40,24 @@ namespace NetTelebot.Type
 
             ChosenInlineResult = jsonObject["chosen_inline_result"] != null
                 ? new ChosenInlineResultInfo(jsonObject["chosen_inline_result"].Value<JObject>())
-                : new ChosenInlineResultInfo();
+                : new ChosenInlineResultInfo {From = new UserInfo(), Location = new LocationInfo()};
 
             CallbackQuery = jsonObject["callback_query"] != null
                 ? new CallbackQueryInfo(jsonObject["callback_query"].Value<JObject>())
-                : new CallbackQueryInfo();
+                : new CallbackQueryInfo
+                {
+                    From = new UserInfo(),
+                    Message =
+                        MessageInfo.GetNewMessageInfo(MessageInfo.GetNewMessageInfo(), MessageInfo.GetNewMessageInfo())
+                };
 
             ShippingQuery = jsonObject["shipping_query"] != null
                 ? new ShippingQueryInfo(jsonObject["shipping_query"].Value<JObject>())
-                : new ShippingQueryInfo();
+                : new ShippingQueryInfo {From = new UserInfo(), ShippingAddress = new ShippingAddressInfo()};
 
             PreCheckoutQuery = jsonObject["pre_checkout_query"] != null
                 ? new PreCheckoutQueryInfo(jsonObject["pre_checkout_query"].Value<JObject>())
-                : new PreCheckoutQueryInfo();
+                : new PreCheckoutQueryInfo {From = new UserInfo(), OrderInfo = new OrderInfo()};
         }
 
         /// <summary>

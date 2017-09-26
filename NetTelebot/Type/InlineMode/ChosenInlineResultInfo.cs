@@ -35,12 +35,12 @@ namespace NetTelebot.Type.InlineMode
         /// <summary>
         /// The user that chose the result
         /// </summary>
-        public UserInfo From { get; private set; }
+        public UserInfo From { get; internal set; }
 
         /// <summary>
         /// Optional. Sender location, only for bots that require user location
         /// </summary>
-        public LocationInfo Location { get; private set; }
+        public LocationInfo Location { get; internal set; }
 
         /// <summary>
         /// Optional. 

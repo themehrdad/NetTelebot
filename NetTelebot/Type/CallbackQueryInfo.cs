@@ -41,14 +41,14 @@ namespace NetTelebot.Type
         /// <summary>
         /// Sender
         /// </summary>
-        public UserInfo From { get; private set; }
+        public UserInfo From { get; internal set; }
 
         /// <summary>
         /// Optional. 
         /// Message with the callback button that originated the query. 
         /// Note that message content and message date will not be available if the message is too old
         /// </summary>
-        public MessageInfo Message { get; private set; }
+        public MessageInfo Message { get; internal set; }
 
         /// <summary>
         /// Optional. 

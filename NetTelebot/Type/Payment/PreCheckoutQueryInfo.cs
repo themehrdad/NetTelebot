@@ -36,7 +36,7 @@ namespace NetTelebot.Type.Payment
         /// <summary>
         /// User who sent the query
         /// </summary>
-        public UserInfo From { get; private set; }
+        public UserInfo From { get; internal set; }
 
         /// <summary>
         /// Three-letter ISO 4217 currency code
@@ -65,6 +65,6 @@ namespace NetTelebot.Type.Payment
         /// Optional. 
         /// Order info provided by the user
         /// </summary>
-        public OrderInfo OrderInfo { get; private set; }
+        public OrderInfo OrderInfo { get; internal set; }
     }
 }

@@ -28,7 +28,7 @@ namespace NetTelebot.Type.Payment
         /// <summary>
         /// User who sent the query
         /// </summary>
-        public UserInfo From { get; private set; }
+        public UserInfo From { get; internal set; }
 
         /// <summary>
         /// Bot specified invoice payload
@@ -38,6 +38,6 @@ namespace NetTelebot.Type.Payment
         /// <summary>
         /// User specified shipping address
         /// </summary>
-        public ShippingAddressInfo ShippingAddress { get; private set; }
+        public ShippingAddressInfo ShippingAddress { get; internal set; }
     }
 }
