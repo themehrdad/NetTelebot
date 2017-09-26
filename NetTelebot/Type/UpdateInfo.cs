@@ -97,7 +97,6 @@ namespace NetTelebot.Type
 
         //todo InlineQuery => InlineQuery
 
-        //todo need test
         /// <summary>
         /// Optional. 
         /// The result of an inline query that was chosen by a user and sent to their chat partner. 

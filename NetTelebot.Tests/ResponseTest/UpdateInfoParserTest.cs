@@ -2,6 +2,7 @@
 using NetTelebot.BotEnum;
 using NetTelebot.Extension;
 using NetTelebot.Tests.TypeTestObject;
+using NetTelebot.Tests.TypeTestObject.InlineModeObject;
 using NetTelebot.Tests.TypeTestObject.PaymentObject;
 using NetTelebot.Type;
 using Newtonsoft.Json.Linq;
@@ -66,6 +67,57 @@ namespace NetTelebot.Tests.ResponseTest
         }
 
         [Test]
+        public static void ChosenInlineResult()
+        {
+            //field class UpdateInfo
+            const int updateId = 123;
+
+            //field class UserInfo
+            const int id = 123;
+            const string firstName = "TestFirstName";
+            const string lastName = "TestLastName";
+            const string username = " TestUserName";
+            const string languageCode = "TestLanguageCode";
+
+            JObject userInfo = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            //field class Location
+            const float longitude = 1;
+            const float latitude = 1;
+
+            JObject locationInfo = LocationInfoObject.GetObject(longitude, latitude);
+
+            //field class ChosenInlineResultInfo
+            const string resultId = "TestResultId";
+            const string inlineMessageId = "InlineMessageId";
+            const string query = "TestQuery";
+
+            JObject chosenInlineResult = ChosenInlineResultInfoObject.GetObject(resultId, userInfo, locationInfo,
+                inlineMessageId, query);
+
+            dynamic updateInfoObject = UpdateInfoObject.GetObject(updateId, chosenInlineResult: chosenInlineResult);
+
+            UpdateInfo updateInfo = new UpdateInfo(updateInfoObject);
+
+            //ChosenInlineResultInfo filed
+            Assert.AreEqual(resultId, updateInfo.ChosenInlineResult.ResultId);
+            Assert.AreEqual(inlineMessageId, updateInfo.ChosenInlineResult.InlineMessageId);
+            Assert.AreEqual(query, updateInfo.ChosenInlineResult.Query);
+
+            //UserInfo field
+            Assert.AreEqual(id, updateInfo.ChosenInlineResult.From.Id);
+            Assert.AreEqual(firstName, updateInfo.ChosenInlineResult.From.FirstName);
+            Assert.AreEqual(lastName, updateInfo.ChosenInlineResult.From.LastName);
+            Assert.AreEqual(username, updateInfo.ChosenInlineResult.From.UserName);
+            Assert.AreEqual(languageCode, updateInfo.ChosenInlineResult.From.LanguageCode);
+
+            //LocationInfo fiels
+            Assert.AreEqual(latitude, updateInfo.ChosenInlineResult.Location.Latitude);
+            Assert.AreEqual(longitude, updateInfo.ChosenInlineResult.Location.Longitude);
+        }
+
+
+        [Test]
         public static void CallbackQueryTest()
         {
             //field class UpdateInfo
@@ -103,24 +155,24 @@ namespace NetTelebot.Tests.ResponseTest
             Assert.AreEqual(updateInfo.UpdateId, updateId);
 
             //UserInfo field
-            Assert.AreEqual(updateInfo.CallbackQuery.From.Id, id);
-            Assert.AreEqual(updateInfo.CallbackQuery.From.FirstName, firstName);
-            Assert.AreEqual(updateInfo.CallbackQuery.From.LastName, lastName);
-            Assert.AreEqual(updateInfo.CallbackQuery.From.UserName, username);
-            Assert.AreEqual(updateInfo.CallbackQuery.From.LanguageCode, languageCode);
+            Assert.AreEqual(id, updateInfo.CallbackQuery.From.Id);
+            Assert.AreEqual(firstName, updateInfo.CallbackQuery.From.FirstName);
+            Assert.AreEqual(lastName, updateInfo.CallbackQuery.From.LastName);
+            Assert.AreEqual(username, updateInfo.CallbackQuery.From.UserName);
+            Assert.AreEqual(languageCode, updateInfo.CallbackQuery.From.LanguageCode);
 
             //MessageInfo field
-            Assert.AreEqual(updateInfo.CallbackQuery.Message.MessageId, messageId);
-            Assert.AreEqual(updateInfo.CallbackQuery.Message.DateUnix, date);
-            Assert.AreEqual(updateInfo.CallbackQuery.Message.Chat.Id, chatId);
-            Assert.AreEqual(updateInfo.CallbackQuery.Message.Chat.Type, chatType);
+            Assert.AreEqual(messageId, updateInfo.CallbackQuery.Message.MessageId);
+            Assert.AreEqual(date, updateInfo.CallbackQuery.Message.DateUnix);
+            Assert.AreEqual(chatId, updateInfo.CallbackQuery.Message.Chat.Id);
+            Assert.AreEqual(chatType, updateInfo.CallbackQuery.Message.Chat.Type);
 
             //CallbackQueryInfo field
-            Assert.AreEqual(updateInfo.CallbackQuery.Id, idСallback);
-            Assert.AreEqual(updateInfo.CallbackQuery.InlineMessageId, inlineMessageId);
-            Assert.AreEqual(updateInfo.CallbackQuery.ChatInstance, chatInstance);
-            Assert.AreEqual(updateInfo.CallbackQuery.Data, data);
-            Assert.AreEqual(updateInfo.CallbackQuery.GameShortName, gameShortName);
+            Assert.AreEqual(idСallback, updateInfo.CallbackQuery.Id);
+            Assert.AreEqual(inlineMessageId, updateInfo.CallbackQuery.InlineMessageId);
+            Assert.AreEqual(chatInstance, updateInfo.CallbackQuery.ChatInstance );
+            Assert.AreEqual(data, updateInfo.CallbackQuery.Data);
+            Assert.AreEqual(gameShortName, updateInfo.CallbackQuery.GameShortName);
         }
 
         [Test]

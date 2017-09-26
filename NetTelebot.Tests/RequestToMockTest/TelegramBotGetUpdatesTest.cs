@@ -96,6 +96,8 @@ namespace NetTelebot.Tests.RequestToMockTest
             StartTest(ResponseStringGetUpdatesResult.ExpectedBodyWithObjectPreCheckoutQuery);
         }
 
+        //todo add ChosenInlineResultInfoTest
+
         private static void StartTest(string body)
         {
             MockServer.AddNewRouter("/botToken/getUpdates", body);
