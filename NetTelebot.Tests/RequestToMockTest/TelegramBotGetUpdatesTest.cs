@@ -96,7 +96,11 @@ namespace NetTelebot.Tests.RequestToMockTest
             StartTest(ResponseStringGetUpdatesResult.ExpectedBodyWithObjectPreCheckoutQuery);
         }
 
-        //todo add ChosenInlineResultInfoTest
+        [Test]
+        public static void GetUpdatesWithChosenInlineResultTest()
+        {
+            StartTest(ResponseStringGetUpdatesResult.ExpectedBodyWithObjectChosenInlineResult);
+        }
 
         private static void StartTest(string body)
         {
