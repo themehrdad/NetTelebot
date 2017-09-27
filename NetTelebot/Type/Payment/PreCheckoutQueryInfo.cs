@@ -31,40 +31,40 @@ namespace NetTelebot.Type.Payment
         /// <summary>
         /// Unique query identifier
         /// </summary>
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
         /// User who sent the query
         /// </summary>
-        public UserInfo From { get; set; }
+        public UserInfo From { get; internal set; }
 
         /// <summary>
         /// Three-letter ISO 4217 currency code
         /// </summary>
-        public Currency? Currency { get; set; }
+        public Currency? Currency { get; private set; }
 
         /// <summary>
         /// Total price in the smallest units of the currency (integer, not float/double). 
         /// For example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in currencies.json, 
         /// it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
         /// </summary>
-        public int TotalAmmount { get; set; }
+        public int TotalAmmount { get; private set; }
 
         /// <summary>
         /// Bot specified invoice payload
         /// </summary>
-        public string InvoicePayload { get; set; }
+        public string InvoicePayload { get; private set; }
 
         /// <summary>
         /// Optional. 
         /// Identifier of the shipping option chosen by the user
         /// </summary>
-        public string ShippingOptionId { get; set; }
+        public string ShippingOptionId { get; private set; }
 
         /// <summary>
         /// Optional. 
         /// Order info provided by the user
         /// </summary>
-        public OrderInfo OrderInfo { get; set; }
+        public OrderInfo OrderInfo { get; internal set; }
     }
 }

@@ -103,6 +103,7 @@
     <Compile Include="TypeTestObject\FileInfoObject.cs" />
     <Compile Include="TypeTestObject\GameObject\AnimationInfoObject.cs" />
     <Compile Include="TypeTestObject\GameObject\GameInfoObject.cs" />
+    <Compile Include="TypeTestObject\InlineModeObject\ChosenInlineResultInfoObject.cs" />
     <Compile Include="TypeTestObject\PaymentObject\InvoiceInfoObject.cs" />
     <Compile Include="TypeTestObject\PaymentObject\OrderInfoObject.cs" />
     <Compile Include="TypeTestObject\PaymentObject\PreCheckoutQueryInfoObject.cs" />

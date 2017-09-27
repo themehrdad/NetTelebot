@@ -1,5 +1,6 @@
 ﻿using System;
 using NetTelebot.Tests.TypeTestObject;
+using NetTelebot.Tests.TypeTestObject.InlineModeObject;
 using NetTelebot.Tests.TypeTestObject.PaymentObject;
 using NetTelebot.Tests.TypeTestObject.ResultTestObject;
 using Newtonsoft.Json.Linq;
@@ -316,13 +317,53 @@ namespace NetTelebot.Tests.MockServers
              GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithPreCheckoutQuery).ToString();
         #endregion
 
+        #region ChosenInlineResult
+
+        private static readonly JObject locationInfo = LocationInfoObject.GetObject(1, 1);
+
+        private static readonly JObject сhosenInlineResult =
+            ChosenInlineResultInfoObject.GetObject("TestResultId", mExpectedBodyUserInfo, locationInfo, "InlineMessageId", "query");
+
+        private static readonly JArray expectedBodyUpdateInfoWithChosenInlineResult
+            = UpdateInfoObject.GetObjectInArray(123, chosenInlineResult: сhosenInlineResult);
+
+        /// <summary>
+        /// {
+        ///  "ok": true,
+        ///  "result": [
+        ///    {
+        ///      "update_id": 123,
+        ///      "chosen_inline_result": {
+        ///        "result_id": "TestResultId",
+        ///        "from": {
+        ///          "id": 123,
+        ///          "first_name": "TestFirstName",
+        ///          "last_name": "TestFirstName",
+        ///          "username": "TestUserName",
+        ///          "language_code": "TestLanguageCode"
+        ///        },
+        ///        "location": {
+        ///          "longitude": 1.0,
+        ///          "latitude": 1.0
+        ///      },
+        ///        "inline_message_id": "InlineMessageId",
+        ///        "query": "query"
+        ///      }
+        ///    }
+        ///  ]
+        /// }
+        /// </summary>
+        internal static string ExpectedBodyWithObjectChosenInlineResult { get; } =
+             GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithChosenInlineResult).ToString();
+        #endregion
+
         /// <summary>
         /// Print JSON. Not test.
         /// </summary>
         [Test]
         public static void TestPrint()
         {
-            Console.WriteLine(ExpectedBodyWithObjectPreCheckoutQuery);
+            Console.WriteLine(ExpectedBodyWithObjectChosenInlineResult);
         }
     }
 }
