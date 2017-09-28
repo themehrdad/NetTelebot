@@ -14,11 +14,6 @@ namespace NetTelebot.Type
 
         internal DocumentInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-        
-        private void Parse(JObject jsonObject)
-        {
             FileId = jsonObject["file_id"].Value<string>();
             if (jsonObject["thumb"] != null)
                 Thumb = new PhotoSizeInfo(jsonObject["thumb"].Value<JObject>());
@@ -29,7 +24,7 @@ namespace NetTelebot.Type
             if (jsonObject["file_size"] != null)
                 FileSize = jsonObject["file_size"].Value<int>();
         }
-
+        
         /// <summary>
         /// Unique file identifier
         /// </summary>

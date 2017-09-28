@@ -15,14 +15,10 @@ namespace NetTelebot.Type
         
         internal PhotoSizeInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-        
-        private void Parse(JObject jsonObject)
-        {
             FileId = jsonObject["file_id"].Value<string>();
             Width = jsonObject["width"].Value<int>();
             Height = jsonObject["height"].Value<int>();
+
             if (jsonObject["file_size"] != null)
                 FileSize = jsonObject["file_size"].Value<int>();
         }

@@ -8,19 +8,13 @@ namespace NetTelebot.Type
 {
     /// <summary>
     /// This object contains information about one member of a chat.
+    /// See <see cref="https://core.telegram.org/bots/api#chatmember">API</see>
     /// </summary>
     public class ChatMemberInfo
     {
         internal ChatMemberInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
-            User = jsonObject["user"] != null
-                ? new UserInfo(jsonObject["user"].Value<JObject>())
-                : new UserInfo();
+            User = new UserInfo(jsonObject["user"].Value<JObject>());
             Status = jsonObject["status"].Value<string>().ToEnum<Status>();
 
             if (jsonObject["until_date"] != null)

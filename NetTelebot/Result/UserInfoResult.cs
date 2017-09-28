@@ -12,11 +12,6 @@ namespace NetTelebot.Result
     {
         internal UserInfoResult(string jsonText)
         {
-            Parse(jsonText);
-        }
-
-        private void Parse(string jsonText)
-        {
             JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }

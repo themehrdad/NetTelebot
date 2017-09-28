@@ -14,15 +14,9 @@ namespace NetTelebot.Type.Games
 
         internal GameInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
             Title = jsonObject["title"].Value<string>();
             Description = jsonObject["description"].Value<string>();
             Photo = PhotoSizeInfo.ParseArray(jsonObject["photo"].Value<JArray>());
-
 
             if (jsonObject["text"] != null)
                 Text = jsonObject["text"].Value<string>();

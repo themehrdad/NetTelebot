@@ -14,11 +14,6 @@ namespace NetTelebot.Type.Payment
 
         internal OrderInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
             if (jsonObject["name"] != null)
                 Name = jsonObject["name"].Value<string>();
             if (jsonObject["phone_number"] != null)

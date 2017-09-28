@@ -24,16 +24,11 @@ namespace NetTelebot.Type
         {
         }
         
-        internal MessageInfo(JObject jsonObject)
-        {
-            Parse(jsonObject);
-        }
-        
         /// <summary>
         /// Parses the specified json object.
         /// </summary>
         /// <param name="jsonObject">The json object.</param>
-        private void Parse(JObject jsonObject)
+        internal MessageInfo(JObject jsonObject)
         {
             MessageId = jsonObject["message_id"].Value<int>();
 

@@ -12,19 +12,14 @@ namespace NetTelebot.Result
     {
         internal ChatInfoResult(string jsonText)
         {
-            Parse(jsonText);
+            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
+            Parse(jsonObject);
         }
 
         private void Parse(JObject jsonObject)
         {
             Ok = jsonObject["ok"].Value<bool>();
             Result = new ChatInfo(jsonObject["result"].Value<JObject>());
-        }
-
-        private void Parse(string jsonText)
-        {
-            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
-            Parse(jsonObject);
         }
 
         /// <summary>

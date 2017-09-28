@@ -13,11 +13,6 @@ namespace NetTelebot.Type
         
         internal StickerInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
             FileId = jsonObject["file_id"].Value<string>();
             Width = jsonObject["width"].Value<int>();
             Height = jsonObject["height"].Value<int>();
