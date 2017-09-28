@@ -38,6 +38,10 @@ namespace NetTelebot.Type
                 ? new MessageInfo(jsonObject["edited_channel_post"].Value<JObject>())
                 : MessageInfo.GetNewMessageInfo(MessageInfo.GetNewMessageInfo(), MessageInfo.GetNewMessageInfo());
 
+            InlineQuery = jsonObject["inline_query"] != null
+                ? new InlineQueryInfo(jsonObject["inline_query"].Value<JObject>())
+                : new InlineQueryInfo{ From = new UserInfo(), Location = new LocationInfo() };
+
             ChosenInlineResult = jsonObject["chosen_inline_result"] != null
                 ? new ChosenInlineResultInfo(jsonObject["chosen_inline_result"].Value<JObject>())
                 : new ChosenInlineResultInfo {From = new UserInfo(), Location = new LocationInfo()};
@@ -101,7 +105,12 @@ namespace NetTelebot.Type
         /// </summary>
         public MessageInfo EditedChannelPost { get; private set;  }
 
-        //todo InlineQuery => InlineQuery
+        //todo test this
+        /// <summary>
+        /// Optional.
+        /// New incoming inline query
+        /// </summary>
+        public InlineQueryInfo InlineQuery { get; private set; }
 
         /// <summary>
         /// Optional. 

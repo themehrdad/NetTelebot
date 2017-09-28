@@ -53,6 +53,17 @@ namespace NetTelebot.Tests.MockServers
         /// </summary>
         private static readonly JObject mShippingAddress = ShippingAddressInfoObject.GetObject("countryCode", "state", "city",
             "streetLineOne", "streetLineTwo", "postCode");
+
+        /// <summary>
+        /// Represent JSON string:
+        /// 
+        /// {
+        ///  "longitude": 1.0,
+        ///  "latitude": 1.0
+        /// }
+        /// </summary>
+        private static readonly JObject mLocationInfo = LocationInfoObject.GetObject(1, 1);
+
         #endregion
 
         #region Message
@@ -319,10 +330,8 @@ namespace NetTelebot.Tests.MockServers
 
         #region ChosenInlineResult
 
-        private static readonly JObject locationInfo = LocationInfoObject.GetObject(1, 1);
-
         private static readonly JObject сhosenInlineResult =
-            ChosenInlineResultInfoObject.GetObject("TestResultId", mExpectedBodyUserInfo, locationInfo, "InlineMessageId", "query");
+            ChosenInlineResultInfoObject.GetObject("TestResultId", mExpectedBodyUserInfo, mLocationInfo, "InlineMessageId", "query");
 
         private static readonly JArray expectedBodyUpdateInfoWithChosenInlineResult
             = UpdateInfoObject.GetObjectInArray(123, chosenInlineResult: сhosenInlineResult);
@@ -363,7 +372,7 @@ namespace NetTelebot.Tests.MockServers
         [Test]
         public static void TestPrint()
         {
-            Console.WriteLine(ExpectedBodyWithObjectChosenInlineResult);
+            Console.WriteLine(mLocationInfo);
         }
     }
 }
