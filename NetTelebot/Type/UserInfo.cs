@@ -14,11 +14,6 @@ namespace NetTelebot.Type
 
         internal UserInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
             Id = jsonObject["id"].Value<int>();
             FirstName = jsonObject["first_name"].Value<string>();
             if (jsonObject["last_name"] != null)

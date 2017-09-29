@@ -16,11 +16,6 @@ namespace NetTelebot.Type.Games
 
         internal AnimationInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
             FileId = jsonObject["file_id"].Value<string>();
             if (jsonObject["thumb"] != null)
                 Thumb = new PhotoSizeInfo(jsonObject["thumb"].Value<JObject>());

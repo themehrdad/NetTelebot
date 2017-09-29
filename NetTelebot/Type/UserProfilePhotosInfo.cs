@@ -11,11 +11,6 @@ namespace NetTelebot.Type
 
         internal UserProfilePhotosInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
             TotalCount = jsonObject["total_count"].Value<int>();
             JArray arrayOfArrays = jsonObject["photos"].Value<JArray>();
             Photos = arrayOfArrays.Cast<JArray>().Select(PhotoSizeInfo.ParseArray).ToArray();

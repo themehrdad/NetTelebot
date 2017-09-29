@@ -13,11 +13,6 @@ namespace NetTelebot.Type
 
         internal LocationInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
             Longitude = jsonObject["longitude"].Value<float>();
             Latitude = jsonObject["latitude"].Value<float>();
         }

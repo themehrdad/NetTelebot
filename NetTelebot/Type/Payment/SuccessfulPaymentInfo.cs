@@ -16,11 +16,6 @@ namespace NetTelebot.Type.Payment
 
         internal SuccessfulPaymentInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
             Currency = jsonObject["currency"].Value<string>().ToEnum<Currency>();
             TotalAmmount = jsonObject["total_amount"].Value<int>();
             InvoicePayload = jsonObject["invoice_payload"].Value<string>();

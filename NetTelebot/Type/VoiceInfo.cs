@@ -13,13 +13,9 @@ namespace NetTelebot.Type
 
         internal VoiceInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
             FileId = jsonObject["file_id"].Value<string>();
             Duration = jsonObject["duration"].Value<int>();
+
             if (jsonObject["mime_type"] != null)
                 MimeType = jsonObject["mime_type"].Value<string>();
             if (jsonObject["file_size"] != null)

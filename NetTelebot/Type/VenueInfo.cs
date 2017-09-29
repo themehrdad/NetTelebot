@@ -16,6 +16,7 @@ namespace NetTelebot.Type
             Location = new LocationInfo(jsonObject["location"].Value<JObject>());
             Title= jsonObject["title"].Value<string>();
             Address = jsonObject["address"].Value<string>();
+
             if (jsonObject["foursquare_id"] != null)
                 FoursquareId = jsonObject["foursquare_id"].Value<string>();
         }

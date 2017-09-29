@@ -10,19 +10,14 @@ namespace NetTelebot.Result
     {
         internal IntegerResult(string jsonText)
         {
-            Parse(jsonText);
+            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
+            Parse(jsonObject);
         }
 
         private void Parse(JObject jsonObject)
         {
             Ok = jsonObject["ok"].Value<bool>();
             Result = jsonObject["result"].Value<int>();
-        }
-
-        private void Parse(string jsonText)
-        {
-            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
-            Parse(jsonObject);
         }
 
         /// <summary>

@@ -71,6 +71,7 @@
     <Compile Include="Type\Games\AnimationInfo.cs" />
     <Compile Include="Type\Games\GameInfo.cs" />
     <Compile Include="Type\InlineMode\ChosenInlineResultInfo.cs" />
+    <Compile Include="Type\InlineMode\InlineQueryInfo.cs" />
     <Compile Include="Type\Keyboard\ForceReplyMarkup.cs" />
     <Compile Include="Result\GetUpdatesResult.cs" />
     <Compile Include="Result\GetUserProfilePhotosResult.cs" />

@@ -16,14 +16,9 @@ namespace NetTelebot.Type
 
         internal ChatInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
             Id = jsonObject["id"].Value<long>();
             Type = jsonObject["type"].Value<string>().ToEnum<ChatType>();
-            
+
             if (jsonObject["title"] != null)
                 Title = jsonObject["title"].Value<string>();
             if (jsonObject["username"] != null)
@@ -33,7 +28,7 @@ namespace NetTelebot.Type
             if (jsonObject["last_name"] != null)
                 LastName = jsonObject["last_name"].Value<string>();
             if (jsonObject["all_members_are_administrators"] != null)
-                AllMembersAreAdministrators =  jsonObject["all_members_are_administrators"].Value<bool>();
+                AllMembersAreAdministrators = jsonObject["all_members_are_administrators"].Value<bool>();
             if (jsonObject["photo"] != null)
                 Photo = new ChatPhotoInfo(jsonObject["photo"].Value<JObject>());
             if (jsonObject["description"] != null)
@@ -82,7 +77,7 @@ namespace NetTelebot.Type
         /// <summary>
         /// Optional. Chat photo. Returned only in getChat.
         /// </summary>
-        public ChatPhotoInfo Photo { get; set; }
+        public ChatPhotoInfo Photo { get; internal set; }
 
         /// <summary>
         /// Optional. Description, for supergroups and channel chats. Returned only in getChat.

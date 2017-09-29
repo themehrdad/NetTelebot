@@ -67,7 +67,56 @@ namespace NetTelebot.Tests.ResponseTest
         }
 
         [Test]
-        public static void ChosenInlineResult()
+        public static void InlineQueryTest()
+        {
+            //field class UpdateInfo
+            const int updateId = 123;
+
+            //field class UserInfo
+            const int id = 123;
+            const string firstName = "TestFirstName";
+            const string lastName = "TestLastName";
+            const string username = " TestUserName";
+            const string languageCode = "TestLanguageCode";
+
+            JObject userInfo = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+
+            //field class Location
+            const float longitude = 1;
+            const float latitude = 1;
+
+            JObject locationInfo = LocationInfoObject.GetObject(longitude, latitude);
+
+            //field class InlineQueryInfo
+            const string idInlineQuery = "TestIdInlineQuery";
+            const string query = "TestQuery";
+            const string offset = "TestOffset";
+
+            JObject inlineQuery = InlineQueryInfoObject.GetObject(idInlineQuery, userInfo, locationInfo, query, offset);
+
+            JObject updateInfoObject = UpdateInfoObject.GetObject(updateId, inlineQuery: inlineQuery);
+
+            UpdateInfo updateInfo = new UpdateInfo(updateInfoObject);
+
+            //field class InlineQueryInfo
+            Assert.AreEqual(idInlineQuery, updateInfo.InlineQuery.Id);
+            Assert.AreEqual(query, updateInfo.InlineQuery.Query);
+            Assert.AreEqual(offset, updateInfo.InlineQuery.Offset);
+
+            //UserInfo field
+            Assert.AreEqual(id, updateInfo.InlineQuery.From.Id);
+            Assert.AreEqual(firstName, updateInfo.InlineQuery.From.FirstName);
+            Assert.AreEqual(lastName, updateInfo.InlineQuery.From.LastName);
+            Assert.AreEqual(username, updateInfo.InlineQuery.From.UserName);
+            Assert.AreEqual(languageCode, updateInfo.InlineQuery.From.LanguageCode);
+
+            //LocationInfo fiels
+            Assert.AreEqual(latitude, updateInfo.InlineQuery.Location.Latitude);
+            Assert.AreEqual(longitude, updateInfo.InlineQuery.Location.Longitude);
+        }
+
+        [Test]
+        public static void ChosenInlineResultTest()
         {
             //field class UpdateInfo
             const int updateId = 123;
@@ -95,7 +144,7 @@ namespace NetTelebot.Tests.ResponseTest
             JObject chosenInlineResult = ChosenInlineResultInfoObject.GetObject(resultId, userInfo, locationInfo,
                 inlineMessageId, query);
 
-            dynamic updateInfoObject = UpdateInfoObject.GetObject(updateId, chosenInlineResult: chosenInlineResult);
+            JObject updateInfoObject = UpdateInfoObject.GetObject(updateId, chosenInlineResult: chosenInlineResult);
 
             UpdateInfo updateInfo = new UpdateInfo(updateInfoObject);
 

@@ -1,10 +1,8 @@
-﻿using System;
-using NetTelebot.Tests.TypeTestObject;
+﻿using NetTelebot.Tests.TypeTestObject;
 using NetTelebot.Tests.TypeTestObject.InlineModeObject;
 using NetTelebot.Tests.TypeTestObject.PaymentObject;
 using NetTelebot.Tests.TypeTestObject.ResultTestObject;
 using Newtonsoft.Json.Linq;
-using NUnit.Framework;
 
 namespace NetTelebot.Tests.MockServers
 {
@@ -53,6 +51,17 @@ namespace NetTelebot.Tests.MockServers
         /// </summary>
         private static readonly JObject mShippingAddress = ShippingAddressInfoObject.GetObject("countryCode", "state", "city",
             "streetLineOne", "streetLineTwo", "postCode");
+
+        /// <summary>
+        /// Represent JSON string:
+        /// 
+        /// {
+        ///  "longitude": 1.0,
+        ///  "latitude": 1.0
+        /// }
+        /// </summary>
+        private static readonly JObject mLocationInfo = LocationInfoObject.GetObject(1, 1);
+
         #endregion
 
         #region Message
@@ -264,7 +273,6 @@ namespace NetTelebot.Tests.MockServers
         #endregion
 
         #region PreCheckoutQuery
-
         private static readonly JObject orderInfo = OrderInfoObject.GetObject("TestName", "TestPhoneNumber", "TestEmail",
             mShippingAddress);
 
@@ -277,7 +285,7 @@ namespace NetTelebot.Tests.MockServers
         /// <summary>
         /// Represent JSON string:
         /// 
-        ///  {
+        /// {
         ///  "ok": true,
         ///  "result": [
         ///    {
@@ -318,16 +326,15 @@ namespace NetTelebot.Tests.MockServers
         #endregion
 
         #region ChosenInlineResult
-
-        private static readonly JObject locationInfo = LocationInfoObject.GetObject(1, 1);
-
         private static readonly JObject сhosenInlineResult =
-            ChosenInlineResultInfoObject.GetObject("TestResultId", mExpectedBodyUserInfo, locationInfo, "InlineMessageId", "query");
+            ChosenInlineResultInfoObject.GetObject("TestResultId", mExpectedBodyUserInfo, mLocationInfo, "InlineMessageId", "query");
 
         private static readonly JArray expectedBodyUpdateInfoWithChosenInlineResult
             = UpdateInfoObject.GetObjectInArray(123, chosenInlineResult: сhosenInlineResult);
 
         /// <summary>
+        /// Represent JSON string:
+        /// 
         /// {
         ///  "ok": true,
         ///  "result": [
@@ -355,15 +362,48 @@ namespace NetTelebot.Tests.MockServers
         /// </summary>
         internal static string ExpectedBodyWithObjectChosenInlineResult { get; } =
              GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithChosenInlineResult).ToString();
+
         #endregion
 
+        #region InlineQuery
+
+        private static readonly JObject inlineQuery=
+            InlineQueryInfoObject.GetObject("TestId", mExpectedBodyUserInfo, mLocationInfo, "TestQuery", "TestOffset");
+
+        private static readonly JArray expectedBodyUpdateInfoWithInlineQuery
+            = UpdateInfoObject.GetObjectInArray(123, inlineQuery: inlineQuery);
+
         /// <summary>
-        /// Print JSON. Not test.
+        /// Represent JSON string:
+        /// 
+        /// {
+        ///  "ok": true,
+        ///  "result": [
+        ///    {
+        ///      "update_id": 123,
+        ///      "inline_query": {
+        ///        "id": "TestId",
+        ///        "from": {
+        ///          "id": 123,
+        ///          "first_name": "TestFirstName",
+        ///          "last_name": "TestFirstName",
+        ///          "username": "TestUserName",
+        ///          "language_code": "TestLanguageCode"
+        ///        },
+        ///        "location": {
+        ///          "longitude": 1.0,
+        ///          "latitude": 1.0
+        ///        },
+        ///        "query": "TestQuery",
+        ///        "offset": "TestOffset"
+        ///      }
+        ///    }
+        ///  ]
+        /// }
         /// </summary>
-        [Test]
-        public static void TestPrint()
-        {
-            Console.WriteLine(ExpectedBodyWithObjectChosenInlineResult);
-        }
+        internal static string ExpectedBodyWithObjectInlineQuery { get; } =
+             GetUpdatesResultObject.GetObject(true, expectedBodyUpdateInfoWithInlineQuery).ToString();
+
+        #endregion
     }
 }
