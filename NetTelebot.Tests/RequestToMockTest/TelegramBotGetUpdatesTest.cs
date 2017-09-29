@@ -54,6 +54,59 @@ namespace NetTelebot.Tests.RequestToMockTest
             Assert.Throws<Exception>(() => telegramBot.GetUpdates());
         }
 
+        #region GetUpdatesWithOffsetAndLimit
+
+        [Test]
+        public static void GetUpdatesWithOFfsetAndLimitTest()
+        {
+            MockServer.ServerOkResponse.ResetRequestLogs();
+
+            MockServer.AddNewRouter("/botToken/getUpdates*", ResponseStringGetUpdatesResult.ExpectedBodyWithObjectMessage);
+
+            mBotOkResponse.GetUpdates(1, 1);
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates*").UsingPost());
+
+            Console.WriteLine(request.FirstOrDefault()?.Url);
+
+            Assert.AreEqual("/botToken/getUpdates?offset=1&limit=1", request.FirstOrDefault()?.Url);
+            Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
+        }
+
+        [Test]
+        public static void GetUpdatesWithLimitTest()
+        {
+            MockServer.ServerOkResponse.ResetRequestLogs();
+
+            MockServer.AddNewRouter("/botToken/getUpdates*", ResponseStringGetUpdatesResult.ExpectedBodyWithObjectMessage);
+
+            mBotOkResponse.GetUpdates((byte)1);
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates*").UsingPost());
+
+            Console.WriteLine(request.FirstOrDefault()?.Url);
+
+
+            Assert.AreEqual("/botToken/getUpdates?limit=1", request.FirstOrDefault()?.Url);
+            Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
+        }
+
+        [Test]
+        public static void GetUpdatesWithOffsetTest()
+        {
+            MockServer.ServerOkResponse.ResetRequestLogs();
+
+            MockServer.AddNewRouter("/botToken/getUpdates*", ResponseStringGetUpdatesResult.ExpectedBodyWithObjectMessage);
+
+            mBotOkResponse.GetUpdates(1);
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates*").UsingPost());
+
+            Console.WriteLine(request.FirstOrDefault()?.Url);
+
+            Assert.AreEqual("/botToken/getUpdates?offset=1", request.FirstOrDefault()?.Url);
+            Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
+        }
+
+        #endregion
+
         [Test]
         public static void GetUpdatesWithMessageObjectTest()
         {
