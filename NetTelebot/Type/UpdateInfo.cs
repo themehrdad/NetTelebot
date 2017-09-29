@@ -105,7 +105,6 @@ namespace NetTelebot.Type
         /// </summary>
         public MessageInfo EditedChannelPost { get; private set;  }
 
-        //todo test this
         /// <summary>
         /// Optional.
         /// New incoming inline query
