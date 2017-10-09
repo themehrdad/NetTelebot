@@ -17,17 +17,12 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
         {
             //EnableProxy();
 
-            mClient = new TelegramBotClient
-            {    
-                Token = WindowsCredential.GetTelegramCredential("NetTelebotBot").Token,
-                CheckInterval = 1000
-            };
+            mClient = new TelegramBot().GetBot();
 
             mClient.UpdatesReceived += ClientUpdatesReceived;
             mClient.GetUpdatesError += ClientGetUpdatesError;
             mClient.StartCheckingUpdates();
             
-
             Console.WriteLine("Bot start. For exit press any key");
             Console.ReadKey();
         }
@@ -48,17 +43,13 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
             foreach (UpdateInfo update in e.Updates.Where(update => update.CallbackQuery.Data.StartsWith("/")))
             {
                 if (update.CallbackQuery.Data.Equals("/getId"))
-                    SendMessage(update.CallbackQuery.Message.Chat.Id,
-                        "This chat id is " + update.CallbackQuery.Message.Chat.Id);
+                    SendMessage(update.CallbackQuery.Message.Chat.Id, "This chat id is " + update.CallbackQuery.Message.Chat.Id);
                 else if (update.CallbackQuery.Data.Equals("/reply"))
-                    SendMessage(update.CallbackQuery.Message.Chat.Id, "Please reply this message",
-                        new ForceReplyMarkup());
+                    SendMessage(update.CallbackQuery.Message.Chat.Id, "Please reply this message", new ForceReplyMarkup());
                 else if (update.CallbackQuery.Data.Equals("/calculate"))
-                    SendMessage(update.CallbackQuery.Message.Chat.Id, "Please enter an arithmetic expression.",
-                        ReplyKeyboardMarkupExample.GetKeyboardMarkup());
+                    SendMessage(update.CallbackQuery.Message.Chat.Id, "Please enter an arithmetic expression.", ReplyKeyboardMarkupExample.GetKeyboardMarkup());
                 else if (update.CallbackQuery.Data.Equals("/remove_calculate"))
-                    SendMessage(update.CallbackQuery.Message.Chat.Id, "Remove keyboard",
-                        new ReplyKeyboardRemove());
+                    SendMessage(update.CallbackQuery.Message.Chat.Id, "Remove keyboard", new ReplyKeyboardRemove());
             }
         }
 
