@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using NetTelebot.CommonUtils;
+using NetTelebot.Result;
+using NetTelebot.Type;
 
 namespace NetTelebot.InlineKeyboardMarkup.TestApplication
 {
@@ -11,13 +14,61 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
         {
             mClient = new TelegramBot().GetBot();
 
-            //mClient.UpdatesReceived += ClientUpdatesReceived;
-            //mClient.GetUpdatesError += ClientGetUpdatesError;
+            mClient.UpdatesReceived += ClientUpdatesReceived;
+            mClient.GetUpdatesError += ClientGetUpdatesError;
             mClient.StartCheckingUpdates();
 
-
-            Console.WriteLine("Bot start. For exit press any key");
+            Console.WriteLine("Example bot start. For exit press any key");
             Console.ReadKey();
         }
+
+        private static void ClientGetUpdatesError(object sender, UnhandledExceptionEventArgs e)
+        {
+            Console.WriteLine("Error occured: {0}", ((Exception)e.ExceptionObject).Message);
+        }
+
+        private static void ClientUpdatesReceived(object sender, TelegramUpdateEventArgs e)
+        {
+            ParseUpdate(e.Updates);
+        }
+
+        private static void ParseUpdate(IEnumerable<UpdateInfo> updateInfo)
+        {
+            foreach (var update in updateInfo)
+            {
+                if(update.InlineQuery.Id != null)
+                    WriteConsoleLog("New InlineQuery");
+                if(update.CallbackQuery.Id != null)
+                    WriteConsoleLog("New CallbackQuery");
+                if(update.ChosenInlineResult.ResultId != null)
+                    WriteConsoleLog("New ChosenInlineResult");
+
+                if (update.Message.MessageId != 0)
+                {
+                    WriteConsoleLog("New MessageInfo");
+                    if (update.Message.Text.StartsWith("/"))
+                        ParseCommandInMessageInfo(update.Message);
+                }
+            }
+        }
+
+        private static void WriteConsoleLog(string text)
+        {
+            Console.WriteLine(DateTime.Now.ToLocalTime() + " " + text);
+        }
+
+        private static void ParseCommandInMessageInfo(MessageInfo messageInfo)
+        {
+            if (messageInfo.Text.Equals("/start"))
+            {
+                mClient.SendMessage(messageInfo.Chat.Id, 
+                    "Hey. I'm a demo bot." +
+                    "\nI'll show you how the inline keyboard works" +
+                    "\nPlease", replyMarkup: InlineKeyboardExample.GetInlineKeyboard());
+            }
+  
+        }
+
+
     }
 }
