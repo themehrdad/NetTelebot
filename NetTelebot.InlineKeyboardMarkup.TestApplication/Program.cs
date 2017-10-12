@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type;
@@ -38,8 +39,13 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
             {
                 if(update.InlineQuery.Id != null)
                     WriteConsoleLog("New InlineQuery");
-                if(update.CallbackQuery.Id != null)
+
+                if (update.CallbackQuery.Id != null)
+                {
                     WriteConsoleLog("New CallbackQuery");
+                    ParseCommandInCallbackQuery(update.CallbackQuery);
+                }
+                    
                 if(update.ChosenInlineResult.ResultId != null)
                     WriteConsoleLog("New ChosenInlineResult");
 
@@ -64,11 +70,24 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
                 mClient.SendMessage(messageInfo.Chat.Id, 
                     "Hey. I'm a demo bot." +
                     "\nI'll show you how the inline keyboard works" +
-                    "\nPlease", replyMarkup: InlineKeyboardExample.GetInlineKeyboard());
+                    "\nPlease", replyMarkup: InlineKeyboard.GetInlineKeyboard());
             }
   
         }
 
+        private static void ParseCommandInCallbackQuery(CallbackQueryInfo callbackQuery)
+        {
+            if (callbackQuery.Data.Equals("/getId"))
+            {
+                long chatId = callbackQuery.Message.Chat.Id;
+                mClient.SendMessage(chatId, "This chat id is " + chatId);
+            }
 
+            if (callbackQuery.Data.Equals("/stopBot"))
+            {
+                mClient.SendMessage(callbackQuery.Message.Chat.Id, "Goodbye");
+                //Environment.Exit(0);
+            }
+        }
     }
 }

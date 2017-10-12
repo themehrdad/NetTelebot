@@ -41,16 +41,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InlineKeyboardExample.cs" />
+    <Compile Include="InlineKeyboard.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="NetTelebot.XML" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetTelebot.CommonUtils\NetTelebot.CommonUtils.csproj">
