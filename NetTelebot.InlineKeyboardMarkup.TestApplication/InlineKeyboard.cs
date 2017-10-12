@@ -25,14 +25,14 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
                 SwitchInlineQuery = "@vertigraInlineBot "
             };
 
-            InlineKeyboardButton buttonStopBot = new InlineKeyboardButton
+            InlineKeyboardButton buttonGetLogo = new InlineKeyboardButton
             {
-                Text = "Stop bot",
-                CallbackData = "/stopBot"
+                Text = "Get NetTelbot logo",
+                CallbackData = "/getLogo"
             };
 
             InlineKeyboardButton[] line1 = {buttonGetId, buttonUrl};
-            InlineKeyboardButton[] line2 = {buttonInlineQuery, buttonStopBot};
+            InlineKeyboardButton[] line2 = {buttonInlineQuery, buttonGetLogo};
 
             InlineKeyboardButton[][] buttons = {line1, line2};
 

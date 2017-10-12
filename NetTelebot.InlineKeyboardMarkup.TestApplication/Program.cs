@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type;
@@ -70,23 +69,25 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
                 mClient.SendMessage(messageInfo.Chat.Id, 
                     "Hey. I'm a demo bot." +
                     "\nI'll show you how the inline keyboard works" +
-                    "\nPlease", replyMarkup: InlineKeyboard.GetInlineKeyboard());
+                    "\nPlease press inline button", 
+                    replyMarkup: InlineKeyboard.GetInlineKeyboard());
             }
-  
         }
 
         private static void ParseCommandInCallbackQuery(CallbackQueryInfo callbackQuery)
         {
             if (callbackQuery.Data.Equals("/getId"))
             {
-                long chatId = callbackQuery.Message.Chat.Id;
+                var chatId = callbackQuery.Message.Chat.Id;
                 mClient.SendMessage(chatId, "This chat id is " + chatId);
             }
 
-            if (callbackQuery.Data.Equals("/stopBot"))
+            if (callbackQuery.Data.Equals("/getLogo"))
             {
-                mClient.SendMessage(callbackQuery.Message.Chat.Id, "Goodbye");
-                //Environment.Exit(0);
+                mClient.SendPhoto(callbackQuery.Message.Chat.Id, new ExistingFile
+                {
+                    Url = "https://raw.githubusercontent.com/themehrdad/NetTelebot/master/Images/Logo/logo-100.png"
+                });
             }
         }
     }
