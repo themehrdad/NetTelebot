@@ -36,30 +36,25 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
         {
             foreach (var update in updateInfo)
             {
-                if(update.InlineQuery.Id != null)
-                    WriteConsoleLog("New InlineQuery");
+                if (update.InlineQuery.Id != null)
+                    ConsoleUtlis.WriteConsoleLog("New InlineQuery");
 
                 if (update.CallbackQuery.Id != null)
                 {
-                    WriteConsoleLog("New CallbackQuery");
+                    ConsoleUtlis.WriteConsoleLog("New CallbackQuery");
                     ParseCommandInCallbackQuery(update.CallbackQuery);
                 }
-                    
-                if(update.ChosenInlineResult.ResultId != null)
-                    WriteConsoleLog("New ChosenInlineResult");
+
+                if (update.ChosenInlineResult.ResultId != null)
+                    ConsoleUtlis.WriteConsoleLog("New ChosenInlineResult");
 
                 if (update.Message.MessageId != 0)
                 {
-                    WriteConsoleLog("New MessageInfo");
+                    ConsoleUtlis.WriteConsoleLog("New MessageInfo");
                     if (update.Message.Text.StartsWith("/"))
                         ParseCommandInMessageInfo(update.Message);
                 }
             }
-        }
-
-        private static void WriteConsoleLog(string text)
-        {
-            Console.WriteLine(DateTime.Now.ToLocalTime() + " " + text);
         }
 
         private static void ParseCommandInMessageInfo(MessageInfo messageInfo)

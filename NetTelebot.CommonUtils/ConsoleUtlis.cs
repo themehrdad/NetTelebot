@@ -42,5 +42,10 @@ namespace NetTelebot.CommonUtils
 
             Console.WriteLine("Property name: " + properties + ". Property value: " + result);
         }
+
+        public static void WriteConsoleLog(string text)
+        {
+            Console.WriteLine(DateTime.Now.ToLocalTime() + " " + text);
+        }
     }
 }
