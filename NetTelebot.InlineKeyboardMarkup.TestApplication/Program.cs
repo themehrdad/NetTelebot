@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Globalization;
-using System.Linq;
 using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type;
 
-namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
+namespace NetTelebot.InlineKeyboardMarkup.TestApplication
 {
     internal static class Program
     {
@@ -47,56 +45,49 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
 
         private static void ClientUpdatesReceived(object sender, TelegramUpdateEventArgs e)
         {
-            foreach (var update in e.Updates.Where(update => update.Message.MessageId != 0))
+            foreach (var update in e.Updates)
             {
-                if (update.Message.Text.StartsWith("/"))
-                    ParseCommandInMessageInfo(update.Message);
+                if (update.CallbackQuery.Id != null)
+                {
+                    ConsoleUtlis.WriteConsoleLog("New CallbackQuery");
+                    ParseCommandInCallbackQuery(update.CallbackQuery);
+                }
 
-                else if (update.Message.Text.Equals("Exit"))
-                    ReplyKeyboardRemove(update.Message.Chat.Id);
-
-                else
-                    ParseAnswerInMessageInfo(update.Message);
+                if (update.Message.MessageId != 0)
+                {
+                    ConsoleUtlis.WriteConsoleLog("New MessageInfo");
+                    if (update.Message.Text.StartsWith("/"))
+                        ParseCommandInMessageInfo(update.Message);
+                }
             }
         }
-
+        
         private static void ParseCommandInMessageInfo(MessageInfo messageInfo)
         {
             if (messageInfo.Text.Equals("/start"))
             {
-                mClient.SendMessage(messageInfo.Chat.Id,
+                mClient.SendMessage(messageInfo.Chat.Id, 
                     "Hey. I'm a demo bot." +
-                    "\nI'll show you how the inline keyboard works." +
-                    "\nPlease answer how many bits in the byte?",
-                    replyMarkup: ReplyKeyboard.GetKeyboard());
+                    "\nI'll show you how the inline keyboard works" +
+                    "\nPlease press inline button", 
+                    replyMarkup: InlineKeyboard.GetKeyboard());
             }
         }
 
-        private static void ReplyKeyboardRemove(long chatId)
+        private static void ParseCommandInCallbackQuery(CallbackQueryInfo callbackQuery)
         {
-            mClient.SendMessage(chatId, "Goodbay", replyMarkup: ReplyKeyboard.ReplyKeyboardRemove);
-        }
-
-        private static void ParseAnswerInMessageInfo(MessageInfo messageInfo)
-        {
-            int tempOut;
-            var chatId = messageInfo.Chat.Id;
-
-            if (int.TryParse(messageInfo.Text, NumberStyles.None, CultureInfo.InvariantCulture, out tempOut))
+            if (callbackQuery.Data.Equals("/getId"))
             {
-                if (tempOut == 8)
-                {
-                    mClient.SendMessage(chatId, "You win!");
-                    ReplyKeyboardRemove(chatId);
-                }
-                else
-                {
-                    mClient.SendMessage(chatId, "No. Try again");
-                }
+                var chatId = callbackQuery.Message.Chat.Id;
+                mClient.SendMessage(chatId, "This chat id is " + chatId);
             }
-            else
+
+            if (callbackQuery.Data.Equals("/getLogo"))
             {
-                mClient.SendMessage(chatId, "Need numeral");
+                mClient.SendPhoto(callbackQuery.Message.Chat.Id, new ExistingFile
+                {
+                    Url = "https://raw.githubusercontent.com/themehrdad/NetTelebot/master/Images/Logo/logo-100.png"
+                });
             }
         }
     }

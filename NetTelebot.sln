@@ -28,6 +28,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Coomon Project", "Coomon Project", "{0F3ADE71-52CB-412A-886C-7C4E11EF03F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.InlineKeyboardMarkup.TestApplication", "NetTelebot.InlineKeyboardMarkup.TestApplication\NetTelebot.InlineKeyboardMarkup.TestApplication.csproj", "{19D5559E-6E85-4155-804C-0C7670B0AC2D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{58C5212E-1FF1-47E4-A131-A872E46E3A4C} = {58C5212E-1FF1-47E4-A131-A872E46E3A4C}
+		{49C7146E-4A6B-406F-8332-042B9BCA19EB} = {49C7146E-4A6B-406F-8332-042B9BCA19EB}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +56,10 @@ Global
 		{58C5212E-1FF1-47E4-A131-A872E46E3A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58C5212E-1FF1-47E4-A131-A872E46E3A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58C5212E-1FF1-47E4-A131-A872E46E3A4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19D5559E-6E85-4155-804C-0C7670B0AC2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19D5559E-6E85-4155-804C-0C7670B0AC2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19D5559E-6E85-4155-804C-0C7670B0AC2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19D5559E-6E85-4155-804C-0C7670B0AC2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,5 +67,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A6F3D4C3-6628-47FF-94E7-09B87337B1C5} = {4A41CC2C-8882-4FB4-BFF8-3B4ED14421A9}
 		{58C5212E-1FF1-47E4-A131-A872E46E3A4C} = {0F3ADE71-52CB-412A-886C-7C4E11EF03F3}
+		{19D5559E-6E85-4155-804C-0C7670B0AC2D} = {4A41CC2C-8882-4FB4-BFF8-3B4ED14421A9}
 	EndGlobalSection
 EndGlobal

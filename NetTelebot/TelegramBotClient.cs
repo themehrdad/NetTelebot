@@ -139,6 +139,7 @@ namespace NetTelebot
             return GetUpdatesInternal(null, limit);
         }
 
+        //todo refact this
         private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit)
         {
             CheckToken();
