@@ -18,7 +18,7 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
             mClient.GetUpdatesError += ClientGetUpdatesError;
             mClient.StartCheckingUpdates();
 
-            Console.WriteLine("Example bot start. For exit press any key");
+            ConsoleUtlis.WriteConsoleLog("Example bot start. For exit press any key");
             Console.ReadKey();
         }
 
@@ -29,24 +29,13 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
 
         private static void ClientUpdatesReceived(object sender, TelegramUpdateEventArgs e)
         {
-            ParseUpdate(e.Updates);
-        }
-
-        private static void ParseUpdate(IEnumerable<UpdateInfo> updateInfo)
-        {
-            foreach (var update in updateInfo)
+            foreach (var update in e.Updates)
             {
-                if (update.InlineQuery.Id != null)
-                    ConsoleUtlis.WriteConsoleLog("New InlineQuery");
-
                 if (update.CallbackQuery.Id != null)
                 {
                     ConsoleUtlis.WriteConsoleLog("New CallbackQuery");
                     ParseCommandInCallbackQuery(update.CallbackQuery);
                 }
-
-                if (update.ChosenInlineResult.ResultId != null)
-                    ConsoleUtlis.WriteConsoleLog("New ChosenInlineResult");
 
                 if (update.Message.MessageId != 0)
                 {
@@ -56,7 +45,7 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
                 }
             }
         }
-
+        
         private static void ParseCommandInMessageInfo(MessageInfo messageInfo)
         {
             if (messageInfo.Text.Equals("/start"))
@@ -65,7 +54,7 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
                     "Hey. I'm a demo bot." +
                     "\nI'll show you how the inline keyboard works" +
                     "\nPlease press inline button", 
-                    replyMarkup: InlineKeyboard.GetInlineKeyboard());
+                    replyMarkup: InlineKeyboard.GetKeyboard());
             }
         }
 

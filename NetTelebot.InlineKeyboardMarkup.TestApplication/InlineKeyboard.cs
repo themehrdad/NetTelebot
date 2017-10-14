@@ -4,7 +4,7 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
 {
     internal static class InlineKeyboard
     {
-        internal static Type.Keyboard.InlineKeyboardMarkup GetInlineKeyboard()
+        internal static Type.Keyboard.InlineKeyboardMarkup GetKeyboard()
         {
             InlineKeyboardButton buttonGetId = new InlineKeyboardButton
             {
