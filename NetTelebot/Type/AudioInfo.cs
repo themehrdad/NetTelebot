@@ -14,13 +14,9 @@ namespace NetTelebot.Type
 
         internal AudioInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
             FileId = jsonObject["file_id"].Value<string>();
             Duration = jsonObject["duration"].Value<int>();
+
             if (jsonObject["performer"] != null)
                 Performer = jsonObject["performer"].Value<string>();
             if (jsonObject["title"] != null)

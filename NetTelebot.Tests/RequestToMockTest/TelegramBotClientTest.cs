@@ -33,42 +33,6 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the message test method <see cref="TelegramBotClient.GetMe"/>.
-        /// </summary>
-        [Test, Obsolete]
-        public void GetMeTest()
-        {
-            mBotOkResponse.GetMe();
-            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getMe").UsingPost());
-          
-            PrintResult(request);
-
-            Assert.Multiple(() =>
-            {
-                Assert.AreEqual("/botToken/getMe", request.FirstOrDefault()?.Url);
-                Assert.Throws<Exception>(() => mBotBadResponse.GetMe());
-            });
-        }
-
-        /// <summary>
-        /// Sends the message test method <see cref="TelegramBotClient.GetMe"/>.
-        /// </summary>
-        [Test]
-        public void GetsMeTest()
-        {
-            mBotOkResponse.GetsMe();
-            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getMe").UsingPost());
-
-            PrintResult(request);
-
-            Assert.Multiple(() =>
-            {
-                Assert.AreEqual("/botToken/getMe", request.FirstOrDefault()?.Url);
-                Assert.Throws<Exception>(() => mBotBadResponse.GetsMe());
-            });
-        }
-
-        /// <summary>
         /// Sends the message test method <see cref="TelegramBotClient.SendMessage"/>.
         /// </summary>
         [Test]
@@ -127,7 +91,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         [Test]
         public void SendPhotoTest()
         {
-            mBotOkResponse.SendPhoto(123, new ExistingFile { FileId = "123" }, "caption", false, 123, new ForceReplyMarkup());
+            mBotOkResponse.SendPhoto(123, new ExistingFile { FileId = "123", Url = "url"}, "caption", false, 123, new ForceReplyMarkup());
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendPhoto").UsingPost());
 
@@ -264,8 +228,74 @@ namespace NetTelebot.Tests.RequestToMockTest
                 request.FirstOrDefault()?.Body);
 
                 Assert.AreEqual("/botToken/sendVideo", request.FirstOrDefault()?.Url);
+
                 Assert.Throws<Exception>(() => mBotBadResponse.SendVideo(123, new ExistingFile {FileId = "123"},
                     123, 123, 123, "caption", true, 123, new ForceReplyMarkup()));
+            });
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.SendVoice"/>.
+        /// </summary>
+        [Test]
+        public void SendVoiceTest()
+        {
+            mBotOkResponse.SendVoice(123, new ExistingFile { FileId = "123" }, "TestCaption", 123, true, 123,
+                new ForceReplyMarkup());
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendVoice").UsingPost());
+
+            PrintResult(request);
+
+            
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                                "voice=123&" +
+                                "caption=TestCaption&" +
+                                "duration=123&" +
+                                "disable_notification=True&" +
+                                "reply_to_message_id=123&" +
+                                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D",
+                request.FirstOrDefault()?.Body);
+
+                Assert.AreEqual("/botToken/sendVoice", request.FirstOrDefault()?.Url);
+
+                Assert.Throws<Exception>(
+                    () =>
+                        mBotBadResponse.SendVoice(123, new ExistingFile {FileId = "123"}, "TestCaption", 123, true, 123,
+                            new ForceReplyMarkup()));
+            });
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.SendVideoNote"/>.
+        /// </summary>
+        [Test]
+        public void SendVideoNoteTest()
+        {
+            mBotOkResponse.SendVideoNote(123, new ExistingFile { FileId = "123" }, 123, 123, true, 123,
+                new ForceReplyMarkup());
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendVideoNote").UsingPost());
+
+            PrintResult(request);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=123&" +
+                                "video_note=123&" +
+                                "duration=123&" +
+                                "length=123&" +
+                                "disable_notification=True&" +
+                                "reply_to_message_id=123&" +
+                                "reply_markup=%7B%0D%0A%20%20%22force_reply%22%3A%20true%0D%0A%7D",
+                request.FirstOrDefault()?.Body);
+
+                Assert.AreEqual("/botToken/sendVideoNote", request.FirstOrDefault()?.Url);
+
+                Assert.Throws<Exception>(() => mBotBadResponse.SendVideoNote(123, new ExistingFile {FileId = "123"},
+                    123, 123, true, 123, new ForceReplyMarkup()));
             });
         }
 
@@ -585,6 +615,96 @@ namespace NetTelebot.Tests.RequestToMockTest
 
                 Assert.AreEqual("/botToken/getChat", request.FirstOrDefault()?.Url);
                 Assert.Throws<Exception>(() => mBotBadResponse.GetChat(123));
+            });
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.GetChat"/>.
+        /// </summary>
+        [Test]
+        public void GetFileTest()
+        {
+            mBotOkResponse.GetFile("jksdfjlskdjlaf");
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getFile").UsingPost());
+
+            PrintResult(request);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("file_id=jksdfjlskdjlaf", request.FirstOrDefault()?.Body);
+
+                Assert.AreEqual("/botToken/getFile", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.GetFile("jksdfjlskdjlaf"));
+            });
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.GetChatAdministrators"/>.
+        /// </summary>
+        [Test]
+        public void GetChatAdministratorsTest()
+        {
+            mBotOkResponse.GetChatAdministrators("testChatId");
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getChatAdministrators").UsingPost());
+
+            PrintResult(request);
+            
+                Assert.Multiple(() =>
+                {
+                    Assert.AreEqual("chat_id=testChatId", request.FirstOrDefault()?.Body);
+
+                    Assert.AreEqual("/botToken/getChatAdministrators", request.FirstOrDefault()?.Url);
+                    Assert.Throws<Exception>(() => mBotBadResponse.GetChatAdministrators("testChatId"));
+                });
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.GetChatAdministrators"/>.
+        /// </summary>
+        [Test]
+        public void AnswerCallbackQuery()
+        {
+            mBotOkResponse.AswerCallbackQuery("testCallbackQueryId", "TestText", true, "TestUrl", 123);
+
+            var request =
+                MockServer.ServerOkResponse.SearchLogsFor(
+                    Requests.WithUrl("/botToken/answerCallbackQuery").UsingPost());
+
+            PrintResult(request);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("callback_query_id=testCallbackQueryId&" +
+                                "text=TestText&" +
+                                "show_alert=True&" +
+                                "url=TestUrl&" +
+                                "cache_time=123", request.FirstOrDefault()?.Body);
+
+                Assert.AreEqual("/botToken/answerCallbackQuery", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.AswerCallbackQuery("testCallbackQueryId", "TestText", true, "TestUrl", 123));
+            });
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.GetChatMember"/>.
+        /// </summary>
+        [Test]
+        public void GetChatMemberTest()
+        {
+            mBotOkResponse.GetChatMember("testChatId", 123456);
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getChatMember").UsingPost());
+
+            PrintResult(request);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=testChatId&user_id=123456", request.FirstOrDefault()?.Body);
+
+                Assert.AreEqual("/botToken/getChatMember", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.GetChatMember("testChatId", 123456));
             });
         }
 

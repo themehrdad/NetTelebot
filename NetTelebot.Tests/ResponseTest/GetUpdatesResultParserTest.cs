@@ -1,6 +1,8 @@
 ﻿using NetTelebot.Result;
 using NetTelebot.Tests.TypeTestObject;
 using NetTelebot.Tests.TypeTestObject.ResultTestObject;
+using NetTelebot.Type;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests.ResponseTest
@@ -8,36 +10,73 @@ namespace NetTelebot.Tests.ResponseTest
     [TestFixture]
     internal static class GetUpdatesResultParserTest
     {
+        private const int mUpdateId = 123;
+
+        //field class MessageInfo 
+        private const int mMessageId = 123;
+        private const int mDate = 0;
+        private const int mChatId = 123;
+        private const string mChatType = @"private";
+
+        //field class GetUpadtesResult
+        private const bool mOk = true;
+
         /// <summary>
-        /// Test for <see cref="GetUpdatesResult"/> parse field.
+        /// Test for <see cref="GetUpdatesResult"/> parse field message.
         /// </summary>
         [Test]
-        public static void GetUpdatesResultTest()
+        public static void GetUpdatesResultMessageInfoTest()
         {
-            //field class UpdateInfo
-            const int updateId = 123;
+            //message
+            JObject messageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(mMessageId, mDate, mChatId, mChatType);
+            dynamic result = UpdateInfoObject.GetObjectInArray(mUpdateId, messageInfo);
 
-            //field class MessageInfo 
-            const int messageId = 123;
-            const int date = 0;
-            const int chatId = 123;
-            const string chatType = @"private";
-
-            //field class GetUpadtesResult
-            const bool ok = true;
-
-            var messageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatType);
-            dynamic result = UpdateInfoObject.GetObjectInArray(updateId, messageInfo);
-
-            dynamic getUpdates = GetUpdatesResultObject.GetObject(ok, result);
+            dynamic getUpdates = GetUpdatesResultObject.GetObject(mOk, result);
             GetUpdatesResult updateResult = new GetUpdatesResult(getUpdates.ToString());
 
-            Assert.True(updateResult.Ok);
-            Assert.AreEqual(updateResult.Result[0].UpdateId, updateId);
-            Assert.AreEqual(updateResult.Result[0].Message.MessageId, messageId);
-            Assert.AreEqual(updateResult.Result[0].Message.DateUnix, date);
-            Assert.AreEqual(updateResult.Result[0].Message.Chat.Id, chatId);
-            Assert.AreEqual(updateResult.Result[0].Message.Chat.Type.ToString(), chatType);
+            AssertUpdateInfo(updateResult);
+            AssertMessageInfo(updateResult.Result[0].Message);
+
+            //editedMessage
+            result = UpdateInfoObject.GetObjectInArray(mUpdateId, editedMessage: messageInfo);
+
+            getUpdates = GetUpdatesResultObject.GetObject(mOk, result);
+            updateResult = new GetUpdatesResult(getUpdates.ToString());
+
+            AssertUpdateInfo(updateResult);
+            AssertMessageInfo(updateResult.Result[0].EditedMessage);
+
+            //channelPost
+            result = UpdateInfoObject.GetObjectInArray(mUpdateId, channelPost: messageInfo);
+
+            getUpdates = GetUpdatesResultObject.GetObject(mOk, result);
+            updateResult = new GetUpdatesResult(getUpdates.ToString());
+
+            AssertUpdateInfo(updateResult);
+            AssertMessageInfo(updateResult.Result[0].ChannelPost);
+
+            //editedChannelPost
+            result = UpdateInfoObject.GetObjectInArray(mUpdateId, editedChannelPost: messageInfo);
+
+            getUpdates = GetUpdatesResultObject.GetObject(mOk, result);
+            updateResult = new GetUpdatesResult(getUpdates.ToString());
+
+            AssertUpdateInfo(updateResult);
+            AssertMessageInfo(updateResult.Result[0].EditedChannelPost);
+        }
+
+        private static void AssertUpdateInfo(GetUpdatesResult updatesResult)
+        {
+            Assert.True(updatesResult.Ok);
+            Assert.AreEqual(mUpdateId, updatesResult.Result[0].UpdateId);
+        }
+
+        private static void AssertMessageInfo(MessageInfo updatesResult)
+        {
+            Assert.AreEqual(mMessageId, updatesResult.MessageId);
+            Assert.AreEqual(mDate, updatesResult.DateUnix);
+            Assert.AreEqual(mChatId, updatesResult.Chat.Id);
+            Assert.AreEqual(mChatType, updatesResult.Chat.Type.ToString());
         }
     }
 }

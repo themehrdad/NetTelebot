@@ -24,16 +24,11 @@ namespace NetTelebot.Type
         {
         }
         
-        internal MessageInfo(JObject jsonObject)
-        {
-            Parse(jsonObject);
-        }
-        
         /// <summary>
         /// Parses the specified json object.
         /// </summary>
         /// <param name="jsonObject">The json object.</param>
-        private void Parse(JObject jsonObject)
+        internal MessageInfo(JObject jsonObject)
         {
             MessageId = jsonObject["message_id"].Value<int>();
 
@@ -41,10 +36,8 @@ namespace NetTelebot.Type
                 ? new UserInfo(jsonObject["from"].Value<JObject>())
                 : new UserInfo();
 
-            DateUnix = jsonObject["date"].Value<int>();
-
+            DateUnix = jsonObject["date"].Value<long>();
             Date = DateUnix.ToDateTime();
-
             Chat = new ChatInfo(jsonObject["chat"].Value<JObject>());
 
             ForwardFrom = jsonObject["forward_from"] != null
@@ -60,7 +53,7 @@ namespace NetTelebot.Type
 
             if (jsonObject["forward_date"]!=null)
             {
-                ForwardDateUnix = jsonObject["forward_date"].Value<int>();
+                ForwardDateUnix = jsonObject["forward_date"].Value<long>();
                 ForwardDate = ForwardDateUnix.ToDateTime();
             }
 
@@ -70,7 +63,7 @@ namespace NetTelebot.Type
 
             if (jsonObject["edit_date"] != null)
             {
-                EditDateUnix = jsonObject["edit_date"].Value<int>();
+                EditDateUnix = jsonObject["edit_date"].Value<long>();
                 EditDate = EditDateUnix.ToDateTime();
             }
 

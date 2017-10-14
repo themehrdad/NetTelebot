@@ -6,6 +6,7 @@ namespace NetTelebot.Type.Payment
 {
     /// <summary>
     /// This object contains basic information about a successful payment.
+    /// See <see href="https://core.telegram.org/bots/api#successfulpayment">API</see>
     /// </summary>
     public class SuccessfulPaymentInfo
     {
@@ -14,11 +15,6 @@ namespace NetTelebot.Type.Payment
         }
 
         internal SuccessfulPaymentInfo(JObject jsonObject)
-        {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
         {
             Currency = jsonObject["currency"].Value<string>().ToEnum<Currency>();
             TotalAmmount = jsonObject["total_amount"].Value<int>();

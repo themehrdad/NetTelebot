@@ -1,6 +1,6 @@
 <img src="Images/Logo/logo-100.png"  alt="logo" title="NetTelebot" align="right" height="60" />
 
-# NetTelebot [![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/vertigra/nettelebot) [![NuGet version](https://badge.fury.io/nu/nettelebot.svg)](https://badge.fury.io/nu/nettelebot)
+# NetTelebot [![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/vertigra/nettelebot) [![NuGet version](https://badge.fury.io/nu/nettelebot.svg)](https://badge.fury.io/nu/nettelebot) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/themehrdad/NetTelebot/blob/master/LICENSE)
 
 Telegram bot API implementation on .NET framework
 
@@ -54,11 +54,11 @@ See more examples in the project [wiki](https://github.com/themehrdad/NetTelebot
 ## Plans
 
 On the nearest release (1.0.11)
-- [ ] In class TelegramBotClient add fields marked in todo (except inline mode methods)
-- [ ] In class UpdateInfo add fields marked in todo
-- [ ] Delete classes, tests and methods marked as obsolete
-- [ ] Net.Commands and Net.Commands.TestApplication remove from repository
-- [ ] To divide the project NetTelebot.ReplyKeyboardMarkup.TestApplication on
+- [x] In class TelegramBotClient add fields marked in todo (except inline mode methods)
+- [x] In class UpdateInfo add fields marked in todo
+- [x] Delete classes, tests and methods marked as obsolete
+- [x] Net.Commands and Net.Commands.TestApplication remove from repository
+- [x] To divide the project NetTelebot.ReplyKeyboardMarkup.TestApplication on
 ReplyKeyboardMarkup and InlineKeyboardMarkup.
 
 For the project
@@ -70,6 +70,3 @@ More details [here](https://github.com/vertigra/NetTelebot-2.0/projects/1)
 
 The logo is provided by the site [icons8.com](https://icons8.com/)
 
-## License
-
-Usage is provided under the [MIT License](http://http//opensource.org/licenses/mit-license.php).

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type
 {
@@ -16,11 +12,6 @@ namespace NetTelebot.Type
         }
 
         internal VideoNoteInfo(JObject jsonObject)
-        {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
         {
             FileId = jsonObject["file_id"].Value<string>();
             Length = jsonObject["length"].Value<int>();

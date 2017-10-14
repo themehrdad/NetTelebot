@@ -16,11 +16,6 @@ namespace NetTelebot.Type.Payment
 
         internal ShippingAddressInfo(JObject jsonObject)
         {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
-        {
             CountryCode = jsonObject["country_code"].Value<string>().ToEnum<Countries>();
             State = jsonObject["state"].Value<string>();
             City = jsonObject["city"].Value<string>();

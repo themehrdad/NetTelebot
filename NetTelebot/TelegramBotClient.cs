@@ -84,7 +84,7 @@ namespace NetTelebot
         private const string getChatAdministratorsUri = "/bot{0}/getChatAdministrators";
         private const string getChatMembersCountUri = "/bot{0}/getChatMembersCount";
         private const string getChatMemberUri = "/bot{0}/getChatMember";
-        private const string answerCallbackQueryUri = "/bot{0}/getChatMember";
+        private const string answerCallbackQueryUri = "/bot{0}/answerCallbackQuery";
 
         private Timer mUpdateTimer;
         private int mLastUpdateId;
@@ -139,6 +139,7 @@ namespace NetTelebot
             return GetUpdatesInternal(null, limit);
         }
 
+        //todo refact this
         private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit)
         {
             CheckToken();
@@ -172,15 +173,6 @@ namespace NetTelebot
         /// <summary>
         /// Gets information about your bot. You can call this method as a ping
         /// </summary>
-        [Obsolete("Please use GetsMe method. This method will be removed at the following updates")]
-        public MeInfo GetMe()
-        {
-            return ExecuteRequest<MeInfo>(NewRestRequest(getMeUri)) as MeInfo;
-        }
-
-        /// <summary>
-        /// Gets information about your bot. You can call this method as a ping
-        /// </summary>
         public UserInfoResult GetsMe()
         {
             return ExecuteRequest<UserInfoResult>(NewRestRequest(getMeUri)) as UserInfoResult;
@@ -189,7 +181,7 @@ namespace NetTelebot
         /// <summary>
         /// Use this method to send text messages. See <see href="https://core.telegram.org/bots/api#sendmessage">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="text">Text of the message to be sent</param>
         /// <param name="parseMode">Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message</param>
         /// <param name="disableWebPagePreview">Disables link previews for links in this message</param>
@@ -226,7 +218,7 @@ namespace NetTelebot
         /// <summary>
         /// Use this method to forward messages of any kind. See <see href="https://core.telegram.org/bots/api#forwardmessage">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="fromChatId">Unique identifier for the chat where the original message was sent — User or GroupChat id</param>
         /// <param name="messageId">Unique message identifier</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
@@ -248,7 +240,7 @@ namespace NetTelebot
         /// <summary>
         /// Use this method to send photos. See <see href="https://core.telegram.org/bots/api#sendphoto">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="photo">Photo to send. You can either pass a file_id as String to resend a photo that is already on the Telegram servers (using ExistingFile class),
         /// or upload a new photo using multipart/form-data. (Using NewFile class)</param>
         /// <param name="caption">Photo caption (may also be used when resending photos by file_id).</param>
@@ -265,17 +257,8 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendPhotoUri);
             request.AddParameter("chat_id", chatId);
-            ExistingFile file = photo as ExistingFile;
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("photo", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)photo;
-                request.AddFile("photo", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(photo, request, "photo");
+
             if (!string.IsNullOrEmpty(caption))
                 request.AddParameter("caption", caption);
             if (disableNotification.HasValue)
@@ -294,7 +277,7 @@ namespace NetTelebot
         /// Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
         /// See <see href="https://core.telegram.org/bots/api#sendaudio">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="audio">Audio file to send. You can either pass a file_id as String to resend an audio that is already on the Telegram servers,
         /// or upload a new audio file using multipart/form-data.</param>
         /// <param name="caption">Audio caption, 0-200 characters</param>
@@ -317,18 +300,7 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendAudioUri);
             request.AddParameter("chat_id", chatId);
-
-            ExistingFile file = audio as ExistingFile;
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("audio", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)audio;
-                request.AddFile("audio", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(audio, request, "audio");
 
             if (!string.IsNullOrEmpty(caption))
                 request.AddParameter("caption", caption);
@@ -352,7 +324,7 @@ namespace NetTelebot
         /// Use this method to send general files. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
         /// See <see href="https://core.telegram.org/bots/api#senddocument">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="document">File to send. You can either pass a file_id as String to resend a file that is already on the Telegram servers,
         /// or upload a new file using multipart/form-data.</param>
         /// <param name="caption">Document caption (may also be used when resending documents by file_id), 0-200 characters</param>
@@ -368,18 +340,7 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendDocumentUri);
             request.AddParameter("chat_id", chatId);
-
-            ExistingFile file = document as ExistingFile;
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("document", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)document;
-                request.AddFile("document", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(document, request, "document");
 
             if (!string.IsNullOrEmpty(caption))
                 request.AddParameter("caption", caption);
@@ -396,7 +357,7 @@ namespace NetTelebot
         /// <summary>
         /// Use this method to send .webp stickers. See <see href="https://core.telegram.org/bots/api#sendsticker">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="sticker">Sticker to send. You can either pass a file_id as String to resend a sticker that is 
         /// already on the Telegram servers, or upload a new sticker using multipart/form-data.</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
@@ -410,19 +371,7 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendStickerUri);
             request.AddParameter("chat_id", chatId);
-
-            ExistingFile file = sticker as ExistingFile;
-
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("sticker", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)sticker;
-                request.AddFile("sticker", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(sticker, request, "sticker");
 
             if (disableNotification.HasValue)
                 request.AddParameter("disable_notification", disableNotification.Value);
@@ -438,7 +387,7 @@ namespace NetTelebot
         /// Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). 
         /// Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future. See <see href="https://core.telegram.org/bots/api#sendvideo"></see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="video">Video to send. You can either pass a file_id as String to resend a video that is already on the Telegram servers,
         /// or upload a new video file using multipart/form-data.</param>
         /// <param name="duration">Optional. Duration of sent video in seconds</param>
@@ -460,19 +409,7 @@ namespace NetTelebot
         {
             RestRequest request = NewRestRequest(sendVideoUri);
             request.AddParameter("chat_id", chatId);
-
-            ExistingFile file = video as ExistingFile;
-
-            if (file != null)
-            {
-                ExistingFile existingFile = file;
-                request.AddParameter("video", existingFile.FileId);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)video;
-                request.AddFile("video", newFile.FileContent, newFile.FileName);
-            }
+            request = AddFile(video, request, "video");
 
             if (duration != null)
                 request.AddParameter("duration", duration);
@@ -492,14 +429,90 @@ namespace NetTelebot
             return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
         }
 
-        //todo sendVoice (https://core.telegram.org/bots/api#sendvoice)
-        //todo sendVideonote (https://core.telegram.org/bots/api#sendvideonote)
+        /// <summary>
+        /// Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. 
+        /// For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document).
+        /// On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
+        /// <param name="voice">Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), 
+        /// pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data</param>
+        /// <param name="caption">Voice message caption, 0-200 characters </param>
+        /// <param name="duration">Duration of the voice message in seconds </param>
+        /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.</param>
+        /// <returns></returns>
+        public SendMessageResult SendVoice(object chatId, IFile voice, 
+            string caption = null,
+            int? duration = null,
+            bool? disableNotification = null,
+            int? replyToMessageId = null,
+            IReplyMarkup replyMarkup = null)
+        {
+            RestRequest request = NewRestRequest(sendVoiceUri);
+            request.AddParameter("chat_id", chatId);
+            request = AddFile(voice, request, "voice");
+
+            if (!string.IsNullOrEmpty(caption))
+                request.AddParameter("caption", caption);
+            if (duration != null)
+                request.AddParameter("duration", duration);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+            if (replyToMessageId != null)
+                request.AddParameter("reply_to_message_id", replyToMessageId);
+            if (replyMarkup != null)
+                request.AddParameter("reply_markup", replyMarkup.GetJson());
+
+            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
+        }
+
+        /// <summary>
+        /// As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long.
+        /// Use this method to send video messages.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
+        /// <param name="videoNote">Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) 
+        /// or upload a new video using multipart/form-data. 
+        /// Sending video notes by a URL is currently unsupported</param>
+        /// <param name="duration">Optional. Duration of sent video in seconds</param>
+        /// <param name="length">Optional. Video width and height</param>
+        /// <param name="disableNotification">Optional. Sends the message silently. Users will receive a notification with no sound.</param>
+        /// <param name="replyToMessageId">Optional. If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Optional. Additional interface options. 
+        /// A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.</param>
+        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned</returns>
+        public SendMessageResult SendVideoNote(object chatId, IFile videoNote,
+            int? duration = null,
+            int? length = null,
+            bool? disableNotification = null,
+            int? replyToMessageId = null,
+            IReplyMarkup replyMarkup = null)
+        {
+            RestRequest request = NewRestRequest(sendVideoNoteUri);
+            request.AddParameter("chat_id", chatId);
+            request = AddFile(videoNote, request, "video_note");
+
+            if (duration != null)
+                request.AddParameter("duration", duration);
+            if (length != null)
+                request.AddParameter("length", length);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+            if (replyToMessageId != null)
+                request.AddParameter("reply_to_message_id", replyToMessageId);
+            if (replyMarkup != null)
+                request.AddParameter("reply_markup", replyMarkup.GetJson());
+
+            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
+        }
 
         /// <summary>
         /// Use this method to send point on the map.
         /// See <see href="https://core.telegram.org/bots/api#sendlocation">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="latitude">Latitude of location</param>
         /// <param name="longitude">Longitude of location</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
@@ -605,7 +618,7 @@ namespace NetTelebot
         /// The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
         /// See <see href="https://core.telegram.org/bots/api#sendchataction">API</see>
         /// </summary>
-        /// <param name="chatId">Unique identifier for the message recipient — User or GroupChat id</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="action">Type of action to broadcast. Choose one, depending on what the user is about to receive: 
         /// typing for text messages, upload_photo for photos, record_video or upload_video for videos, 
         /// record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.</param>
@@ -639,7 +652,21 @@ namespace NetTelebot
             return ExecuteRequest<GetUserProfilePhotosResult>(request) as GetUserProfilePhotosResult;
         }
 
-        //todo getFile (https://core.telegram.org/bots/api#getfile)
+        /// <summary>
+        /// Use this method to get basic info about a file and prepare it for downloading.
+        /// For the moment, bots can download files of up to 20MB in size. 
+        /// The file can then be downloaded via the link https://api.telegram.org/file/botToken/file_path, where file_path is taken from the response. 
+        /// It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
+        /// </summary>
+        /// <param name="fileId">File identifier to get info about</param>
+        /// <returns>On success, a <see cref="FileInfo"/> is returned.</returns>
+        public FileInfoResult GetFile(string fileId)
+        {
+            RestRequest request = NewRestRequest(getFileUri);
+
+            request.AddParameter("file_id", fileId);
+            return ExecuteRequest<FileInfoResult>(request) as FileInfoResult;
+        }
 
         /// <summary>
         /// Use this method to kick a user from a group, a supergroup or a channel. 
@@ -669,7 +696,7 @@ namespace NetTelebot
         /// The bot must be an administrator for this to work.
         /// See <see href="https://core.telegram.org/bots/api#unbanchatmember">API</see> 
         /// </summary>
-        /// <param name="chatId">Unique identifier for the target group or username of the target supergroup or channel</param>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
         /// <param name="userId">Unique identifier of the target user</param>
         /// <returns>Returns True on success, false otherwise</returns>
         public BooleanResult UnbanChatMember(object chatId, int userId)
@@ -711,15 +738,26 @@ namespace NetTelebot
             return ExecuteRequest<ChatInfoResult>(request) as ChatInfoResult;
         }
 
-        //todo getChatAdministrators (https://core.telegram.org/bots/api#getchatadministrators)
-        //todo getChatMembersCount (https://core.telegram.org/bots/api#getchatmemberscount)
-
-
         /// <summary>
-        /// Use this method to get the number of members in a chat. Returns <see cref="IntegerResult"/> on success
+        /// Use this method to get a list of administrators in a chat. 
         /// </summary>
         /// <param name="chatId"></param>
-        /// <returns></returns>
+        /// <returns>On success, returns an Array of <see cref="ChatMemberInfo"/> objects that contains information about all chat
+        /// administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.</returns>
+        public ChatMembersInfoResult GetChatAdministrators(object chatId)
+        {
+            RestRequest request = NewRestRequest(getChatAdministratorsUri);
+
+            request.AddParameter("chat_id", chatId);
+
+            return ExecuteRequest<ChatMembersInfoResult>(request) as ChatMembersInfoResult;
+        }
+
+        /// <summary>
+        /// Use this method to get the number of members in a chat. 
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)</param>
+        /// <returns>Returns <see cref="IntegerResult"/> on success</returns>
         public IntegerResult GetChatMembersCount(object chatId)
         {
             RestRequest request = NewRestRequest(getChatMembersCountUri);
@@ -729,8 +767,61 @@ namespace NetTelebot
             return ExecuteRequest<IntegerResult>(request) as IntegerResult;
         }
 
-        //todo getChatMember (https://core.telegram.org/bots/api#getchatmember)
-        //todo answerCallbackQuery (https://core.telegram.org/bots/api#answercallbackquery)
+        /// <summary>
+        /// Use this method to get information about a member of a chat. 
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)</param>
+        /// <param name="userId">Unique identifier of the target user</param>
+        /// <returns>Returns a <see cref="ChatMemberInfo"/> object on success.</returns>
+        public ChatMemberInfoResult GetChatMember(object chatId, int userId)
+        {
+            RestRequest request = NewRestRequest(getChatMemberUri);
+
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("user_id", userId);
+
+            return ExecuteRequest<ChatMemberInfoResult>(request) as ChatMemberInfoResult;
+        }
+
+        /// <summary>
+        /// Use this method to send answers to callback queries sent from inline keyboards. 
+        /// The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. 
+        /// 
+        /// Note: Alternatively, the user can be redirected to the specified Game URL. 
+        /// For this option to work, you must first create a game for your bot via @Botfather and accept the terms. 
+        /// Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
+        /// </summary>
+        /// <param name="callbackQueryId">Unique identifier for the query to be answered</param>
+        /// <param name="text">Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters</param>
+        /// <param name="showAlert">If true, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to false.</param>
+        /// <param name="url">URL that will be opened by the user's client. If you have created a Game and accepted the conditions via @Botfather, 
+        /// specify the URL that opens your game – note that this will only work if the query comes from a callback_game button. 
+        /// Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.</param>
+        /// <param name="cacheTime">The maximum amount of time in seconds that the result of the callback query may be cached client-side. 
+        /// Telegram apps will support caching starting in version 3.14. Defaults to 0.</param>
+        /// <returns>On success, True is returned.</returns>
+        public BooleanResult AswerCallbackQuery(string callbackQueryId, 
+            string text = null, 
+            bool? showAlert = null,
+            string url = null,
+            int? cacheTime = null)
+        {
+            RestRequest request = NewRestRequest(answerCallbackQueryUri);
+
+            request.AddParameter("callback_query_id", callbackQueryId);
+
+            if (!string.IsNullOrEmpty(text))
+                request.AddParameter("text", text);
+            if (showAlert.HasValue)
+                request.AddParameter("show_alert", showAlert.Value);
+            if (!string.IsNullOrEmpty(url))
+                request.AddParameter("url", url);
+            if (cacheTime != null)
+                request.AddParameter("cache_time", cacheTime);
+
+            return ExecuteRequest<BooleanResult>(request) as BooleanResult;
+        }
+
         //todo Inline mode methods (https://core.telegram.org/bots/api#inline-mode-methods)
 
         private void CheckToken()
@@ -763,6 +854,27 @@ namespace NetTelebot
         {
             mUpdateTimer?.Dispose();
             mUpdateTimer = null;
+        }
+
+        private static RestRequest AddFile(IFile iFile, RestRequest request, string name)
+        {
+            ExistingFile file = iFile as ExistingFile;
+
+            if (file?.FileId != null)
+            {
+                request.AddParameter(name, file.FileId);
+            }
+            else if(file?.Url != null)
+            {
+                request.AddParameter(name, file.Url);
+            }
+            else
+            {
+                NewFile newFile = (NewFile)iFile;
+                request.AddFile(name, newFile.FileContent, newFile.FileName);
+            }
+
+            return request;
         }
 
         private void UpdateTimerCallback(object state)
@@ -813,11 +925,8 @@ namespace NetTelebot
                 if (typeof(T) == typeof (SendMessageResult))
                     return new SendMessageResult(response.Content);
 
-                if (typeof(T) == typeof (BooleanResult))
+                if (typeof (T) == typeof (BooleanResult))
                     return new BooleanResult(response.Content);
-
-                if (typeof(T) == typeof (MeInfo))
-                    return new MeInfo(response.Content);
 
                 if (typeof(T) == typeof(UserInfoResult))
                     return new UserInfoResult(response.Content);
@@ -833,6 +942,15 @@ namespace NetTelebot
 
                 if (typeof(T) == typeof (IntegerResult))
                     return new IntegerResult(response.Content);
+
+                if(typeof(T) == typeof(FileInfoResult))
+                    return new FileInfoResult(response.Content);
+
+                if(typeof(T) == typeof(ChatMembersInfoResult))
+                    return new ChatMembersInfoResult(response.Content);
+
+                if (typeof(T) == typeof(ChatMemberInfoResult))
+                    return new ChatMemberInfoResult(response.Content);
             }
 
             throw new Exception(response.StatusDescription);

@@ -11,11 +11,6 @@ namespace NetTelebot.Result
     {
         internal GetUserProfilePhotosResult(string jsonText)
         {
-            Parse(jsonText);
-        }
-
-        private void Parse(string jsonText)
-        {
             var jsonObject = (JObject)JsonConvert.DeserializeObject(jsonText);
             Parse(jsonObject);
         }

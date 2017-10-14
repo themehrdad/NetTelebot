@@ -11,13 +11,7 @@ namespace NetTelebot.Type
         {
         }
 
-        
         internal ContactInfo(JObject jsonObject)
-        {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
         {
             PhoneNumber = jsonObject["phone_number"].Value<string>();
             FirstName = jsonObject["first_name"].Value<string>();

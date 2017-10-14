@@ -13,12 +13,6 @@ namespace NetTelebot.Type
         }
 
         internal VideoInfo(JObject jsonObject)
-
-        {
-            Parse(jsonObject);
-        }
-
-        private void Parse(JObject jsonObject)
         {
             FileId = jsonObject["file_id"].Value<string>();
             Width = jsonObject["width"].Value<int>();
