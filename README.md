@@ -58,7 +58,7 @@ On the nearest release (1.0.11)
 - [x] In class UpdateInfo add fields marked in todo
 - [x] Delete classes, tests and methods marked as obsolete
 - [x] Net.Commands and Net.Commands.TestApplication remove from repository
-- [ ] To divide the project NetTelebot.ReplyKeyboardMarkup.TestApplication on
+- [x] To divide the project NetTelebot.ReplyKeyboardMarkup.TestApplication on
 ReplyKeyboardMarkup and InlineKeyboardMarkup.
 
 For the project
