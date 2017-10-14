@@ -7,7 +7,7 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
         internal static ReplyKeyboardMarkup GetKeyboard()
         {
             KeyboardButton[] line1 =
-{
+            {
                 new KeyboardButton {Text = "1"},
                 new KeyboardButton {Text = "2"},
                 new KeyboardButton {Text = "3"}

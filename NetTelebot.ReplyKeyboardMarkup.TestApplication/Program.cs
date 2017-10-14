@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
-using System.Net;
 using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type;
@@ -14,9 +13,7 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
 
         private static void Main()
         {
-            //EnableProxy();
-
-            mClient = new TelegramBot().GetBot();
+            mClient = GetBot();
 
             mClient.UpdatesReceived += ClientUpdatesReceived;
             mClient.GetUpdatesError += ClientGetUpdatesError;
@@ -24,6 +21,23 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
 
             ConsoleUtlis.WriteConsoleLog("Example bot start. For exit press any key");
             Console.ReadKey();
+        }
+
+        /// <summary>
+        /// to start the bot remove
+        /// <code>return new TelegramBot().GetBot();</code> 
+        /// and uncomment 
+        /// <code>
+        /// return new TelegramBotClient {Token = "ENTER YOUR TOKEN HERE"};
+        /// </code>
+        /// by specifying your token.
+        /// </summary>
+        /// <returns><see cref="TelegramBotClient"/></returns>
+        private static TelegramBotClient GetBot()
+        {
+            //return new TelegramBotClient {Token = "ENTER YOUR TOKEN HERE"};
+
+            return new TelegramBot().GetBot();
         }
 
         private static void ClientGetUpdatesError(object sender, UnhandledExceptionEventArgs e)
@@ -45,7 +59,6 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
                     ParseAnswerInMessageInfo(update.Message);
             }
         }
-
 
         private static void ParseCommandInMessageInfo(MessageInfo messageInfo)
         {
@@ -86,12 +99,5 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
                 mClient.SendMessage(chatId, "Need numeral");
             }
         }
-
-        private static void EnableProxy()
-        {
-            WebProxy proxyObject = new WebProxy("http://192.168.1.254:3128/", true);
-            WebRequest.DefaultWebProxy = proxyObject;
-        }
-
     }
 }

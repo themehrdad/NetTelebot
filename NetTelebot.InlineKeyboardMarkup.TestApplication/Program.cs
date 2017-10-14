@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type;
@@ -12,7 +11,7 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
 
         private static void Main()
         {
-            mClient = new TelegramBot().GetBot();
+            mClient = GetBot();
 
             mClient.UpdatesReceived += ClientUpdatesReceived;
             mClient.GetUpdatesError += ClientGetUpdatesError;
@@ -20,6 +19,23 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
 
             ConsoleUtlis.WriteConsoleLog("Example bot start. For exit press any key");
             Console.ReadKey();
+        }
+
+        /// <summary>
+        /// to start the bot remove
+        /// <code>return new TelegramBot().GetBot();</code> 
+        /// and uncomment 
+        /// <code>
+        /// return new TelegramBotClient {Token = "ENTER YOUR TOKEN HERE"};
+        /// </code>
+        /// by specifying your token.
+        /// </summary>
+        /// <returns><see cref="TelegramBotClient"/></returns>
+        private static TelegramBotClient GetBot()
+        {
+            //return new TelegramBotClient {Token = "ENTER YOUR TOKEN HERE"};
+
+            return new TelegramBot().GetBot();
         }
 
         private static void ClientGetUpdatesError(object sender, UnhandledExceptionEventArgs e)
