@@ -53,13 +53,14 @@ See more examples in the project [wiki](https://github.com/themehrdad/NetTelebot
 
 ## Plans
 
-On the nearest release (1.0.11)
-- [x] In class TelegramBotClient add fields marked in todo (except inline mode methods)
-- [x] In class UpdateInfo add fields marked in todo
-- [x] Delete classes, tests and methods marked as obsolete
-- [x] Net.Commands and Net.Commands.TestApplication remove from repository
-- [x] To divide the project NetTelebot.ReplyKeyboardMarkup.TestApplication on
-ReplyKeyboardMarkup and InlineKeyboardMarkup.
+On the nearest release (1.0.12)
+- [ ] Add test for common project
+- [ ] Add all parameters for method getUpdates (offset, limit, timeout)
+- [ ] Add all method for Updating messages
+- [ ] Add all method and type for Payments
+- [ ] Add the new fields author_signature, aption_entities and forward_signature to the MessageInfo object.
+- [ ] Add the new field is_bot to the UserInfo object.
+
 
 For the project
 - [ ] Full support API Telegrams
