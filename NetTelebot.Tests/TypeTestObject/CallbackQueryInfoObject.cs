@@ -14,11 +14,17 @@ namespace NetTelebot.Tests.TypeTestObject
         /// </summary>
         /// <param name="id">Unique identifier for this query</param>
         /// <param name="userInfo">Sender</param>
-        /// <param name="messageInfo">Optional. Message with the callback button that originated the query. Note that message content and message date will not be available if the message is too old</param>
-        /// <param name="inlineMessageId">Optional. Identifier of the message sent via the bot in inline mode, that originated the query.</param>
-        /// <param name="chatInstance">Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in games.</param>
-        /// <param name="data">Optional. Data associated with the callback button. Be aware that a bad client can send arbitrary data in this field.</param>
-        /// <param name="gameShortName">Optional. Short name of a Game to be returned, serves as the unique identifier for the game</param>
+        /// <param name="messageInfo">Optional. 
+        /// Message with the callback button that originated the query. 
+        /// Note that message content and message date will not be available if the message is too old</param>
+        /// <param name="inlineMessageId">Optional. 
+        /// Identifier of the message sent via the bot in inline mode, that originated the query.</param>
+        /// <param name="chatInstance">Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. 
+        /// Useful for high scores in games.</param>
+        /// <param name="data">Optional. Data associated with the callback button. 
+        /// Be aware that a bad client can send arbitrary data in this field.</param>
+        /// <param name="gameShortName">Optional. Short name of a Game to be returned, 
+        /// serves as the unique identifier for the game</param>
         /// <returns><see cref="CallbackQueryInfo"/></returns>
         internal static JObject GetObject(string id, JObject userInfo, JObject messageInfo,
             string inlineMessageId, string chatInstance, string data, string gameShortName)

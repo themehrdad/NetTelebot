@@ -441,7 +441,8 @@ namespace NetTelebot
         /// <param name="duration">Duration of the voice message in seconds </param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
-        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, 
+        /// instructions to remove reply keyboard or to force a reply from the user.</param>
         /// <returns></returns>
         public SendMessageResult SendVoice(object chatId, IFile voice, 
             string caption = null,
