@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type;
@@ -12,14 +11,31 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
 
         private static void Main()
         {
-            mClient = new TelegramBot().GetBot();
+            mClient = GetBot();
 
             mClient.UpdatesReceived += ClientUpdatesReceived;
             mClient.GetUpdatesError += ClientGetUpdatesError;
             mClient.StartCheckingUpdates();
 
-            Console.WriteLine("Example bot start. For exit press any key");
+            ConsoleUtlis.WriteConsoleLog("Example bot start. For exit press any key");
             Console.ReadKey();
+        }
+
+        /// <summary>
+        /// to start the bot remove
+        /// <code>return new TelegramBot().GetBot();</code> 
+        /// and uncomment 
+        /// <code>
+        /// return new TelegramBotClient {Token = "ENTER YOUR TOKEN HERE"};
+        /// </code>
+        /// by specifying your token.
+        /// </summary>
+        /// <returns><see cref="TelegramBotClient"/></returns>
+        private static TelegramBotClient GetBot()
+        {
+            //return new TelegramBotClient {Token = "ENTER YOUR TOKEN HERE"};
+
+            return new TelegramBot().GetBot();
         }
 
         private static void ClientGetUpdatesError(object sender, UnhandledExceptionEventArgs e)
@@ -29,24 +45,13 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
 
         private static void ClientUpdatesReceived(object sender, TelegramUpdateEventArgs e)
         {
-            ParseUpdate(e.Updates);
-        }
-
-        private static void ParseUpdate(IEnumerable<UpdateInfo> updateInfo)
-        {
-            foreach (var update in updateInfo)
+            foreach (var update in e.Updates)
             {
-                if (update.InlineQuery.Id != null)
-                    ConsoleUtlis.WriteConsoleLog("New InlineQuery");
-
                 if (update.CallbackQuery.Id != null)
                 {
                     ConsoleUtlis.WriteConsoleLog("New CallbackQuery");
                     ParseCommandInCallbackQuery(update.CallbackQuery);
                 }
-
-                if (update.ChosenInlineResult.ResultId != null)
-                    ConsoleUtlis.WriteConsoleLog("New ChosenInlineResult");
 
                 if (update.Message.MessageId != 0)
                 {
@@ -56,7 +61,7 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
                 }
             }
         }
-
+        
         private static void ParseCommandInMessageInfo(MessageInfo messageInfo)
         {
             if (messageInfo.Text.Equals("/start"))
@@ -65,7 +70,7 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
                     "Hey. I'm a demo bot." +
                     "\nI'll show you how the inline keyboard works" +
                     "\nPlease press inline button", 
-                    replyMarkup: InlineKeyboard.GetInlineKeyboard());
+                    replyMarkup: InlineKeyboard.GetKeyboard());
             }
         }
 
