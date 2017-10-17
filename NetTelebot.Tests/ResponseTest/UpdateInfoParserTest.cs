@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using NetTelebot.BotEnum;
+﻿using NetTelebot.BotEnum;
 using NetTelebot.Extension;
 using NetTelebot.Tests.TypeTestObject;
 using NetTelebot.Tests.TypeTestObject.InlineModeObject;
