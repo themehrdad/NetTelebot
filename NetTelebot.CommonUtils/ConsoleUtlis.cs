@@ -21,7 +21,6 @@ namespace NetTelebot.CommonUtils
             }
         }
 
-
         public static void PrintResult(DateTime result)
         {
             foreach (PropertyInfo properties in result.GetType().GetProperties())

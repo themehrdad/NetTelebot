@@ -35,7 +35,7 @@ namespace NetTelebot.Tests.MockServers
         ///   "language_code": "TestLanguageCode"
         /// }
         /// </summary>
-        private static readonly JObject mExpectedBodyUserInfo = UserInfoObject.GetObject(123, "TestFirstName",
+        private static readonly JObject mExpectedBodyUserInfo = UserInfoObject.GetObject(123, true, "TestFirstName",
             "TestFirstName", "TestUserName", "TestLanguageCode");
 
         /// <summary>

@@ -26,6 +26,7 @@ namespace NetTelebot.Tests.ResponseTest
         public static void MessageInfoFromTest()
         {
             const int id = 1000;
+            const bool isBot = true;
             const string firstName = "TestName";
             const string lastName = "testLastName";
             const string username = "testUsername";
@@ -33,13 +34,14 @@ namespace NetTelebot.Tests.ResponseTest
 
             dynamic messageInfoUser = mMandatoryFieldsMessageInfo;
 
-            messageInfoUser.from = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+            messageInfoUser.from = UserInfoObject.GetObject(id, isBot, firstName, lastName, username, languageCode);
 
             MessageInfo messageInfo = new MessageInfo(messageInfoUser);
 
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(id, messageInfo.From.Id);
+                Assert.AreEqual(isBot, messageInfo.From.IsBot);
                 Assert.AreEqual(firstName, messageInfo.From.FirstName);
                 Assert.AreEqual(lastName, messageInfo.From.LastName);
                 Assert.AreEqual(username, messageInfo.From.UserName);
@@ -54,6 +56,7 @@ namespace NetTelebot.Tests.ResponseTest
         public static void MessageInfoForwardFromTest()
         {
             const int id = 1000;
+            const bool isBot = true;
             const string firstName = "TestName";
             const string lastName = "testLastName";
             const string username = "testUsername";
@@ -61,13 +64,14 @@ namespace NetTelebot.Tests.ResponseTest
 
             dynamic messageInfoUser = mMandatoryFieldsMessageInfo;
 
-            messageInfoUser.forward_from = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+            messageInfoUser.forward_from = UserInfoObject.GetObject(id, isBot, firstName, lastName, username, languageCode);
 
             MessageInfo messageInfo = new MessageInfo(messageInfoUser);
 
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(id, messageInfo.ForwardFrom.Id);
+                Assert.AreEqual(isBot, messageInfo.ForwardFrom.IsBot);
                 Assert.AreEqual(firstName, messageInfo.ForwardFrom.FirstName);
                 Assert.AreEqual(lastName, messageInfo.ForwardFrom.LastName);
                 Assert.AreEqual(username, messageInfo.ForwardFrom.UserName);
@@ -338,12 +342,13 @@ namespace NetTelebot.Tests.ResponseTest
             const string url = "url";
 
             const int id = 123;
+            const bool isBot = true;
             const string firstName = "name";
             const string lastName = "lastName";
             const string username = "username";
             const string languageCode = "code";
 
-            JObject user = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+            JObject user = UserInfoObject.GetObject(id, isBot, firstName, lastName, username, languageCode);
 
             dynamic messageInfoEntities = mMandatoryFieldsMessageInfo;
 
@@ -362,6 +367,7 @@ namespace NetTelebot.Tests.ResponseTest
 
                 //test MessageInfo.Entities.User
                 Assert.AreEqual(id, messageInfo.Entities[0].User.Id);
+                Assert.AreEqual(isBot, messageInfo.Entities[0].User.IsBot);
                 Assert.AreEqual(firstName, messageInfo.Entities[0].User.FirstName);
                 Assert.AreEqual(lastName, messageInfo.Entities[0].User.LastName);
                 Assert.AreEqual(username, messageInfo.Entities[0].User.UserName);
@@ -511,11 +517,12 @@ namespace NetTelebot.Tests.ResponseTest
 
             //UserInfo field
             const int id = 123456;
+            const bool isBot = true;
             const string firstName = "TestFirstName";
             const string lastName = "TestLastName";
             const string username = "TestUsername";
             const string languageCode = "TestLanguageCode";
-            JObject user = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+            JObject user = UserInfoObject.GetObject(id, isBot, firstName, lastName, username, languageCode);
             
             //MessageEntityInfo field
             const string type = "TestType";
@@ -553,6 +560,7 @@ namespace NetTelebot.Tests.ResponseTest
 
                 //Game.Entites.User
                 Assert.AreEqual(id, messageInfo.Game.Entities[0].User.Id);
+                Assert.AreEqual(isBot, messageInfo.Game.Entities[0].User.IsBot);
                 Assert.AreEqual(firstName, messageInfo.Game.Entities[0].User.FirstName);
                 Assert.AreEqual(lastName, messageInfo.Game.Entities[0].User.LastName);
                 Assert.AreEqual(username, messageInfo.Game.Entities[0].User.UserName);
@@ -761,6 +769,7 @@ namespace NetTelebot.Tests.ResponseTest
         public static void MessageInfoNewChatMembersTest()
         {
             const int id = 1000;
+            const bool isBot = true;
             const string firstName = "TestName";
             const string lastName = "testLastName";
             const string username = "testUsername";
@@ -768,7 +777,7 @@ namespace NetTelebot.Tests.ResponseTest
 
             dynamic messageInfoUser = mMandatoryFieldsMessageInfo;
 
-            JArray membersArray = new JArray(UserInfoObject.GetObject(id, firstName, lastName, username, languageCode));
+            JArray membersArray = new JArray(UserInfoObject.GetObject(id, isBot, firstName, lastName, username, languageCode));
 
             messageInfoUser.new_chat_members = membersArray;
 
@@ -777,6 +786,7 @@ namespace NetTelebot.Tests.ResponseTest
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(id, messageInfo.NewChatMembers[0].Id);
+                Assert.AreEqual(isBot, messageInfo.NewChatMembers[0].IsBot);
                 Assert.AreEqual(firstName, messageInfo.NewChatMembers[0].FirstName);
                 Assert.AreEqual(lastName, messageInfo.NewChatMembers[0].LastName);
                 Assert.AreEqual(messageInfo.NewChatMembers[0].UserName, username);
@@ -895,6 +905,7 @@ namespace NetTelebot.Tests.ResponseTest
         public static void MessageInfoNewChatMemberTest()
         {
             const int id = 1000;
+            const bool isBot = true;
             const string firstName = "TestName";
             const string lastName = "testLastName";
             const string username = "testUsername";
@@ -902,13 +913,14 @@ namespace NetTelebot.Tests.ResponseTest
 
             dynamic messageInfoUser = mMandatoryFieldsMessageInfo;
 
-            messageInfoUser.new_chat_member = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+            messageInfoUser.new_chat_member = UserInfoObject.GetObject(id, isBot, firstName, lastName, username, languageCode);
 
             MessageInfo messageInfo = new MessageInfo(messageInfoUser);
 
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(id, messageInfo.NewChatMember.Id);
+                Assert.AreEqual(isBot, messageInfo.NewChatMember.IsBot);
                 Assert.AreEqual(firstName, messageInfo.NewChatMember.FirstName);
                 Assert.AreEqual(lastName, messageInfo.NewChatMember.LastName);
                 Assert.AreEqual(messageInfo.NewChatMember.UserName, username);
@@ -923,6 +935,7 @@ namespace NetTelebot.Tests.ResponseTest
         public static void MessageInfoLeftChatMemberTest()
         {
             const int id = 1000;
+            const bool isBot = true;
             const string firstName = "TestName";
             const string lastName = "testLastName";
             const string username = "testUsername";
@@ -930,13 +943,14 @@ namespace NetTelebot.Tests.ResponseTest
 
             dynamic messageInfoUser = mMandatoryFieldsMessageInfo;
 
-            messageInfoUser.left_chat_member = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+            messageInfoUser.left_chat_member = UserInfoObject.GetObject(id, isBot, firstName, lastName, username, languageCode);
 
             MessageInfo messageInfo = new MessageInfo(messageInfoUser);
 
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(id, messageInfo.LeftChatMember.Id);
+                Assert.AreEqual(isBot, messageInfo.LeftChatMember.IsBot);
                 Assert.AreEqual(firstName, messageInfo.LeftChatMember.FirstName);
                 Assert.AreEqual(lastName, messageInfo.LeftChatMember.LastName);
                 Assert.AreEqual(username, messageInfo.LeftChatMember.UserName);

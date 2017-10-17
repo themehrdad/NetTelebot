@@ -13,6 +13,17 @@ namespace NetTelebot.Tests.ResponseTest
     [TestFixture]
     internal static class UpdateInfoParserTest
     {
+        private const int mId = 123;
+        private const bool mIsBot = true;
+        private const string mFirstName = "TestFirstName";
+        private const string mLastName = "TestLastName";
+        private const string mUsername = " TestUserName";
+        private const string mLanguageCode = "TestLanguageCode";
+
+        private static JObject mCommonUserInfo { get; } = UserInfoObject.
+            GetObject(mId, mIsBot, mFirstName, mLastName, mUsername, mLanguageCode);
+
+
         /// <summary>
         /// Test for <see cref="UpdateInfo"/> parse field with incoming <see cref="MessageInfo"/>.
         /// </summary>
@@ -71,16 +82,7 @@ namespace NetTelebot.Tests.ResponseTest
         {
             //field class UpdateInfo
             const int updateId = 123;
-
-            //field class UserInfo
-            const int id = 123;
-            const string firstName = "TestFirstName";
-            const string lastName = "TestLastName";
-            const string username = " TestUserName";
-            const string languageCode = "TestLanguageCode";
-
-            JObject userInfo = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
-
+            
             //field class Location
             const float longitude = 1;
             const float latitude = 1;
@@ -92,7 +94,7 @@ namespace NetTelebot.Tests.ResponseTest
             const string query = "TestQuery";
             const string offset = "TestOffset";
 
-            JObject inlineQuery = InlineQueryInfoObject.GetObject(idInlineQuery, userInfo, locationInfo, query, offset);
+            JObject inlineQuery = InlineQueryInfoObject.GetObject(idInlineQuery, mCommonUserInfo, locationInfo, query, offset);
 
             JObject updateInfoObject = UpdateInfoObject.GetObject(updateId, inlineQuery: inlineQuery);
 
@@ -104,11 +106,12 @@ namespace NetTelebot.Tests.ResponseTest
             Assert.AreEqual(offset, updateInfo.InlineQuery.Offset);
 
             //UserInfo field
-            Assert.AreEqual(id, updateInfo.InlineQuery.From.Id);
-            Assert.AreEqual(firstName, updateInfo.InlineQuery.From.FirstName);
-            Assert.AreEqual(lastName, updateInfo.InlineQuery.From.LastName);
-            Assert.AreEqual(username, updateInfo.InlineQuery.From.UserName);
-            Assert.AreEqual(languageCode, updateInfo.InlineQuery.From.LanguageCode);
+            Assert.AreEqual(mId, updateInfo.InlineQuery.From.Id);
+            Assert.AreEqual(mIsBot, updateInfo.InlineQuery.From.IsBot);
+            Assert.AreEqual(mFirstName, updateInfo.InlineQuery.From.FirstName);
+            Assert.AreEqual(mLastName, updateInfo.InlineQuery.From.LastName);
+            Assert.AreEqual(mUsername, updateInfo.InlineQuery.From.UserName);
+            Assert.AreEqual(mLanguageCode, updateInfo.InlineQuery.From.LanguageCode);
 
             //LocationInfo fiels
             Assert.AreEqual(latitude, updateInfo.InlineQuery.Location.Latitude);
@@ -120,16 +123,7 @@ namespace NetTelebot.Tests.ResponseTest
         {
             //field class UpdateInfo
             const int updateId = 123;
-
-            //field class UserInfo
-            const int id = 123;
-            const string firstName = "TestFirstName";
-            const string lastName = "TestLastName";
-            const string username = " TestUserName";
-            const string languageCode = "TestLanguageCode";
-
-            JObject userInfo = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
-
+            
             //field class Location
             const float longitude = 1;
             const float latitude = 1;
@@ -141,7 +135,7 @@ namespace NetTelebot.Tests.ResponseTest
             const string inlineMessageId = "InlineMessageId";
             const string query = "TestQuery";
 
-            JObject chosenInlineResult = ChosenInlineResultInfoObject.GetObject(resultId, userInfo, locationInfo,
+            JObject chosenInlineResult = ChosenInlineResultInfoObject.GetObject(resultId, mCommonUserInfo, locationInfo,
                 inlineMessageId, query);
 
             JObject updateInfoObject = UpdateInfoObject.GetObject(updateId, chosenInlineResult: chosenInlineResult);
@@ -154,11 +148,12 @@ namespace NetTelebot.Tests.ResponseTest
             Assert.AreEqual(query, updateInfo.ChosenInlineResult.Query);
 
             //UserInfo field
-            Assert.AreEqual(id, updateInfo.ChosenInlineResult.From.Id);
-            Assert.AreEqual(firstName, updateInfo.ChosenInlineResult.From.FirstName);
-            Assert.AreEqual(lastName, updateInfo.ChosenInlineResult.From.LastName);
-            Assert.AreEqual(username, updateInfo.ChosenInlineResult.From.UserName);
-            Assert.AreEqual(languageCode, updateInfo.ChosenInlineResult.From.LanguageCode);
+            Assert.AreEqual(mId, updateInfo.ChosenInlineResult.From.Id);
+            Assert.AreEqual(mIsBot, updateInfo.ChosenInlineResult.From.IsBot);
+            Assert.AreEqual(mFirstName, updateInfo.ChosenInlineResult.From.FirstName);
+            Assert.AreEqual(mLastName, updateInfo.ChosenInlineResult.From.LastName);
+            Assert.AreEqual(mUsername, updateInfo.ChosenInlineResult.From.UserName);
+            Assert.AreEqual(mLanguageCode, updateInfo.ChosenInlineResult.From.LanguageCode);
 
             //LocationInfo fiels
             Assert.AreEqual(latitude, updateInfo.ChosenInlineResult.Location.Latitude);
@@ -171,15 +166,8 @@ namespace NetTelebot.Tests.ResponseTest
         {
             //field class UpdateInfo
             const int updateId = 123;
-
-            //field class UserInfo
-            const int id = 123;
             const string idСallback = "123";
-            const string firstName = "TestFirstName";
-            const string lastName = "TestLastName";
-            const string username = " TestUserName";
-            const string languageCode = "TestLanguageCode";
-
+            
             //field class MessageInfo
             const int messageId = 123;
             const int date = 0;
@@ -192,23 +180,24 @@ namespace NetTelebot.Tests.ResponseTest
             const string data = "TestData";
             const string gameShortName = "TestGameShortName";
 
-            JObject userInfo = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
             JObject messageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatType);
 
-            dynamic callbackQueryInfo = CallbackQueryInfoObject.GetObject(idСallback, userInfo, messageInfo, inlineMessageId,
+            dynamic callbackQueryInfo = CallbackQueryInfoObject.GetObject(idСallback, mCommonUserInfo, messageInfo, inlineMessageId,
                 chatInstance, data, gameShortName);
 
             dynamic updateInfoObject = UpdateInfoObject.GetObject(updateId, callbackQuery: callbackQueryInfo);
+
             UpdateInfo updateInfo = new UpdateInfo(updateInfoObject);
 
             Assert.AreEqual(updateInfo.UpdateId, updateId);
 
             //UserInfo field
-            Assert.AreEqual(id, updateInfo.CallbackQuery.From.Id);
-            Assert.AreEqual(firstName, updateInfo.CallbackQuery.From.FirstName);
-            Assert.AreEqual(lastName, updateInfo.CallbackQuery.From.LastName);
-            Assert.AreEqual(username, updateInfo.CallbackQuery.From.UserName);
-            Assert.AreEqual(languageCode, updateInfo.CallbackQuery.From.LanguageCode);
+            Assert.AreEqual(mId, updateInfo.CallbackQuery.From.Id);
+            Assert.AreEqual(mIsBot, updateInfo.CallbackQuery.From.IsBot);
+            Assert.AreEqual(mFirstName, updateInfo.CallbackQuery.From.FirstName);
+            Assert.AreEqual(mLastName, updateInfo.CallbackQuery.From.LastName);
+            Assert.AreEqual(mUsername, updateInfo.CallbackQuery.From.UserName);
+            Assert.AreEqual(mLanguageCode, updateInfo.CallbackQuery.From.LanguageCode);
 
             //MessageInfo field
             Assert.AreEqual(messageId, updateInfo.CallbackQuery.Message.MessageId);
@@ -229,14 +218,7 @@ namespace NetTelebot.Tests.ResponseTest
         {
             //field class UpdateInfo
             const int updateId = 123;
-
-            //field class UserInfo
-            const int id = 123;
-            const string firstName = "TestFirstName";
-            const string lastName = "TestLastName";
-            const string username = " TestUserName";
-            const string languageCode = "TestLanguageCode";
-
+           
             //field class ShippingAddressInfo
             const string countryCode = "AW";
             const string state = "TestState";
@@ -249,11 +231,10 @@ namespace NetTelebot.Tests.ResponseTest
             const string invoicePayload = "TestInvoicePayload";
             const string idShippingQuery = "TestId";
 
-            JObject userInfo = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
             JObject shippingAddress = ShippingAddressInfoObject.GetObject(countryCode, state, city, streetLineOne,
                 streetLineTwo, postCode);
 
-            JObject shippingQueryInfo = ShippingQueryInfoObject.GetObject(idShippingQuery, userInfo, invoicePayload,
+            JObject shippingQueryInfo = ShippingQueryInfoObject.GetObject(idShippingQuery, mCommonUserInfo, invoicePayload,
                 shippingAddress);
 
             JObject updateInfoObject = UpdateInfoObject.GetObject(updateId, shippingQuery: shippingQueryInfo);
@@ -266,11 +247,12 @@ namespace NetTelebot.Tests.ResponseTest
             Assert.AreEqual(invoicePayload, updateInfo.ShippingQuery.InvoicePayload);
 
             //field class UserInfo
-            Assert.AreEqual(id, updateInfo.ShippingQuery.From.Id);
-            Assert.AreEqual(firstName, updateInfo.ShippingQuery.From.FirstName);
-            Assert.AreEqual(lastName, updateInfo.ShippingQuery.From.LastName);
-            Assert.AreEqual(username, updateInfo.ShippingQuery.From.UserName);
-            Assert.AreEqual(languageCode, updateInfo.ShippingQuery.From.LanguageCode);
+            Assert.AreEqual(mId, updateInfo.ShippingQuery.From.Id);
+            Assert.AreEqual(mIsBot, updateInfo.ShippingQuery.From.IsBot);
+            Assert.AreEqual(mFirstName, updateInfo.ShippingQuery.From.FirstName);
+            Assert.AreEqual(mLastName, updateInfo.ShippingQuery.From.LastName);
+            Assert.AreEqual(mUsername, updateInfo.ShippingQuery.From.UserName);
+            Assert.AreEqual(mLanguageCode, updateInfo.ShippingQuery.From.LanguageCode);
 
             //field class ShippingAddressInfo
             Assert.AreEqual(countryCode.ToEnum<Countries>(), updateInfo.ShippingQuery.ShippingAddress.CountryCode);
@@ -284,14 +266,6 @@ namespace NetTelebot.Tests.ResponseTest
         [Test]
         public static void PreCheckoutQueryTest()
         { 
-            //field class UserInfo
-            const int id = 123;
-            const string firstName = "TestFirstName";
-            const string lastName = "TestLastName";
-            const string username = " TestUserName";
-            const string languageCode = "TestLanguageCode";
-            JObject userInfo = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
-
             //field class ShippingAddressInfo
             const string countryCode = "AW";
             const string state = "TestState";
@@ -319,7 +293,7 @@ namespace NetTelebot.Tests.ResponseTest
             const string invoicePayload = "TestInvoicePayload";
 
             JObject preCheckoutQueryInfo = PreCheckoutQueryInfoObject.GetObject(
-                preCheckoutId, userInfo, currency, totalAmmount, invoicePayload, shippingOptionId, orderInfo);
+                preCheckoutId, mCommonUserInfo, currency, totalAmmount, invoicePayload, shippingOptionId, orderInfo);
 
             //field class UpdateInfo
             const int updateId = 123;
@@ -335,11 +309,12 @@ namespace NetTelebot.Tests.ResponseTest
             Assert.AreEqual(shippingOptionId, updateInfo.PreCheckoutQuery.ShippingOptionId);
 
             //filed From
-            Assert.AreEqual(id, updateInfo.PreCheckoutQuery.From.Id);
-            Assert.AreEqual(firstName, updateInfo.PreCheckoutQuery.From.FirstName);
-            Assert.AreEqual(lastName, updateInfo.PreCheckoutQuery.From.LastName);
-            Assert.AreEqual(username, updateInfo.PreCheckoutQuery.From.UserName);
-            Assert.AreEqual(languageCode, updateInfo.PreCheckoutQuery.From.LanguageCode);
+            Assert.AreEqual(mId, updateInfo.PreCheckoutQuery.From.Id);
+            Assert.AreEqual(mIsBot, updateInfo.PreCheckoutQuery.From.IsBot);
+            Assert.AreEqual(mFirstName, updateInfo.PreCheckoutQuery.From.FirstName);
+            Assert.AreEqual(mLastName, updateInfo.PreCheckoutQuery.From.LastName);
+            Assert.AreEqual(mUsername, updateInfo.PreCheckoutQuery.From.UserName);
+            Assert.AreEqual(mLanguageCode, updateInfo.PreCheckoutQuery.From.LanguageCode);
 
             //field OrderInfo
             Assert.AreEqual(name, updateInfo.PreCheckoutQuery.OrderInfo.Name);
