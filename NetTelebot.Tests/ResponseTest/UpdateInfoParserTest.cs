@@ -13,6 +13,7 @@ namespace NetTelebot.Tests.ResponseTest
     [TestFixture]
     internal static class UpdateInfoParserTest
     {
+        //field class UserInfo
         private const int mId = 123;
         private const bool mIsBot = true;
         private const string mFirstName = "TestFirstName";
@@ -20,8 +21,17 @@ namespace NetTelebot.Tests.ResponseTest
         private const string mUsername = " TestUserName";
         private const string mLanguageCode = "TestLanguageCode";
 
-        private static JObject mCommonUserInfo { get; } = UserInfoObject.
+        private static JObject MCommonUserInfo { get; } = UserInfoObject.
             GetObject(mId, mIsBot, mFirstName, mLastName, mUsername, mLanguageCode);
+
+        //field class MessageInfo
+        private const int mMessageId = 123;
+        private const int mDate = 0;
+        private const int mChatId = 123;
+        private const ChatType mChatType = ChatType.channel;
+
+        private static JObject MCommonMessageInfo { get; } = MessageInfoObject.GetMandatoryFieldsMessageInfo(mMessageId,
+            mDate, mChatId, mChatType);
 
 
         /// <summary>
@@ -33,40 +43,32 @@ namespace NetTelebot.Tests.ResponseTest
             //field class UpdateInfo
             const int updateId = 123;
 
-            //field class MessageInfo
-            const int messageId = 123;
-            const int date = 0;
-            const int chatId = 123;
-            const ChatType chatType = ChatType.channel;
-
-            JObject messageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatType);
-
             //check message
-            dynamic updateInfoObject = UpdateInfoObject.GetObject(updateId, messageInfo);
+            dynamic updateInfoObject = UpdateInfoObject.GetObject(updateId, MCommonMessageInfo);
             UpdateInfo updateInfo = new UpdateInfo(updateInfoObject);
 
             //common field
             Assert.AreEqual(updateInfo.UpdateId, updateId);
 
-            AssertMessageInfo(new object[] { messageId, date, chatId, chatType }, updateInfo.Message);
+            AssertMessageInfo(new object[] { mMessageId, mDate, mChatId, mChatType }, updateInfo.Message);
             
             //check editedMessage
-            updateInfoObject = UpdateInfoObject.GetObject(updateId, editedMessage: messageInfo);
+            updateInfoObject = UpdateInfoObject.GetObject(updateId, editedMessage: MCommonMessageInfo);
             updateInfo = new UpdateInfo(updateInfoObject);
 
-            AssertMessageInfo(new object[] { messageId, date, chatId, chatType }, updateInfo.EditedMessage);
+            AssertMessageInfo(new object[] { mMessageId, mDate, mChatId, mChatType }, updateInfo.EditedMessage);
             
             //check channelPost
-            updateInfoObject = UpdateInfoObject.GetObject(updateId, channelPost: messageInfo);
+            updateInfoObject = UpdateInfoObject.GetObject(updateId, channelPost: MCommonMessageInfo);
             updateInfo = new UpdateInfo(updateInfoObject);
 
-            AssertMessageInfo(new object[] { messageId, date, chatId, chatType }, updateInfo.ChannelPost);
+            AssertMessageInfo(new object[] { mMessageId, mDate, mChatId, mChatType }, updateInfo.ChannelPost);
             
             //check editedChannelPost
-            updateInfoObject = UpdateInfoObject.GetObject(updateId, editedChannelPost: messageInfo);
+            updateInfoObject = UpdateInfoObject.GetObject(updateId, editedChannelPost: MCommonMessageInfo);
             updateInfo = new UpdateInfo(updateInfoObject);
 
-            AssertMessageInfo(new object[] { messageId, date, chatId, chatType }, updateInfo.EditedChannelPost);
+            AssertMessageInfo(new object[] { mMessageId, mDate, mChatId, mChatType }, updateInfo.EditedChannelPost);
         }
 
         private static void AssertMessageInfo(IReadOnlyList<object> expected, MessageInfo updatesResult)
@@ -94,7 +96,7 @@ namespace NetTelebot.Tests.ResponseTest
             const string query = "TestQuery";
             const string offset = "TestOffset";
 
-            JObject inlineQuery = InlineQueryInfoObject.GetObject(idInlineQuery, mCommonUserInfo, locationInfo, query, offset);
+            JObject inlineQuery = InlineQueryInfoObject.GetObject(idInlineQuery, MCommonUserInfo, locationInfo, query, offset);
 
             JObject updateInfoObject = UpdateInfoObject.GetObject(updateId, inlineQuery: inlineQuery);
 
@@ -135,7 +137,7 @@ namespace NetTelebot.Tests.ResponseTest
             const string inlineMessageId = "InlineMessageId";
             const string query = "TestQuery";
 
-            JObject chosenInlineResult = ChosenInlineResultInfoObject.GetObject(resultId, mCommonUserInfo, locationInfo,
+            JObject chosenInlineResult = ChosenInlineResultInfoObject.GetObject(resultId, MCommonUserInfo, locationInfo,
                 inlineMessageId, query);
 
             JObject updateInfoObject = UpdateInfoObject.GetObject(updateId, chosenInlineResult: chosenInlineResult);
@@ -168,21 +170,14 @@ namespace NetTelebot.Tests.ResponseTest
             const int updateId = 123;
             const string idСallback = "123";
             
-            //field class MessageInfo
-            const int messageId = 123;
-            const int date = 0;
-            const int chatId = 123;
-            const ChatType chatType = ChatType.channel;
-
             //field class CallbackQueryInfo
             const string inlineMessageId = "123";
             const string chatInstance = "123";
             const string data = "TestData";
             const string gameShortName = "TestGameShortName";
 
-            JObject messageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatType);
-
-            dynamic callbackQueryInfo = CallbackQueryInfoObject.GetObject(idСallback, mCommonUserInfo, messageInfo, inlineMessageId,
+            
+            dynamic callbackQueryInfo = CallbackQueryInfoObject.GetObject(idСallback, MCommonUserInfo, MCommonMessageInfo, inlineMessageId,
                 chatInstance, data, gameShortName);
 
             dynamic updateInfoObject = UpdateInfoObject.GetObject(updateId, callbackQuery: callbackQueryInfo);
@@ -200,10 +195,8 @@ namespace NetTelebot.Tests.ResponseTest
             Assert.AreEqual(mLanguageCode, updateInfo.CallbackQuery.From.LanguageCode);
 
             //MessageInfo field
-            Assert.AreEqual(messageId, updateInfo.CallbackQuery.Message.MessageId);
-            Assert.AreEqual(date, updateInfo.CallbackQuery.Message.DateUnix);
-            Assert.AreEqual(chatId, updateInfo.CallbackQuery.Message.Chat.Id);
-            Assert.AreEqual(chatType, updateInfo.CallbackQuery.Message.Chat.Type);
+            AssertMessageInfo(new object[] {mMessageId, mDate, mChatId, mChatType},
+                updateInfo.CallbackQuery.Message);
 
             //CallbackQueryInfo field
             Assert.AreEqual(idСallback, updateInfo.CallbackQuery.Id);
@@ -234,7 +227,7 @@ namespace NetTelebot.Tests.ResponseTest
             JObject shippingAddress = ShippingAddressInfoObject.GetObject(countryCode, state, city, streetLineOne,
                 streetLineTwo, postCode);
 
-            JObject shippingQueryInfo = ShippingQueryInfoObject.GetObject(idShippingQuery, mCommonUserInfo, invoicePayload,
+            JObject shippingQueryInfo = ShippingQueryInfoObject.GetObject(idShippingQuery, MCommonUserInfo, invoicePayload,
                 shippingAddress);
 
             JObject updateInfoObject = UpdateInfoObject.GetObject(updateId, shippingQuery: shippingQueryInfo);
@@ -293,7 +286,7 @@ namespace NetTelebot.Tests.ResponseTest
             const string invoicePayload = "TestInvoicePayload";
 
             JObject preCheckoutQueryInfo = PreCheckoutQueryInfoObject.GetObject(
-                preCheckoutId, mCommonUserInfo, currency, totalAmmount, invoicePayload, shippingOptionId, orderInfo);
+                preCheckoutId, MCommonUserInfo, currency, totalAmmount, invoicePayload, shippingOptionId, orderInfo);
 
             //field class UpdateInfo
             const int updateId = 123;
