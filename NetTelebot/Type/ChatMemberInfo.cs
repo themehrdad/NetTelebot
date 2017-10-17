@@ -8,7 +8,7 @@ namespace NetTelebot.Type
 {
     /// <summary>
     /// This object contains information about one member of a chat.
-    /// See <see cref="https://core.telegram.org/bots/api#chatmember">API</see>
+    /// See <see href="https://core.telegram.org/bots/api#chatmember">API</see>
     /// </summary>
     public class ChatMemberInfo
     {

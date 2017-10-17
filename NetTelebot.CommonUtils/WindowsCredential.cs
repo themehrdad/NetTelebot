@@ -14,29 +14,29 @@ namespace NetTelebot.CommonUtils
     /// User Name: real telegram chat id
     /// Password: real telegram token
     /// </summary>
-    public static class WindowsCredential
+    internal static class WindowsCredential
     {
         /// <summary>
         /// Returns the telegram credentials
         /// </summary>
         /// <param name="botAlias">Account stored in Windows Credential Manager</param>
         /// <returns></returns>
-        public static TelegramCredentials GetTelegramCredential(string botAlias)
+        internal static TelegramCredentials GetTelegramCredential(string botAlias)
         {
             Credential credential = new Credential { Target = botAlias };
 
             return credential.Load()
                 ? new TelegramCredentials {Token = credential.Password, ChatId = Convert.ToInt64(credential.Username)}
-                : new TelegramCredentials {Token = null, ChatId = 0};
+                : new TelegramCredentials {Token = null, ChatId = null};
         }
     }
 
-    public struct TelegramCredentials : IEquatable<TelegramCredentials>
+    internal struct TelegramCredentials
     {
         /// <summary>
         /// You can learn your token from BotFather (@BotFather) 
         /// </summary>
-        public string Token { get; set; }
+        internal string Token { get; set; }
 
         /// <summary>
         /// In order to get the group chat id, do as follows:
@@ -49,11 +49,6 @@ namespace NetTelebot.CommonUtils
         /// This is a sample of the response when you add your BOT into a group. 
         /// 4. Use the "id" of the "chat" object to send your messages.
         /// </summary>
-        public long ChatId { get; set; }
-
-        public bool Equals(TelegramCredentials credentials)
-        {
-            return (Token == credentials.Token) && (ChatId == credentials.ChatId);
-        }
+        internal long? ChatId { get; set; }
     }
 }

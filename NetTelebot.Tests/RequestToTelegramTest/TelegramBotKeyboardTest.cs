@@ -10,8 +10,8 @@ namespace NetTelebot.Tests.RequestToTelegramTest
     internal class TelegramBotKeyboardTest
     {
         private TelegramBotClient mTelegramBot;
-        private long mChatGroupId;
-        private long mChatSuperGroupId;
+        private long? mChatGroupId;
+        private long? mChatSuperGroupId;
 
         [SetUp]
         public void OnTestStart()
@@ -21,7 +21,6 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             mChatGroupId = new TelegramBot().GetGroupChatId();
             mChatSuperGroupId = new TelegramBot().GetSuperGroupChatId();
         }
-
 
         [Test]
         public void SendReplyKeyboardToGroupTest()

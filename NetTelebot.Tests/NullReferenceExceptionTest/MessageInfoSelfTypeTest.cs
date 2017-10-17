@@ -13,7 +13,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
     internal class MessageInfoSelfTypeTest
     {
         private TelegramBotClient mTelegramBot;
-        private long mChatId;
+        private long? mChatId;
 
         /// <summary>
         /// Called when [test start].
