@@ -29,6 +29,14 @@ namespace NetTelebot.Tests.ResponseTest
         private static JObject MCommonUserInfo { get;  } = 
             UserInfoObject.GetObject(mId, mIsBot, mFirstName, mLastName, mUsername, mLanguageCode);
 
+        private const string mFileId = "100";
+        private const int mWidth = 100;
+        private const int mHeight = 100;
+        private const int mFileSize = 10;
+
+        private static JObject MCommonPhotoSizeInfo { get; } = 
+            PhotoSizeInfoObject.GetObject(mFileId, mWidth, mHeight, mFileSize);
+
         private static void AssertUserInfo(UserInfo userInfo)
         {
             Assert.Multiple(() =>
@@ -39,6 +47,17 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(mLastName, userInfo.LastName);
                 Assert.AreEqual(mUsername, userInfo.UserName);
                 Assert.AreEqual(mLanguageCode, userInfo.LanguageCode);
+            });
+        }
+
+        private static void AssertPhotoSizeInfo(PhotoSizeInfo photoSize)
+        {
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(mFileId, photoSize.FileId);
+                Assert.AreEqual(mWidth, photoSize.Width);
+                Assert.AreEqual(mHeight, photoSize.Height);
+                Assert.AreEqual(mFileSize, photoSize.FileSize);
             });
         }
 
@@ -438,13 +457,10 @@ namespace NetTelebot.Tests.ResponseTest
             const string fileName = "testFleName";
             const int fileSize = 10;
 
-            const int width = 100;
-            const int height = 100;
-
             dynamic messageInfoDocument = mMandatoryFieldsMessageInfo;
 
             messageInfoDocument.document = DocumentInfoObject.GetObject(fileId,
-                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), fileName, mimeType, fileSize);
+               MCommonPhotoSizeInfo, fileName, mimeType, fileSize);
 
             MessageInfo messageInfo = new MessageInfo(messageInfoDocument);
 
@@ -455,14 +471,9 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(fileName, messageInfo.Document.FileName);
                 Assert.AreEqual(mimeType, messageInfo.Document.MimeType);
                 Assert.AreEqual(fileSize, messageInfo.Document.FileSize);
-
-                //test MessageInfo.Document.Thumb
-                Assert.AreEqual(fileId, messageInfo.Document.Thumb.FileId);
-                Assert.AreEqual(width, messageInfo.Document.Thumb.Width);
-                Assert.AreEqual(height, messageInfo.Document.Thumb.Height);
-                Assert.AreEqual(fileSize, messageInfo.Document.Thumb.FileSize);
             });
 
+            AssertPhotoSizeInfo(messageInfo.Document.Thumb);
 
             Console.WriteLine(messageInfoDocument);
         }
@@ -1039,7 +1050,6 @@ namespace NetTelebot.Tests.ResponseTest
             Assert.AreEqual(new DateTime(1970, 1, 1).ToLocalTime(), messageInfo.Date);
             Assert.AreEqual(1049413668, messageInfo.Chat.Id);
             
-
             Console.WriteLine(mandatoryMessageInfoFields);
         }
 
