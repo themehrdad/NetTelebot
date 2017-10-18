@@ -131,9 +131,6 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(description, messageInfo.ForwardFromChat.Description);
                 Assert.AreEqual(inviteLink, messageInfo.ForwardFromChat.InviteLink);
             });
-
-            Console.WriteLine(mandatoryMessageInfoFields);
-
         }
 
         /// <summary>
@@ -151,8 +148,6 @@ namespace NetTelebot.Tests.ResponseTest
             messageInfoForwardFromMessageId.forward_from_message_id = 14881488;
             messageInfo = new MessageInfo(messageInfoForwardFromMessageId);
             Assert.AreEqual(14881488, messageInfo.ForwardFromMessageId);
-
-            Console.WriteLine(messageInfoForwardFromMessageId);
         }
 
         /// <summary>
@@ -171,8 +166,6 @@ namespace NetTelebot.Tests.ResponseTest
             messageInfoForwardDateUnix.forward_date = 0;
             Assert.AreEqual(0, messageInfo.DateUnix);
             Assert.AreEqual(new DateTime(1970, 1, 1).ToLocalTime(), messageInfo.Date);
-
-            Console.WriteLine(messageInfoForwardDateUnix);
         }
 
         /// <summary>
@@ -220,8 +213,6 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(description, messageInfo.Chat.Description);
                 Assert.AreEqual(inviteLink, messageInfo.Chat.InviteLink);
             });
-
-            Console.WriteLine(mandatoryMessageInfoFields);
         }
 
         /// <summary>
@@ -334,8 +325,6 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(date, messageInfo.ReplyToMessage.DateUnix);
                 Assert.AreEqual(chatId, messageInfo.ReplyToMessage.Chat.Id);
             });
-
-            Console.WriteLine(messageInfoReplyToMessage);
         }
 
         /// <summary>
@@ -366,8 +355,6 @@ namespace NetTelebot.Tests.ResponseTest
 
             //test MessageInfo.Entities.User
             AssertUserInfo(messageInfo.Entities[0].User);
-
-            Console.WriteLine(messageInfoEntities);
         }
 
         /// <summary>
@@ -389,8 +376,6 @@ namespace NetTelebot.Tests.ResponseTest
 
             Assert.AreEqual(0, messageInfo.EditDateUnix);
             Assert.AreEqual(new DateTime(1970, 1, 1).ToLocalTime(), messageInfo.EditDate);
-
-            Console.WriteLine(messageInfoEditDate);
         }
 
         /// <summary>
@@ -408,8 +393,6 @@ namespace NetTelebot.Tests.ResponseTest
             messageInfoText.text = "TestText";
             messageInfo = new MessageInfo(messageInfoText);
             Assert.AreEqual("TestText", messageInfo.Text);
-
-            Console.WriteLine(messageInfoText);
         }
 
         /// <summary>
@@ -442,8 +425,6 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(mimeType, messageInfo.Audio.MimeType);
                 Assert.AreEqual(fileSize, messageInfo.Audio.FileSize);
             });
-                
-            Console.WriteLine(messageInfoAudio);
         }
 
         /// <summary>
@@ -474,8 +455,6 @@ namespace NetTelebot.Tests.ResponseTest
             });
 
             AssertPhotoSizeInfo(messageInfo.Document.Thumb);
-
-            Console.WriteLine(messageInfoDocument);
         }
 
         /// <summary>
@@ -493,25 +472,18 @@ namespace NetTelebot.Tests.ResponseTest
             const string mimeType = "mimeTypeTest";
             const string fileName = "testFleName";
             const int fileSize = 10;
-            const int width = 100;
-            const int height = 100;
-            JObject animation = AnimationInfoObject.GetObject(fileId,
-                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), fileName, mimeType, fileSize);
-
-            JObject user = MCommonUserInfo;
+            JObject animation = AnimationInfoObject.GetObject(fileId, MCommonPhotoSizeInfo, fileName, mimeType, fileSize);
             
             //MessageEntityInfo field
             const string type = "TestType";
             const int offset = 123456;
             const int length = 123456;
             const string url = "TestUrl";
-            JArray entities = new JArray(MessageEntityInfoObject.GetObject(type, offset, length, url, user));
-
-            JArray photo = new JArray(PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize));
+            JArray entities = new JArray(MessageEntityInfoObject.GetObject(type, offset, length, url, MCommonUserInfo));
 
             dynamic messageInfoGame = mMandatoryFieldsMessageInfo;
 
-            messageInfoGame.game = GameInfoObject.GetObject(title, description, photo, text, entities, animation);
+            messageInfoGame.game = GameInfoObject.GetObject(title, description, new JArray(MCommonPhotoSizeInfo), text, entities, animation);
 
             MessageInfo messageInfo = new MessageInfo(messageInfoGame);
 
@@ -521,12 +493,6 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(title, messageInfo.Game.Title);
                 Assert.AreEqual(description, messageInfo.Game.Description);
                 Assert.AreEqual(text, messageInfo.Game.Text);
-
-                //Game.Photo
-                Assert.AreEqual(fileId, messageInfo.Game.Photo[0].FileId);
-                Assert.AreEqual(width, messageInfo.Game.Photo[0].Width);
-                Assert.AreEqual(height, messageInfo.Game.Photo[0].Height);
-                Assert.AreEqual(fileSize, messageInfo.Game.Photo[0].FileSize);
 
                 //Game.Entities
                 Assert.AreEqual(type, messageInfo.Game.Entities[0].Type);
@@ -539,18 +505,16 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(fileName, messageInfo.Game.Animation.FileName);
                 Assert.AreEqual(mimeType, messageInfo.Game.Animation.MimeType);
                 Assert.AreEqual(fileSize, messageInfo.Game.Animation.FileSize);
-
-                //Game.Animation.Thumb
-                Assert.AreEqual(fileId, messageInfo.Game.Animation.Thumb.FileId);
-                Assert.AreEqual(height, messageInfo.Game.Animation.Thumb.Height);
-                Assert.AreEqual(width, messageInfo.Game.Animation.Thumb.Width);
-                Assert.AreEqual(fileSize, messageInfo.Game.Animation.Thumb.FileSize);
             });
 
             //Game.Entites.User
             AssertUserInfo(messageInfo.Game.Entities[0].User);
 
-            Console.WriteLine(messageInfoGame);
+            //Game.Photo
+            AssertPhotoSizeInfo(messageInfo.Game.Photo[0]);
+
+            //Game.Animation.Thumb
+            AssertPhotoSizeInfo(messageInfo.Game.Animation.Thumb);
         }
 
         /// <summary>
@@ -559,29 +523,11 @@ namespace NetTelebot.Tests.ResponseTest
         [Test]
         public static void MessageInfoPhotoTest()
         {
-            const string fileId = "100";
-            const int width = 100;
-            const int height = 100;
-            const int fileSize = 10;
-            
             dynamic messageInfoPhoto = mMandatoryFieldsMessageInfo;
-
-            JArray photoArray = new JArray(PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize));
-
-            messageInfoPhoto.photo = photoArray;
-
+            messageInfoPhoto.photo = new JArray(MCommonPhotoSizeInfo);
             MessageInfo messageInfo = new MessageInfo(messageInfoPhoto);
 
-            Assert.Multiple(() =>
-            {
-                Assert.AreEqual(fileId, messageInfo.Photo[0].FileId);
-                Assert.AreEqual(width, messageInfo.Photo[0].Width);
-                Assert.AreEqual(height, messageInfo.Photo[0].Height);
-                Assert.AreEqual(fileSize, messageInfo.Photo[0].FileSize);
-            });
-
-
-            Console.WriteLine(messageInfoPhoto);
+            AssertPhotoSizeInfo(messageInfo.Photo[0]);
         }
 
         /// <summary>
@@ -599,7 +545,7 @@ namespace NetTelebot.Tests.ResponseTest
             dynamic messageInfoSticker = mMandatoryFieldsMessageInfo;
 
             messageInfoSticker.sticker = StickerInfoObject.GetObject(fileId, width, height,
-                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), emoji, fileSize);
+                MCommonPhotoSizeInfo, emoji, fileSize);
 
             MessageInfo messageInfo = new MessageInfo(messageInfoSticker);
 
@@ -611,15 +557,10 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(height, messageInfo.Sticker.Height);
                 Assert.AreEqual(emoji, messageInfo.Sticker.Emoji);
                 Assert.AreEqual(fileSize, messageInfo.Sticker.FileSize);
-
-                //test MessageInfo.Sticker.Thumb
-                Assert.AreEqual(fileId, messageInfo.Sticker.Thumb.FileId);
-                Assert.AreEqual(width, messageInfo.Sticker.Thumb.Width);
-                Assert.AreEqual(height, messageInfo.Sticker.Thumb.Height);
-                Assert.AreEqual(fileSize, messageInfo.Sticker.Thumb.FileSize);
             });
 
-            Console.WriteLine(messageInfoSticker);
+            //test MessageInfo.Sticker.Thumb
+            AssertPhotoSizeInfo(messageInfo.Sticker.Thumb);
         }
 
         /// <summary>
@@ -638,7 +579,7 @@ namespace NetTelebot.Tests.ResponseTest
             dynamic messageInfoVideo = mMandatoryFieldsMessageInfo;
 
             messageInfoVideo.video = VideoInfoObject.GetObject(fileId, width, height, duration,
-                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), mimeType, fileSize);
+                MCommonPhotoSizeInfo, mimeType, fileSize);
 
             MessageInfo messageInfo = new MessageInfo(messageInfoVideo);
 
@@ -651,16 +592,10 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(duration, messageInfo.Video.Duration);
                 Assert.AreEqual(mimeType, messageInfo.Video.MimeType);
                 Assert.AreEqual(fileSize, messageInfo.Video.FileSize);
-
-                //test MessageInfo.Video.Thumb
-                Assert.AreEqual(fileId, messageInfo.Video.Thumb.FileId);
-                Assert.AreEqual(width, messageInfo.Video.Thumb.Width);
-                Assert.AreEqual(height, messageInfo.Video.Thumb.Height);
-                Assert.AreEqual(fileSize, messageInfo.Video.Thumb.FileSize);
             });
-         
 
-            Console.WriteLine(messageInfoVideo);
+            //test MessageInfo.Video.Thumb
+            AssertPhotoSizeInfo(messageInfo.Video.Thumb);
         }
 
         /// <summary>
@@ -687,8 +622,6 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(mimeType, messageInfo.Voice.MimeType);
                 Assert.AreEqual(fileSize, messageInfo.Voice.FileSize);
             });
-
-            Console.WriteLine(messageInfoVoice);
         }
 
         /// <summary>
@@ -700,16 +633,12 @@ namespace NetTelebot.Tests.ResponseTest
             const string fileId = "100";
             const int length = 123;
             const int duration = 100;
-            const int width = 1000;
-            const int height = 10000;
             const int fileSize = 10;
 
             dynamic messageInfoVoice = mMandatoryFieldsMessageInfo;
 
-            messageInfoVoice.video_note  = VideoNoteInfoObject.GetObject(
-                fileId, length, duration,
-                PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize), 
-                fileSize);
+            messageInfoVoice.video_note = VideoNoteInfoObject.GetObject(
+                fileId, length, duration, MCommonPhotoSizeInfo, fileSize);
 
             MessageInfo messageInfo = new MessageInfo(messageInfoVoice);
 
@@ -720,15 +649,10 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(length, messageInfo.VideoNote.Length);
                 Assert.AreEqual(duration, messageInfo.VideoNote.Duration);
                 Assert.AreEqual(fileSize, messageInfo.VideoNote.FileSize);
-
-                //test MessageInfo.VideoNote.Thumb
-                Assert.AreEqual(fileId, messageInfo.VideoNote.Thumb.FileId);
-                Assert.AreEqual(width, messageInfo.VideoNote.Thumb.Width);
-                Assert.AreEqual(height, messageInfo.VideoNote.Thumb.Height);
-                Assert.AreEqual(fileSize, messageInfo.VideoNote.Thumb.FileSize);
             });
 
-            Console.WriteLine(messageInfoVoice);
+            //test MessageInfo.VideoNote.Thumb
+            AssertPhotoSizeInfo(messageInfo.VideoNote.Thumb);
         }
 
         /// <summary>
@@ -743,8 +667,6 @@ namespace NetTelebot.Tests.ResponseTest
             MessageInfo messageInfo = new MessageInfo(messageInfoUser);
 
             AssertUserInfo(messageInfo.NewChatMembers[0]);
-
-            Console.WriteLine(messageInfoUser);
         }
 
         /// <summary>
@@ -763,8 +685,6 @@ namespace NetTelebot.Tests.ResponseTest
             messageInfo = new MessageInfo(messageInfoCaption);
 
             Assert.AreEqual("TestCaption", messageInfo.Caption);
-
-            Console.WriteLine(messageInfoCaption);
         }
 
         /// <summary>
@@ -785,15 +705,12 @@ namespace NetTelebot.Tests.ResponseTest
 
             MessageInfo messageInfo = new MessageInfo(messageInfoContact);
 
-
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(phoneNumber, messageInfo.Contact.PhoneNumber);
                 Assert.AreEqual(firstName, messageInfo.Contact.FirstName);
                 Assert.AreEqual(lastName, messageInfo.Contact.LastName);
                 Assert.AreEqual(userId, messageInfo.Contact.UserId);
-
-                Console.WriteLine(messageInfoContact);
             });
         }
 
@@ -890,8 +807,6 @@ namespace NetTelebot.Tests.ResponseTest
             messageInfoNewChatTitle.new_chat_title = "TestTitle";
             messageInfo = new MessageInfo(messageInfoNewChatTitle);
             Assert.AreEqual("TestTitle", messageInfo.NewChatTitle);
-
-            Console.WriteLine(messageInfoNewChatTitle);
         }
 
         /// <summary>
@@ -900,28 +815,11 @@ namespace NetTelebot.Tests.ResponseTest
         [Test]
         public static void MessageInfoNewChatPhotoTest()
         {
-            const string fileId = "100";
-            const int width = 100;
-            const int height = 100;
-            const int fileSize = 10;
-
             dynamic messageInfoNewChatPhoto = mMandatoryFieldsMessageInfo;
-
-            JArray photoArray = new JArray(PhotoSizeInfoObject.GetObject(fileId, width, height, fileSize));
-
-            messageInfoNewChatPhoto.new_chat_photo = photoArray;
-
+            messageInfoNewChatPhoto.new_chat_photo = new JArray(MCommonPhotoSizeInfo); 
             MessageInfo messageInfo = new MessageInfo(messageInfoNewChatPhoto);
 
-            Assert.Multiple(() =>
-            {
-                Assert.AreEqual(fileId, messageInfo.NewChatPhoto[0].FileId);
-                Assert.AreEqual(width, messageInfo.NewChatPhoto[0].Width);
-                Assert.AreEqual(height, messageInfo.NewChatPhoto[0].Height);
-                Assert.AreEqual(fileSize, messageInfo.NewChatPhoto[0].FileSize);
-            });
-
-            Console.WriteLine(messageInfoNewChatPhoto);
+            AssertPhotoSizeInfo(messageInfo.NewChatPhoto[0]);
         }
 
         /// <summary>
@@ -939,8 +837,6 @@ namespace NetTelebot.Tests.ResponseTest
             deleteChatPhoto.delete_chat_photo = true;
             messageInfo = new MessageInfo(deleteChatPhoto);
             Assert.True(messageInfo.DeleteChatPhoto);
-
-            Console.WriteLine(deleteChatPhoto);
         }
 
         /// <summary>
@@ -958,8 +854,6 @@ namespace NetTelebot.Tests.ResponseTest
             groupChatCreated.group_chat_created = true;
             messageInfo = new MessageInfo(groupChatCreated);
             Assert.True(messageInfo.GroupChatCreated);
-
-            Console.WriteLine(groupChatCreated);
         }
 
         /// <summary>
@@ -977,8 +871,6 @@ namespace NetTelebot.Tests.ResponseTest
             superGroupChatCreated.supergroup_chat_created = true;
             messageInfo = new MessageInfo(superGroupChatCreated);
             Assert.True(messageInfo.SuperGroupChatCreated);
-
-            Console.WriteLine(superGroupChatCreated);
         }
 
         /// <summary>
@@ -996,8 +888,6 @@ namespace NetTelebot.Tests.ResponseTest
             channelChatCreated.channel_chat_created = true;
             messageInfo = new MessageInfo(channelChatCreated);
             Assert.True(messageInfo.ChannelChatCreated);
-
-            Console.WriteLine(channelChatCreated);
         }
 
         /// <summary>
@@ -1015,8 +905,6 @@ namespace NetTelebot.Tests.ResponseTest
             messageInfoMigrateToChatId.migrate_to_chat_id = 14881488;
             messageInfo = new MessageInfo(messageInfoMigrateToChatId);
             Assert.AreEqual(14881488, messageInfo.MigrateToChatId);
-
-            Console.WriteLine(messageInfoMigrateToChatId);
         }
 
         /// <summary>
@@ -1034,8 +922,6 @@ namespace NetTelebot.Tests.ResponseTest
             migrateFromChatId.migrate_from_chat_id = 14881488;
             messageInfo = new MessageInfo(migrateFromChatId);
             Assert.AreEqual(14881488, messageInfo.MigrateFromChatId);
-
-            Console.WriteLine(migrateFromChatId);
         }
         
         [Test, Obsolete]
@@ -1049,8 +935,6 @@ namespace NetTelebot.Tests.ResponseTest
             Assert.AreEqual(0, messageInfo.DateUnix);
             Assert.AreEqual(new DateTime(1970, 1, 1).ToLocalTime(), messageInfo.Date);
             Assert.AreEqual(1049413668, messageInfo.Chat.Id);
-            
-            Console.WriteLine(mandatoryMessageInfoFields);
         }
 
         /// <summary>
@@ -1075,8 +959,6 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(date, messageInfo.PinnedMessage.DateUnix);
                 Assert.AreEqual(chatId, messageInfo.PinnedMessage.Chat.Id);
             });
-
-            Console.WriteLine(messageInfoPinnedMessage);
         }
 
         /// <summary>
@@ -1106,8 +988,6 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(Currency.USD, messageInfo.Invoice.Currency);
                 Assert.AreEqual(totalAmount, messageInfo.Invoice.TotalAmmount);
             });
-
-            Console.WriteLine(messageInfoInvoice);
         }
 
         [Test]
@@ -1191,8 +1071,6 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(streetLineTwo, messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.StreetLineTwo);
                 Assert.AreEqual(postCode, messageInfo.SuccessfulPayment.OrderInfo.ShippingAddress.PostCode);
             });
-
-            Console.WriteLine(messageSuccessfulPayment);
         }
 
         [Test]
