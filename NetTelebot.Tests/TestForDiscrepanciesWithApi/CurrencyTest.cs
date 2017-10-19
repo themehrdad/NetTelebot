@@ -8,7 +8,7 @@ using RestSharp;
 namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
 {
     [TestFixture]
-    internal  class CurrencyTest
+    internal static class CurrencyTest
     {
         private static readonly List<string> mKeyList = GetCurrencyList();
 

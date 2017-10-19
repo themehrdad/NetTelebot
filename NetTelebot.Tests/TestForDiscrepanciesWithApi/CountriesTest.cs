@@ -8,7 +8,7 @@ using RestSharp;
 namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
 {
     [TestFixture]
-    internal class CountriesTest
+    internal static class CountriesTest
     {
         
         [Test, Timeout(30000)]
