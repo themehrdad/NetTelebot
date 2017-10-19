@@ -71,6 +71,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="CommonProjectTest\TelegramBotTest.cs" />
     <Compile Include="MockServers\MockServer.cs" />
     <Compile Include="MockServers\ResponseString.cs" />
     <Compile Include="MockServers\ResponseStringGetUpdatesResult.cs" />

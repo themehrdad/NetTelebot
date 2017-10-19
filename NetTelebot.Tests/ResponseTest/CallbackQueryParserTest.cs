@@ -17,6 +17,7 @@ namespace NetTelebot.Tests.ResponseTest
         {
             //field class UserInfo
             const int id = 123;
+            const bool isBot = true;
             const string idСallback = "123";
             const string firstName = "TestFirstName";
             const string lastName = "TestLastName";
@@ -35,7 +36,7 @@ namespace NetTelebot.Tests.ResponseTest
             const string data = "TestData";
             const string gameShortName = "TestGameShortName";
             
-            JObject userInfo = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+            JObject userInfo = UserInfoObject.GetObject(id, isBot, firstName, lastName, username, languageCode);
             JObject messageInfo = MessageInfoObject.GetMandatoryFieldsMessageInfo(messageId, date, chatId, chatType);
 
             dynamic callbackQueryInfo = CallbackQueryInfoObject.GetObject(idСallback, userInfo, messageInfo, inlineMessageId,
@@ -47,6 +48,7 @@ namespace NetTelebot.Tests.ResponseTest
             {
                 //UserInfo field
                 Assert.AreEqual(id, callbackQuery.From.Id);
+                Assert.AreEqual(isBot, callbackQuery.From.IsBot);
                 Assert.AreEqual(firstName, callbackQuery.From.FirstName);
                 Assert.AreEqual(lastName, callbackQuery.From.LastName);
                 Assert.AreEqual(username, callbackQuery.From.UserName);

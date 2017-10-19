@@ -19,7 +19,7 @@ namespace NetTelebot.Type.Payment
             Id = jsonObject["id"].Value<string>();
             From = new UserInfo(jsonObject["from"].Value<JObject>());
             Currency = jsonObject["currency"].Value<string>().ToEnum<Currency>();
-            TotalAmmount = jsonObject["total_amount"].Value<int>();
+            TotalAmount = jsonObject["total_amount"].Value<int>();
             InvoicePayload = jsonObject["invoice_payload"].Value<string>();
 
             if (jsonObject["shipping_option_id"] != null)
@@ -44,11 +44,12 @@ namespace NetTelebot.Type.Payment
         public Currency? Currency { get; private set; }
 
         /// <summary>
-        /// Total price in the smallest units of the currency (integer, not float/double). 
-        /// For example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in currencies.json, 
+        /// Price of the product in the smallest units of the currency (integer, not float/double). 
+        /// For example, for a price of US$ 1.45 pass amount = 145. 
+        /// See the exp parameter in <see href="https://core.telegram.org/bots/payments/currencies.json">currencies.json</see>, 
         /// it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
         /// </summary>
-        public int TotalAmmount { get; private set; }
+        public int TotalAmount { get; private set; }
 
         /// <summary>
         /// Bot specified invoice payload

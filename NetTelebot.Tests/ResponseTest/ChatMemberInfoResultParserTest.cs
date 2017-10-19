@@ -19,11 +19,12 @@ namespace NetTelebot.Tests.ResponseTest
         public static void UserInfoResultTest()
         {
             const int id = 1000;
+            const bool isBot = true;
             const string firstName = "TestName";
             const string lastName = "testLastName";
             const string username = "testUsername";
             const string languageCode = "testLanguageCode";
-            JObject userObject = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+            JObject userObject = UserInfoObject.GetObject(id, isBot, firstName, lastName, username, languageCode);
 
             const string status = "creator";
 
@@ -37,10 +38,14 @@ namespace NetTelebot.Tests.ResponseTest
             Assert.Multiple(() =>
             {
                 Assert.True(chatMemberInfoResult.Ok);
+
+                Assert.AreEqual(id, chatMemberInfoResult.Result.User.Id);
+                Assert.AreEqual(isBot, chatMemberInfoResult.Result.User.IsBot);
                 Assert.AreEqual(firstName, chatMemberInfoResult.Result.User.FirstName);
                 Assert.AreEqual(lastName, chatMemberInfoResult.Result.User.LastName);
                 Assert.AreEqual(username, chatMemberInfoResult.Result.User.UserName);
                 Assert.AreEqual(languageCode, chatMemberInfoResult.Result.User.LanguageCode);
+
                 Assert.AreEqual(Status.creator, chatMemberInfoResult.Result.Status);
                 Assert.AreEqual(0, chatMemberInfoResult.Result.UntilDateUnix);
                 Assert.AreEqual(new DateTime(1970, 1, 1, 0, 0, 0).ToLocalTime(),
