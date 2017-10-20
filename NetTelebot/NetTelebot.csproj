@@ -87,7 +87,7 @@
     <Compile Include="Type\NewFile.cs" />
     <Compile Include="BotEnum\ParseMode.cs" />
     <Compile Include="Type\Payment\InvoceInfo.cs" />
-    <Compile Include="Type\Payment\LabelPriceInfo.cs" />
+    <Compile Include="Type\Payment\LabeledPriceInfo.cs" />
     <Compile Include="Type\Payment\OrderInfo.cs" />
     <Compile Include="Type\Payment\PreCheckoutQueryInfo.cs" />
     <Compile Include="Type\Payment\ShippingOptionInfo.cs" />

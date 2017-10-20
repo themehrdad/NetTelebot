@@ -9,6 +9,7 @@ using NetTelebot.Interface;
 using NetTelebot.Result;
 using NetTelebot.Type;
 using NetTelebot.Extension;
+using NetTelebot.Type.Payment;
 
 
 #if DEBUG
@@ -85,6 +86,7 @@ namespace NetTelebot
         private const string getChatMembersCountUri = "/bot{0}/getChatMembersCount";
         private const string getChatMemberUri = "/bot{0}/getChatMember";
         private const string answerCallbackQueryUri = "/bot{0}/answerCallbackQuery";
+        private const string answerShippingQueryUri = "/bot{0}/answerShippingQuery";
 
         private Timer mUpdateTimer;
         private int mLastUpdateId;
@@ -93,7 +95,7 @@ namespace NetTelebot
         /// Occurs when [get updates error].
         /// </summary>
         public event UnhandledExceptionEventHandler GetUpdatesError;
-        
+
         /// <summary>
         /// Whenever a message is sent to your bot, this event will be raised.
         /// </summary>
@@ -198,7 +200,7 @@ namespace NetTelebot
             IReplyMarkup replyMarkup = null)
         {
             RestRequest request = NewRestRequest(sendMessageUri);
-            
+
             request.AddParameter("chat_id", chatId);
             request.AddParameter("text", text);
             if (parseMode != null)
@@ -223,7 +225,7 @@ namespace NetTelebot
         /// <param name="messageId">Unique message identifier</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
         /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned.</returns>
-        public SendMessageResult ForwardMessage(object chatId, int fromChatId, 
+        public SendMessageResult ForwardMessage(object chatId, int fromChatId,
             int messageId,
             bool? disableNotification = null)
         {
@@ -444,7 +446,7 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, 
         /// instructions to remove reply keyboard or to force a reply from the user.</param>
         /// <returns></returns>
-        public SendMessageResult SendVoice(object chatId, IFile voice, 
+        public SendMessageResult SendVoice(object chatId, IFile voice,
             string caption = null,
             int? duration = null,
             bool? disableNotification = null,
@@ -554,7 +556,7 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an 
         /// inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned</returns>
-        public SendMessageResult SendVenue(object chatId, float latitude, float longitude, string title, string address, 
+        public SendMessageResult SendVenue(object chatId, float latitude, float longitude, string title, string address,
             string foursquareId = null,
             bool? disableNotification = null,
             int? replyToMessageId = null,
@@ -610,7 +612,7 @@ namespace NetTelebot
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
-            
+
             return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
         }
 
@@ -724,7 +726,7 @@ namespace NetTelebot
 
             return ExecuteRequest<BooleanResult>(request) as BooleanResult;
         }
-        
+
         /// <summary>
         /// Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). 
         /// </summary>
@@ -801,8 +803,8 @@ namespace NetTelebot
         /// <param name="cacheTime">The maximum amount of time in seconds that the result of the callback query may be cached client-side. 
         /// Telegram apps will support caching starting in version 3.14. Defaults to 0.</param>
         /// <returns>On success, True is returned.</returns>
-        public BooleanResult AswerCallbackQuery(string callbackQueryId, 
-            string text = null, 
+        public BooleanResult AswerCallbackQuery(string callbackQueryId,
+            string text = null,
             bool? showAlert = null,
             string url = null,
             int? cacheTime = null)
@@ -819,6 +821,37 @@ namespace NetTelebot
                 request.AddParameter("url", url);
             if (cacheTime != null)
                 request.AddParameter("cache_time", cacheTime);
+
+            return ExecuteRequest<BooleanResult>(request) as BooleanResult;
+        }
+
+        /// <summary>
+        /// If you sent an invoice requesting a shipping address and the parameter is_flexible was specified, 
+        /// the Bot API will send an <see href="https://core.telegram.org/bots/api#update">Update</see> with a shipping_query field to the bot. 
+        /// Use this method to reply to shipping queries.
+        /// </summary>
+        /// <param name="shippingQueryId">Unique identifier for the query to be answered</param>
+        /// <param name="ok">Specify True if delivery to the specified address is possible and False if there are any problems 
+        /// (for example, if delivery to the specified address is not possible)</param>
+        /// <param name="shippingOption">Required if ok is True. 
+        /// A JSON-serialized array of available shipping options.</param>
+        /// <param name="errorMessage">Required if ok is False. 
+        /// Error message in human readable form that explains why it is impossible to complete the order (e.g. "Sorry, delivery to your desired address is unavailable'). 
+        /// Telegram will display this message to the user.</param>
+        /// <returns>On success, True is returned.</returns>
+        public BooleanResult AnswerShippingQuery(string shippingQueryId, bool ok, 
+            ShippingOptionInfo[] shippingOption = null, 
+            string errorMessage = null)
+        {
+            RestRequest request = NewRestRequest(answerShippingQueryUri);
+
+            request.AddParameter("shipping_query_id", shippingQueryId);
+            request.AddParameter("ok", ok);
+
+            if(shippingOption != null)
+                request.AddParameter("shipping_options", ShippingOptionInfo.GetJson(shippingOption));
+            if (errorMessage != null)
+                request.AddParameter("error_message", errorMessage);
 
             return ExecuteRequest<BooleanResult>(request) as BooleanResult;
         }
