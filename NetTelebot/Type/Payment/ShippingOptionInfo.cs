@@ -9,19 +9,23 @@ namespace NetTelebot.Type.Payment
     /// </summary>
     public class ShippingOptionInfo
     {
+
         internal ShippingOptionInfo() 
         {   
         }
 
-        /*
-         * Temporarily off
-         * 
-         * internal ShippingOptionInfo(JObject jsonObject)
+        /// <summary>
+        /// This method create JSON-serialized array of available shipping options. Used for resonse in AnswerShippingQuery method.
+        /// </summary>
+        /// <param name="shippingOption"><see cref="ShippingOptionInfo"/> array</param>
+        /// <returns><see cref="ShippingOptionInfo"/> JSON-serialized array</returns>
+        internal static JObject GetJson(ShippingOptionInfo[] shippingOption)
         {
-            Id = jsonObject["id"].Value<string>();
-            Title = jsonObject["title"].Value<string>();
-            LabelPrice = LabeledPriceInfo.ParseArray(jsonObject["prices"].Value<JArray>());
-        }*/
+            dynamic json = new JObject();
+            json.prices = GetJsonArray(shippingOption);
+
+            return json;
+        }
 
         /// <summary>
         /// Shipping option identifier
@@ -37,19 +41,6 @@ namespace NetTelebot.Type.Payment
         /// List of price portions
         /// </summary>
         public LabeledPriceInfo[] LabelPrice { get; set; }
-
-        /// <summary>
-        /// This method create JSON-serialized array of available shipping options. Used for resonse in AnswerShippingQuery method.
-        /// </summary>
-        /// <param name="shippingOption"><see cref="ShippingOptionInfo"/> array</param>
-        /// <returns><see cref="ShippingOptionInfo"/> JSON-serialized array</returns>
-        internal static JObject GetJson(ShippingOptionInfo[] shippingOption)
-        {
-            dynamic json = new JObject();
-            json.prices = GetJsonArray(shippingOption);
-
-            return json;
-        }
 
         /// <summary>
         /// This method creates part of the json-serialize array of the available shipping options.
