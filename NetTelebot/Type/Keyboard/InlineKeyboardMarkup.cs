@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NetTelebot.Interface;
 using Newtonsoft.Json.Linq;
 
@@ -21,7 +22,7 @@ namespace NetTelebot.Type.Keyboard
             return json;
         }
 
-        private static JArray GetJsonArrayOfArray(InlineKeyboardButton[][] keyboard)
+        private static JArray GetJsonArrayOfArray(IEnumerable<InlineKeyboardButton[]> keyboard)
         {
             JArray jArray = new JArray
             {
@@ -32,7 +33,7 @@ namespace NetTelebot.Type.Keyboard
             return jArray;
         }
 
-        private static JArray GetJsonArray(InlineKeyboardButton[] keyboard)
+        private static JArray GetJsonArray(IEnumerable<InlineKeyboardButton> keyboard)
         {
             JArray jArray = new JArray
             {

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type.Payment
 {
@@ -7,31 +9,65 @@ namespace NetTelebot.Type.Payment
     /// </summary>
     public class ShippingOptionInfo
     {
-        //todo add test
-        internal ShippingOptionInfo()
+
+        internal ShippingOptionInfo() 
         {   
         }
 
-        internal ShippingOptionInfo(JObject jsonObject)
+        /// <summary>
+        /// This method create JSON-serialized array of available shipping options. Used for resonse in AnswerShippingQuery method.
+        /// </summary>
+        /// <param name="shippingOption"><see cref="ShippingOptionInfo"/> array</param>
+        /// <returns><see cref="ShippingOptionInfo"/> JSON-serialized array</returns>
+        internal static JObject GetJson(ShippingOptionInfo[] shippingOption)
         {
-            Id = jsonObject["id"].Value<string>();
-            Title = jsonObject["title"].Value<string>();
-            LabelPrice = LabelPriceInfo.ParseArray(jsonObject["prices"].Value<JArray>());
+            dynamic json = new JObject();
+            json.prices = GetJsonArray(shippingOption);
+
+            return json;
         }
-        
+
         /// <summary>
         /// Shipping option identifier
         /// </summary>
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Option title
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// List of price portions
         /// </summary>
-        public LabelPriceInfo[] LabelPrice { get; internal set; }
+        public LabeledPriceInfo[] LabelPrice { get; set; }
+
+        /// <summary>
+        /// This method creates part of the json-serialize array of the available shipping options.
+        /// </summary>
+        private static JArray GetJsonArray(IEnumerable<ShippingOptionInfo> shippingOptions)
+        {
+            JArray jArray = new JArray
+            {
+                from shipingOption in shippingOptions
+                select GetJsonObject(shipingOption)
+            };
+
+            return jArray;
+        }
+
+        /// <summary>
+        /// This method creates part of the json-serialize array of the available shipping options.
+        /// </summary>
+        private static JObject GetJsonObject(ShippingOptionInfo shippingOption)
+        {
+            dynamic json = new JObject();
+
+            json.id = shippingOption.Id;
+            json.title = shippingOption.Title;
+            json.prices = LabeledPriceInfo.GetJsonArray(shippingOption.LabelPrice);
+
+            return json;
+        }
     }
 }

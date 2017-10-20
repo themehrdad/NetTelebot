@@ -56,6 +56,7 @@
     <Compile Include="Result\FileInfoResult.cs" />
     <Compile Include="Result\IntegerResult.cs" />
     <Compile Include="Result\UserInfoResult.cs" />
+    <Compile Include="TelegramBotClientUpdate.cs" />
     <Compile Include="Type\AudioInfo.cs" />
     <Compile Include="Result\BooleanResult.cs" />
     <Compile Include="BotEnum\ChatActions.cs" />
@@ -87,7 +88,7 @@
     <Compile Include="Type\NewFile.cs" />
     <Compile Include="BotEnum\ParseMode.cs" />
     <Compile Include="Type\Payment\InvoceInfo.cs" />
-    <Compile Include="Type\Payment\LabelPriceInfo.cs" />
+    <Compile Include="Type\Payment\LabeledPriceInfo.cs" />
     <Compile Include="Type\Payment\OrderInfo.cs" />
     <Compile Include="Type\Payment\PreCheckoutQueryInfo.cs" />
     <Compile Include="Type\Payment\ShippingOptionInfo.cs" />
@@ -100,7 +101,7 @@
     <Compile Include="Result\SendMessageResult.cs" />
     <Compile Include="Type\Payment\ShippingAddressInfo.cs" />
     <Compile Include="Type\StickerInfo.cs" />
-    <Compile Include="TelegramBotClient.cs" />
+    <Compile Include="TelegramBotClientMethods.cs" />
     <Compile Include="Result\TelegramUpdateEventArgs.cs" />
     <Compile Include="Type\UpdateInfo.cs" />
     <Compile Include="Type\UserInfo.cs" />

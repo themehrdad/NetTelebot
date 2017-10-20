@@ -6,6 +6,7 @@ using NetTelebot.BotEnum;
 using NetTelebot.Tests.MockServers;
 using NetTelebot.Type;
 using NetTelebot.Type.Keyboard;
+using NetTelebot.Type.Payment;
 using NUnit.Framework;
 using RestSharp;
 
@@ -705,6 +706,68 @@ namespace NetTelebot.Tests.RequestToMockTest
 
                 Assert.AreEqual("/botToken/getChatMember", request.FirstOrDefault()?.Url);
                 Assert.Throws<Exception>(() => mBotBadResponse.GetChatMember("testChatId", 123456));
+            });
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.AnswerShippingQuery"/>.
+        /// </summary>
+        [Test]
+        public void AnswerShippingQueryTest()
+        {
+            ShippingOptionInfo shippingOption1 = new ShippingOptionInfo
+            {
+                Id = "idTest",
+                Title = "titleTest",
+                LabelPrice = new[]
+                {
+                    new LabeledPriceInfo {Label = "LableTest1", Amount = 123},
+                    new LabeledPriceInfo {Label = "LabelTest2", Amount = 456} 
+                }
+            };
+
+            ShippingOptionInfo shippingOption2 = new ShippingOptionInfo
+            {
+                Id = "idTest",
+                Title = "titleTest",
+                LabelPrice = new[]
+                {
+                    new LabeledPriceInfo {Label = "LableTest3", Amount = 123},
+                    new LabeledPriceInfo {Label = "LabelTest4", Amount = 456}
+                }
+            };
+
+            ShippingOptionInfo[] shippingOption = {shippingOption1, shippingOption2};
+
+            mBotOkResponse.AnswerShippingQuery("AnswerIdTest", false, shippingOption, "TestErrorMessage");
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/answerShippingQuery").UsingPost());
+
+            PrintResult(request);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("shipping_query_id=AnswerIdTest&" +
+                                "ok=False&" +
+                                "shipping_options=%7B%0D%0A%20%20%22prices" +
+                                "%22%3A%20%5B%0D%0A%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%22id" +
+                                "%22%3A%20%22idTest%22%2C%0D%0A%20%20%20%20%20%20%22title" +
+                                "%22%3A%20%22titleTest%22%2C%0D%0A%20%20%20%20%20%20%22prices" +
+                                "%22%3A%20%5B%0D%0A%20%20%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%22label" +
+                                "%22%3A%20%22LableTest1" +
+                                "%22%2C%0D%0A%20%20%20%20%20%20%20%20%20%20%22amount" +
+                                "%22%3A%20123%0D%0A%20%20%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%22label" +
+                                "%22%3A%20%22LabelTest2%22%2C%0D%0A%20%20%20%20%20%20%20%20%20%20%22amount" +
+                                "%22%3A%20456%0D%0A%20%20%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%20%20%5D%0D%0A%20%20%20%20%7D%2C%0D%0A%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%22id" +
+                                "%22%3A%20%22idTest%22%2C%0D%0A%20%20%20%20%20%20%22title%22%3A%20%22titleTest%22%2C%0D%0A%20%20%20%20%20%20%22prices" +
+                                "%22%3A%20%5B%0D%0A%20%20%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%22label" +
+                                "%22%3A%20%22LableTest3%22%2C%0D%0A%20%20%20%20%20%20%20%20%20%20%22amount" +
+                                "%22%3A%20123%0D%0A%20%20%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%22label" +
+                                "%22%3A%20%22LabelTest4%22%2C%0D%0A%20%20%20%20%20%20%20%20%20%20%22amount" +
+                                "%22%3A%20456%0D%0A%20%20%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%20%20%5D%0D%0A%20%20%20%20%7D%0D%0A%20%20%5D%0D%0A%7D&" +
+                                "error_message=TestErrorMessage", request.FirstOrDefault()?.Body);
+                Assert.AreEqual("/botToken/answerShippingQuery", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.AnswerShippingQuery("AnswerIdTest", false, shippingOption, "TestErrorMessage"));
             });
         }
 
