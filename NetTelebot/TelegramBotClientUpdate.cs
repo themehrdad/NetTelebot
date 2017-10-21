@@ -116,7 +116,7 @@ namespace NetTelebot
         {
             CheckToken();
 
-            RestRequest request = new RestRequest(string.Format(getUpdatesUri, Token), Method.POST);
+            RestRequest request = new RestRequest(string.Format(mGetUpdatesUri, Token), Method.POST);
 
             if (offset.HasValue)
                 request.AddQueryParameter("offset", offset.Value.ToString());

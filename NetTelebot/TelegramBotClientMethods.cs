@@ -37,32 +37,33 @@ namespace NetTelebot
 
     public partial class TelegramBotClient
     {
-        private const string getMeUri = "/bot{0}/getMe";
-        private const string getUpdatesUri = "/bot{0}/getUpdates";
-        private const string sendMessageUri = "/bot{0}/sendMessage";
-        private const string forwardMessageUri = "/bot{0}/forwardMessage";
-        private const string sendPhotoUri = "/bot{0}/sendPhoto";
-        private const string sendAudioUri = "/bot{0}/sendAudio";
-        private const string sendDocumentUri = "/bot{0}/sendDocument";
-        private const string sendStickerUri = "/bot{0}/sendSticker";
-        private const string sendVideoUri = "/bot{0}/sendVideo";
-        private const string sendVoiceUri = "/bot{0}/sendVoice";
-        private const string sendVideoNoteUri = "/bot{0}/sendVideoNote";
-        private const string sendLocationUri = "/bot{0}/sendLocation";
-        private const string sendVenueUri = "/bot{0}/sendVenue";
-        private const string sendContactUri = "/bot{0}/sendContact";
-        private const string sendChatActionUri = "/bot{0}/sendChatAction";
-        private const string getUserProfilePhotosUri = "/bot{0}/getUserProfilePhotos";
-        private const string getFileUri = "/bot{0}/getFile";
-        private const string kickChatMemberUri = "/bot{0}/kickChatMember";
-        private const string unbanChatMemberUri = "/bot{0}/unbanChatMember";
-        private const string leaveChatUri = "/bot{0}/leaveChat";
-        private const string getChatUri = "/bot{0}/getChat";
-        private const string getChatAdministratorsUri = "/bot{0}/getChatAdministrators";
-        private const string getChatMembersCountUri = "/bot{0}/getChatMembersCount";
-        private const string getChatMemberUri = "/bot{0}/getChatMember";
-        private const string answerCallbackQueryUri = "/bot{0}/answerCallbackQuery";
-        private const string answerShippingQueryUri = "/bot{0}/answerShippingQuery";
+        private const string mGetMeUri = "/bot{0}/getMe";
+        private const string mGetUpdatesUri = "/bot{0}/getUpdates";
+        private const string mSendMessageUri = "/bot{0}/sendMessage";
+        private const string mForwardMessageUri = "/bot{0}/forwardMessage";
+        private const string mSendPhotoUri = "/bot{0}/sendPhoto";
+        private const string mSendAudioUri = "/bot{0}/sendAudio";
+        private const string mSendDocumentUri = "/bot{0}/sendDocument";
+        private const string mSendStickerUri = "/bot{0}/sendSticker";
+        private const string mSendVideoUri = "/bot{0}/sendVideo";
+        private const string mSendVoiceUri = "/bot{0}/sendVoice";
+        private const string mSendVideoNoteUri = "/bot{0}/sendVideoNote";
+        private const string mSendLocationUri = "/bot{0}/sendLocation";
+        private const string mSendVenueUri = "/bot{0}/sendVenue";
+        private const string mSendContactUri = "/bot{0}/sendContact";
+        private const string mSendChatActionUri = "/bot{0}/sendChatAction";
+        private const string mGetUserProfilePhotosUri = "/bot{0}/getUserProfilePhotos";
+        private const string mGetFileUri = "/bot{0}/getFile";
+        private const string mKickChatMemberUri = "/bot{0}/kickChatMember";
+        private const string mUnbanChatMemberUri = "/bot{0}/unbanChatMember";
+        private const string mLeaveChatUri = "/bot{0}/leaveChat";
+        private const string mGetChatUri = "/bot{0}/getChat";
+        private const string mGetChatAdministratorsUri = "/bot{0}/getChatAdministrators";
+        private const string mGetChatMembersCountUri = "/bot{0}/getChatMembersCount";
+        private const string mGetChatMemberUri = "/bot{0}/getChatMember";
+        private const string mAnswerCallbackQueryUri = "/bot{0}/answerCallbackQuery";
+        private const string mAnswerShippingQueryUri = "/bot{0}/answerShippingQuery";
+        private const string mSendInvoiceUri = "/bot{0}/sendInvoice";
 
         private RestRequest NewRestRequest(string uri)
         {
@@ -76,7 +77,7 @@ namespace NetTelebot
         /// </summary>
         public UserInfoResult GetsMe()
         {
-            return ExecuteRequest<UserInfoResult>(NewRestRequest(getMeUri)) as UserInfoResult;
+            return ExecuteRequest<UserInfoResult>(NewRestRequest(mGetMeUri)) as UserInfoResult;
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendMessageUri);
+            RestRequest request = NewRestRequest(mSendMessageUri);
 
             request.AddParameter("chat_id", chatId);
             request.AddParameter("text", text);
@@ -128,7 +129,7 @@ namespace NetTelebot
             int messageId,
             bool? disableNotification = null)
         {
-            RestRequest request = NewRestRequest(forwardMessageUri);
+            RestRequest request = NewRestRequest(mForwardMessageUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("from_chat_id", fromChatId);
             if (disableNotification.HasValue)
@@ -156,7 +157,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendPhotoUri);
+            RestRequest request = NewRestRequest(mSendPhotoUri);
             request.AddParameter("chat_id", chatId);
             request = AddFile(photo, request, "photo");
 
@@ -199,7 +200,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendAudioUri);
+            RestRequest request = NewRestRequest(mSendAudioUri);
             request.AddParameter("chat_id", chatId);
             request = AddFile(audio, request, "audio");
 
@@ -239,7 +240,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendDocumentUri);
+            RestRequest request = NewRestRequest(mSendDocumentUri);
             request.AddParameter("chat_id", chatId);
             request = AddFile(document, request, "document");
 
@@ -270,7 +271,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendStickerUri);
+            RestRequest request = NewRestRequest(mSendStickerUri);
             request.AddParameter("chat_id", chatId);
             request = AddFile(sticker, request, "sticker");
 
@@ -308,7 +309,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendVideoUri);
+            RestRequest request = NewRestRequest(mSendVideoUri);
             request.AddParameter("chat_id", chatId);
             request = AddFile(video, request, "video");
 
@@ -352,7 +353,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendVoiceUri);
+            RestRequest request = NewRestRequest(mSendVoiceUri);
             request.AddParameter("chat_id", chatId);
             request = AddFile(voice, request, "voice");
 
@@ -392,7 +393,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendVideoNoteUri);
+            RestRequest request = NewRestRequest(mSendVideoNoteUri);
             request.AddParameter("chat_id", chatId);
             request = AddFile(videoNote, request, "video_note");
 
@@ -426,7 +427,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendLocationUri);
+            RestRequest request = NewRestRequest(mSendLocationUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("latitude", latitude);
             request.AddParameter("longitude", longitude);
@@ -461,7 +462,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendVenueUri);
+            RestRequest request = NewRestRequest(mSendVenueUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("latitude", latitude);
             request.AddParameter("longitude", longitude);
@@ -498,7 +499,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendContactUri);
+            RestRequest request = NewRestRequest(mSendContactUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("phone_number", phoneNumber);
             request.AddParameter("first_name", firstName);
@@ -526,7 +527,7 @@ namespace NetTelebot
         /// record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.</param>
         public BooleanResult SendChatAction(object chatId, ChatActions action)
         {
-            RestRequest request = NewRestRequest(sendChatActionUri);
+            RestRequest request = NewRestRequest(mSendChatActionUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("action", action.ToString().ToLower());
 
@@ -543,7 +544,7 @@ namespace NetTelebot
         /// <returns><see cref="UserProfilePhotosInfo"/></returns>
         public GetUserProfilePhotosResult GetUserProfilePhotos(int userId, int? offset = null, byte? limit = null)
         {
-            RestRequest request = NewRestRequest(getUserProfilePhotosUri);
+            RestRequest request = NewRestRequest(mGetUserProfilePhotosUri);
 
             request.AddParameter("user_id", userId);
             if (offset.HasValue)
@@ -564,7 +565,7 @@ namespace NetTelebot
         /// <returns>On success, a <see cref="FileInfo"/> is returned.</returns>
         public FileInfoResult GetFile(string fileId)
         {
-            RestRequest request = NewRestRequest(getFileUri);
+            RestRequest request = NewRestRequest(mGetFileUri);
 
             request.AddParameter("file_id", fileId);
             return ExecuteRequest<FileInfoResult>(request) as FileInfoResult;
@@ -583,7 +584,7 @@ namespace NetTelebot
         /// <returns>Returns True on success, false otherwise</returns>
         public BooleanResult KickChatMember(object chatId, int userId, DateTime untilDate)
         {
-            RestRequest request = NewRestRequest(kickChatMemberUri);
+            RestRequest request = NewRestRequest(mKickChatMemberUri);
 
             request.AddParameter("chat_id", chatId);
             request.AddParameter("user_id", userId);
@@ -603,7 +604,7 @@ namespace NetTelebot
         /// <returns>Returns True on success, false otherwise</returns>
         public BooleanResult UnbanChatMember(object chatId, int userId)
         {
-            RestRequest request = NewRestRequest(unbanChatMemberUri);
+            RestRequest request = NewRestRequest(mUnbanChatMemberUri);
 
             request.AddParameter("chat_id", chatId);
             request.AddParameter("user_id", userId);
@@ -619,7 +620,7 @@ namespace NetTelebot
         /// <returns>Returns True on success, false otherwise</returns>
         public BooleanResult LeaveChat(object chatId)
         {
-            RestRequest request = NewRestRequest(leaveChatUri);
+            RestRequest request = NewRestRequest(mLeaveChatUri);
 
             request.AddParameter("chat_id", chatId);
 
@@ -633,7 +634,7 @@ namespace NetTelebot
         /// <returns>Returns a <see cref="ChatInfoResult"/> object on success.</returns>
         public ChatInfoResult GetChat(object chatId)
         {
-            RestRequest request = NewRestRequest(getChatUri);
+            RestRequest request = NewRestRequest(mGetChatUri);
 
             request.AddParameter("chat_id", chatId);
 
@@ -648,7 +649,7 @@ namespace NetTelebot
         /// administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.</returns>
         public ChatMembersInfoResult GetChatAdministrators(object chatId)
         {
-            RestRequest request = NewRestRequest(getChatAdministratorsUri);
+            RestRequest request = NewRestRequest(mGetChatAdministratorsUri);
 
             request.AddParameter("chat_id", chatId);
 
@@ -662,7 +663,7 @@ namespace NetTelebot
         /// <returns>Returns <see cref="IntegerResult"/> on success</returns>
         public IntegerResult GetChatMembersCount(object chatId)
         {
-            RestRequest request = NewRestRequest(getChatMembersCountUri);
+            RestRequest request = NewRestRequest(mGetChatMembersCountUri);
 
             request.AddParameter("chat_id", chatId);
 
@@ -677,7 +678,7 @@ namespace NetTelebot
         /// <returns>Returns a <see cref="ChatMemberInfo"/> object on success.</returns>
         public ChatMemberInfoResult GetChatMember(object chatId, int userId)
         {
-            RestRequest request = NewRestRequest(getChatMemberUri);
+            RestRequest request = NewRestRequest(mGetChatMemberUri);
 
             request.AddParameter("chat_id", chatId);
             request.AddParameter("user_id", userId);
@@ -708,7 +709,7 @@ namespace NetTelebot
             string url = null,
             int? cacheTime = null)
         {
-            RestRequest request = NewRestRequest(answerCallbackQueryUri);
+            RestRequest request = NewRestRequest(mAnswerCallbackQueryUri);
 
             request.AddParameter("callback_query_id", callbackQueryId);
 
@@ -742,7 +743,7 @@ namespace NetTelebot
             ShippingOptionInfo[] shippingOption = null, 
             string errorMessage = null)
         {
-            RestRequest request = NewRestRequest(answerShippingQueryUri);
+            RestRequest request = NewRestRequest(mAnswerShippingQueryUri);
 
             request.AddParameter("shipping_query_id", shippingQueryId);
             request.AddParameter("ok", ok);
@@ -753,6 +754,91 @@ namespace NetTelebot
                 request.AddParameter("error_message", errorMessage);
 
             return ExecuteRequest<BooleanResult>(request) as BooleanResult;
+        }
+
+        //todo test this
+        /// <summary>
+        /// Use this method to send invoices.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target private chat</param>
+        /// <param name="title">Product name, 1-32 characters</param>
+        /// <param name="description">Product description, 1-255 characters</param>
+        /// <param name="payload"> 	Bot-defined invoice payload, 1-128 bytes. 
+        /// This will not be displayed to the user, use for your internal processes.</param>
+        /// <param name="providerToken">Payments provider token, obtained via Botfather</param>
+        /// <param name="startParameter">Unique deep-linking parameter that can be used to generate this invoice when used as a start parameter</param>
+        /// <param name="currency">Three-letter ISO 4217 currency code</param>
+        /// <param name="labeledPrice">Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)</param>
+        /// <param name="photoUrl">URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service. 
+        /// People like it better when they see what they are paying for.</param>
+        /// <param name="photoSize">Photo size</param>
+        /// <param name="photoWidth">Photo width</param>
+        /// <param name="photoHeight">Photo height</param>
+        /// <param name="needName">Pass True, if you require the user's full name to complete the order</param>
+        /// <param name="needPhoneNumber">Pass True, if you require the user's phone number to complete the order</param>
+        /// <param name="needEmail">Pass True, if you require the user's email to complete the order</param>
+        /// <param name="needShippingAdress">Pass True, if you require the user's shipping address to complete the order</param>
+        /// <param name="isFlexible">Pass True, if the final price depends on the shipping method</param>
+        /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">A JSON-serialized object for an inline keyboard. 
+        /// If empty, one 'Pay total price' button will be shown. If not empty, the first button must be a Pay button.</param>
+        /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned.</returns>
+        public SendMessageResult SendInvoice(string chatId, 
+            string title, 
+            string description,
+            string payload, 
+            string providerToken, 
+            string startParameter, 
+            Currency currency, 
+            LabeledPriceInfo[] labeledPrice,
+            string photoUrl = null, 
+            int? photoSize = null, 
+            int? photoWidth = null, 
+            int? photoHeight = null,
+            bool? needName = null, 
+            bool? needPhoneNumber = null,  
+            bool? needEmail = null, 
+            bool? needShippingAdress = null,
+            bool? isFlexible = null, 
+            bool? disableNotification = null, 
+            int? replyToMessageId = null,
+            IReplyMarkup replyMarkup = null)
+        {
+            RestRequest request = NewRestRequest(mSendInvoiceUri);
+
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("title", title);
+            request.AddParameter("description", description);
+            request.AddParameter("payload", payload);
+            request.AddParameter("provider_token", providerToken);
+            request.AddParameter("start_parameter", startParameter);
+            request.AddParameter("currency", currency.ToString());
+            request.AddParameter("prices", LabeledPriceInfo.GetJsonArray(labeledPrice));
+
+            if (photoUrl != null)
+                request.AddParameter("photo_url", photoUrl);
+            if (photoSize != null)
+                request.AddParameter("photo_size", photoSize);
+            if (photoWidth != null)
+                request.AddParameter("photo_width", photoWidth);
+            if (photoHeight != null)
+                request.AddParameter("photo_height", photoHeight);
+
+            request.AddParameter("need_name", needName ?? false);
+            request.AddParameter("need_phone_number", needPhoneNumber ?? false);
+            request.AddParameter("need_email", needEmail ?? false);
+            request.AddParameter("need_shipping_address", needShippingAdress ?? false);
+            request.AddParameter("is_flexible", isFlexible ?? false);
+
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+            if (replyToMessageId != null)
+                request.AddParameter("reply_to_message_id", replyToMessageId);
+            if (replyMarkup != null)
+                request.AddParameter("reply_markup", replyMarkup.GetJson());
+
+            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
         }
 
         //todo Inline mode methods (https://core.telegram.org/bots/api#inline-mode-methods)
