@@ -756,7 +756,6 @@ namespace NetTelebot
             return ExecuteRequest<BooleanResult>(request) as BooleanResult;
         }
 
-        //todo test this
         /// <summary>
         /// Use this method to send invoices. See <see href="https://core.telegram.org/bots/api#sendinvoice">API</see>
         /// </summary>
