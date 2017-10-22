@@ -758,12 +758,12 @@ namespace NetTelebot
 
         //todo test this
         /// <summary>
-        /// Use this method to send invoices.
+        /// Use this method to send invoices. See <see href="https://core.telegram.org/bots/api#sendinvoice">API</see>
         /// </summary>
         /// <param name="chatId">Unique identifier for the target private chat</param>
         /// <param name="title">Product name, 1-32 characters</param>
         /// <param name="description">Product description, 1-255 characters</param>
-        /// <param name="payload"> 	Bot-defined invoice payload, 1-128 bytes. 
+        /// <param name="payload">Bot-defined invoice payload, 1-128 bytes. 
         /// This will not be displayed to the user, use for your internal processes.</param>
         /// <param name="providerToken">Payments provider token, obtained via Botfather</param>
         /// <param name="startParameter">Unique deep-linking parameter that can be used to generate this invoice when used as a start parameter</param>
