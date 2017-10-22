@@ -771,6 +771,106 @@ namespace NetTelebot.Tests.RequestToMockTest
             });
         }
 
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.SendInvoice"/>.
+        /// </summary>
+        [Test]
+        public void SendInvoiceWithoutOptionalParametersTest()
+        {
+            MockServer.ServerOkResponse.ResetRequestLogs();
+
+            var labelPrice = new[]
+            {
+                new LabeledPriceInfo {Label = "LableTest1", Amount = 123},
+                new LabeledPriceInfo {Label = "LabelTest2", Amount = 456}
+            };
+
+
+            mBotOkResponse.SendInvoice("TestChatId", "TestTitle", "TestDescription", "TestPayload", "TestProviderToken", "TestStartParameter", Currency.USD, labelPrice);
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendInvoice").UsingPost());
+            PrintResult(request);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("chat_id=TestChatId&" +
+                                "title=TestTitle&" +
+                                "description=TestDescription&" +
+                                "payload=TestPayload&" +
+                                "provider_token=TestProviderToken&" +
+                                "start_parameter=TestStartParameter&" +
+                                "currency=USD&" +
+                                "prices=%5B%0D%0A%20%20%7B%0D%0A%20%20%20%20%22label" +
+                                "%22%3A%20%22LableTest1" +
+                                "%22%2C%0D%0A%20%20%20%20%22amount" +
+                                "%22%3A%20123" +
+                                "%0D%0A%20%20%7D%2C%0D%0A%20%20%7B%0D%0A%20%20%20%20%22label" +
+                                "%22%3A%20%22LabelTest2" +
+                                "%22%2C%0D%0A%20%20%20%20%22amount" +
+                                "%22%3A%20456%0D%0A%20%20%7D%0D%0A%5D&" +
+                                "need_name=False&" +
+                                "need_phone_number=False&" +
+                                "need_email=False&" +
+                                "need_shipping_address=False&" +
+                                "is_flexible=False", request.FirstOrDefault()?.Body);
+                Assert.AreEqual("/botToken/sendInvoice", request.FirstOrDefault()?.Url);
+                //Assert.Throws<Exception>(() => mBotBadResponse.AnswerShippingQuery("AnswerIdTest", false, shippingOption, "TestErrorMessage"));
+            });
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.SendInvoice"/>.
+        /// </summary>
+        [Test]
+        public void SendInvoiceWithOptionalParametersTest()
+        {
+            MockServer.ServerOkResponse.ResetRequestLogs();
+
+            var labelPrice = new[]
+            {
+                new LabeledPriceInfo {Label = "LableTest1", Amount = 123},
+                new LabeledPriceInfo {Label = "LabelTest2", Amount = 456}
+            };
+
+
+            mBotOkResponse.SendInvoice("TestChatId", "TestTitle", "TestDescription", "TestPayload", "TestProviderToken",
+                "TestStartParameter", Currency.USD, labelPrice, "TestPhotoUrl", 123, 456, 789, true, true, true, true,
+                true, true, 123, new ForceReplyMarkup());
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendInvoice").UsingPost());
+            PrintResult(request);
+
+            Assert.AreEqual("chat_id=TestChatId&" +
+                            "title=TestTitle&" +
+                            "description=TestDescription&" +
+                            "payload=TestPayload&" +
+                            "provider_token=TestProviderToken&" +
+                            "start_parameter=TestStartParameter&" +
+                            "currency=USD&" +
+                            "prices=%5B%0D%0A%20%20%7B%0D%0A%20%20%20%20%22label" +
+                            "%22%3A%20%22LableTest1" +
+                            "%22%2C%0D%0A%20%20%20%20%22amount" +
+                            "%22%3A%20123%0D%0A%20%20%7D%2C%0D%0A%20%20%7B%0D%0A%20%20%20%20%22label" +
+                            "%22%3A%20%22LabelTest" +
+                            "2%22%2C%0D%0A%20%20%20%20%22amount" +
+                            "%22%3A%20456%0D%0A%20%20%7D%0D%0A%5D&photo_url=TestPhotoUrl&" +
+                            "photo_size=123&" +
+                            "photo_width=456&" +
+                            "photo_height=789&" +
+                            "need_name=True&" +
+                            "need_phone_number=True&" +
+                            "need_email=True&" +
+                            "need_shipping_address=True&" +
+                            "is_flexible=True&" +
+                            "disable_notification=True&" +
+                            "reply_to_message_id=123&" +
+                            "reply_markup=%7B%0D%0A%20%20%22force_reply" +
+                            "%22%3A%20true" +
+                            "%0D%0A%7D", request.FirstOrDefault()?.Body);
+            Assert.AreEqual("/botToken/sendInvoice", request.FirstOrDefault()?.Url);
+        }
+
+
         //todo move common project
         internal static void PrintResult(IEnumerable<Request> request)
         {

@@ -57,7 +57,5 @@ namespace NetTelebot.Tests.MockServers
             ServerOkResponse?.Stop();
             ServerBadResponse?.Stop();
         }
-
-
     }
 }
