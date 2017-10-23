@@ -64,6 +64,7 @@ namespace NetTelebot
         private const string mAnswerCallbackQueryUri = "/bot{0}/answerCallbackQuery";
         private const string mAnswerShippingQueryUri = "/bot{0}/answerShippingQuery";
         private const string mSendInvoiceUri = "/bot{0}/sendInvoice";
+        private const string mAnswerPreCheckoutQuery = "/bot{0}/answerPreCheckoutQuery";
 
         private RestRequest NewRestRequest(string uri)
         {
@@ -750,7 +751,7 @@ namespace NetTelebot
 
             if(shippingOption != null)
                 request.AddParameter("shipping_options", ShippingOptionInfo.GetJson(shippingOption));
-            if (errorMessage != null)
+            if (!string.IsNullOrEmpty(errorMessage))
                 request.AddParameter("error_message", errorMessage);
 
             return ExecuteRequest<BooleanResult>(request) as BooleanResult;
@@ -841,13 +842,30 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// 
+        /// Once the user has confirmed their payment and shipping details, 
+        /// the Bot API sends the final confirmation in the form of an Update with the field pre_checkout_query. 
+        /// Use this method to respond to such pre-checkout queries. 
         /// </summary>
-        /// <returns></returns>
-        public BooleanResult AnswerPreCheckoutQuery()
+        /// <param name="preCheckoutQueryId">Unique identifier for the query to be answered</param>
+        /// <param name="ok">Specify True if everything is alright (goods are available, etc.) 
+        /// and the bot is ready to proceed with the order. Use False if there are any problems.</param>
+        /// <param name="errorMessage">Required if ok is False. 
+        /// Error message in human readable form that explains the reason for failure to proceed with the checkout 
+        /// (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. 
+        /// Please choose a different color or garment!"). Telegram will display this message to the user.</param>
+        /// <returns>On success, True is returned. 
+        /// Note: The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.</returns>
+        public BooleanResult AnswerPreCheckoutQuery(string preCheckoutQueryId, bool ok, string errorMessage = null)
         {
-            //todo add AnswerPreCheckoutQuery (https://core.telegram.org/bots/api#answerprecheckoutquery)
-            return null;
+            RestRequest request = NewRestRequest(mAnswerPreCheckoutQuery);
+
+            request.AddParameter("pre_checkout_query_id", preCheckoutQueryId);
+            request.AddParameter("ok", ok);
+
+            if(!string.IsNullOrEmpty(errorMessage))
+                request.AddParameter("error_message", errorMessage);
+
+            return ExecuteRequest<BooleanResult>(request) as BooleanResult;
         }
 
         //todo Inline mode methods (https://core.telegram.org/bots/api#inline-mode-methods)

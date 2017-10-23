@@ -786,7 +786,8 @@ namespace NetTelebot.Tests.RequestToMockTest
             };
 
 
-            mBotOkResponse.SendInvoice("TestChatId", "TestTitle", "TestDescription", "TestPayload", "TestProviderToken", "TestStartParameter", Currency.USD, labelPrice);
+            mBotOkResponse.SendInvoice("TestChatId", "TestTitle", "TestDescription", "TestPayload", "TestProviderToken",
+                "TestStartParameter", Currency.USD, labelPrice);
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendInvoice").UsingPost());
             PrintResult(request);
@@ -814,7 +815,10 @@ namespace NetTelebot.Tests.RequestToMockTest
                                 "need_shipping_address=False&" +
                                 "is_flexible=False", request.FirstOrDefault()?.Body);
                 Assert.AreEqual("/botToken/sendInvoice", request.FirstOrDefault()?.Url);
-                //Assert.Throws<Exception>(() => mBotBadResponse.AnswerShippingQuery("AnswerIdTest", false, shippingOption, "TestErrorMessage"));
+                Assert.Throws<Exception>(
+                    () =>
+                        mBotOkResponse.SendInvoice("TestChatId", "TestTitle", "TestDescription", "TestPayload",
+                            "TestProviderToken", "TestStartParameter", Currency.USD, labelPrice));
             });
         }
 
