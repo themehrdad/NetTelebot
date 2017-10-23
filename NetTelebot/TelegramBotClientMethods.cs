@@ -840,6 +840,16 @@ namespace NetTelebot
             return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public BooleanResult AnswerPreCheckoutQuery()
+        {
+            //todo add AnswerPreCheckoutQuery (https://core.telegram.org/bots/api#answerprecheckoutquery)
+            return null;
+        }
+
         //todo Inline mode methods (https://core.telegram.org/bots/api#inline-mode-methods)
 
         private static RestRequest AddFile(IFile iFile, RestRequest request, string name)
