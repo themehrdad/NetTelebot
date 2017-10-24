@@ -758,7 +758,8 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// Use this method to send invoices. See <see href="https://core.telegram.org/bots/api#sendinvoice">API</see>
+        /// Use this method to send invoices. 
+        /// See <see href="https://core.telegram.org/bots/api#sendinvoice">API</see>
         /// </summary>
         /// <param name="chatId">Unique identifier for the target private chat</param>
         /// <param name="title">Product name, 1-32 characters</param>
@@ -844,7 +845,8 @@ namespace NetTelebot
         /// <summary>
         /// Once the user has confirmed their payment and shipping details, 
         /// the Bot API sends the final confirmation in the form of an Update with the field pre_checkout_query. 
-        /// Use this method to respond to such pre-checkout queries. 
+        /// Use this method to respond to such pre-checkout queries.
+        /// See <see href="https://core.telegram.org/bots/api#answerprecheckoutquery">API</see>
         /// </summary>
         /// <param name="preCheckoutQueryId">Unique identifier for the query to be answered</param>
         /// <param name="ok">Specify True if everything is alright (goods are available, etc.) 

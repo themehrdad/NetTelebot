@@ -873,6 +873,26 @@ namespace NetTelebot.Tests.RequestToMockTest
             Assert.AreEqual("/botToken/sendInvoice", request.FirstOrDefault()?.Url);
         }
 
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.AnswerPreCheckoutQuery"/>.
+        /// </summary>
+        [Test]
+        public void AnswerPreCheckoutQueryTest()
+        {
+            mBotOkResponse.AnswerPreCheckoutQuery("TestPreCheckoutQueryId", true, "TestErrorMessage");
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/answerPreCheckoutQuery").UsingPost());
+            PrintResult(request);
+
+            Assert.AreEqual("pre_checkout_query_id=TestPreCheckoutQueryId&" +
+                            "ok=True&" +
+                            "error_message=TestErrorMessage", request.FirstOrDefault()?.Body);
+
+            Assert.Throws<Exception>(
+                () => mBotBadResponse.AnswerPreCheckoutQuery("TestPreCheckoutQueryId", true, "TestErrorMessage"));
+        }
+
+
 
         //todo move common project
         internal static void PrintResult(IEnumerable<Request> request)
