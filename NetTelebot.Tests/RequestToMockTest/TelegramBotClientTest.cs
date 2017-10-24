@@ -785,8 +785,8 @@ namespace NetTelebot.Tests.RequestToMockTest
                 new LabeledPriceInfo {Label = "LabelTest2", Amount = 456}
             };
 
-
-            mBotOkResponse.SendInvoice("TestChatId", "TestTitle", "TestDescription", "TestPayload", "TestProviderToken", "TestStartParameter", Currency.USD, labelPrice);
+            mBotOkResponse.SendInvoice("TestChatId", "TestTitle", "TestDescription", "TestPayload", "TestProviderToken",
+                "TestStartParameter", Currency.USD, labelPrice);
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendInvoice").UsingPost());
             PrintResult(request);
@@ -814,7 +814,10 @@ namespace NetTelebot.Tests.RequestToMockTest
                                 "need_shipping_address=False&" +
                                 "is_flexible=False", request.FirstOrDefault()?.Body);
                 Assert.AreEqual("/botToken/sendInvoice", request.FirstOrDefault()?.Url);
-                //Assert.Throws<Exception>(() => mBotBadResponse.AnswerShippingQuery("AnswerIdTest", false, shippingOption, "TestErrorMessage"));
+                Assert.Throws<Exception>(
+                    () =>
+                        mBotBadResponse.SendInvoice("TestChatId", "TestTitle", "TestDescription", "TestPayload",
+                            "TestProviderToken", "TestStartParameter", Currency.USD, labelPrice));
             });
         }
 
@@ -869,6 +872,26 @@ namespace NetTelebot.Tests.RequestToMockTest
                             "%0D%0A%7D", request.FirstOrDefault()?.Body);
             Assert.AreEqual("/botToken/sendInvoice", request.FirstOrDefault()?.Url);
         }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.AnswerPreCheckoutQuery"/>.
+        /// </summary>
+        [Test]
+        public void AnswerPreCheckoutQueryTest()
+        {
+            mBotOkResponse.AnswerPreCheckoutQuery("TestPreCheckoutQueryId", true, "TestErrorMessage");
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/answerPreCheckoutQuery").UsingPost());
+            PrintResult(request);
+
+            Assert.AreEqual("pre_checkout_query_id=TestPreCheckoutQueryId&" +
+                            "ok=True&" +
+                            "error_message=TestErrorMessage", request.FirstOrDefault()?.Body);
+
+            Assert.Throws<Exception>(
+                () => mBotBadResponse.AnswerPreCheckoutQuery("TestPreCheckoutQueryId", true, "TestErrorMessage"));
+        }
+
 
 
         //todo move common project
