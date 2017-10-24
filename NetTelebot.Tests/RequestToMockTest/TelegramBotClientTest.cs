@@ -785,7 +785,6 @@ namespace NetTelebot.Tests.RequestToMockTest
                 new LabeledPriceInfo {Label = "LabelTest2", Amount = 456}
             };
 
-
             mBotOkResponse.SendInvoice("TestChatId", "TestTitle", "TestDescription", "TestPayload", "TestProviderToken",
                 "TestStartParameter", Currency.USD, labelPrice);
 
@@ -817,7 +816,7 @@ namespace NetTelebot.Tests.RequestToMockTest
                 Assert.AreEqual("/botToken/sendInvoice", request.FirstOrDefault()?.Url);
                 Assert.Throws<Exception>(
                     () =>
-                        mBotOkResponse.SendInvoice("TestChatId", "TestTitle", "TestDescription", "TestPayload",
+                        mBotBadResponse.SendInvoice("TestChatId", "TestTitle", "TestDescription", "TestPayload",
                             "TestProviderToken", "TestStartParameter", Currency.USD, labelPrice));
             });
         }
