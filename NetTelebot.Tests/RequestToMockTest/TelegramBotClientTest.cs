@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Mock4Net.Core;
 using NetTelebot.BotEnum;
+using NetTelebot.CommonUtils;
 using NetTelebot.Tests.MockServers;
 using NetTelebot.Type;
 using NetTelebot.Type.Keyboard;
@@ -43,7 +43,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendMessage").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -72,7 +72,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/forwardMessage").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -96,7 +96,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendPhoto").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -125,7 +125,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendAudio").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -157,7 +157,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendDocument").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -185,7 +185,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendSticker").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -213,7 +213,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendVideo").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -246,7 +246,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendVoice").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             
             Assert.Multiple(() =>
@@ -280,7 +280,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendVideoNote").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -310,7 +310,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendLocation").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -339,7 +339,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendVenue").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -371,7 +371,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendContact").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -401,7 +401,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             //typing
             mBotOkResponse.SendChatAction(123, ChatActions.Typing);
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
             Assert.AreEqual("chat_id=123&" +
                             "action=typing", request.FirstOrDefault()?.Body);
 
@@ -410,7 +410,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             //upload_photo
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_photo);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
             Assert.AreEqual("chat_id=123&" +
                             "action=upload_photo", request.FirstOrDefault()?.Body);
 
@@ -419,7 +419,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             //record_video
             mBotOkResponse.SendChatAction(123, ChatActions.Record_video);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
             Assert.AreEqual("chat_id=123&" +
                             "action=record_video", request.FirstOrDefault()?.Body);
 
@@ -428,7 +428,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             //upload_video
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_video);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
             Assert.AreEqual("chat_id=123&" +
                             "action=upload_video", request.FirstOrDefault()?.Body);
 
@@ -437,7 +437,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             //record_audio
             mBotOkResponse.SendChatAction(123, ChatActions.Record_audio);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
             Assert.AreEqual("chat_id=123&" +
                             "action=record_audio", request.FirstOrDefault()?.Body);
 
@@ -446,7 +446,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             //upload_audio
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_audio);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
             Assert.AreEqual("chat_id=123&" +
                             "action=upload_audio", request.FirstOrDefault()?.Body);
 
@@ -455,7 +455,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             //upload_document
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_document);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
             Assert.AreEqual("chat_id=123&" +
                             "action=upload_document", request.FirstOrDefault()?.Body);
 
@@ -464,7 +464,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             //find_location
             mBotOkResponse.SendChatAction(123, ChatActions.Find_location);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
             Assert.AreEqual("chat_id=123&" +
                             "action=find_location", request.FirstOrDefault()?.Body);
 
@@ -473,7 +473,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             //record_video_note
             mBotOkResponse.SendChatAction(123, ChatActions.Record_video_note);
             request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
             Assert.AreEqual("chat_id=123&" +
                             "action=record_video_note", request.FirstOrDefault()?.Body);
 
@@ -482,7 +482,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             //upload_video_note
             mBotOkResponse.SendChatAction(123, ChatActions.Upload_video_note);
             request =MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendChatAction").UsingPost());
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
             Assert.AreEqual("chat_id=123&" +
                             "action=upload_video_note", request.FirstOrDefault()?.Body);
 
@@ -501,7 +501,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUserProfilePhotos").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -524,7 +524,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/kickChatMember").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -547,7 +547,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/unbanChatMember").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -569,7 +569,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/leaveChat").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -587,7 +587,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getChatMembersCount").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -608,7 +608,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getChat").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -629,7 +629,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getFile").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -650,7 +650,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getChatAdministrators").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
             
                 Assert.Multiple(() =>
                 {
@@ -673,7 +673,7 @@ namespace NetTelebot.Tests.RequestToMockTest
                 MockServer.ServerOkResponse.SearchLogsFor(
                     Requests.WithUrl("/botToken/answerCallbackQuery").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -698,7 +698,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getChatMember").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -743,7 +743,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/answerShippingQuery").UsingPost());
 
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -789,7 +789,7 @@ namespace NetTelebot.Tests.RequestToMockTest
                 "TestStartParameter", Currency.USD, labelPrice);
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendInvoice").UsingPost());
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.Multiple(() =>
             {
@@ -841,7 +841,7 @@ namespace NetTelebot.Tests.RequestToMockTest
                 true, true, 123, new ForceReplyMarkup());
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/sendInvoice").UsingPost());
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.AreEqual("chat_id=TestChatId&" +
                             "title=TestTitle&" +
@@ -882,7 +882,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.AnswerPreCheckoutQuery("TestPreCheckoutQueryId", true, "TestErrorMessage");
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/answerPreCheckoutQuery").UsingPost());
-            PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             Assert.AreEqual("pre_checkout_query_id=TestPreCheckoutQueryId&" +
                             "ok=True&" +
@@ -890,15 +890,6 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             Assert.Throws<Exception>(
                 () => mBotBadResponse.AnswerPreCheckoutQuery("TestPreCheckoutQueryId", true, "TestErrorMessage"));
-        }
-
-
-
-        //todo move common project
-        internal static void PrintResult(IEnumerable<Request> request)
-        {
-            Console.WriteLine(request.FirstOrDefault()?.Body);
-            Console.WriteLine(request.FirstOrDefault()?.Url);
         }
     }
 }
