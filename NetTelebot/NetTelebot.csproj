@@ -50,6 +50,7 @@
     <Compile Include="BotEnum\Countries.cs" />
     <Compile Include="BotEnum\Currency.cs" />
     <Compile Include="BotEnum\Status.cs" />
+    <Compile Include="Interface\IInlineKeyboardMarkup.cs" />
     <Compile Include="Result\ChatInfoResult.cs" />
     <Compile Include="Result\ChatMemberInfoResult.cs" />
     <Compile Include="Result\ChatMembersInfoResult.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Result\UserInfoResult.cs" />
     <Compile Include="TelegramBotClientPayment.cs" />
     <Compile Include="TelegramBotClientUpdate.cs" />
+    <Compile Include="TelegramBotClientUpdatingMessages.cs" />
     <Compile Include="Type\AudioInfo.cs" />
     <Compile Include="Result\BooleanResult.cs" />
     <Compile Include="BotEnum\ChatActions.cs" />

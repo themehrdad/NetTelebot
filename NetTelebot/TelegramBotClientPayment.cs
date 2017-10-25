@@ -22,8 +22,9 @@ namespace NetTelebot
 
     /* About this partial class
      * 
-     * in this part of the class, only methods for handling updates, declaring variables and events.
-     * 
+     * In this part of the class, only methods for payment. 
+     * See API https://core.telegram.org/bots/api#payments
+     *  
      */
 
     public partial class TelegramBotClient
