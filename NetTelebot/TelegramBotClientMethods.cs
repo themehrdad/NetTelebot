@@ -43,7 +43,6 @@ namespace NetTelebot
     public partial class TelegramBotClient
     {
         private const string mGetMeUri = "/bot{0}/getMe";
-        private const string mGetUpdatesUri = "/bot{0}/getUpdates";
         private const string mSendMessageUri = "/bot{0}/sendMessage";
         private const string mForwardMessageUri = "/bot{0}/forwardMessage";
         private const string mSendPhotoUri = "/bot{0}/sendPhoto";

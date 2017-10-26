@@ -33,6 +33,11 @@ namespace NetTelebot
     /// </summary>
     public partial class TelegramBotClient
     {
+        private const string mGetUpdatesUri = "/bot{0}/getUpdates";
+
+        private Timer mUpdateTimer;
+        private int mLastUpdateId;
+
         /// <summary>
         /// Occurs when [get updates error].
         /// </summary>
@@ -42,9 +47,6 @@ namespace NetTelebot
         /// Whenever a message is sent to your bot, this event will be raised.
         /// </summary>
         public event EventHandler<TelegramUpdateEventArgs> UpdatesReceived;
-
-        private Timer mUpdateTimer;
-        private int mLastUpdateId;
 
         /// <summary>
         /// Gets first 100 messages sent to your bot.
@@ -178,7 +180,9 @@ namespace NetTelebot
 
         private void UpdateReceived(GetUpdatesResult updates)
         {
-            if (!updates.Ok || updates.Result == null) return;
+            if (!updates.Ok) return;
+            if (updates.Result == null) return;
+            if (!updates.Result.Any()) return;
 
             mLastUpdateId = updates.Result.Last().UpdateId;
             OnUpdatesReceived(updates.Result);
