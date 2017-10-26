@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using NetTelebot.Result;
 using NetTelebot.Type;
@@ -24,7 +23,7 @@ namespace NetTelebot
 
     /* About this partial class
      * 
-     * In this part of the class, only methods for handling updates, declaring variables and events.
+     * Part of the class, only methods for handling updates.
      * 
      */
 
@@ -35,33 +34,6 @@ namespace NetTelebot
     public partial class TelegramBotClient
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TelegramBotClient"/> class.
-        /// </summary>
-        public TelegramBotClient()
-        {
-            CheckInterval = 1000;
-            RestClient = new RestClient("https://api.telegram.org");
-        }
-
-        /// <summary>
-        /// Your bot token
-        /// </summary>
-        public string Token { get; set; }
-
-        /// <summary>
-        /// Gets or sets the REST client. Used in integartion test.
-        /// </summary>
-        internal RestClient RestClient { private get; set; }
-
-        /// <summary>
-        /// Interval time in milliseconds to get latest messages sent to your bot.
-        /// </summary>
-        public int CheckInterval { get; set; }
-
-        private Timer mUpdateTimer;
-        private int mLastUpdateId;
-
-        /// <summary>
         /// Occurs when [get updates error].
         /// </summary>
         public event UnhandledExceptionEventHandler GetUpdatesError;
@@ -70,6 +42,9 @@ namespace NetTelebot
         /// Whenever a message is sent to your bot, this event will be raised.
         /// </summary>
         public event EventHandler<TelegramUpdateEventArgs> UpdatesReceived;
+
+        private Timer mUpdateTimer;
+        private int mLastUpdateId;
 
         /// <summary>
         /// Gets first 100 messages sent to your bot.
@@ -127,21 +102,6 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// Called when [get updates error].
-        /// </summary>
-        /// <param name="exception">The exception.</param>
-        protected virtual void OnGetUpdatesError(Exception exception)
-        {
-            GetUpdatesError?.Invoke(this, new UnhandledExceptionEventArgs(exception, false));
-        }
-
-        private void CheckToken()
-        {
-            if (Token == null)
-                throw new Exception("Token is null");
-        }
-
-        /// <summary>
         /// Checks new updates (sent messages to your bot) automatically. Set CheckInterval property and handle UpdatesReceived event.
         /// </summary>
         public void StartCheckingUpdates()
@@ -167,6 +127,31 @@ namespace NetTelebot
             mUpdateTimer = null;
         }
 
+        /// <summary>
+        /// Called when updates received.
+        /// </summary>
+        /// <param name="updates">The updates</param>
+        protected virtual void OnUpdatesReceived(UpdateInfo[] updates)
+        {
+            TelegramUpdateEventArgs args = new TelegramUpdateEventArgs(updates);
+            UpdatesReceived?.Invoke(this, args);
+        }
+
+        /// <summary>
+        /// Called when [get updates error].
+        /// </summary>
+        /// <param name="exception">The exception.</param>
+        protected virtual void OnGetUpdatesError(Exception exception)
+        {
+            GetUpdatesError?.Invoke(this, new UnhandledExceptionEventArgs(exception, false));
+        }
+
+        private void CheckToken()
+        {
+            if (Token == null)
+                throw new Exception("Token is null");
+        }
+
         private void UpdateTimerCallback(object state)
         {
             GetUpdatesResult updates = null;
@@ -186,64 +171,17 @@ namespace NetTelebot
             }
 
             if (getUpdatesSuccess)
-
-                if (updates.Ok && updates.Result != null && updates.Result.Any())
-                {
-                    mLastUpdateId = updates.Result.Last().UpdateId;
-                    OnUpdatesReceived(updates.Result);
-                }
+                UpdateReceived(updates);
 
             mUpdateTimer?.Change(CheckInterval, Timeout.Infinite);
         }
 
-        /// <summary>
-        /// Called when updates received.
-        /// </summary>
-        /// <param name="updates">The updates</param>
-        protected virtual void OnUpdatesReceived(UpdateInfo[] updates)
+        private void UpdateReceived(GetUpdatesResult updates)
         {
-            TelegramUpdateEventArgs args = new TelegramUpdateEventArgs(updates);
-            UpdatesReceived?.Invoke(this, args);
-        }
+            if (!updates.Ok || updates.Result == null) return;
 
-        private object ExecuteRequest<T>(IRestRequest request) where T : class
-        {
-            IRestResponse response = RestClient.Execute(request);
-
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                if (typeof(T) == typeof(SendMessageResult))
-                    return new SendMessageResult(response.Content);
-
-                if (typeof(T) == typeof(BooleanResult))
-                    return new BooleanResult(response.Content);
-
-                if (typeof(T) == typeof(UserInfoResult))
-                    return new UserInfoResult(response.Content);
-
-                if (typeof(T) == typeof(GetUserProfilePhotosResult))
-                    return new GetUserProfilePhotosResult(response.Content);
-
-                if (typeof(T) == typeof(GetUpdatesResult))
-                    return new GetUpdatesResult(response.Content);
-
-                if (typeof(T) == typeof(ChatInfoResult))
-                    return new ChatInfoResult(response.Content);
-
-                if (typeof(T) == typeof(IntegerResult))
-                    return new IntegerResult(response.Content);
-
-                if (typeof(T) == typeof(FileInfoResult))
-                    return new FileInfoResult(response.Content);
-
-                if (typeof(T) == typeof(ChatMembersInfoResult))
-                    return new ChatMembersInfoResult(response.Content);
-
-                if (typeof(T) == typeof(ChatMemberInfoResult))
-                    return new ChatMemberInfoResult(response.Content);
-            }
-
-            throw new Exception(response.StatusDescription);
+            mLastUpdateId = updates.Result.Last().UpdateId;
+            OnUpdatesReceived(updates.Result);
         }
     }
 }

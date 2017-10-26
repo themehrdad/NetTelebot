@@ -22,17 +22,18 @@ namespace NetTelebot
 
     /* About this partial class
      * 
-     * In this part of the class, only methods for payment. 
+     * Part of the class, for payment methods. 
      * See API https://core.telegram.org/bots/api#payments
+     * 
+     * Note
+     * Your bot can accept payments from Telegram users. 
+     * Please see the introduction to payments for more details on the process and how to set up payments for your bot. 
+     * Please note that users will need Telegram v.4.0 or higher to use payments (released on May 18, 2017).
      *  
      */
 
     public partial class TelegramBotClient
     {
-        private const string mAnswerShippingQueryUri = "/bot{0}/answerShippingQuery";
-        private const string mSendInvoiceUri = "/bot{0}/sendInvoice";
-        private const string mAnswerPreCheckoutQuery = "/bot{0}/answerPreCheckoutQuery";
-
         /// <summary>
         /// If you sent an invoice requesting a shipping address and the parameter is_flexible was specified, 
         /// the Bot API will send an <see href="https://core.telegram.org/bots/api#update">Update</see> with a shipping_query field to the bot. 

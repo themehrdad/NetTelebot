@@ -57,6 +57,7 @@
     <Compile Include="Result\FileInfoResult.cs" />
     <Compile Include="Result\IntegerResult.cs" />
     <Compile Include="Result\UserInfoResult.cs" />
+    <Compile Include="TelegramBotClientCommon.cs" />
     <Compile Include="TelegramBotClientPayment.cs" />
     <Compile Include="TelegramBotClientUpdate.cs" />
     <Compile Include="TelegramBotClientUpdatingMessages.cs" />

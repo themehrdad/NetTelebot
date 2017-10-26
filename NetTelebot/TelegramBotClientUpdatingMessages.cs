@@ -6,7 +6,7 @@ using RestSharp;
 namespace NetTelebot
 {
     /* About tests
-     * After adding the class field, you need to add the following tests:
+     * Аfter adding the method to the class, you need to add the following tests:
      *  
      * NetTelebot.Tests.RequestToMockTest.[ClassName]
      * 
@@ -21,11 +21,10 @@ namespace NetTelebot
 
     /* About this partial class
      * 
-     * In this part of the class, only methods for UpdatingMessages. 
+     * Part of the class for UpdatingMessages methods. 
      * See API https://core.telegram.org/bots/api#updating-messages
      * 
-     * About UpdatingMessages
-     * 
+     * Note
      * The following methods allow you to change an existing message in the message history instead of sending a new one with a result of an action. 
      * This is most useful for messages with inline keyboards using callback queries, 
      * but can also help reduce clutter in conversations with regular chat bots.
@@ -34,7 +33,7 @@ namespace NetTelebot
 
     public partial class TelegramBotClient
     {
-        private const string mEditMessageText = "/bot{0}/editMessageText";
+        
 
         /// <summary>
         /// Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). 
@@ -54,7 +53,7 @@ namespace NetTelebot
             string inlineMessageId = null, ParseMode? parseMode = null, bool? disableWebPagePreview = null,
             IInlineKeyboardMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(mEditMessageText);
+            RestRequest request = NewRestRequest(mEditMessageTextUri);
 
             request.AddParameter("text", text);
 
