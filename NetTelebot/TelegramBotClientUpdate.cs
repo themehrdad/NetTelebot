@@ -156,34 +156,29 @@ namespace NetTelebot
 
         private void UpdateTimerCallback(object state)
         {
-            GetUpdatesResult updates = null;
-            var getUpdatesSuccess = false;
-
             try
             {
-                updates = mLastUpdateId == 0
+                GetUpdatesResult updates = mLastUpdateId == 0
                     ? GetUpdates()
                     : GetUpdates(mLastUpdateId + 1);
 
-                getUpdatesSuccess = true;
+                UpdateReceived(updates);
             }
             catch (Exception ex)
             {
                 OnGetUpdatesError(ex);
             }
 
-            if (getUpdatesSuccess)
-                UpdateReceived(updates);
-
             mUpdateTimer?.Change(CheckInterval, Timeout.Infinite);
         }
 
         private void UpdateReceived(GetUpdatesResult updates)
         {
-            if (!updates.Ok) return;
-            if (updates.Result == null) return;
-            if (!updates.Result.Any()) return;
-
+            if (!updates.Ok ||
+                updates.Result == null ||
+                !updates.Result.Any())
+                return;
+            
             mLastUpdateId = updates.Result.Last().UpdateId;
             OnUpdatesReceived(updates.Result);
         }
