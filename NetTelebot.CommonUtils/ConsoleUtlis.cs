@@ -46,7 +46,7 @@ namespace NetTelebot.CommonUtils
             WriteConsoleLog("Property name: " + properties + ". Property value: " + result);
         }
 
-        internal static void PrintResult(IEnumerable<Request> request)
+        public static void PrintResult(IEnumerable<Request> request)
         {
             WriteConsoleLog(request.FirstOrDefault()?.Body);
             WriteConsoleLog(request.FirstOrDefault()?.Url);
