@@ -39,7 +39,7 @@ namespace NetTelebot
         private int mLastUpdateId;
 
         /// <summary>
-        /// Occurs when [get updates error].
+        /// Occurs when updates error.
         /// </summary>
         public event UnhandledExceptionEventHandler GetUpdatesError;
 
@@ -68,6 +68,16 @@ namespace NetTelebot
         }
 
         /// <summary>
+        /// Gets messages sent to your bot, from the begining and maximum number of limit set as parameter
+        /// </summary>
+        /// <param name="limit">Maximum number of messages to receive. It cannot be more than 100</param>
+        /// <returns>Returns a class containing messages sent to your bot</returns>
+        public GetUpdatesResult GetUpdates(byte limit)
+        {
+            return GetUpdatesInternal(null, limit);
+        }
+
+        /// <summary>
         /// Gets messages sent to your bot, starting from update_id set by offset, maximum number is set by limit
         /// </summary>
         /// <param name="offset">First update_id to be downloaded</param>
@@ -78,17 +88,6 @@ namespace NetTelebot
             return GetUpdatesInternal(offset, limit);
         }
 
-        /// <summary>
-        /// Gets messages sent to your bot, from the begining and maximum number of limit set as parameter
-        /// </summary>
-        /// <param name="limit">Maximum number of messages to receive. It cannot be more than 100</param>
-        /// <returns>Returns a class containing messages sent to your bot</returns>
-        public GetUpdatesResult GetUpdates(byte limit)
-        {
-            return GetUpdatesInternal(null, limit);
-        }
-
-        //todo refact this
         private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit)
         {
             CheckToken();
