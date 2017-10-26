@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using Mock4Net.Core;
 
 namespace NetTelebot.CommonUtils
 {
@@ -9,7 +12,7 @@ namespace NetTelebot.CommonUtils
         {
             foreach (PropertyInfo properties in result.GetType().GetProperties())
             {
-                Console.WriteLine("Property name: " + properties.Name + ". Property value: " + properties.GetValue(result, null));
+                WriteConsoleLog("Property name: " + properties.Name + ". Property value: " + properties.GetValue(result, null));
             }
         }
 
@@ -17,7 +20,7 @@ namespace NetTelebot.CommonUtils
         {
             foreach (PropertyInfo properties in result.GetType().GetProperties())
             {
-                Console.WriteLine("Property name: " + properties.Name + ". Property value: " + properties.GetValue(result, null));
+                WriteConsoleLog("Property name: " + properties.Name + ". Property value: " + properties.GetValue(result, null));
             }
         }
 
@@ -25,7 +28,7 @@ namespace NetTelebot.CommonUtils
         {
             foreach (PropertyInfo properties in result.GetType().GetProperties())
             {
-                Console.WriteLine("Property name: " + properties.Name + ". Property value: " + properties.GetValue(result, null));
+                WriteConsoleLog("Property name: " + properties.Name + ". Property value: " + properties.GetValue(result, null));
             }
         }
 
@@ -33,14 +36,20 @@ namespace NetTelebot.CommonUtils
         {
             var properties = result.GetType().Name;
 
-            Console.WriteLine("Property name: " + properties + ". Property value: " + result);
+            WriteConsoleLog("Property name: " + properties + ". Property value: " + result);
         }
 
         public static void PrintSimpleResult(string result)
         {
             var properties = result.GetType().Name;
 
-            Console.WriteLine("Property name: " + properties + ". Property value: " + result);
+            WriteConsoleLog("Property name: " + properties + ". Property value: " + result);
+        }
+
+        public static void PrintResult(IEnumerable<Request> request)
+        {
+            WriteConsoleLog(request.FirstOrDefault()?.Body);
+            WriteConsoleLog(request.FirstOrDefault()?.Url);
         }
 
         public static void WriteConsoleLog(string text)

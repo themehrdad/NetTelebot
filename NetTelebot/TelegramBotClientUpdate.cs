@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using NetTelebot.Result;
 using NetTelebot.Type;
@@ -24,7 +23,7 @@ namespace NetTelebot
 
     /* About this partial class
      * 
-     * in this part of the class, only methods for handling updates, declaring variables and events.
+     * Part of the class, only methods for handling updates.
      * 
      */
 
@@ -34,29 +33,7 @@ namespace NetTelebot
     /// </summary>
     public partial class TelegramBotClient
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TelegramBotClient"/> class.
-        /// </summary>
-        public TelegramBotClient()
-        {
-            CheckInterval = 1000;
-            RestClient = new RestClient("https://api.telegram.org");
-        }
-
-        /// <summary>
-        /// Your bot token
-        /// </summary>
-        public string Token { get; set; }
-
-        /// <summary>
-        /// Gets or sets the REST client. Used in integartion test.
-        /// </summary>
-        internal RestClient RestClient { private get; set; }
-
-        /// <summary>
-        /// Interval time in milliseconds to get latest messages sent to your bot.
-        /// </summary>
-        public int CheckInterval { get; set; }
+        private const string mGetUpdatesUri = "/bot{0}/getUpdates";
 
         private Timer mUpdateTimer;
         private int mLastUpdateId;
@@ -127,21 +104,6 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// Called when [get updates error].
-        /// </summary>
-        /// <param name="exception">The exception.</param>
-        protected virtual void OnGetUpdatesError(Exception exception)
-        {
-            GetUpdatesError?.Invoke(this, new UnhandledExceptionEventArgs(exception, false));
-        }
-
-        private void CheckToken()
-        {
-            if (Token == null)
-                throw new Exception("Token is null");
-        }
-
-        /// <summary>
         /// Checks new updates (sent messages to your bot) automatically. Set CheckInterval property and handle UpdatesReceived event.
         /// </summary>
         public void StartCheckingUpdates()
@@ -167,35 +129,6 @@ namespace NetTelebot
             mUpdateTimer = null;
         }
 
-        private void UpdateTimerCallback(object state)
-        {
-            GetUpdatesResult updates = null;
-            var getUpdatesSuccess = false;
-
-            try
-            {
-                updates = mLastUpdateId == 0
-                    ? GetUpdates()
-                    : GetUpdates(mLastUpdateId + 1);
-
-                getUpdatesSuccess = true;
-            }
-            catch (Exception ex)
-            {
-                OnGetUpdatesError(ex);
-            }
-
-            if (getUpdatesSuccess)
-
-                if (updates.Ok && updates.Result != null && updates.Result.Any())
-                {
-                    mLastUpdateId = updates.Result.Last().UpdateId;
-                    OnUpdatesReceived(updates.Result);
-                }
-
-            mUpdateTimer?.Change(CheckInterval, Timeout.Infinite);
-        }
-
         /// <summary>
         /// Called when updates received.
         /// </summary>
@@ -206,44 +139,48 @@ namespace NetTelebot
             UpdatesReceived?.Invoke(this, args);
         }
 
-        private object ExecuteRequest<T>(IRestRequest request) where T : class
+        /// <summary>
+        /// Called when [get updates error].
+        /// </summary>
+        /// <param name="exception">The exception.</param>
+        protected virtual void OnGetUpdatesError(Exception exception)
         {
-            IRestResponse response = RestClient.Execute(request);
+            GetUpdatesError?.Invoke(this, new UnhandledExceptionEventArgs(exception, false));
+        }
 
-            if (response.StatusCode == HttpStatusCode.OK)
+        private void CheckToken()
+        {
+            if (Token == null)
+                throw new Exception("Token is null");
+        }
+
+        private void UpdateTimerCallback(object state)
+        {
+            try
             {
-                if (typeof(T) == typeof(SendMessageResult))
-                    return new SendMessageResult(response.Content);
+                GetUpdatesResult updates = mLastUpdateId == 0
+                    ? GetUpdates()
+                    : GetUpdates(mLastUpdateId + 1);
 
-                if (typeof(T) == typeof(BooleanResult))
-                    return new BooleanResult(response.Content);
-
-                if (typeof(T) == typeof(UserInfoResult))
-                    return new UserInfoResult(response.Content);
-
-                if (typeof(T) == typeof(GetUserProfilePhotosResult))
-                    return new GetUserProfilePhotosResult(response.Content);
-
-                if (typeof(T) == typeof(GetUpdatesResult))
-                    return new GetUpdatesResult(response.Content);
-
-                if (typeof(T) == typeof(ChatInfoResult))
-                    return new ChatInfoResult(response.Content);
-
-                if (typeof(T) == typeof(IntegerResult))
-                    return new IntegerResult(response.Content);
-
-                if (typeof(T) == typeof(FileInfoResult))
-                    return new FileInfoResult(response.Content);
-
-                if (typeof(T) == typeof(ChatMembersInfoResult))
-                    return new ChatMembersInfoResult(response.Content);
-
-                if (typeof(T) == typeof(ChatMemberInfoResult))
-                    return new ChatMemberInfoResult(response.Content);
+                UpdateReceived(updates);
+            }
+            catch (Exception ex)
+            {
+                OnGetUpdatesError(ex);
             }
 
-            throw new Exception(response.StatusDescription);
+            mUpdateTimer?.Change(CheckInterval, Timeout.Infinite);
+        }
+
+        private void UpdateReceived(GetUpdatesResult updates)
+        {
+            if (!updates.Ok ||
+                updates.Result == null ||
+                !updates.Result.Any())
+                return;
+            
+            mLastUpdateId = updates.Result.Last().UpdateId;
+            OnUpdatesReceived(updates.Result);
         }
     }
 }

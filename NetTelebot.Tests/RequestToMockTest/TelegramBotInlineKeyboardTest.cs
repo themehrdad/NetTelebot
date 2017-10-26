@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Mock4Net.Core;
+using NetTelebot.CommonUtils;
 using NetTelebot.Tests.MockServers;
 using NetTelebot.Type.Keyboard;
 using NUnit.Framework;
@@ -95,7 +96,7 @@ namespace NetTelebot.Tests.RequestToMockTest
                 "20%20%20%20%20%20%20%22text%22%3A%20%22Button3%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22" +
                 "text%22%3A%20%22Button4%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%0D%0A%20%20%5D%0D%0A%7D");
 
-            TelegramBotClientTest.PrintResult(request);
+            ConsoleUtlis.PrintResult(request);
 
             MockServer.ServerOkResponse.ResetRequestLogs();
         }

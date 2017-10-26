@@ -8,7 +8,7 @@ namespace NetTelebot.Type.Keyboard
     /// <summary>
     /// This object represents an inline keyboard that appears right next to the message it belongs to..
     /// </summary>
-    public class InlineKeyboardMarkup : IReplyMarkup
+    public class InlineKeyboardMarkup : IReplyMarkup, IInlineKeyboardMarkup
     {
         /// <summary>
         /// Gets the json.
