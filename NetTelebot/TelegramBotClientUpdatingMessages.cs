@@ -33,7 +33,7 @@ namespace NetTelebot
 
     public partial class TelegramBotClient
     {
-        
+        private const string mEditMessageTextUri = "/bot{0}/editMessageText";
 
         /// <summary>
         /// Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). 

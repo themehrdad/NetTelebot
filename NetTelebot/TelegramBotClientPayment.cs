@@ -34,6 +34,10 @@ namespace NetTelebot
 
     public partial class TelegramBotClient
     {
+        private const string mAnswerShippingQueryUri = "/bot{0}/answerShippingQuery";
+        private const string mSendInvoiceUri = "/bot{0}/sendInvoice";
+        private const string mAnswerPreCheckoutQuery = "/bot{0}/answerPreCheckoutQuery";
+
         /// <summary>
         /// If you sent an invoice requesting a shipping address and the parameter is_flexible was specified, 
         /// the Bot API will send an <see href="https://core.telegram.org/bots/api#update">Update</see> with a shipping_query field to the bot. 

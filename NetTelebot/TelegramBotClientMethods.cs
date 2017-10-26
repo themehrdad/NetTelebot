@@ -42,6 +42,32 @@ namespace NetTelebot
 
     public partial class TelegramBotClient
     {
+        private const string mGetMeUri = "/bot{0}/getMe";
+        private const string mGetUpdatesUri = "/bot{0}/getUpdates";
+        private const string mSendMessageUri = "/bot{0}/sendMessage";
+        private const string mForwardMessageUri = "/bot{0}/forwardMessage";
+        private const string mSendPhotoUri = "/bot{0}/sendPhoto";
+        private const string mSendAudioUri = "/bot{0}/sendAudio";
+        private const string mSendDocumentUri = "/bot{0}/sendDocument";
+        private const string mSendStickerUri = "/bot{0}/sendSticker";
+        private const string mSendVideoUri = "/bot{0}/sendVideo";
+        private const string mSendVoiceUri = "/bot{0}/sendVoice";
+        private const string mSendVideoNoteUri = "/bot{0}/sendVideoNote";
+        private const string mSendLocationUri = "/bot{0}/sendLocation";
+        private const string mSendVenueUri = "/bot{0}/sendVenue";
+        private const string mSendContactUri = "/bot{0}/sendContact";
+        private const string mSendChatActionUri = "/bot{0}/sendChatAction";
+        private const string mGetUserProfilePhotosUri = "/bot{0}/getUserProfilePhotos";
+        private const string mGetFileUri = "/bot{0}/getFile";
+        private const string mKickChatMemberUri = "/bot{0}/kickChatMember";
+        private const string mUnbanChatMemberUri = "/bot{0}/unbanChatMember";
+        private const string mLeaveChatUri = "/bot{0}/leaveChat";
+        private const string mGetChatUri = "/bot{0}/getChat";
+        private const string mGetChatAdministratorsUri = "/bot{0}/getChatAdministrators";
+        private const string mGetChatMembersCountUri = "/bot{0}/getChatMembersCount";
+        private const string mGetChatMemberUri = "/bot{0}/getChatMember";
+        private const string mAnswerCallbackQueryUri = "/bot{0}/answerCallbackQuery";
+
         private RestRequest NewRestRequest(string uri)
         {
             RestRequest request = new RestRequest(string.Format(uri, Token), Method.POST);
