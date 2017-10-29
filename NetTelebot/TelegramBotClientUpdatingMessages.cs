@@ -36,7 +36,8 @@ namespace NetTelebot
         private const string mEditMessageTextUri = "/bot{0}/editMessageText";
 
         /// <summary>
-        /// Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). 
+        /// Use this method to edit text and game messages sent by the bot or via the bot (for inline bots).
+        /// See <see href="https://core.telegram.org/bots/api#editmessagetext">API</see>
         /// </summary>
         /// <param name="text">New text of the message</param>
         /// <param name="chatId">Required if inline_message_id is not specified. 
