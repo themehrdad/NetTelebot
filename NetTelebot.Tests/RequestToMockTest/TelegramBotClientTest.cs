@@ -44,7 +44,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the message test method <see cref="TelegramBotClient.SendMessage"/>.
+        /// Test method <see cref="TelegramBotClient.SendMessage"/>.
         /// </summary>
         [Test]
         public void SendMessageTest()
@@ -74,7 +74,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Forward the message test method <see cref="TelegramBotClient.ForwardMessage"/>.
+        /// Test method <see cref="TelegramBotClient.ForwardMessage"/>.
         /// </summary>
         [Test]
         public void ForwardMessageTest()
@@ -99,7 +99,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the photo test method <see cref="TelegramBotClient.SendPhoto"/>.
+        /// Test method <see cref="TelegramBotClient.SendPhoto"/>.
         /// </summary>
         [Test]
         public void SendPhotoTest()
@@ -128,7 +128,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the audio test method <see cref="TelegramBotClient.SendAudio"/>.
+        /// Test method <see cref="TelegramBotClient.SendAudio"/>.
         /// </summary>
         [Test]
         public void SendAudioTest()
@@ -161,7 +161,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the document test method <see cref="TelegramBotClient.SendDocument"/>.
+        /// Test method <see cref="TelegramBotClient.SendDocument"/>.
         /// </summary>
         [Test]
         public void SendDocumentTest()
@@ -191,7 +191,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.SendSticker"/>.
+        /// Test method <see cref="TelegramBotClient.SendSticker"/>.
         /// </summary>
         [Test]
         public void SendStickerTest()
@@ -219,7 +219,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.SendVideo"/>.
+        /// Test method <see cref="TelegramBotClient.SendVideo"/>.
         /// </summary>
         [Test]
         public void SendVideoTest()
@@ -252,7 +252,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.SendVoice"/>.
+        /// Test method <see cref="TelegramBotClient.SendVoice"/>.
         /// </summary>
         [Test]
         public void SendVoiceTest()
@@ -286,7 +286,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.SendVideoNote"/>.
+        /// Test method <see cref="TelegramBotClient.SendVideoNote"/>.
         /// </summary>
         [Test]
         public void SendVideoNoteTest()
@@ -318,7 +318,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.SendLocation"/>.
+        /// Test method <see cref="TelegramBotClient.SendLocation"/>.
         /// </summary>
         [Test]
         public void SendLocationTest()
@@ -347,7 +347,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.SendVenue"/>.
+        /// Test method <see cref="TelegramBotClient.SendVenue"/>.
         /// </summary>
         [Test]
         public void SendVenueTest()
@@ -380,7 +380,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.SendContact"/>.
+        /// Test method <see cref="TelegramBotClient.SendContact"/>.
         /// </summary>
         [Test]
         public void SendContactTest()
@@ -412,7 +412,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.SendChatAction"/>.
+        /// Test method <see cref="TelegramBotClient.SendChatAction"/>.
         /// </summary>
         [Test]
         public void SendChatActionTest()
@@ -512,7 +512,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.GetUserProfilePhotos"/>.
+        /// Test method <see cref="TelegramBotClient.GetUserProfilePhotos"/>.
         /// </summary>
         [Test]
         public void GetUserProfilePhotosTest()
@@ -536,7 +536,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.KickChatMember"/>.
+        /// Test method <see cref="TelegramBotClient.KickChatMember"/>.
         /// </summary>
         [Test]
         public void KickChatMemberTest()
@@ -560,7 +560,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.UnbanChatMember"/>.
+        /// Test method <see cref="TelegramBotClient.UnbanChatMember"/>.
         /// </summary>
         [Test]
         public void UnbanChatMemberTest()
@@ -583,7 +583,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.LeaveChat"/>.
+        /// Test method <see cref="TelegramBotClient.LeaveChat"/>.
         /// </summary>
         [Test]
         public void LeaveChatTest()
@@ -623,7 +623,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.GetChat"/>.
+        /// Test method <see cref="TelegramBotClient.GetChat"/>.
         /// </summary>
         [Test]
         public void GetChatTest()
@@ -644,7 +644,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.GetChat"/>.
+        /// Test method <see cref="TelegramBotClient.GetChat"/>.
         /// </summary>
         [Test]
         public void GetFileTest()
@@ -665,7 +665,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.GetChatAdministrators"/>.
+        /// Test method <see cref="TelegramBotClient.GetChatAdministrators"/>.
         /// </summary>
         [Test]
         public void GetChatAdministratorsTest()
@@ -688,7 +688,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.GetChatAdministrators"/>.
+        /// Test method <see cref="TelegramBotClient.GetChatAdministrators"/>.
         /// </summary>
         [Test]
         public void AnswerCallbackQuery()
@@ -716,7 +716,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.GetChatMember"/>.
+        /// Test method <see cref="TelegramBotClient.GetChatMember"/>.
         /// </summary>
         [Test]
         public void GetChatMemberTest()
@@ -738,7 +738,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.AnswerShippingQuery"/>.
+        /// Test method <see cref="TelegramBotClient.AnswerShippingQuery"/>.
         /// </summary>
         [Test]
         public void AnswerShippingQueryTest()
@@ -802,7 +802,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.SendInvoice"/>.
+        /// Test method <see cref="TelegramBotClient.SendInvoice"/>.
         /// </summary>
         [Test]
         public void SendInvoiceWithoutOptionalParametersTest()
@@ -853,7 +853,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.SendInvoice"/>.
+        /// Test method <see cref="TelegramBotClient.SendInvoice"/>.
         /// </summary>
         [Test]
         public void SendInvoiceWithOptionalParametersTest()
@@ -906,7 +906,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.AnswerPreCheckoutQuery"/>.
+        /// Test method <see cref="TelegramBotClient.AnswerPreCheckoutQuery"/>.
         /// </summary>
         [Test]
         public void AnswerPreCheckoutQueryTest()
@@ -921,21 +921,22 @@ namespace NetTelebot.Tests.RequestToMockTest
             Assert.AreEqual("pre_checkout_query_id=TestPreCheckoutQueryId&" +
                             "ok=True&" +
                             "error_message=TestErrorMessage", request.FirstOrDefault()?.Body);
+            Assert.AreEqual("/botToken/answerPreCheckoutQuery", request.FirstOrDefault()?.Url);
 
             Assert.Throws<Exception>(
                 () => mBotBadResponse.AnswerPreCheckoutQuery("TestPreCheckoutQueryId", true, "TestErrorMessage"));
         }
 
         /// <summary>
-        /// Sends the sticker test method <see cref="TelegramBotClient.EditMessageText"/>.
+        /// Test method <see cref="TelegramBotClient.EditMessageText"/>.
         /// </summary>
         [Test]
         public void EditMessageTextTest()
         {
             InlineKeyboardButton[][] keyboard =
             {
-                new[] {new InlineKeyboardButton {Text = "1"}, new InlineKeyboardButton { Text = "2" }},
-                new[] {new InlineKeyboardButton {Text = "3"}, new InlineKeyboardButton { Text = "4" }},
+                new[] {new InlineKeyboardButton {Text = "1"}, new InlineKeyboardButton {Text = "2"}},
+                new[] {new InlineKeyboardButton {Text = "3"}, new InlineKeyboardButton {Text = "4"}},
             };
 
             InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup
@@ -943,11 +944,11 @@ namespace NetTelebot.Tests.RequestToMockTest
                 Keyboard = keyboard
             };
 
-            mBotOkResponse.EditMessageText("TestText", "testChatId", 123, "testInlineMessageId", ParseMode.HTML, true, inlineKeyboardMarkup);
+            mBotOkResponse.EditMessageText("TestText", "testChatId", 123, "testInlineMessageId", ParseMode.HTML, true,
+                inlineKeyboardMarkup);
 
-            var request =
-                MockServer.ServerOkResponse.SearchLogsFor(
-                    Requests.WithUrl("/botToken/editMessageText").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(
+                Requests.WithUrl("/botToken/editMessageText").UsingPost());
 
             ConsoleUtlis.PrintResult(request);
 
@@ -960,12 +961,61 @@ namespace NetTelebot.Tests.RequestToMockTest
                             "reply_markup=%7B%0D%0A%20%20%22inline_keyboard" +
                             "%22%3A%20%5B%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
                             "%22%3A%20%221%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
-                            "%22%3A%20%222%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%2C%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
-                            "%22%3A%20%223%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
-                            "%22%3A%20%224%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%0D%0A%20%20%5D%0D%0A%7D", request.FirstOrDefault()?.Body);
+                            "%22%3A%20%222%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%2C%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%" +
+                            "20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%223%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%" +
+                            "20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%224%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%0D%" +
+                            "0A%20%20%5D%0D%0A%7D", request.FirstOrDefault()?.Body);
+            Assert.AreEqual("/botToken/editMessageText", request.FirstOrDefault()?.Url);
 
             Assert.Throws<Exception>(
-                () => mBotBadResponse.EditMessageText("TestText", "testChatId", 123, "testInlineMessageId", ParseMode.HTML, true, inlineKeyboardMarkup));
+                () =>
+                    mBotBadResponse.EditMessageText("TestText", "testChatId", 123, "testInlineMessageId", ParseMode.HTML,
+                        true, inlineKeyboardMarkup));
+        }
+
+        /// <summary>
+        /// Test method <see cref="TelegramBotClient.EditMessageCaption"/>.
+        /// </summary>
+        [Test]
+        public void EditMessageCaptionTest()
+        {
+            InlineKeyboardButton[][] keyboard =
+            {
+                new[] {new InlineKeyboardButton {Text = "1"}, new InlineKeyboardButton {Text = "2"}},
+                new[] {new InlineKeyboardButton {Text = "3"}, new InlineKeyboardButton {Text = "4"}},
+            };
+
+            InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup
+            {
+                Keyboard = keyboard
+            };
+
+            mBotOkResponse.EditMessageCaption("TestChatId", 123, "TestInlineMessageId", "TestCaption",
+                inlineKeyboardMarkup);
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(
+                Requests.WithUrl("/botToken/editMessageCaption").UsingPost());
+
+            ConsoleUtlis.PrintResult(request);
+
+            Assert.AreEqual("chat_id=TestChatId&" +
+                            "message_id=123&" +
+                            "inline_message_id=TestInlineMessageId&" +
+                            "caption=TestCaption&" +
+                            "reply_markup=%7B%0D%0A%20%20%22inline_keyboard" +
+                            "%22%3A%20%5B%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
+                            "%22%3A%20%221%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
+                            "%22%3A%20%222%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%2C%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B" +
+                            "%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%223%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0" +
+                            "A%20%20%20%20%20%20%20%20%22text%22%3A%20%224%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%0D%0A%20%20%5D%0D%" +
+                            "0A%7D", request.FirstOrDefault()?.Body);
+            Assert.AreEqual("/botToken/editMessageCaption", request.FirstOrDefault()?.Url);
+
+            Assert.Throws<Exception>(
+                () =>
+                    mBotBadResponse.EditMessageCaption("TestChatId", 123, "TestInlineMessageId", "TestCaption",
+                        inlineKeyboardMarkup));
+
         }
     }
 }

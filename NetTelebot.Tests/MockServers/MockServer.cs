@@ -31,7 +31,8 @@ namespace NetTelebot.Tests.MockServers
             AddNewRouter("/botToken/answerShippingQuery", ResponseString.ExpectedBodyForBooleanResult);
             AddNewRouter("/botToken/answerPreCheckoutQuery", ResponseString.ExpectedBodyForBooleanResult);
             AddNewRouter("/botToken/editMessageText", ResponseString.ExpectedBodyForSendMessageResult);
-
+            AddNewRouter("/botToken/editMessageCaption", ResponseString.ExpectedBodyForSendMessageResult);
+            
             AddNewRouter("/", ResponseString.ExpectedBodyForBadResponse, ServerBadResponse, 401);
         }
 
