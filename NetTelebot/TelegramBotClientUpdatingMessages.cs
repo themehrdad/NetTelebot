@@ -41,15 +41,18 @@ namespace NetTelebot
         /// See <see href="https://core.telegram.org/bots/api#editmessagetext">API</see>
         /// </summary>
         /// <param name="text">New text of the message</param>
-        /// <param name="chatId">Required if inline_message_id is not specified. 
-        /// Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
-        /// <param name="messageId">Required if inline_message_id is not specified. Identifier of the sent message</param>
-        /// <param name="inlineMessageId">Required if chat_id and message_id are not specified. Identifier of the inline message</param>
-        /// <param name="parseMode">Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, 
-        /// fixed-width text or inline URLs in your bot's message.</param>
-        /// <param name="disableWebPagePreview">Optional. Disables link previews for links in this message.</param>
-        /// <param name="replyMarkup">A JSON-serialized object for an inline keyboard. 
-        /// Please note, that it is currently only possible to edit messages without reply_markup or with inline keyboards.</param>
+        /// <param name="chatId">Optional.
+        /// Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
+        /// <param name="messageId">Optional.
+        /// Required if inline_message_id is not specified. Identifier of the sent message</param>
+        /// <param name="inlineMessageId">Optional.
+        /// Required if chat_id and message_id are not specified. Identifier of the inline message</param>
+        /// <param name="parseMode">Optional. 
+        /// Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.</param>
+        /// <param name="disableWebPagePreview">Optional. 
+        /// Disables link previews for links in this message.</param>
+        /// <param name="replyMarkup">Optional. 
+        /// A JSON-serialized object for an inline keyboard. Please note, that it is currently only possible to edit messages without reply_markup or with inline keyboards.</param>
         /// <returns>On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned</returns>
         public SendMessageResult EditMessageText(string text, object chatId = null, int? messageId = null,
             string inlineMessageId = null, ParseMode? parseMode = null, bool? disableWebPagePreview = null,
@@ -79,13 +82,18 @@ namespace NetTelebot
         /// Use this method to edit captions of messages sent by the bot or via the bot (for inline bots). 
         /// See <see href="https://core.telegram.org/bots/api#editmessagecaption">API</see>
         /// </summary>
-        /// <param name="chatId">Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
-        /// <param name="messageId">Required if inline_message_id is not specified. Identifier of the sent message</param>
-        /// <param name="inlineMessageId">Required if chat_id and message_id are not specified. Identifier of the inline message</param>
-        /// <param name="caption">New caption of the message</param>
-        /// <param name="replyMarkup">A JSON-serialized object for an inline keyboard.</param>
+        /// <param name="chatId">Optional. 
+        /// Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
+        /// <param name="messageId">Optional. 
+        /// Required if inline_message_id is not specified. Identifier of the sent message</param>
+        /// <param name="inlineMessageId">Optional. 
+        /// Required if chat_id and message_id are not specified. Identifier of the inline message</param>
+        /// <param name="caption">Optional. 
+        /// New caption of the message</param>
+        /// <param name="replyMarkup">Optional.
+        /// A JSON-serialized object for an inline keyboard.</param>
         /// <returns>On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.</returns>
-        public SendMessageResult EditMessageCaption(object chatId = null, int? messageId = null, 
+        public SendMessageResult EditMessageCaption(object chatId = null, int? messageId = null,
             string inlineMessageId = null, string caption = null, IInlineKeyboardMarkup replyMarkup = null)
         {
             RestRequest request = NewRestRequest(mEditMessageCaptionUri);
@@ -98,6 +106,37 @@ namespace NetTelebot
                 request.AddParameter("inline_message_id", inlineMessageId);
             if (caption != null)
                 request.AddParameter("caption", caption);
+            if (replyMarkup != null)
+                request.AddParameter("reply_markup", replyMarkup.GetJson());
+
+            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
+        }
+
+        /// <summary>
+        /// Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots). 
+        /// </summary>
+        /// <param name="chatId">Optional. 
+        /// Required if inline_message_id is not specified. 
+        /// Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
+        /// <param name="messageId">Optional. 
+        /// Required if inline_message_id is not specified. Identifier of the sent message</param>
+        /// <param name="inlineMessageId">Optional. 
+        /// Required if chat_id and message_id are not specified. Identifier of the inline message</param>
+        /// <param name="replyMarkup">Optional. 
+        /// A JSON-serialized object for an inline keyboard. </param>
+        /// <returns>On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.</returns>
+        public SendMessageResult EditMessageReplyMarkup(object chatId = null, int? messageId = null,
+            string inlineMessageId = null, IInlineKeyboardMarkup replyMarkup = null)
+        {
+            //todo test this
+            RestRequest request = NewRestRequest(mEditMessageCaptionUri);
+
+            if (chatId != null)
+                request.AddParameter("chat_id", chatId);
+            if (messageId != null)
+                request.AddParameter("message_id", messageId);
+            if (inlineMessageId != null)
+                request.AddParameter("inline_message_id", inlineMessageId);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
