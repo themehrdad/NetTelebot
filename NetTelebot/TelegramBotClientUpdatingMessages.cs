@@ -34,6 +34,7 @@ namespace NetTelebot
     public partial class TelegramBotClient
     {
         private const string mEditMessageTextUri = "/bot{0}/editMessageText";
+        private const string mEditMessageCaptionUri = "/bot{0}/editMessageCaption";
 
         /// <summary>
         /// Use this method to edit text and game messages sent by the bot or via the bot (for inline bots).
@@ -87,8 +88,7 @@ namespace NetTelebot
         public SendMessageResult EditMessageCaption(object chatId = null, int? messageId = null, 
             string inlineMessageId = null, string caption = null, IInlineKeyboardMarkup replyMarkup = null)
         {
-            //todo test this
-            RestRequest request = NewRestRequest(mEditMessageTextUri);
+            RestRequest request = NewRestRequest(mEditMessageCaptionUri);
 
             if (chatId != null)
                 request.AddParameter("chat_id", chatId);

@@ -921,6 +921,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             Assert.AreEqual("pre_checkout_query_id=TestPreCheckoutQueryId&" +
                             "ok=True&" +
                             "error_message=TestErrorMessage", request.FirstOrDefault()?.Body);
+            Assert.AreEqual("/botToken/answerPreCheckoutQuery", request.FirstOrDefault()?.Url);
 
             Assert.Throws<Exception>(
                 () => mBotBadResponse.AnswerPreCheckoutQuery("TestPreCheckoutQueryId", true, "TestErrorMessage"));
@@ -934,8 +935,8 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             InlineKeyboardButton[][] keyboard =
             {
-                new[] {new InlineKeyboardButton {Text = "1"}, new InlineKeyboardButton { Text = "2" }},
-                new[] {new InlineKeyboardButton {Text = "3"}, new InlineKeyboardButton { Text = "4" }},
+                new[] {new InlineKeyboardButton {Text = "1"}, new InlineKeyboardButton {Text = "2"}},
+                new[] {new InlineKeyboardButton {Text = "3"}, new InlineKeyboardButton {Text = "4"}},
             };
 
             InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup
@@ -943,11 +944,11 @@ namespace NetTelebot.Tests.RequestToMockTest
                 Keyboard = keyboard
             };
 
-            mBotOkResponse.EditMessageText("TestText", "testChatId", 123, "testInlineMessageId", ParseMode.HTML, true, inlineKeyboardMarkup);
+            mBotOkResponse.EditMessageText("TestText", "testChatId", 123, "testInlineMessageId", ParseMode.HTML, true,
+                inlineKeyboardMarkup);
 
-            var request =
-                MockServer.ServerOkResponse.SearchLogsFor(
-                    Requests.WithUrl("/botToken/editMessageText").UsingPost());
+            var request = MockServer.ServerOkResponse.SearchLogsFor(
+                Requests.WithUrl("/botToken/editMessageText").UsingPost());
 
             ConsoleUtlis.PrintResult(request);
 
@@ -960,12 +961,61 @@ namespace NetTelebot.Tests.RequestToMockTest
                             "reply_markup=%7B%0D%0A%20%20%22inline_keyboard" +
                             "%22%3A%20%5B%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
                             "%22%3A%20%221%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
-                            "%22%3A%20%222%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%2C%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
-                            "%22%3A%20%223%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
-                            "%22%3A%20%224%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%0D%0A%20%20%5D%0D%0A%7D", request.FirstOrDefault()?.Body);
+                            "%22%3A%20%222%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%2C%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%" +
+                            "20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%223%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%" +
+                            "20%7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%224%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%0D%" +
+                            "0A%20%20%5D%0D%0A%7D", request.FirstOrDefault()?.Body);
+            Assert.AreEqual("/botToken/editMessageText", request.FirstOrDefault()?.Url);
 
             Assert.Throws<Exception>(
-                () => mBotBadResponse.EditMessageText("TestText", "testChatId", 123, "testInlineMessageId", ParseMode.HTML, true, inlineKeyboardMarkup));
+                () =>
+                    mBotBadResponse.EditMessageText("TestText", "testChatId", 123, "testInlineMessageId", ParseMode.HTML,
+                        true, inlineKeyboardMarkup));
+        }
+
+        /// <summary>
+        /// Sends the sticker test method <see cref="TelegramBotClient.EditMessageCaption"/>.
+        /// </summary>
+        [Test]
+        public void EditMessageCaptionTest()
+        {
+            InlineKeyboardButton[][] keyboard =
+            {
+                new[] {new InlineKeyboardButton {Text = "1"}, new InlineKeyboardButton {Text = "2"}},
+                new[] {new InlineKeyboardButton {Text = "3"}, new InlineKeyboardButton {Text = "4"}},
+            };
+
+            InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup
+            {
+                Keyboard = keyboard
+            };
+
+            mBotOkResponse.EditMessageCaption("TestChatId", 123, "TestInlineMessageId", "TestCaption",
+                inlineKeyboardMarkup);
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(
+                Requests.WithUrl("/botToken/editMessageCaption").UsingPost());
+
+            ConsoleUtlis.PrintResult(request);
+
+            Assert.AreEqual("chat_id=TestChatId&" +
+                            "message_id=123&" +
+                            "inline_message_id=TestInlineMessageId&" +
+                            "caption=TestCaption&" +
+                            "reply_markup=%7B%0D%0A%20%20%22inline_keyboard" +
+                            "%22%3A%20%5B%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
+                            "%22%3A%20%221%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
+                            "%22%3A%20%222%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%2C%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B" +
+                            "%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%223%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0" +
+                            "A%20%20%20%20%20%20%20%20%22text%22%3A%20%224%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%0D%0A%20%20%5D%0D%" +
+                            "0A%7D", request.FirstOrDefault()?.Body);
+            Assert.AreEqual("/botToken/editMessageCaption", request.FirstOrDefault()?.Url);
+
+            Assert.Throws<Exception>(
+                () =>
+                    mBotBadResponse.EditMessageCaption("TestChatId", 123, "TestInlineMessageId", "TestCaption",
+                        inlineKeyboardMarkup));
+
         }
     }
 }

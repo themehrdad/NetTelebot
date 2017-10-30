@@ -90,7 +90,5 @@ namespace NetTelebot
 
             throw new Exception(response.StatusDescription);
         }
-
-
     }
 }
