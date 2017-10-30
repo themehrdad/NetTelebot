@@ -15,6 +15,7 @@ namespace NetTelebot.Tests.RequestToMockTest
     [TestFixture]
     internal class TelegramBotClientTest
     {
+
         private const int mOkServerPort = 8091;
         private const int mBadServerPort = 8092;
 
