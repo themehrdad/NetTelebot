@@ -33,6 +33,7 @@ namespace NetTelebot.Tests.MockServers
             AddNewRouter("/botToken/editMessageText", ResponseString.ExpectedBodyForSendMessageResult);
             AddNewRouter("/botToken/editMessageCaption", ResponseString.ExpectedBodyForSendMessageResult);
             AddNewRouter("/botToken/editMessageReplyMarkup", ResponseString.ExpectedBodyForSendMessageResult);
+            AddNewRouter("/botToken/deleteMessage", ResponseString.ExpectedBodyForBooleanResult);
 
             AddNewRouter("/", ResponseString.ExpectedBodyForBadResponse, ServerBadResponse, 401);
         }
