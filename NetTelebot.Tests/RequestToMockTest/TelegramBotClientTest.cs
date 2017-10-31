@@ -1017,5 +1017,47 @@ namespace NetTelebot.Tests.RequestToMockTest
                         inlineKeyboardMarkup));
 
         }
+
+        /// <summary>
+        /// Test method <see cref="TelegramBotClient.EditMessageReplyMarkup"/>.
+        /// </summary>
+        [Test]
+        public void EditMessageEditMessageReplyMarkupTest()
+        {
+            InlineKeyboardButton[][] keyboard =
+            {
+                new[] {new InlineKeyboardButton {Text = "1"}, new InlineKeyboardButton {Text = "2"}},
+                new[] {new InlineKeyboardButton {Text = "3"}, new InlineKeyboardButton {Text = "4"}},
+            };
+
+            InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup
+            {
+                Keyboard = keyboard
+            };
+
+            mBotOkResponse.EditMessageReplyMarkup("TestChatId", 123, "TestInlineMessageId", inlineKeyboardMarkup);
+
+
+            var request =
+                MockServer.ServerOkResponse.SearchLogsFor(
+                    Requests.WithUrl("/botToken/editMessageReplyMarkup").UsingPost());
+
+            ConsoleUtlis.PrintResult(request);
+
+            Assert.AreEqual("chat_id=TestChatId&" +
+                            "message_id=123&" +
+                            "inline_message_id=TestInlineMessageId&" +
+                            "reply_markup=%7B%0D%0A%20%20%22inline_keyboard" +
+                            "%22%3A%20%5B%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
+                            "%22%3A%20%221%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%20%20%22text" +
+                            "%22%3A%20%222%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%2C%0D%0A%20%20%20%20%5B%0D%0A%20%20%20%20%20%20%" +
+                            "7B%0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%223%22%0D%0A%20%20%20%20%20%20%7D%2C%0D%0A%20%20%20%20%20%20%7B%" +
+                            "0D%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%224%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%5D%0D%0A%20%20%" +
+                            "5D%0D%0A%7D", request.FirstOrDefault()?.Body);
+
+            Assert.Throws<Exception>(
+                () =>
+                    mBotBadResponse.EditMessageReplyMarkup("TestChatId", 123, "TestInlineMessageId", inlineKeyboardMarkup));
+        }
     }
 }

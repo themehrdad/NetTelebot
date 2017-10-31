@@ -35,6 +35,7 @@ namespace NetTelebot
     {
         private const string mEditMessageTextUri = "/bot{0}/editMessageText";
         private const string mEditMessageCaptionUri = "/bot{0}/editMessageCaption";
+        private const string mEditMessageReplyMarkupUri = "/bot{0}/editMessageReplyMarkup";
 
         /// <summary>
         /// Use this method to edit text and game messages sent by the bot or via the bot (for inline bots).
@@ -114,6 +115,7 @@ namespace NetTelebot
 
         /// <summary>
         /// Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots). 
+        /// See <see href="https://core.telegram.org/bots/api#editmessagereplymarkup">API</see>
         /// </summary>
         /// <param name="chatId">Optional. 
         /// Required if inline_message_id is not specified. 
@@ -128,8 +130,7 @@ namespace NetTelebot
         public SendMessageResult EditMessageReplyMarkup(object chatId = null, int? messageId = null,
             string inlineMessageId = null, IInlineKeyboardMarkup replyMarkup = null)
         {
-            //todo test this
-            RestRequest request = NewRestRequest(mEditMessageCaptionUri);
+            RestRequest request = NewRestRequest(mEditMessageReplyMarkupUri);
 
             if (chatId != null)
                 request.AddParameter("chat_id", chatId);
