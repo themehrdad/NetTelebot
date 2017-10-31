@@ -35,6 +35,8 @@ namespace NetTelebot
     {
         private const string mEditMessageTextUri = "/bot{0}/editMessageText";
         private const string mEditMessageCaptionUri = "/bot{0}/editMessageCaption";
+        private const string mEditMessageReplyMarkupUri = "/bot{0}/editMessageReplyMarkup";
+        private const string mDeleteMessage = "/bot{0}/deleteMessage";
 
         /// <summary>
         /// Use this method to edit text and game messages sent by the bot or via the bot (for inline bots).
@@ -114,6 +116,7 @@ namespace NetTelebot
 
         /// <summary>
         /// Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots). 
+        /// See <see href="https://core.telegram.org/bots/api#editmessagereplymarkup">API</see>
         /// </summary>
         /// <param name="chatId">Optional. 
         /// Required if inline_message_id is not specified. 
@@ -128,8 +131,7 @@ namespace NetTelebot
         public SendMessageResult EditMessageReplyMarkup(object chatId = null, int? messageId = null,
             string inlineMessageId = null, IInlineKeyboardMarkup replyMarkup = null)
         {
-            //todo test this
-            RestRequest request = NewRestRequest(mEditMessageCaptionUri);
+            RestRequest request = NewRestRequest(mEditMessageReplyMarkupUri);
 
             if (chatId != null)
                 request.AddParameter("chat_id", chatId);
@@ -141,6 +143,27 @@ namespace NetTelebot
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
 
             return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
+        }
+
+        /// <summary>
+        /// Use this method to delete a message, including service messages, with the following limitations:
+        /// - A message can only be deleted if it was sent less than 48 hours ago.
+        /// - Bots can delete outgoing messages in groups and supergroups.
+        /// - Bots granted can_post_messages permissions can delete outgoing messages in channels.
+        /// - If the bot is an administrator of a group, it can delete any message there.
+        /// - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
+        /// <param name="messageId">Identifier of the message to delete</param>
+        /// <returns></returns>
+        public BooleanResult DeleteMessage(object chatId, int messageId)
+        {
+            RestRequest request = NewRestRequest(mDeleteMessage);
+
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("message_id", messageId);
+
+            return ExecuteRequest<BooleanResult>(request) as BooleanResult;
         }
     }
 }
