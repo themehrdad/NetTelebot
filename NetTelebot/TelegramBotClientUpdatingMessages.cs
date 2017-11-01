@@ -55,7 +55,7 @@ namespace NetTelebot
         /// Disables link previews for links in this message.</param>
         /// <param name="replyMarkup">Optional. 
         /// A JSON-serialized object for an inline keyboard. Please note, that it is currently only possible to edit messages without reply_markup or with inline keyboards.</param>
-        /// <returns>On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned</returns>
+        /// <returns>On success, if edited message is sent by the bot, the edited Message is returned</returns>
         public SendMessageResult EditMessageText(string text, object chatId = null, int? messageId = null,
             string inlineMessageId = null, ParseMode? parseMode = null, bool? disableWebPagePreview = null,
             IInlineKeyboardMarkup replyMarkup = null)
@@ -94,7 +94,7 @@ namespace NetTelebot
         /// New caption of the message</param>
         /// <param name="replyMarkup">Optional.
         /// A JSON-serialized object for an inline keyboard.</param>
-        /// <returns>On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.</returns>
+        /// <returns>On success, if edited message is sent by the bot, the edited Message is returned</returns>
         public SendMessageResult EditMessageCaption(object chatId = null, int? messageId = null,
             string inlineMessageId = null, string caption = null, IInlineKeyboardMarkup replyMarkup = null)
         {
@@ -127,7 +127,7 @@ namespace NetTelebot
         /// Required if chat_id and message_id are not specified. Identifier of the inline message</param>
         /// <param name="replyMarkup">Optional. 
         /// A JSON-serialized object for an inline keyboard. </param>
-        /// <returns>On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.</returns>
+        /// <returns>On success, if edited message is sent by the bot, the edited Message is returned</returns>
         public SendMessageResult EditMessageReplyMarkup(object chatId = null, int? messageId = null,
             string inlineMessageId = null, IInlineKeyboardMarkup replyMarkup = null)
         {
