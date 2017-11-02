@@ -22,6 +22,48 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardFromMessageId"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyForwardFromMessageId()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyForwardFromMessageId()");
+
+            var forwardFromMessageId = sendMessage.Result.ForwardFromMessageId;
+
+            ConsoleUtlis.PrintSimpleResult(forwardFromMessageId);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof(int), forwardFromMessageId);
+                Assert.AreEqual(forwardFromMessageId, 0);
+            });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardSignature"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyForwardSignatureMessageId()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyForwardSignature()");
+
+            var  forwardSignature = sendMessage.Result.ForwardSignature;
+
+            ConsoleUtlis.PrintSimpleResult(forwardSignature);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof(string), forwardSignature);
+                Assert.AreEqual(forwardSignature, string.Empty);
+            });
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardDateUnix"/>
         /// </summary>
         [Test]
@@ -66,6 +108,27 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.AuthorSignature"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToAuthorSignature()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromEditDateUnix()");
+
+            var authorSignature = sendMessage.Result.AuthorSignature;
+
+            ConsoleUtlis.PrintSimpleResult(authorSignature);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof(string), authorSignature);
+                Assert.AreEqual(authorSignature, string.Empty);
+            });
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Text"/>
         /// </summary>
         [Test]
@@ -87,27 +150,6 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsInstanceOf(typeof (string), text);
                 Assert.IsEmpty(text);
                 Assert.IsEmpty(text.ToUpper());
-            });
-        }
-
-        /// <summary>
-        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.ForwardFromMessageId"/>
-        /// </summary>
-        [Test]
-        public void TestAppealToTheEmptyForwardFromMessageId()
-        {
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyForwardFromMessageId()");
-            
-            var forwardFromMessageId = sendMessage.Result.ForwardFromMessageId;
-
-            ConsoleUtlis.PrintSimpleResult(forwardFromMessageId);
-
-            Assert.Multiple(() =>
-            {
-                Assert.True(sendMessage.Ok);
-
-                Assert.IsInstanceOf(typeof (int), forwardFromMessageId);
-                Assert.AreEqual(forwardFromMessageId, 0);
             });
         }
 

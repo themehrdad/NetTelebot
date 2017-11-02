@@ -91,6 +91,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsNull(messageInfo.Text);
 
                 Assert.IsInstanceOf<MessageEntityInfo[]>(messageInfo.Entities);
+                Assert.IsInstanceOf<MessageEntityInfo[]>(messageInfo.CaptionEntities);
 
                 Assert.IsInstanceOf<AudioInfo>(messageInfo.Audio);
                 Assert.AreEqual(0, messageInfo.Audio.Duration);

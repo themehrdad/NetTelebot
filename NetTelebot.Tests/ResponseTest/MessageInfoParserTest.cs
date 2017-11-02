@@ -177,6 +177,23 @@ namespace NetTelebot.Tests.ResponseTest
         }
 
         /// <summary>
+        /// Test for <see cref="MessageInfo.ForwardSignature"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoForwardSignatureTest()
+        {
+            //check MessageInfo witout field [forward_signature]
+            dynamic messageInfoForwardFromMessageId = MCommonMandatoryFieldsMessageInfo;
+            MessageInfo messageInfo = new MessageInfo(messageInfoForwardFromMessageId);
+            Assert.AreEqual(string.Empty, messageInfo.ForwardSignature);
+
+            //check MessageInfo with field [forward_signature: "TestForwardSignature"] 
+            messageInfoForwardFromMessageId.forward_signature = "TestForwardSignature";
+            messageInfo = new MessageInfo(messageInfoForwardFromMessageId);
+            Assert.AreEqual("TestForwardSignature", messageInfo.ForwardSignature);
+        }
+
+        /// <summary>
         /// Test for <see cref="MessageInfo.ForwardDateUnix"/> parse field.
         /// </summary>
         [Test]
@@ -339,6 +356,36 @@ namespace NetTelebot.Tests.ResponseTest
         }
 
         /// <summary>
+        /// Test for <see cref="MessageInfo.CaptionEntities"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoCaptionEntitiesTest()
+        {
+            const string type = "type";
+            const int offset = 10;
+            const int length = 12345;
+            const string url = "url";
+
+            JObject user = MCommonUserInfo;
+            dynamic messageInfoEntities = MCommonMandatoryFieldsMessageInfo;
+            messageInfoEntities.caption_entities = new JArray(MessageEntityInfoObject.GetObject(type, offset, length, url, user));
+
+            MessageInfo messageInfo = new MessageInfo(messageInfoEntities);
+
+            Assert.Multiple(() =>
+            {
+                //test MessageInfo.Entities
+                Assert.AreEqual(type, messageInfo.CaptionEntities[0].Type);
+                Assert.AreEqual(offset, messageInfo.CaptionEntities[0].Offset);
+                Assert.AreEqual(length, messageInfo.CaptionEntities[0].Length);
+                Assert.AreEqual(url, messageInfo.CaptionEntities[0].Url);
+            });
+
+            //test MessageInfo.Entities.User
+            AssertUserInfo(messageInfo.CaptionEntities[0].User);
+        }
+
+        /// <summary>
         /// Test for <see cref="MessageInfo.EditDate"/> parse field.
         /// </summary>
         [Test]
@@ -357,6 +404,20 @@ namespace NetTelebot.Tests.ResponseTest
 
             Assert.AreEqual(0, messageInfo.EditDateUnix);
             Assert.AreEqual(new DateTime(1970, 1, 1).ToLocalTime(), messageInfo.EditDate);
+        }
+
+        [Test]
+        public static void MessageInfoAuthorSignatureTest()
+        {
+            //check MessageInfo without field [author_signature]
+            dynamic messageInfoText = MCommonMandatoryFieldsMessageInfo;
+            MessageInfo messageInfo = new MessageInfo(messageInfoText);
+            Assert.AreEqual(string.Empty, messageInfo.AuthorSignature);
+
+            //check MessageInfo with field [author_signature: TestAuthorSignature] 
+            messageInfoText.author_signature = "TestAuthorSignature";
+            messageInfo = new MessageInfo(messageInfoText);
+            Assert.AreEqual("TestAuthorSignature", messageInfo.AuthorSignature);
         }
 
         /// <summary>
