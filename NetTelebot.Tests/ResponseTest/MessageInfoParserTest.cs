@@ -177,6 +177,23 @@ namespace NetTelebot.Tests.ResponseTest
         }
 
         /// <summary>
+        /// Test for <see cref="MessageInfo.ForwardSignature"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoForwardSignatureTest()
+        {
+            //check MessageInfo witout field [forward_signature]
+            dynamic messageInfoForwardFromMessageId = MCommonMandatoryFieldsMessageInfo;
+            MessageInfo messageInfo = new MessageInfo(messageInfoForwardFromMessageId);
+            Assert.AreEqual(string.Empty, messageInfo.ForwardSignature);
+
+            //check MessageInfo with field [forward_signature: "TestForwardSignature"] 
+            messageInfoForwardFromMessageId.forward_signature = "TestForwardSignature";
+            messageInfo = new MessageInfo(messageInfoForwardFromMessageId);
+            Assert.AreEqual("TestForwardSignature", messageInfo.ForwardSignature);
+        }
+
+        /// <summary>
         /// Test for <see cref="MessageInfo.ForwardDateUnix"/> parse field.
         /// </summary>
         [Test]

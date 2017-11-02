@@ -51,6 +51,10 @@ namespace NetTelebot.Type
             if (jsonObject["forward_from_message_id"] != null)
                 ForwardFromMessageId = jsonObject["forward_from_message_id"].Value<int>();
 
+            ForwardSignature = jsonObject["forward_signature"] != null
+                ? jsonObject["forward_signature"].Value<string>()
+                : string.Empty;
+
             if (jsonObject["forward_date"]!=null)
             {
                 ForwardDateUnix = jsonObject["forward_date"].Value<long>();
@@ -75,12 +79,12 @@ namespace NetTelebot.Type
                 ? jsonObject["text"].Value<string>() 
                 : string.Empty;
 
-            CaptionEntities = jsonObject["caption_entities"] != null
-                ? MessageEntityInfo.ParseArray(jsonObject["caption_entities"].Value<JArray>())
-                : new MessageEntityInfo[0];
-
             Entities = jsonObject["entities"] != null
                 ? MessageEntityInfo.ParseArray(jsonObject["entities"].Value<JArray>())
+                : new MessageEntityInfo[0];
+
+            CaptionEntities = jsonObject["caption_entities"] != null
+                ? MessageEntityInfo.ParseArray(jsonObject["caption_entities"].Value<JArray>())
                 : new MessageEntityInfo[0];
 
             Audio = jsonObject["audio"] != null 
@@ -193,6 +197,7 @@ namespace NetTelebot.Type
                 ForwardFromChat = new ChatInfo{Photo = new ChatPhotoInfo()},
                 ReplyToMessage = reply,
                 Entities = new MessageEntityInfo[0],
+                CaptionEntities = new MessageEntityInfo[0],
                 Audio = new AudioInfo(),
                 Document = new DocumentInfo {Thumb = new PhotoSizeInfo()},
                 Game  = new GameInfo
@@ -242,7 +247,7 @@ namespace NetTelebot.Type
         /// <summary>
         /// Date the message was sent in Unix time
         /// </summary>
-        public long DateUnix { get; private set; }
+        public long DateUnix { get; }
 
         /// <summary>
         /// Date the message was sent in <see cref="DateTime"/>
@@ -270,9 +275,14 @@ namespace NetTelebot.Type
         public int ForwardFromMessageId { get; private set; }
 
         /// <summary>
+        /// Optional. For messages forwarded from channels, signature of the post author if present
+        /// </summary>
+        public string ForwardSignature { get; private set; }
+
+        /// <summary>
         /// Optional. For forwarded messages, date the original message was sent in Unix time
         /// </summary>
-        public long ForwardDateUnix { get; private set; }
+        public long ForwardDateUnix { get; }
 
         /// <summary>
         /// Optional. For forwarded messages, date the original message was sent in <see cref="DateTime"/>

@@ -58,7 +58,7 @@ On the nearest release (1.0.12)
 - [ ] Add all parameters for method getUpdates (offset, limit, timeout)
 - [x] Add all method for Updating messages
 - [x] Add all method and type for Payments
-- [ ] Add the new fields author_signature, aption_entities and forward_signature to the MessageInfo object.
+- [x] Add the new fields author_signature, aption_entities and forward_signature to the MessageInfo object.
 - [x] Add the new field is_bot to the UserInfo object.
 
 
