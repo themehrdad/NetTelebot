@@ -67,6 +67,10 @@ namespace NetTelebot.Type
                 EditDate = EditDateUnix.ToDateTime();
             }
 
+            AuthorSignature = jsonObject["author_signature"] != null
+                ? jsonObject["author_signature"].Value<string>()
+                : string.Empty;
+
             Text = jsonObject["text"] != null 
                 ? jsonObject["text"].Value<string>() 
                 : string.Empty;
@@ -280,13 +284,18 @@ namespace NetTelebot.Type
         /// <summary>
         /// Optional. Date the message was last edited in Unix time
         /// </summary>
-        public long EditDateUnix { get; private set; }
+        public long EditDateUnix { get; }
 
         /// <summary>
         /// Optional. Date the message was last edited 
         /// </summary>
         /// <remarks> This extension, not the available API type <seealso cref="UtilityExtensions.ToDateTime"/> </remarks>
         public DateTime EditDate { get; private set; }
+
+        /// <summary>
+        /// Optional. Signature of the post author for messages in channels
+        /// </summary>
+        public string AuthorSignature { get; private set; }
 
         /// <summary>
         /// Optional. For text messages, the actual UTF-8 text of the message 

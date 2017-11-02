@@ -359,6 +359,20 @@ namespace NetTelebot.Tests.ResponseTest
             Assert.AreEqual(new DateTime(1970, 1, 1).ToLocalTime(), messageInfo.EditDate);
         }
 
+        [Test]
+        public static void MessageInfoAuthorSignatureTest()
+        {
+            //check MessageInfo without field [author_signature]
+            dynamic messageInfoText = MCommonMandatoryFieldsMessageInfo;
+            MessageInfo messageInfo = new MessageInfo(messageInfoText);
+            Assert.AreEqual(string.Empty, messageInfo.AuthorSignature);
+
+            //check MessageInfo with field [author_signature: TestAuthorSignature] 
+            messageInfoText.author_signature = "TestAuthorSignature";
+            messageInfo = new MessageInfo(messageInfoText);
+            Assert.AreEqual("TestAuthorSignature", messageInfo.AuthorSignature);
+        }
+
         /// <summary>
         /// Test for <see cref="MessageInfo.Text"/> parse field.
         /// </summary>

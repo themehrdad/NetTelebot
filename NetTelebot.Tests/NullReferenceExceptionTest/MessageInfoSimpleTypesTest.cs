@@ -66,6 +66,27 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
         }
 
         /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.AuthorSignature"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToAuthorSignature()
+        {
+            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToMigrateFromEditDateUnix()");
+
+            var authorSignature = sendMessage.Result.AuthorSignature;
+
+            ConsoleUtlis.PrintSimpleResult(authorSignature);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendMessage.Ok);
+
+                Assert.IsInstanceOf(typeof(string), authorSignature);
+                Assert.AreEqual(authorSignature, string.Empty);
+            });
+        }
+
+        /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.Text"/>
         /// </summary>
         [Test]
