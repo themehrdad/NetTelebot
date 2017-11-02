@@ -506,7 +506,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.SuccessfulPayment"/>
         /// </summary>
         [Test]
-        public void TestAppealTo()
+        public void TestAppealToSuccessfulPayment()
         {
             SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptySuccessfulPayment()");
 

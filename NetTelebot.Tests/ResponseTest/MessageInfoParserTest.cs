@@ -339,6 +339,36 @@ namespace NetTelebot.Tests.ResponseTest
         }
 
         /// <summary>
+        /// Test for <see cref="MessageInfo.CaptionEntities"/> parse field.
+        /// </summary>
+        [Test]
+        public static void MessageInfoCaptionEntitiesTest()
+        {
+            const string type = "type";
+            const int offset = 10;
+            const int length = 12345;
+            const string url = "url";
+
+            JObject user = MCommonUserInfo;
+            dynamic messageInfoEntities = MCommonMandatoryFieldsMessageInfo;
+            messageInfoEntities.caption_entities = new JArray(MessageEntityInfoObject.GetObject(type, offset, length, url, user));
+
+            MessageInfo messageInfo = new MessageInfo(messageInfoEntities);
+
+            Assert.Multiple(() =>
+            {
+                //test MessageInfo.Entities
+                Assert.AreEqual(type, messageInfo.CaptionEntities[0].Type);
+                Assert.AreEqual(offset, messageInfo.CaptionEntities[0].Offset);
+                Assert.AreEqual(length, messageInfo.CaptionEntities[0].Length);
+                Assert.AreEqual(url, messageInfo.CaptionEntities[0].Url);
+            });
+
+            //test MessageInfo.Entities.User
+            AssertUserInfo(messageInfo.CaptionEntities[0].User);
+        }
+
+        /// <summary>
         /// Test for <see cref="MessageInfo.EditDate"/> parse field.
         /// </summary>
         [Test]

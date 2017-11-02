@@ -75,6 +75,10 @@ namespace NetTelebot.Type
                 ? jsonObject["text"].Value<string>() 
                 : string.Empty;
 
+            CaptionEntities = jsonObject["caption_entities"] != null
+                ? MessageEntityInfo.ParseArray(jsonObject["caption_entities"].Value<JArray>())
+                : new MessageEntityInfo[0];
+
             Entities = jsonObject["entities"] != null
                 ? MessageEntityInfo.ParseArray(jsonObject["entities"].Value<JArray>())
                 : new MessageEntityInfo[0];
@@ -112,10 +116,6 @@ namespace NetTelebot.Type
                 ? new VideoNoteInfo(jsonObject["video_note"].Value<JObject>())
                 : new VideoNoteInfo {Thumb = new PhotoSizeInfo()};
 
-            NewChatMembers = jsonObject["new_chat_members"] != null
-                ? UserInfo.ParseArray(jsonObject["new_chat_members"].Value<JArray>())
-                : new UserInfo[0];
-
             Caption = jsonObject["caption"] != null 
                 ? jsonObject["caption"].Value<string>() 
                 : string.Empty;
@@ -135,6 +135,10 @@ namespace NetTelebot.Type
             NewChatMember = jsonObject["new_chat_member"] != null
                 ? new UserInfo(jsonObject["new_chat_member"].Value<JObject>())
                 : new UserInfo();
+
+            NewChatMembers = jsonObject["new_chat_members"] != null
+                ? UserInfo.ParseArray(jsonObject["new_chat_members"].Value<JArray>())
+                : new UserInfo[0];
 
             LeftChatMember = jsonObject["left_chat_member"] != null
                 ? new UserInfo(jsonObject["left_chat_member"].Value<JObject>())
@@ -308,6 +312,11 @@ namespace NetTelebot.Type
         public MessageEntityInfo[] Entities { get; private set; }
 
         /// <summary>
+        /// Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
+        /// </summary>
+        public MessageEntityInfo[] CaptionEntities { get; private set;  }
+
+        /// <summary>
         /// Optional. Message is an audio file, information about the file TestAppealToTheEmptyAudio()
         /// </summary>
         public AudioInfo Audio { get; private set; }
@@ -377,7 +386,8 @@ namespace NetTelebot.Type
         /// </summary>
         [Obsolete("See Introducing Bot API 3.0: " +
                   "Replaced the field new_chat_member in Message with new_chat_members " +
-                  "(the old field will still be available for a while for compatibility purposes).")]
+                  "(the old field will still be available for a while for compatibility purposes). " +
+                  "In version 10.0.13 will be removed")]
         public UserInfo NewChatMember { get; private set; }
 
         /// <summary>
