@@ -934,7 +934,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         public void EditMessageTextTest()
         {
             mBotOkResponse.EditMessageText("TestText", "testChatId", 123, "testInlineMessageId", ParseMode.HTML, true,
-                GetInlineKeyboard());
+                Keyboards.GetInlineKeyboard());
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(
                 Requests.WithUrl("/botToken/editMessageText").UsingPost());
@@ -959,7 +959,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             Assert.Throws<Exception>(
                 () =>
                     mBotBadResponse.EditMessageText("TestText", "testChatId", 123, "testInlineMessageId", ParseMode.HTML,
-                        true, GetInlineKeyboard()));
+                        true, Keyboards.GetInlineKeyboard()));
         }
 
         /// <summary>
@@ -969,7 +969,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         public void EditMessageCaptionTest()
         {
             mBotOkResponse.EditMessageCaption("TestChatId", 123, "TestInlineMessageId", "TestCaption",
-                GetInlineKeyboard());
+                Keyboards.GetInlineKeyboard());
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(
                 Requests.WithUrl("/botToken/editMessageCaption").UsingPost());
@@ -991,7 +991,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             Assert.Throws<Exception>(
                 () =>
-                    mBotBadResponse.EditMessageCaption("TestChatId", 123, "TestInlineMessageId", "TestCaption", GetInlineKeyboard()));
+                    mBotBadResponse.EditMessageCaption("TestChatId", 123, "TestInlineMessageId", "TestCaption", Keyboards.GetInlineKeyboard()));
 
         }
 
@@ -1001,7 +1001,7 @@ namespace NetTelebot.Tests.RequestToMockTest
         [Test]
         public void EditMessageEditMessageReplyMarkupTest()
         {
-            mBotOkResponse.EditMessageReplyMarkup("TestChatId", 123, "TestInlineMessageId", GetInlineKeyboard());
+            mBotOkResponse.EditMessageReplyMarkup("TestChatId", 123, "TestInlineMessageId", Keyboards.GetInlineKeyboard());
 
 
             var request =
@@ -1024,7 +1024,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             Assert.Throws<Exception>(
                 () =>
-                    mBotBadResponse.EditMessageReplyMarkup("TestChatId", 123, "TestInlineMessageId", GetInlineKeyboard()));
+                    mBotBadResponse.EditMessageReplyMarkup("TestChatId", 123, "TestInlineMessageId", Keyboards.GetInlineKeyboard()));
         }
 
 
@@ -1048,21 +1048,6 @@ namespace NetTelebot.Tests.RequestToMockTest
             Assert.Throws<Exception>(
                 () =>
                     mBotBadResponse.DeleteMessage("TestChatId", 123456));
-        }
-
-        //todo move to common utils
-        private static InlineKeyboardMarkup GetInlineKeyboard()
-        {
-            InlineKeyboardButton[][] keyboard =
-            {
-                new[] {new InlineKeyboardButton {Text = "1"}, new InlineKeyboardButton {Text = "2"}},
-                new[] {new InlineKeyboardButton {Text = "3"}, new InlineKeyboardButton {Text = "4"}},
-            };
-
-            return new InlineKeyboardMarkup
-            {
-                Keyboard = keyboard
-            };
         }
     }
 }
