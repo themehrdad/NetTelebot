@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using NetTelebot.Result;
 using NetTelebot.Type;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 
 namespace NetTelebot
@@ -54,7 +55,7 @@ namespace NetTelebot
         /// <returns>Returns a class containing messages sent to your bot</returns>
         public GetUpdatesResult GetUpdates()
         {
-            return GetUpdatesInternal(null, null);
+            return GetUpdatesInternal(null, null, null, null);
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace NetTelebot
         /// <returns>On success, the sent <see cref="GetUpdatesResult"/> is returned.</returns>
         public GetUpdatesResult GetUpdates(int offset)
         {
-            return GetUpdatesInternal(offset, null);
+            return GetUpdatesInternal(offset, null, null, null);
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace NetTelebot
         /// <returns>Returns a class containing messages sent to your bot</returns>
         public GetUpdatesResult GetUpdates(byte limit)
         {
-            return GetUpdatesInternal(null, limit);
+            return GetUpdatesInternal(null, limit, null, null);
         }
 
         /// <summary>
@@ -85,10 +86,10 @@ namespace NetTelebot
         /// <returns>On success, the sent <see cref="GetUpdatesResult"/> is returned.</returns>
         public GetUpdatesResult GetUpdates(int offset, byte limit)
         {
-            return GetUpdatesInternal(offset, limit);
+            return GetUpdatesInternal(offset, limit, null, null);
         }
 
-        private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit)
+        private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit, int? timeout, AllowedUpdates[] allowedUpdates)
         {
             CheckToken();
 
@@ -98,6 +99,10 @@ namespace NetTelebot
                 request.AddQueryParameter("offset", offset.Value.ToString());
             if (limit.HasValue)
                 request.AddQueryParameter("limit", limit.Value.ToString());
+            if (timeout.HasValue)
+                request.AddQueryParameter("timeout", timeout.Value.ToString());
+            if (allowedUpdates != null)
+                request.AddQueryParameter("allowed_update", AllowedUpdates.GetJson(allowedUpdates).ToString());
 
             return ExecuteRequest<GetUpdatesResult>(request) as GetUpdatesResult;
         }
@@ -180,6 +185,40 @@ namespace NetTelebot
             
             mLastUpdateId = updates.Result.Last().UpdateId;
             OnUpdatesReceived(updates.Result);
+        }
+    }
+
+    /*public interface IAllowedUpdates
+    {
+        JObject GetJson(AllowedUpdates[] allowedUpdateses);
+    }*/
+
+    public class AllowedUpdates 
+    {
+        public string Message;
+        public string EditedMessage;
+        public string ChannelPost;
+        public string EditedChannelPost;
+        public string InlineQuery;
+        public string ChosenInlineResult;
+        public string CallbackQuery;
+        public string ShippingQuery;
+        public string PreCheckoutQuery;
+
+        public static JObject GetJson(AllowedUpdates[] allowedUpdateses)
+        {
+            dynamic json = new JObject();
+
+            foreach (var updates in allowedUpdateses)
+            {
+                if (updates.InlineQuery != null)
+                    json = json.inline_query;
+                if (updates.Message != null)
+                    json = json + json.message;
+
+            }
+
+            return json;
         }
     }
 }
