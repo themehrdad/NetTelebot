@@ -107,6 +107,26 @@ namespace NetTelebot.Tests.RequestToMockTest
 
         #endregion
 
+        #region GetUpdatesWithAllowedUpdates
+
+        [Test]
+        public static void GetUpdatesWithAllowedUpdates()
+        {
+            MockServer.ServerOkResponse.ResetRequestLogs();
+
+            MockServer.AddNewRouter("/botToken/getUpdates*", ResponseStringGetUpdatesResult.ExpectedBodyWithObjectMessage);
+
+            AllowedUpdates[] allowedUpdateses = {AllowedUpdates.Message, AllowedUpdates.EditedMessage};
+            mBotOkResponse.GetUpdates(allowedUpdateses);
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates*").UsingPost());
+
+            Console.WriteLine(request.FirstOrDefault()?.Url);
+
+        }
+
+        #endregion
+
         [Test]
         public static void GetUpdatesWithMessageObjectTest()
         {

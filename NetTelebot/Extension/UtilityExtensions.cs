@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Extension
 {
@@ -41,6 +43,23 @@ namespace NetTelebot.Extension
                 return (T) Enum.Parse(typeof (T), enumString, true);
 
             return null;
+        }
+        
+        public static string GetJarray(this AllowedUpdates[] allowedUpdateses)
+        {
+            JArray jArray = new JArray();
+
+            foreach (AllowedUpdates allowedUpdates in allowedUpdateses)
+            {
+                if(allowedUpdates == AllowedUpdates.Message)
+                    jArray.Add("message");
+                if (allowedUpdates == AllowedUpdates.EditedMessage)
+                    jArray.Add("edited_massage");
+
+
+            }
+
+            return jArray.ToString();
         }
     }
 }

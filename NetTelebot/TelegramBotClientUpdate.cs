@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Threading;
+using NetTelebot.Extension;
 using NetTelebot.Result;
 using NetTelebot.Type;
 using Newtonsoft.Json.Linq;
@@ -78,6 +80,12 @@ namespace NetTelebot
             return GetUpdatesInternal(null, limit, null, null);
         }
 
+
+        public GetUpdatesResult GetUpdates(AllowedUpdates[] allowedUpdates)
+        {
+            return GetUpdatesInternal(null, null, null, allowedUpdates);
+        }
+
         /// <summary>
         /// Gets messages sent to your bot, starting from update_id set by offset, maximum number is set by limit
         /// </summary>
@@ -88,6 +96,7 @@ namespace NetTelebot
         {
             return GetUpdatesInternal(offset, limit, null, null);
         }
+
 
         private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit, int? timeout, AllowedUpdates[] allowedUpdates)
         {
@@ -102,7 +111,7 @@ namespace NetTelebot
             if (timeout.HasValue)
                 request.AddQueryParameter("timeout", timeout.Value.ToString());
             if (allowedUpdates != null)
-                request.AddQueryParameter("allowed_update", AllowedUpdates.GetJson(allowedUpdates).ToString());
+                request.AddQueryParameter("allowed_update", allowedUpdates.GetJarray());
 
             return ExecuteRequest<GetUpdatesResult>(request) as GetUpdatesResult;
         }
@@ -188,37 +197,40 @@ namespace NetTelebot
         }
     }
 
+    public enum AllowedUpdates
+    {
+        Message,
+        EditedMessage,
+        ChannelPost,
+        EditedChannelPost,
+        InlineQuery,
+        ChosenInlineResult,
+        CallbackQuery,
+        ShippingQuery,
+        PreCheckoutQuery
+    }
+
     /*public interface IAllowedUpdates
     {
         JObject GetJson(AllowedUpdates[] allowedUpdateses);
     }*/
 
-    public class AllowedUpdates 
+    public class AllowedUpdate 
     {
-        public string Message;
-        public string EditedMessage;
-        public string ChannelPost;
-        public string EditedChannelPost;
-        public string InlineQuery;
-        public string ChosenInlineResult;
-        public string CallbackQuery;
-        public string ShippingQuery;
-        public string PreCheckoutQuery;
-
-        public static JObject GetJson(AllowedUpdates[] allowedUpdateses)
+        public static string GetJson(AllowedUpdates[] allowedUpdateses)
         {
-            dynamic json = new JObject();
+           StringBuilder stringBuilder = new StringBuilder();
 
-            foreach (var updates in allowedUpdateses)
+            foreach (AllowedUpdates updates in allowedUpdateses)
             {
-                if (updates.InlineQuery != null)
-                    json = json.inline_query;
-                if (updates.Message != null)
-                    json = json + json.message;
+                if (updates == AllowedUpdates.Message)
+                    stringBuilder.Append("message");
+                if (updates == AllowedUpdates.EditedMessage)
+                    stringBuilder.Append("edited_message");
 
             }
 
-            return json;
+            return stringBuilder.ToString();
         }
     }
 }
