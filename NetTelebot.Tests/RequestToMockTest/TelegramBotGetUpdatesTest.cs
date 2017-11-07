@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Mock4Net.Core;
+using NetTelebot.BotEnum;
 using NetTelebot.Result;
 using NetTelebot.Tests.MockServers;
 using NetTelebot.Type;

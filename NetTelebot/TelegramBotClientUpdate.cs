@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Text;
 using System.Threading;
+using NetTelebot.BotEnum;
 using NetTelebot.Extension;
 using NetTelebot.Result;
 using NetTelebot.Type;
-using Newtonsoft.Json.Linq;
 using RestSharp;
 
 namespace NetTelebot
@@ -111,7 +111,7 @@ namespace NetTelebot
             if (timeout.HasValue)
                 request.AddQueryParameter("timeout", timeout.Value.ToString());
             if (allowedUpdates != null)
-                request.AddQueryParameter("allowed_update", allowedUpdates.GetJarray());
+                request.AddQueryParameter("allowed_update", allowedUpdates.ToJarray());
 
             return ExecuteRequest<GetUpdatesResult>(request) as GetUpdatesResult;
         }
@@ -194,43 +194,6 @@ namespace NetTelebot
             
             mLastUpdateId = updates.Result.Last().UpdateId;
             OnUpdatesReceived(updates.Result);
-        }
-    }
-
-    public enum AllowedUpdates
-    {
-        Message,
-        EditedMessage,
-        ChannelPost,
-        EditedChannelPost,
-        InlineQuery,
-        ChosenInlineResult,
-        CallbackQuery,
-        ShippingQuery,
-        PreCheckoutQuery
-    }
-
-    /*public interface IAllowedUpdates
-    {
-        JObject GetJson(AllowedUpdates[] allowedUpdateses);
-    }*/
-
-    public class AllowedUpdate 
-    {
-        public static string GetJson(AllowedUpdates[] allowedUpdateses)
-        {
-           StringBuilder stringBuilder = new StringBuilder();
-
-            foreach (AllowedUpdates updates in allowedUpdateses)
-            {
-                if (updates == AllowedUpdates.Message)
-                    stringBuilder.Append("message");
-                if (updates == AllowedUpdates.EditedMessage)
-                    stringBuilder.Append("edited_message");
-
-            }
-
-            return stringBuilder.ToString();
         }
     }
 }

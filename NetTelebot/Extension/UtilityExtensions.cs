@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text;
+using NetTelebot.BotEnum;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Extension
@@ -44,8 +44,13 @@ namespace NetTelebot.Extension
 
             return null;
         }
-        
-        public static string GetJarray(this AllowedUpdates[] allowedUpdateses)
+
+        /// <summary>
+        /// Converts AllowedUpdates[] to JArray.
+        /// </summary>
+        /// <param name="allowedUpdateses">List the types of updates you want your bot to receive</param>
+        /// <returns>Jarray the types of updates</returns>
+        public static string ToJarray(this AllowedUpdates[] allowedUpdateses)
         {
             JArray jArray = new JArray();
 
@@ -54,9 +59,21 @@ namespace NetTelebot.Extension
                 if(allowedUpdates == AllowedUpdates.Message)
                     jArray.Add("message");
                 if (allowedUpdates == AllowedUpdates.EditedMessage)
-                    jArray.Add("edited_massage");
-
-
+                    jArray.Add("edited_message");
+                if(allowedUpdates == AllowedUpdates.ChannelPost)
+                    jArray.Add("channel_post");
+                if(allowedUpdates == AllowedUpdates.EditedChannelPost)
+                    jArray.Add("edited_channel_post");
+                if(allowedUpdates == AllowedUpdates.InlineQuery)
+                    jArray.Add("inline_query");
+                if(allowedUpdates == AllowedUpdates.ChosenInlineResult)
+                    jArray.Add("chosen_inline_result");
+                if(allowedUpdates == AllowedUpdates.CallbackQuery)
+                    jArray.Add("callback_query");
+                if(allowedUpdates == AllowedUpdates.ShippingQuery)
+                    jArray.Add("shipping_query");
+                if(allowedUpdates == AllowedUpdates.PreCheckoutQuery)
+                    jArray.Add("pre_checkout_query");
             }
 
             return jArray.ToString();
