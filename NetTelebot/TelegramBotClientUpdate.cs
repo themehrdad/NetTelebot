@@ -87,10 +87,13 @@ namespace NetTelebot
         /// </summary>
         /// <param name="timeout">Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. 
         /// Should be positive, short polling should be used for testing purposes only.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// On success, the sent <see cref="GetUpdatesResult" /> is returned.
+        /// </returns>
         [Obsolete("Please use named arguments. Example: GetUpdates(timeout:10). In the next version, overloaded methods will be removed")]
         public GetUpdatesResult GetUpdates(long timeout)
         {
+            //todo test this (mock + real)
             return GetUpdates(null, null, timeout);
         }
 
@@ -105,6 +108,7 @@ namespace NetTelebot
         [Obsolete("Please use named arguments. Example: GetUpdates(allowedUpdates:new[]{AllowedUpdates.Message}). In the next version, overloaded methods will be removed")]
         public GetUpdatesResult GetUpdates(AllowedUpdates[] allowedUpdates)
         {
+            //todo test this (real)
             return GetUpdates(null, null, null, allowedUpdates);
         }
 
