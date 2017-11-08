@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using NetTelebot.BotEnum;
 using NetTelebot.Extension;
@@ -52,53 +51,102 @@ namespace NetTelebot
         public event EventHandler<TelegramUpdateEventArgs> UpdatesReceived;
 
         /// <summary>
-        /// Gets first 100 messages sent to your bot.
+        /// Use this method to receive incoming updates using long polling
         /// </summary>
-        /// <returns>Returns a class containing messages sent to your bot</returns>
-        public GetUpdatesResult GetUpdates()
-        {
-            return GetUpdatesInternal(null, null, null, null);
-        }
-
-        /// <summary>
-        /// Gets maximum 100 messages sent to your bot, starting from update_id set by offset
-        /// </summary>
-        /// <param name="offset">First update_id to be downloaded</param>
-        /// <returns>On success, the sent <see cref="GetUpdatesResult"/> is returned.</returns>
+        /// <param name="offset">Identifier of the first update to be returned. 
+        /// Must be greater by one than the highest among the identifiers of previously received updates. 
+        /// By default, updates starting with the earliest unconfirmed update are returned. 
+        /// An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id. 
+        /// The negative offset can be specified to retrieve updates starting from -offset update from the end of the updates queue. 
+        /// All previous updates will forgotten.</param>
+        /// <returns>
+        /// On success, the sent <see cref="GetUpdatesResult"/> is returned.
+        /// </returns>
+        [Obsolete("Please use named arguments. Example: GetUpdates(offset:1). In the next version, overloaded methods will be removed")]
         public GetUpdatesResult GetUpdates(int offset)
         {
-            return GetUpdatesInternal(offset, null, null, null);
+            return GetUpdates(offset, null);
         }
 
         /// <summary>
-        /// Gets messages sent to your bot, from the begining and maximum number of limit set as parameter
+        /// Use this method to receive incoming updates using long polling
         /// </summary>
-        /// <param name="limit">Maximum number of messages to receive. It cannot be more than 100</param>
-        /// <returns>Returns a class containing messages sent to your bot</returns>
+        /// <param name="limit">Limits the number of updates to be retrieved. 
+        /// Values between 1—100 are accepted. Defaults to 100.</param>
+        /// <returns>
+        /// On success, the sent <see cref="GetUpdatesResult" /> is returned.
+        /// </returns>
+        [Obsolete("Please use named arguments. Example: GetUpdates(limit:10). In the next version, overloaded methods will be removed")]
         public GetUpdatesResult GetUpdates(byte limit)
         {
-            return GetUpdatesInternal(null, limit, null, null);
-        }
-
-
-        public GetUpdatesResult GetUpdates(AllowedUpdates[] allowedUpdates)
-        {
-            return GetUpdatesInternal(null, null, null, allowedUpdates);
+            return GetUpdates(null, limit);
         }
 
         /// <summary>
-        /// Gets messages sent to your bot, starting from update_id set by offset, maximum number is set by limit
+        /// Use this method to receive incoming updates using long polling
         /// </summary>
-        /// <param name="offset">First update_id to be downloaded</param>
-        /// <param name="limit">Maximum number of messages to receive. It cannot be more than 100</param>
-        /// <returns>On success, the sent <see cref="GetUpdatesResult"/> is returned.</returns>
-        public GetUpdatesResult GetUpdates(int offset, byte limit)
+        /// <param name="timeout">Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. 
+        /// Should be positive, short polling should be used for testing purposes only.</param>
+        /// <returns></returns>
+        [Obsolete("Please use named arguments. Example: GetUpdates(timeout:10). In the next version, overloaded methods will be removed")]
+        public GetUpdatesResult GetUpdates(long timeout)
         {
-            return GetUpdatesInternal(offset, limit, null, null);
+            return GetUpdates(null, null, timeout);
         }
 
+        /// <summary>
+        /// Use this method to receive incoming updates using long polling
+        /// </summary>
+        /// <param name="allowedUpdates">List the types of updates you want your bot to receive. 
+        /// Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.</param>
+        /// <returns>
+        /// On success, the sent <see cref="GetUpdatesResult" /> is returned.
+        /// </returns>
+        [Obsolete("Please use named arguments. Example: GetUpdates(allowedUpdates:new[]{AllowedUpdates.Message}). In the next version, overloaded methods will be removed")]
+        public GetUpdatesResult GetUpdates(AllowedUpdates[] allowedUpdates)
+        {
+            return GetUpdates(null, null, null, allowedUpdates);
+        }
 
-        private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit, int? timeout, AllowedUpdates[] allowedUpdates)
+        /// <summary>
+        /// Use this method to receive incoming updates using long polling
+        /// </summary>
+        /// <param name="offset">Identifier of the first update to be returned. 
+        /// Must be greater by one than the highest among the identifiers of previously received updates. 
+        /// By default, updates starting with the earliest unconfirmed update are returned. 
+        /// An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id. 
+        /// The negative offset can be specified to retrieve updates starting from -offset update from the end of the updates queue. 
+        /// All previous updates will forgotten.</param>
+        /// <param name="limit">Limits the number of updates to be retrieved. Values between 1—100 are accepted. Defaults to 100.</param>
+        /// <returns>
+        /// On success, the sent <see cref="GetUpdatesResult" /> is returned.
+        /// </returns>
+        [Obsolete("Please use named arguments. Example: GetUpdates(offset:1, limit:10). In the next version, overloaded methods will be removed")]
+        public GetUpdatesResult GetUpdates(int offset, byte limit)
+        {
+            return GetUpdates(offset, limit, null);
+        }
+
+        /// <summary>
+        /// Use this method to receive incoming updates using long polling
+        /// </summary>
+        /// <param name="offset">Identifier of the first update to be returned. 
+        /// Must be greater by one than the highest among the identifiers of previously received updates. 
+        /// By default, updates starting with the earliest unconfirmed update are returned. 
+        /// An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id. 
+        /// The negative offset can be specified to retrieve updates starting from -offset update from the end of the updates queue. 
+        /// All previous updates will forgotten.</param>
+        /// <param name="limit">Limits the number of updates to be retrieved. 
+        /// Values between 1—100 are accepted. Defaults to 100.</param>
+        /// <param name="timeout">Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. 
+        /// Should be positive, short polling should be used for testing purposes only.</param>
+        /// <param name="allowedUpdates">List the types of updates you want your bot to receive. 
+        /// Specify an empty list to receive all updates regardless of type (default). 
+        /// If not specified, the previous setting will be used.</param>
+        /// <returns>
+        /// On success, the sent <see cref="GetUpdatesResult" /> is returned.
+        /// </returns>
+        public GetUpdatesResult GetUpdates(int? offset = null, byte? limit = null, long? timeout = null, AllowedUpdates[] allowedUpdates = null)
         {
             CheckToken();
 
@@ -153,7 +201,7 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// Called when [get updates error].
+        /// Called when updates error.
         /// </summary>
         /// <param name="exception">The exception.</param>
         protected virtual void OnGetUpdatesError(Exception exception)
@@ -173,7 +221,7 @@ namespace NetTelebot
             {
                 GetUpdatesResult updates = mLastUpdateId == 0
                     ? GetUpdates()
-                    : GetUpdates(mLastUpdateId + 1);
+                    : GetUpdates(offset:mLastUpdateId + 1);
 
                 UpdateReceived(updates);
             }

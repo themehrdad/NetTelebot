@@ -1,7 +1,6 @@
 ﻿using System;
 using NetTelebot.BotEnum;
 using NetTelebot.Extension;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace NetTelebot.Tests
@@ -82,7 +81,7 @@ namespace NetTelebot.Tests
             eEe
         }
 
-        [Test, Ignore("Fail")]
+        [Test]
         public static void AllowedUpdateToJarray()
         {
             AllowedUpdates[] allowedUpdateses =
@@ -98,20 +97,15 @@ namespace NetTelebot.Tests
                 AllowedUpdates.PreCheckoutQuery
             };
 
-            JArray expectedJArray = new JArray
-            {
-                "message",
-                "edited_message",
-                "channel_post",
-                "edited_channel_post",
-                "inline_query",
-                "chosen_inline_result",
-                "callback_query",
-                "shipping_query",
-                "pre_checkout_query"
-            };
-
-            Assert.AreEqual(expectedJArray, allowedUpdateses.ToJarray());
+            Assert.AreEqual("[\r\n  \"message\",\r\n  " +
+                            "\"edited_message\",\r\n  " +
+                            "\"channel_post\",\r\n  " +
+                            "\"edited_channel_post\",\r\n  " +
+                            "\"inline_query\",\r\n  " +
+                            "\"chosen_inline_result\",\r\n  " +
+                            "\"callback_query\",\r\n  " +
+                            "\"shipping_query\",\r\n  " +
+                            "\"pre_checkout_query\"\r\n]", allowedUpdateses.ToJarray());
         }
 
     }
