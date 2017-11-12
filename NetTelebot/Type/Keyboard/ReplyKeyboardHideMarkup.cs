@@ -9,6 +9,7 @@ namespace NetTelebot.Type.Keyboard
     /// By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button
     /// Since the value "hide_keyboard: false" does not make sense, the field of the class of this value is missing
     /// </summary>
+    //todo remove this
     [Obsolete("In version 1.0.11 it will be deleted. Use ReplyKeyboardRemove")]
     public class ReplyKeyboardHideMarkup : IReplyMarkup
     {

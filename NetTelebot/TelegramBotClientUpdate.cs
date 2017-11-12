@@ -93,7 +93,7 @@ namespace NetTelebot
         [Obsolete("Please use named arguments. Example: GetUpdates(timeout:10). In the next version, overloaded methods will be removed")]
         public GetUpdatesResult GetUpdates(long timeout)
         {
-            //todo test this (mock + real)
+            //todo test this (real)
             return GetUpdates(null, null, timeout);
         }
 

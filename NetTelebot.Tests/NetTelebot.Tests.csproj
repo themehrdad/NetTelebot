@@ -80,8 +80,9 @@
     <Compile Include="NullReferenceExceptionTest\MessageInfoSimpleTypesTest.cs" />
     <Compile Include="RequestToMockTest\TelegramBotEventHandlerTest.cs" />
     <Compile Include="RequestToMockTest\TelegramBotGetUpdatesTest.cs" />
-    <Compile Include="RequestToTelegramTest\TelegramBotInlineKeyboardTest.cs" />
-    <Compile Include="RequestToTelegramTest\TelegramBotKeyboardTest.cs" />
+    <Compile Include="RequestToTelegramTest\InlineKeyboardTest.cs" />
+    <Compile Include="RequestToTelegramTest\KeyboardTest.cs" />
+    <Compile Include="RequestToTelegramTest\UpdatesTests.cs" />
     <Compile Include="ResponseTest\BooleanResultParserTest.cs" />
     <Compile Include="ResponseTest\CallbackQueryParserTest.cs" />
     <Compile Include="ResponseTest\ChatMemberInfoResultParserTest.cs" />
@@ -115,7 +116,7 @@
     <Compile Include="TypeTestObject\ResultTestObject\BooleanResultObject.cs" />
     <Compile Include="RequestToMockTest\TelegramBotClientTest.cs" />
     <Compile Include="RequestToMockTest\TelegramBotKeyboardTest.cs" />
-    <Compile Include="RequestToTelegramTest\TelegramBotClientTest.cs" />
+    <Compile Include="RequestToTelegramTest\MethodTests.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\ChatMemberInfoResultObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\ChatMembersInfoResultObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\FileInfoResultObject.cs" />
