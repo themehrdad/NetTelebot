@@ -120,6 +120,26 @@ namespace NetTelebot.Tests.RequestToMockTest
 
         #endregion
 
+        #region GetUpdatesWithTimeout
+
+        [Test]
+        public static void GetUpdatesWithTimeout()
+        {
+            MockServer.ServerOkResponse.ResetRequestLogs();
+
+            MockServer.AddNewRouter("/botToken/getUpdates*", ResponseStringGetUpdatesResult.ExpectedBodyWithObjectMessage);
+
+            mBotOkResponse.GetUpdates(timeout:10);
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates*").UsingPost());
+
+            ConsoleUtlis.PrintResult(request);
+
+            Assert.AreEqual("/botToken/getUpdates?timeout=10", request.FirstOrDefault()?.Url);
+        }
+
+        #endregion
+
         #region GetUpdatesWithAllowedUpdates
 
         [Test]
@@ -143,12 +163,11 @@ namespace NetTelebot.Tests.RequestToMockTest
             };
 
             
-            mBotOkResponse.GetUpdates(allowedUpdates:allowedUpdateses);
+            mBotOkResponse.GetUpdates(allowedUpdateses);
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates*").UsingPost());
 
             ConsoleUtlis.PrintResult(request);
-
 
             Assert.Multiple(() =>
             {
