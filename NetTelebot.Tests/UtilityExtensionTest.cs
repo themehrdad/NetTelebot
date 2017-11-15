@@ -1,4 +1,5 @@
 ﻿using System;
+using NetTelebot.BotEnum;
 using NetTelebot.Extension;
 using NUnit.Framework;
 
@@ -78,6 +79,33 @@ namespace NetTelebot.Tests
             /// The channel
             /// </summary>
             eEe
+        }
+
+        [Test]
+        public static void AllowedUpdateToJarray()
+        {
+            AllowedUpdates[] allowedUpdateses =
+            {
+                AllowedUpdates.Message,
+                AllowedUpdates.EditedMessage, 
+                AllowedUpdates.ChannelPost,
+                AllowedUpdates.EditedChannelPost, 
+                AllowedUpdates.InlineQuery, 
+                AllowedUpdates.ChosenInlineResult, 
+                AllowedUpdates.CallbackQuery, 
+                AllowedUpdates.ShippingQuery, 
+                AllowedUpdates.PreCheckoutQuery
+            };
+
+            Assert.AreEqual("[\r\n  \"message\",\r\n  " +
+                            "\"edited_message\",\r\n  " +
+                            "\"channel_post\",\r\n  " +
+                            "\"edited_channel_post\",\r\n  " +
+                            "\"inline_query\",\r\n  " +
+                            "\"chosen_inline_result\",\r\n  " +
+                            "\"callback_query\",\r\n  " +
+                            "\"shipping_query\",\r\n  " +
+                            "\"pre_checkout_query\"\r\n]", allowedUpdateses.ToJarray());
         }
 
     }

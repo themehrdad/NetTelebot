@@ -280,7 +280,5 @@ namespace NetTelebot.Tests.RequestToTelegramTest
         {
             return  AppDomain.CurrentDomain.BaseDirectory.Replace(@"\NetTelebot.Tests\bin\Debug", string.Empty);
         }
-
-
     }
 }

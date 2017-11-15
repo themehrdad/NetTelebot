@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace NetTelebot.Tests.RequestToTelegramTest
 {
     [TestFixture]
-    internal class TelegramBotKeyboardTest
+    internal class KeyboardTest
     {
         private TelegramBotClient mTelegramBot;
         private long? mChatGroupId;
@@ -94,6 +94,7 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             });
         }
 
+        //todo remove this
         [Test, Obsolete("In version 1.0.11 it will be deleted")]
         public void SendReplyKeyboardHideMarkupToGroupTest()
         {
