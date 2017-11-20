@@ -101,7 +101,6 @@
     <Compile Include="Type\Payment\SuccessfulPaymentInfo.cs" />
     <Compile Include="Type\PhotoSizeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Type\Keyboard\ReplyKeyboardHideMarkup.cs" />
     <Compile Include="Type\Keyboard\ReplyKeyboardMarkup.cs" />
     <Compile Include="Result\SendMessageResult.cs" />
     <Compile Include="Type\Payment\ShippingAddressInfo.cs" />
