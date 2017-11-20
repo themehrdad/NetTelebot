@@ -82,7 +82,6 @@
     <Compile Include="RequestToMockTest\TelegramBotGetUpdatesTest.cs" />
     <Compile Include="RequestToTelegramTest\InlineKeyboardTest.cs" />
     <Compile Include="RequestToTelegramTest\KeyboardTest.cs" />
-    <Compile Include="RequestToTelegramTest\UpdatesTests.cs" />
     <Compile Include="ResponseTest\BooleanResultParserTest.cs" />
     <Compile Include="ResponseTest\CallbackQueryParserTest.cs" />
     <Compile Include="ResponseTest\ChatMemberInfoResultParserTest.cs" />

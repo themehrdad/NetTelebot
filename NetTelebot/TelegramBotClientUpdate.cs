@@ -163,7 +163,7 @@ namespace NetTelebot
             if (timeout.HasValue)
                 request.AddQueryParameter("timeout", timeout.Value.ToString());
             if (allowedUpdates != null)
-                request.AddQueryParameter("allowed_update", allowedUpdates.ToJarray());
+                request.AddQueryParameter("allowed_updates", allowedUpdates.ToJarray());
 
             return ExecuteRequest<GetUpdatesResult>(request) as GetUpdatesResult;
         }
