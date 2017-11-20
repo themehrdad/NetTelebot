@@ -18,7 +18,7 @@ namespace NetTelebot.Tests.RequestToMockTest
     /// Server responses are defined within the methods of the current query method is the same (is method GetUpdates <see href="https://core.telegram.org/bots/api#getupdates"/>)
     /// </summary>
     [TestFixture]
-    internal static class TelegramBotGetUpdatesTest
+    internal static class GetUpdatesTest
     {
         private const int mOkServerPort = 8095;
         private const int mBadServerPort = 8096;

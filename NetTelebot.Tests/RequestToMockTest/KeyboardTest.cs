@@ -9,7 +9,7 @@ using RestSharp;
 namespace NetTelebot.Tests.RequestToMockTest
 {
     [TestFixture]
-    internal class TelegramBotKeyboardTest
+    internal class KeyboardTest
     {
         private const int mServerPort = 8090;
 
