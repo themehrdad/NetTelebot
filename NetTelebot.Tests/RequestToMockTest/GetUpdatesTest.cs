@@ -18,7 +18,7 @@ namespace NetTelebot.Tests.RequestToMockTest
     /// Server responses are defined within the methods of the current query method is the same (is method GetUpdates <see href="https://core.telegram.org/bots/api#getupdates"/>)
     /// </summary>
     [TestFixture]
-    internal static class TelegramBotGetUpdatesTest
+    internal static class GetUpdatesTest
     {
         private const int mOkServerPort = 8095;
         private const int mBadServerPort = 8096;
@@ -172,7 +172,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             Assert.Multiple(() =>
             {
                 Assert.AreEqual("/botToken/getUpdates?" +
-                                "allowed_update=%5B%0D%0A%20%20%22message" +
+                                "allowed_updates=%5B%0D%0A%20%20%22message" +
                                 "%22%2C%0D%0A%20%20%22edited_message" +
                                 "%22%2C%0D%0A%20%20%22channel_post" +
                                 "%22%2C%0D%0A%20%20%22edited_channel_post" +

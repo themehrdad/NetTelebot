@@ -7,7 +7,7 @@ using RestSharp;
 namespace NetTelebot.Tests.RequestToMockTest
 {
     [TestFixture]
-    internal static class TelegramBotEventHandlerTest
+    internal static class EventHandlerTest
     {
         private const int mOkServerPort = 8097;
         private const int mBadServerPort = 8098;

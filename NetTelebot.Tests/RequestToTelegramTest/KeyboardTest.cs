@@ -93,24 +93,5 @@ namespace NetTelebot.Tests.RequestToTelegramTest
                 Assert.True(sendMessageToSuperGroup.Ok);
             });
         }
-
-        //todo remove this
-        [Test, Obsolete("In version 1.0.11 it will be deleted")]
-        public void SendReplyKeyboardHideMarkupToGroupTest()
-        {
-            ReplyKeyboardHideMarkup hideMarkup = new ReplyKeyboardHideMarkup
-            {
-                Selective = false
-            };
-
-            SendMessageResult sendMessageToGroup = mTelegramBot.SendMessage(mChatGroupId, "Goodbay", replyMarkup: hideMarkup);
-            SendMessageResult sendMessageToSuperGroup = mTelegramBot.SendMessage(mChatSuperGroupId, "Goodbay", replyMarkup: hideMarkup);
-
-            Assert.Multiple(() =>
-            {
-                Assert.True(sendMessageToGroup.Ok);
-                Assert.True(sendMessageToSuperGroup.Ok);
-            });
-        }
     }
 }
