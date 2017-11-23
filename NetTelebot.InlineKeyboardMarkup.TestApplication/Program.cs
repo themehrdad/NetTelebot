@@ -33,9 +33,9 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
         /// <returns><see cref="TelegramBotClient"/></returns>
         private static TelegramBotClient GetBot()
         {
-            return new TelegramBotClient {Token = "425788947:AAFhirJjWfEyKjaL3_KzEuodGcrMnEHIlt4" };
+            //return new TelegramBotClient {Token = "ENTER YOUR TOKEN HERE"};
 
-            //return new TelegramBot().GetBot();
+            return new TelegramBot().GetBot();
         }
 
         private static void ClientGetUpdatesError(object sender, UnhandledExceptionEventArgs e)
