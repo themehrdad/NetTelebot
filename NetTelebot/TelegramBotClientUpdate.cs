@@ -156,11 +156,11 @@ namespace NetTelebot
 
             RestRequest request = new RestRequest(string.Format(mGetUpdatesUri, Token), Method.POST);
 
-            if (offset.HasValue)
+            if (offset != null)
                 request.AddQueryParameter("offset", offset.Value.ToString());
-            if (limit.HasValue)
+            if (limit != null)
                 request.AddQueryParameter("limit", limit.Value.ToString());
-            if (timeout.HasValue)
+            if (timeout != null)
                 request.AddQueryParameter("timeout", timeout.Value.ToString());
             if (allowedUpdates != null)
                 request.AddQueryParameter("allowed_updates", allowedUpdates.ToJarray());
