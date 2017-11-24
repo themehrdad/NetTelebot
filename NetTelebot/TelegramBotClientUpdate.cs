@@ -156,11 +156,11 @@ namespace NetTelebot
 
             RestRequest request = new RestRequest(string.Format(mGetUpdatesUri, Token), Method.POST);
 
-            if (offset != null)
+            if (offset.HasValue)
                 request.AddQueryParameter("offset", offset.Value.ToString());
-            if (limit != null)
+            if (limit.HasValue)
                 request.AddQueryParameter("limit", limit.Value.ToString());
-            if (timeout != null)
+            if (timeout.HasValue)
                 request.AddQueryParameter("timeout", timeout.Value.ToString());
             if (allowedUpdates != null)
                 request.AddQueryParameter("allowed_updates", allowedUpdates.ToJarray());
@@ -227,7 +227,7 @@ namespace NetTelebot
             {
                 GetUpdatesResult updates = mLastUpdateId == 0
                     ? GetUpdates()
-                    : GetUpdates(mLastUpdateId + 1);
+                    : GetUpdates(mLastUpdateId + 1, allowedUpdates:allowedUpdateses);
 
                 UpdateReceived(updates);
             }
