@@ -50,6 +50,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetTelebot.CommonUtils\NetTelebot.CommonUtils.csproj">
+      <Project>{58C5212E-1FF1-47E4-A131-A872E46E3A4C}</Project>
+      <Name>NetTelebot.CommonUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NetTelebot\NetTelebot.csproj">
+      <Project>{49C7146E-4A6B-406F-8332-042B9BCA19EB}</Project>
+      <Name>NetTelebot</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

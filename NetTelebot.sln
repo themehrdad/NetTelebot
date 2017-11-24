@@ -35,6 +35,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.InlineKeyboardMa
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelebot.GetUpdates.TestApplication", "NetTelebot.GetUpdates.TestApplication\NetTelebot.GetUpdates.TestApplication.csproj", "{9B95986D-26E2-4318-97D7-978C4C08EF17}"
+	ProjectSection(ProjectDependencies) = postProject
+		{58C5212E-1FF1-47E4-A131-A872E46E3A4C} = {58C5212E-1FF1-47E4-A131-A872E46E3A4C}
+		{49C7146E-4A6B-406F-8332-042B9BCA19EB} = {49C7146E-4A6B-406F-8332-042B9BCA19EB}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
