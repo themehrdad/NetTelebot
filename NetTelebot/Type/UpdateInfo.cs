@@ -17,7 +17,6 @@ namespace NetTelebot.Type
             Parse(jsonObject);
         }
 
-        //todo check NullReferenceException 
         private void Parse(JObject jsonObject)
         {
             UpdateId = jsonObject["update_id"].Value<int>();

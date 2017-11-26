@@ -93,7 +93,6 @@ namespace NetTelebot
         [Obsolete("Please use named arguments. Example: GetUpdates(timeout:10). In the next version, overloaded methods will be removed")]
         public GetUpdatesResult GetUpdates(long timeout)
         {
-            //todo test this (real)
             return GetUpdates(null, null, timeout);
         }
 
@@ -108,7 +107,6 @@ namespace NetTelebot
         [Obsolete("Please use named arguments. Example: GetUpdates(allowedUpdates:new[]{AllowedUpdates.Message}). In the next version, overloaded methods will be removed")]
         public GetUpdatesResult GetUpdates(AllowedUpdates[] allowedUpdates)
         {
-            //todo test this (real)
             return GetUpdates(null, null, null, allowedUpdates);
         }
 
@@ -164,6 +162,7 @@ namespace NetTelebot
                 request.AddQueryParameter("timeout", timeout.Value.ToString());
             if (allowedUpdates != null)
                 request.AddQueryParameter("allowed_updates", allowedUpdates.ToJarray());
+            
 
             return ExecuteRequest<GetUpdatesResult>(request) as GetUpdatesResult;
         }

@@ -12,16 +12,14 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
 
         private static void Main()
         {
-            AllowedUpdates[] allowedUpdateses = { AllowedUpdates.Message, AllowedUpdates.CallbackQuery  };
+            AllowedUpdates[] allowedUpdateses = { AllowedUpdates.Message, AllowedUpdates.CallbackQuery };
 
             mClient = GetBot();
 
             mClient.UpdatesReceived += ClientUpdatesReceived;
             mClient.GetUpdatesError += ClientGetUpdatesError;
 
-            mClient.GetUpdates(allowedUpdates:allowedUpdateses);
-
-            mClient.StartCheckingUpdates();
+            mClient.StartCheckingUpdates(allowedUpdateses:allowedUpdateses);
 
             ConsoleUtlis.WriteConsoleLog("Example bot start. For exit press any key");
             Console.ReadKey();
