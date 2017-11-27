@@ -53,13 +53,12 @@ See more examples in the project [wiki](https://github.com/themehrdad/NetTelebot
 
 ## Plans
 
-On the nearest release (1.0.12)
-- [ ] Add test for common project
-- [ ] Add all parameters for method getUpdates (offset, limit, timeout)
-- [x] Add all method for Updating messages
-- [x] Add all method and type for Payments
-- [x] Add the new fields author_signature, aption_entities and forward_signature to the MessageInfo object.
-- [x] Add the new field is_bot to the UserInfo object.
+On the nearest release (1.0.13)
+- [ ] Remove obsolete methods 
+- [ ] Add all sticker methods and types
+- [ ] Add new method sendMediaGroup and two kinds of InputMedia objects to support the new albums feature
+- [ ] Add support for pinning messages in channels. pinChatMessage and unpinChatMessage accept channels
+- [ ] Add the new field provider_data to sendInvoice for sharing information about the invoice with the payment provider
 
 
 For the project
