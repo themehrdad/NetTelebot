@@ -47,15 +47,21 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BotEnum\AllowedUpdates.cs" />
     <Compile Include="BotEnum\Countries.cs" />
     <Compile Include="BotEnum\Currency.cs" />
     <Compile Include="BotEnum\Status.cs" />
+    <Compile Include="Interface\IInlineKeyboardMarkup.cs" />
     <Compile Include="Result\ChatInfoResult.cs" />
     <Compile Include="Result\ChatMemberInfoResult.cs" />
     <Compile Include="Result\ChatMembersInfoResult.cs" />
     <Compile Include="Result\FileInfoResult.cs" />
     <Compile Include="Result\IntegerResult.cs" />
     <Compile Include="Result\UserInfoResult.cs" />
+    <Compile Include="TelegramBotClientCommon.cs" />
+    <Compile Include="TelegramBotClientPayment.cs" />
+    <Compile Include="TelegramBotClientUpdate.cs" />
+    <Compile Include="TelegramBotClientUpdatingMessages.cs" />
     <Compile Include="Type\AudioInfo.cs" />
     <Compile Include="Result\BooleanResult.cs" />
     <Compile Include="BotEnum\ChatActions.cs" />
@@ -87,18 +93,19 @@
     <Compile Include="Type\NewFile.cs" />
     <Compile Include="BotEnum\ParseMode.cs" />
     <Compile Include="Type\Payment\InvoceInfo.cs" />
+    <Compile Include="Type\Payment\LabeledPriceInfo.cs" />
     <Compile Include="Type\Payment\OrderInfo.cs" />
     <Compile Include="Type\Payment\PreCheckoutQueryInfo.cs" />
+    <Compile Include="Type\Payment\ShippingOptionInfo.cs" />
     <Compile Include="Type\Payment\ShippingQueryInfo.cs" />
     <Compile Include="Type\Payment\SuccessfulPaymentInfo.cs" />
     <Compile Include="Type\PhotoSizeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Type\Keyboard\ReplyKeyboardHideMarkup.cs" />
     <Compile Include="Type\Keyboard\ReplyKeyboardMarkup.cs" />
     <Compile Include="Result\SendMessageResult.cs" />
     <Compile Include="Type\Payment\ShippingAddressInfo.cs" />
     <Compile Include="Type\StickerInfo.cs" />
-    <Compile Include="TelegramBotClient.cs" />
+    <Compile Include="TelegramBotClientMethods.cs" />
     <Compile Include="Result\TelegramUpdateEventArgs.cs" />
     <Compile Include="Type\UpdateInfo.cs" />
     <Compile Include="Type\UserInfo.cs" />

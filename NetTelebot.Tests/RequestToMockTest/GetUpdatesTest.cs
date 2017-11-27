@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Mock4Net.Core;
+using NetTelebot.BotEnum;
+using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Tests.MockServers;
 using NetTelebot.Type;
@@ -16,7 +18,7 @@ namespace NetTelebot.Tests.RequestToMockTest
     /// Server responses are defined within the methods of the current query method is the same (is method GetUpdates <see href="https://core.telegram.org/bots/api#getupdates"/>)
     /// </summary>
     [TestFixture]
-    internal class TelegramBotGetUpdatesTest
+    internal static class GetUpdatesTest
     {
         private const int mOkServerPort = 8095;
         private const int mBadServerPort = 8096;
@@ -50,8 +52,11 @@ namespace NetTelebot.Tests.RequestToMockTest
         {
             TelegramBotClient telegramBot = new TelegramBotClient();
 
-            Assert.Throws<Exception>(() => telegramBot.StartCheckingUpdates());
-            Assert.Throws<Exception>(() => telegramBot.GetUpdates());
+            Assert.Multiple(() =>
+            {
+                Assert.Throws<Exception>(() => telegramBot.StartCheckingUpdates());
+                Assert.Throws<Exception>(() => telegramBot.GetUpdates());
+            });
         }
 
         #region GetUpdatesWithOffsetAndLimit
@@ -66,10 +71,13 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.GetUpdates(1, 1);
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates*").UsingPost());
 
-            Console.WriteLine(request.FirstOrDefault()?.Url);
+            ConsoleUtlis.PrintResult(request);
 
-            Assert.AreEqual("/botToken/getUpdates?offset=1&limit=1", request.FirstOrDefault()?.Url);
-            Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("/botToken/getUpdates?offset=1&limit=1", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
+            });
         }
 
         [Test]
@@ -82,11 +90,13 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.GetUpdates((byte)1);
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates*").UsingPost());
 
-            Console.WriteLine(request.FirstOrDefault()?.Url);
+            ConsoleUtlis.PrintResult(request);
 
-
-            Assert.AreEqual("/botToken/getUpdates?limit=1", request.FirstOrDefault()?.Url);
-            Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("/botToken/getUpdates?limit=1", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
+            });
         }
 
         [Test]
@@ -99,10 +109,82 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.GetUpdates(1);
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates*").UsingPost());
 
-            Console.WriteLine(request.FirstOrDefault()?.Url);
+            ConsoleUtlis.PrintResult(request);
 
-            Assert.AreEqual("/botToken/getUpdates?offset=1", request.FirstOrDefault()?.Url);
-            Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("/botToken/getUpdates?offset=1", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
+            });
+        }
+
+        #endregion
+
+        #region GetUpdatesWithTimeout
+
+        [Test]
+        public static void GetUpdatesWithTimeout()
+        {
+            MockServer.ServerOkResponse.ResetRequestLogs();
+
+            MockServer.AddNewRouter("/botToken/getUpdates*", ResponseStringGetUpdatesResult.ExpectedBodyWithObjectMessage);
+
+            mBotOkResponse.GetUpdates(timeout:10);
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates*").UsingPost());
+
+            ConsoleUtlis.PrintResult(request);
+
+            Assert.AreEqual("/botToken/getUpdates?timeout=10", request.FirstOrDefault()?.Url);
+        }
+
+        #endregion
+
+        #region GetUpdatesWithAllowedUpdates
+
+        [Test]
+        public static void GetUpdatesWithAllowedUpdates()
+        {
+            MockServer.ServerOkResponse.ResetRequestLogs();
+
+            MockServer.AddNewRouter("/botToken/getUpdates*", ResponseStringGetUpdatesResult.ExpectedBodyWithObjectMessage);
+
+            AllowedUpdates[] allowedUpdateses =
+            {
+                AllowedUpdates.Message,
+                AllowedUpdates.EditedMessage,
+                AllowedUpdates.ChannelPost,
+                AllowedUpdates.EditedChannelPost,
+                AllowedUpdates.InlineQuery,
+                AllowedUpdates.ChosenInlineResult,
+                AllowedUpdates.CallbackQuery,
+                AllowedUpdates.ShippingQuery,
+                AllowedUpdates.PreCheckoutQuery
+            };
+
+            
+            mBotOkResponse.GetUpdates(allowedUpdateses);
+
+            var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates*").UsingPost());
+
+            ConsoleUtlis.PrintResult(request);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("/botToken/getUpdates?" +
+                                "allowed_updates=%5B%0D%0A%20%20%22message" +
+                                "%22%2C%0D%0A%20%20%22edited_message" +
+                                "%22%2C%0D%0A%20%20%22channel_post" +
+                                "%22%2C%0D%0A%20%20%22edited_channel_post" +
+                                "%22%2C%0D%0A%20%20%22inline_query" +
+                                "%22%2C%0D%0A%20%20%22chosen_inline_result" +
+                                "%22%2C%0D%0A%20%20%22callback_query" +
+                                "%22%2C%0D%0A%20%20%22shipping_query" +
+                                "%22%2C%0D%0A%20%20%22pre_checkout_query%22%0D%0A%5D", request.FirstOrDefault()?.Url);
+
+                Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates(allowedUpdates:allowedUpdateses));
+            });
+
         }
 
         #endregion
@@ -168,10 +250,14 @@ namespace NetTelebot.Tests.RequestToMockTest
             mBotOkResponse.GetUpdates();
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates").UsingPost());
 
-            Console.WriteLine(request.FirstOrDefault()?.Url);
+            ConsoleUtlis.PrintResult(request);
 
-            Assert.AreEqual("/botToken/getUpdates", request.FirstOrDefault()?.Url);
-            Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("/botToken/getUpdates", request.FirstOrDefault()?.Url);
+                Assert.Throws<Exception>(() => mBotBadResponse.GetUpdates());
+            });
         }
     }
 }

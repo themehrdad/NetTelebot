@@ -13,7 +13,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
     internal class MessageInfoSelfTypeTest
     {
         private TelegramBotClient mTelegramBot;
-        private long mChatId;
+        private long? mChatId;
 
         /// <summary>
         /// Called when [test start].
@@ -91,6 +91,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsNull(messageInfo.Text);
 
                 Assert.IsInstanceOf<MessageEntityInfo[]>(messageInfo.Entities);
+                Assert.IsInstanceOf<MessageEntityInfo[]>(messageInfo.CaptionEntities);
 
                 Assert.IsInstanceOf<AudioInfo>(messageInfo.Audio);
                 Assert.AreEqual(0, messageInfo.Audio.Duration);

@@ -6,11 +6,11 @@ using NUnit.Framework;
 namespace NetTelebot.Tests.RequestToTelegramTest
 {
     [TestFixture]
-    internal class TelegramBotInlineKeyboardTest
+    internal class InlineKeyboardTest
     {
         private TelegramBotClient mTelegramBot;
-        private long mChatGroupId;
-        private long mChatSuperGroupId;
+        private long? mChatGroupId;
+        private long? mChatSuperGroupId;
 
         [SetUp]
         public void OnTestStart()

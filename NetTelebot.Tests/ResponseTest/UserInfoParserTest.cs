@@ -17,12 +17,13 @@ namespace NetTelebot.Tests.ResponseTest
         {
             const bool ok = true;
             const int id = 1000;
+            const bool isBot = false;
             const string firstName = "TestName";
             const string lastName = "testLastName";
             const string username = "testUsername";
             const string languageCode = "testLanguageCode";
 
-            JObject userObject = UserInfoObject.GetObject(id, firstName, lastName, username, languageCode);
+            JObject userObject = UserInfoObject.GetObject(id, isBot, firstName, lastName, username, languageCode);
 
             dynamic userInfoResultObject = UserInfoResultObject.GetObject(ok, userObject);
 
@@ -30,6 +31,7 @@ namespace NetTelebot.Tests.ResponseTest
 
             Assert.AreEqual(ok, userInfo.Ok);
             Assert.AreEqual(id, userInfo.Result.Id);
+            Assert.AreEqual(isBot, userInfo.Result.IsBot);
             Assert.AreEqual(firstName, userInfo.Result.FirstName);
             Assert.AreEqual(lastName, userInfo.Result.LastName);
             Assert.AreEqual(username, userInfo.Result.UserName);

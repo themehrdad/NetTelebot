@@ -12,8 +12,8 @@ namespace NetTelebot.Tests.RequestToTelegramTest
     internal class TelegramRealBotClientTest
     {
         private TelegramBotClient mTelegramBot;
-        private long mChatGroupId;
-        private long mChatSuperGroupId;
+        private long? mChatGroupId;
+        private long? mChatSuperGroupId;
 
         [SetUp]
         public void OnTestStart()
@@ -280,7 +280,5 @@ namespace NetTelebot.Tests.RequestToTelegramTest
         {
             return  AppDomain.CurrentDomain.BaseDirectory.Replace(@"\NetTelebot.Tests\bin\Debug", string.Empty);
         }
-
-
     }
 }

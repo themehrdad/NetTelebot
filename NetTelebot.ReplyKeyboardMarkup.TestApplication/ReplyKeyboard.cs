@@ -44,10 +44,9 @@ namespace NetTelebot.ReplyKeyboardMarkups.TestApplication
             return keyboard;
         }
 
-        internal static ReplyKeyboardRemove ReplyKeyboardRemove = new ReplyKeyboardRemove
+        internal static readonly ReplyKeyboardRemove ReplyKeyboardRemove = new ReplyKeyboardRemove
         {
             Selective = false
         };
-
     }
 }

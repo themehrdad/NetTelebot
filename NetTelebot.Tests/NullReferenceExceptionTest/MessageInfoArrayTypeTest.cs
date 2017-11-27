@@ -9,7 +9,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
     internal class MessageInfoArrayTypeTest
     {
         private TelegramBotClient mTelegramBot;
-        private long mChatId;
+        private long? mChatId;
 
         /// <summary>
         /// Called when [test start].
@@ -44,6 +44,32 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsEmpty(entities);
                 Assert.AreEqual(sendLocation.Result.Entities.Length, 0);
             });
+        }
+
+        /// <summary>
+        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.CaptionEntities"/>
+        /// </summary>
+        [Test]
+        public void TestAppealToTheEmptyCaptionEntities()
+        {
+            const float latitude = 37.0000114f;
+            const float longitude = 37.0000076f;
+
+            SendMessageResult sendLocation = mTelegramBot.SendLocation(mChatId, latitude, longitude);
+
+            var captionEntities = sendLocation.Result.CaptionEntities;
+
+            ConsoleUtlis.PrintResult(captionEntities);
+
+            Assert.Multiple(() =>
+            {
+                Assert.True(sendLocation.Ok);
+
+                Assert.IsInstanceOf(typeof(MessageEntityInfo[]), sendLocation.Result.CaptionEntities);
+                Assert.IsEmpty(sendLocation.Result.CaptionEntities);
+                Assert.AreEqual(sendLocation.Result.CaptionEntities.Length, 0);
+            });
+
         }
 
         /// <summary>

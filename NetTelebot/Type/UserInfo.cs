@@ -15,6 +15,7 @@ namespace NetTelebot.Type
         internal UserInfo(JObject jsonObject)
         {
             Id = jsonObject["id"].Value<int>();
+            IsBot = jsonObject["is_bot"].Value<bool>();
             FirstName = jsonObject["first_name"].Value<string>();
             if (jsonObject["last_name"] != null)
                 LastName = jsonObject["last_name"].Value<string>();
@@ -28,6 +29,11 @@ namespace NetTelebot.Type
         /// Unique identifier for this user or bot
         /// </summary>
         public int Id { get; private set; }
+
+        /// <summary>
+        /// True, if this user is a bot
+        /// </summary>
+        public bool IsBot { get; private set;  }
 
         /// <summary>
         /// User‘s or bot’s first name

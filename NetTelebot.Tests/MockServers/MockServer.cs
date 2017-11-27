@@ -28,6 +28,12 @@ namespace NetTelebot.Tests.MockServers
             AddNewRouter("/botToken/getChatAdministrators", ResponseString.ExpectedBodyForGetChatAdministrators);
             AddNewRouter("/botToken/getChatMember", ResponseString.ExpectedBodyForGetChatMember);
             AddNewRouter("/botToken/answerCallbackQuery", ResponseString.ExpectedBodyForBooleanResult);
+            AddNewRouter("/botToken/answerShippingQuery", ResponseString.ExpectedBodyForBooleanResult);
+            AddNewRouter("/botToken/answerPreCheckoutQuery", ResponseString.ExpectedBodyForBooleanResult);
+            AddNewRouter("/botToken/editMessageText", ResponseString.ExpectedBodyForSendMessageResult);
+            AddNewRouter("/botToken/editMessageCaption", ResponseString.ExpectedBodyForSendMessageResult);
+            AddNewRouter("/botToken/editMessageReplyMarkup", ResponseString.ExpectedBodyForSendMessageResult);
+            AddNewRouter("/botToken/deleteMessage", ResponseString.ExpectedBodyForBooleanResult);
 
             AddNewRouter("/", ResponseString.ExpectedBodyForBadResponse, ServerBadResponse, 401);
         }
@@ -56,7 +62,5 @@ namespace NetTelebot.Tests.MockServers
             ServerOkResponse?.Stop();
             ServerBadResponse?.Stop();
         }
-
-
     }
 }

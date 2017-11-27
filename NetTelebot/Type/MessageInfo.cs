@@ -51,6 +51,10 @@ namespace NetTelebot.Type
             if (jsonObject["forward_from_message_id"] != null)
                 ForwardFromMessageId = jsonObject["forward_from_message_id"].Value<int>();
 
+            ForwardSignature = jsonObject["forward_signature"] != null
+                ? jsonObject["forward_signature"].Value<string>()
+                : string.Empty;
+
             if (jsonObject["forward_date"]!=null)
             {
                 ForwardDateUnix = jsonObject["forward_date"].Value<long>();
@@ -67,12 +71,20 @@ namespace NetTelebot.Type
                 EditDate = EditDateUnix.ToDateTime();
             }
 
+            AuthorSignature = jsonObject["author_signature"] != null
+                ? jsonObject["author_signature"].Value<string>()
+                : string.Empty;
+
             Text = jsonObject["text"] != null 
                 ? jsonObject["text"].Value<string>() 
                 : string.Empty;
 
             Entities = jsonObject["entities"] != null
                 ? MessageEntityInfo.ParseArray(jsonObject["entities"].Value<JArray>())
+                : new MessageEntityInfo[0];
+
+            CaptionEntities = jsonObject["caption_entities"] != null
+                ? MessageEntityInfo.ParseArray(jsonObject["caption_entities"].Value<JArray>())
                 : new MessageEntityInfo[0];
 
             Audio = jsonObject["audio"] != null 
@@ -108,10 +120,6 @@ namespace NetTelebot.Type
                 ? new VideoNoteInfo(jsonObject["video_note"].Value<JObject>())
                 : new VideoNoteInfo {Thumb = new PhotoSizeInfo()};
 
-            NewChatMembers = jsonObject["new_chat_members"] != null
-                ? UserInfo.ParseArray(jsonObject["new_chat_members"].Value<JArray>())
-                : new UserInfo[0];
-
             Caption = jsonObject["caption"] != null 
                 ? jsonObject["caption"].Value<string>() 
                 : string.Empty;
@@ -131,6 +139,10 @@ namespace NetTelebot.Type
             NewChatMember = jsonObject["new_chat_member"] != null
                 ? new UserInfo(jsonObject["new_chat_member"].Value<JObject>())
                 : new UserInfo();
+
+            NewChatMembers = jsonObject["new_chat_members"] != null
+                ? UserInfo.ParseArray(jsonObject["new_chat_members"].Value<JArray>())
+                : new UserInfo[0];
 
             LeftChatMember = jsonObject["left_chat_member"] != null
                 ? new UserInfo(jsonObject["left_chat_member"].Value<JObject>())
@@ -185,6 +197,7 @@ namespace NetTelebot.Type
                 ForwardFromChat = new ChatInfo{Photo = new ChatPhotoInfo()},
                 ReplyToMessage = reply,
                 Entities = new MessageEntityInfo[0],
+                CaptionEntities = new MessageEntityInfo[0],
                 Audio = new AudioInfo(),
                 Document = new DocumentInfo {Thumb = new PhotoSizeInfo()},
                 Game  = new GameInfo
@@ -234,7 +247,7 @@ namespace NetTelebot.Type
         /// <summary>
         /// Date the message was sent in Unix time
         /// </summary>
-        public long DateUnix { get; private set; }
+        public long DateUnix { get; }
 
         /// <summary>
         /// Date the message was sent in <see cref="DateTime"/>
@@ -262,9 +275,14 @@ namespace NetTelebot.Type
         public int ForwardFromMessageId { get; private set; }
 
         /// <summary>
+        /// Optional. For messages forwarded from channels, signature of the post author if present
+        /// </summary>
+        public string ForwardSignature { get; private set; }
+
+        /// <summary>
         /// Optional. For forwarded messages, date the original message was sent in Unix time
         /// </summary>
-        public long ForwardDateUnix { get; private set; }
+        public long ForwardDateUnix { get; }
 
         /// <summary>
         /// Optional. For forwarded messages, date the original message was sent in <see cref="DateTime"/>
@@ -280,13 +298,18 @@ namespace NetTelebot.Type
         /// <summary>
         /// Optional. Date the message was last edited in Unix time
         /// </summary>
-        public long EditDateUnix { get; private set; }
+        public long EditDateUnix { get; }
 
         /// <summary>
         /// Optional. Date the message was last edited 
         /// </summary>
         /// <remarks> This extension, not the available API type <seealso cref="UtilityExtensions.ToDateTime"/> </remarks>
         public DateTime EditDate { get; private set; }
+
+        /// <summary>
+        /// Optional. Signature of the post author for messages in channels
+        /// </summary>
+        public string AuthorSignature { get; private set; }
 
         /// <summary>
         /// Optional. For text messages, the actual UTF-8 text of the message 
@@ -297,6 +320,11 @@ namespace NetTelebot.Type
         /// Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
         /// </summary>
         public MessageEntityInfo[] Entities { get; private set; }
+
+        /// <summary>
+        /// Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
+        /// </summary>
+        public MessageEntityInfo[] CaptionEntities { get; private set;  }
 
         /// <summary>
         /// Optional. Message is an audio file, information about the file TestAppealToTheEmptyAudio()
@@ -368,7 +396,8 @@ namespace NetTelebot.Type
         /// </summary>
         [Obsolete("See Introducing Bot API 3.0: " +
                   "Replaced the field new_chat_member in Message with new_chat_members " +
-                  "(the old field will still be available for a while for compatibility purposes).")]
+                  "(the old field will still be available for a while for compatibility purposes). " +
+                  "In version 10.0.13 will be removed")]
         public UserInfo NewChatMember { get; private set; }
 
         /// <summary>

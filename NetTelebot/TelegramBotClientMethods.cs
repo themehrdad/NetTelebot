@@ -1,9 +1,6 @@
 ﻿using RestSharp;
 using System;
-using System.Linq;
-using System.Net;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using NetTelebot.BotEnum;
 using NetTelebot.Interface;
 using NetTelebot.Result;
@@ -31,128 +28,44 @@ namespace NetTelebot
      * There are requests to the telegram servers
      */
 
-    /// <summary>
-    /// The main class to use Telegram Bot API. Get an instance of this class and set the Token property and start calling methods.
-    /// </summary>
-    public class TelegramBotClient
+    /* About this partial class
+     * 
+     * Part of the class, for methods that work with the api telegram.
+     * See API https://core.telegram.org/bots/api#available-methods
+     * 
+     * Note
+     * All methods in the Bot API are case-insensitive. We support GET and POST HTTP methods. Use either URL query string or application/json or 
+     * application/x-www-form-urlencoded or multipart/form-data for passing parameters in Bot API requests.
+     * On successful call, a JSON-object containing the result will be returned. 
+     * 
+     */
+
+    public partial class TelegramBotClient
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TelegramBotClient"/> class.
-        /// </summary>
-        public TelegramBotClient()
-        {
-            CheckInterval = 1000;
-            RestClient = new RestClient("https://api.telegram.org");
-        }
-
-        /// <summary>
-        /// Your bot token
-        /// </summary>
-        public string Token { get; set; }
-
-        /// <summary>
-        /// Gets or sets the REST client. Used in integartion test.
-        /// </summary>
-        internal RestClient RestClient { private get; set; }
-
-        /// <summary>
-        /// Interval time in milliseconds to get latest messages sent to your bot.
-        /// </summary>
-        public int CheckInterval { get; set; }
-
-        private const string getMeUri = "/bot{0}/getMe";
-        private const string getUpdatesUri = "/bot{0}/getUpdates";
-        private const string sendMessageUri = "/bot{0}/sendMessage";
-        private const string forwardMessageUri = "/bot{0}/forwardMessage";
-        private const string sendPhotoUri = "/bot{0}/sendPhoto";
-        private const string sendAudioUri = "/bot{0}/sendAudio";
-        private const string sendDocumentUri = "/bot{0}/sendDocument";
-        private const string sendStickerUri = "/bot{0}/sendSticker";
-        private const string sendVideoUri = "/bot{0}/sendVideo";
-        private const string sendVoiceUri = "/bot{0}/sendVoice";
-        private const string sendVideoNoteUri = "/bot{0}/sendVideoNote";
-        private const string sendLocationUri = "/bot{0}/sendLocation";
-        private const string sendVenueUri = "/bot{0}/sendVenue";
-        private const string sendContactUri = "/bot{0}/sendContact";
-        private const string sendChatActionUri = "/bot{0}/sendChatAction";
-        private const string getUserProfilePhotosUri = "/bot{0}/getUserProfilePhotos";
-        private const string getFileUri = "/bot{0}/getFile";
-        private const string kickChatMemberUri = "/bot{0}/kickChatMember";
-        private const string unbanChatMemberUri = "/bot{0}/unbanChatMember";
-        private const string leaveChatUri = "/bot{0}/leaveChat";
-        private const string getChatUri = "/bot{0}/getChat";
-        private const string getChatAdministratorsUri = "/bot{0}/getChatAdministrators";
-        private const string getChatMembersCountUri = "/bot{0}/getChatMembersCount";
-        private const string getChatMemberUri = "/bot{0}/getChatMember";
-        private const string answerCallbackQueryUri = "/bot{0}/answerCallbackQuery";
-
-        private Timer mUpdateTimer;
-        private int mLastUpdateId;
-
-        /// <summary>
-        /// Occurs when [get updates error].
-        /// </summary>
-        public event UnhandledExceptionEventHandler GetUpdatesError;
-        
-        /// <summary>
-        /// Whenever a message is sent to your bot, this event will be raised.
-        /// </summary>
-        public event EventHandler<TelegramUpdateEventArgs> UpdatesReceived;
-
-        /// <summary>
-        /// Gets first 100 messages sent to your bot.
-        /// </summary>
-        /// <returns>Returns a class containing messages sent to your bot</returns>
-        public GetUpdatesResult GetUpdates()
-        {
-            return GetUpdatesInternal(null, null);
-        }
-
-        /// <summary>
-        /// Gets maximum 100 messages sent to your bot, starting from update_id set by offset
-        /// </summary>
-        /// <param name="offset">First update_id to be downloaded</param>
-        /// <returns>On success, the sent <see cref="GetUpdatesResult"/> is returned.</returns>
-        public GetUpdatesResult GetUpdates(int offset)
-        {
-            return GetUpdatesInternal(offset, null);
-        }
-
-        /// <summary>
-        /// Gets messages sent to your bot, starting from update_id set by offset, maximum number is set by limit
-        /// </summary>
-        /// <param name="offset">First update_id to be downloaded</param>
-        /// <param name="limit">Maximum number of messages to receive. It cannot be more than 100</param>
-        /// <returns>On success, the sent <see cref="GetUpdatesResult"/> is returned.</returns>
-        public GetUpdatesResult GetUpdates(int offset, byte limit)
-        {
-            return GetUpdatesInternal(offset, limit);
-        }
-
-        /// <summary>
-        /// Gets messages sent to your bot, from the begining and maximum number of limit set as parameter
-        /// </summary>
-        /// <param name="limit">Maximum number of messages to receive. It cannot be more than 100</param>
-        /// <returns>Returns a class containing messages sent to your bot</returns>
-        public GetUpdatesResult GetUpdates(byte limit)
-        {
-            return GetUpdatesInternal(null, limit);
-        }
-
-        //todo refact this
-        private GetUpdatesResult GetUpdatesInternal(int? offset, byte? limit)
-        {
-            CheckToken();
-
-            RestRequest request = new RestRequest(string.Format(getUpdatesUri, Token), Method.POST);
-
-            if (offset.HasValue)
-                request.AddQueryParameter("offset", offset.Value.ToString());
-            if (limit.HasValue)
-                request.AddQueryParameter("limit", limit.Value.ToString());
-
-            return ExecuteRequest<GetUpdatesResult>(request) as GetUpdatesResult;
-        }
+        private const string mGetMeUri = "/bot{0}/getMe";
+        private const string mSendMessageUri = "/bot{0}/sendMessage";
+        private const string mForwardMessageUri = "/bot{0}/forwardMessage";
+        private const string mSendPhotoUri = "/bot{0}/sendPhoto";
+        private const string mSendAudioUri = "/bot{0}/sendAudio";
+        private const string mSendDocumentUri = "/bot{0}/sendDocument";
+        private const string mSendStickerUri = "/bot{0}/sendSticker";
+        private const string mSendVideoUri = "/bot{0}/sendVideo";
+        private const string mSendVoiceUri = "/bot{0}/sendVoice";
+        private const string mSendVideoNoteUri = "/bot{0}/sendVideoNote";
+        private const string mSendLocationUri = "/bot{0}/sendLocation";
+        private const string mSendVenueUri = "/bot{0}/sendVenue";
+        private const string mSendContactUri = "/bot{0}/sendContact";
+        private const string mSendChatActionUri = "/bot{0}/sendChatAction";
+        private const string mGetUserProfilePhotosUri = "/bot{0}/getUserProfilePhotos";
+        private const string mGetFileUri = "/bot{0}/getFile";
+        private const string mKickChatMemberUri = "/bot{0}/kickChatMember";
+        private const string mUnbanChatMemberUri = "/bot{0}/unbanChatMember";
+        private const string mLeaveChatUri = "/bot{0}/leaveChat";
+        private const string mGetChatUri = "/bot{0}/getChat";
+        private const string mGetChatAdministratorsUri = "/bot{0}/getChatAdministrators";
+        private const string mGetChatMembersCountUri = "/bot{0}/getChatMembersCount";
+        private const string mGetChatMemberUri = "/bot{0}/getChatMember";
+        private const string mAnswerCallbackQueryUri = "/bot{0}/answerCallbackQuery";
 
         private RestRequest NewRestRequest(string uri)
         {
@@ -162,20 +75,11 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// Called when [get updates error].
-        /// </summary>
-        /// <param name="exception">The exception.</param>
-        protected virtual void OnGetUpdatesError(Exception exception)
-        {
-            GetUpdatesError?.Invoke(this, new UnhandledExceptionEventArgs(exception, false));
-        }
-
-        /// <summary>
         /// Gets information about your bot. You can call this method as a ping
         /// </summary>
         public UserInfoResult GetsMe()
         {
-            return ExecuteRequest<UserInfoResult>(NewRestRequest(getMeUri)) as UserInfoResult;
+            return ExecuteRequest<UserInfoResult>(NewRestRequest(mGetMeUri)) as UserInfoResult;
         }
 
         /// <summary>
@@ -197,8 +101,8 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendMessageUri);
-            
+            RestRequest request = NewRestRequest(mSendMessageUri);
+
             request.AddParameter("chat_id", chatId);
             request.AddParameter("text", text);
             if (parseMode != null)
@@ -223,11 +127,11 @@ namespace NetTelebot
         /// <param name="messageId">Unique message identifier</param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
         /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned.</returns>
-        public SendMessageResult ForwardMessage(object chatId, int fromChatId, 
+        public SendMessageResult ForwardMessage(object chatId, int fromChatId,
             int messageId,
             bool? disableNotification = null)
         {
-            RestRequest request = NewRestRequest(forwardMessageUri);
+            RestRequest request = NewRestRequest(mForwardMessageUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("from_chat_id", fromChatId);
             if (disableNotification.HasValue)
@@ -255,7 +159,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendPhotoUri);
+            RestRequest request = NewRestRequest(mSendPhotoUri);
             request.AddParameter("chat_id", chatId);
             request = AddFile(photo, request, "photo");
 
@@ -298,7 +202,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendAudioUri);
+            RestRequest request = NewRestRequest(mSendAudioUri);
             request.AddParameter("chat_id", chatId);
             request = AddFile(audio, request, "audio");
 
@@ -338,7 +242,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendDocumentUri);
+            RestRequest request = NewRestRequest(mSendDocumentUri);
             request.AddParameter("chat_id", chatId);
             request = AddFile(document, request, "document");
 
@@ -369,7 +273,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendStickerUri);
+            RestRequest request = NewRestRequest(mSendStickerUri);
             request.AddParameter("chat_id", chatId);
             request = AddFile(sticker, request, "sticker");
 
@@ -407,7 +311,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendVideoUri);
+            RestRequest request = NewRestRequest(mSendVideoUri);
             request.AddParameter("chat_id", chatId);
             request = AddFile(video, request, "video");
 
@@ -441,16 +345,17 @@ namespace NetTelebot
         /// <param name="duration">Duration of the voice message in seconds </param>
         /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param>
         /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
-        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.</param>
+        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, 
+        /// instructions to remove reply keyboard or to force a reply from the user.</param>
         /// <returns></returns>
-        public SendMessageResult SendVoice(object chatId, IFile voice, 
+        public SendMessageResult SendVoice(object chatId, IFile voice,
             string caption = null,
             int? duration = null,
             bool? disableNotification = null,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendVoiceUri);
+            RestRequest request = NewRestRequest(mSendVoiceUri);
             request.AddParameter("chat_id", chatId);
             request = AddFile(voice, request, "voice");
 
@@ -490,7 +395,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendVideoNoteUri);
+            RestRequest request = NewRestRequest(mSendVideoNoteUri);
             request.AddParameter("chat_id", chatId);
             request = AddFile(videoNote, request, "video_note");
 
@@ -524,7 +429,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendLocationUri);
+            RestRequest request = NewRestRequest(mSendLocationUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("latitude", latitude);
             request.AddParameter("longitude", longitude);
@@ -553,13 +458,13 @@ namespace NetTelebot
         /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for an 
         /// inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.</param>
         /// <returns>On success, the sent <see cref="SendMessageResult"/> is returned</returns>
-        public SendMessageResult SendVenue(object chatId, float latitude, float longitude, string title, string address, 
+        public SendMessageResult SendVenue(object chatId, float latitude, float longitude, string title, string address,
             string foursquareId = null,
             bool? disableNotification = null,
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendVenueUri);
+            RestRequest request = NewRestRequest(mSendVenueUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("latitude", latitude);
             request.AddParameter("longitude", longitude);
@@ -596,7 +501,7 @@ namespace NetTelebot
             int? replyToMessageId = null,
             IReplyMarkup replyMarkup = null)
         {
-            RestRequest request = NewRestRequest(sendContactUri);
+            RestRequest request = NewRestRequest(mSendContactUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("phone_number", phoneNumber);
             request.AddParameter("first_name", firstName);
@@ -609,7 +514,7 @@ namespace NetTelebot
                 request.AddParameter("reply_to_message_id", replyToMessageId);
             if (replyMarkup != null)
                 request.AddParameter("reply_markup", replyMarkup.GetJson());
-            
+
             return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
         }
 
@@ -624,7 +529,7 @@ namespace NetTelebot
         /// record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.</param>
         public BooleanResult SendChatAction(object chatId, ChatActions action)
         {
-            RestRequest request = NewRestRequest(sendChatActionUri);
+            RestRequest request = NewRestRequest(mSendChatActionUri);
             request.AddParameter("chat_id", chatId);
             request.AddParameter("action", action.ToString().ToLower());
 
@@ -641,7 +546,7 @@ namespace NetTelebot
         /// <returns><see cref="UserProfilePhotosInfo"/></returns>
         public GetUserProfilePhotosResult GetUserProfilePhotos(int userId, int? offset = null, byte? limit = null)
         {
-            RestRequest request = NewRestRequest(getUserProfilePhotosUri);
+            RestRequest request = NewRestRequest(mGetUserProfilePhotosUri);
 
             request.AddParameter("user_id", userId);
             if (offset.HasValue)
@@ -662,7 +567,7 @@ namespace NetTelebot
         /// <returns>On success, a <see cref="FileInfo"/> is returned.</returns>
         public FileInfoResult GetFile(string fileId)
         {
-            RestRequest request = NewRestRequest(getFileUri);
+            RestRequest request = NewRestRequest(mGetFileUri);
 
             request.AddParameter("file_id", fileId);
             return ExecuteRequest<FileInfoResult>(request) as FileInfoResult;
@@ -681,7 +586,7 @@ namespace NetTelebot
         /// <returns>Returns True on success, false otherwise</returns>
         public BooleanResult KickChatMember(object chatId, int userId, DateTime untilDate)
         {
-            RestRequest request = NewRestRequest(kickChatMemberUri);
+            RestRequest request = NewRestRequest(mKickChatMemberUri);
 
             request.AddParameter("chat_id", chatId);
             request.AddParameter("user_id", userId);
@@ -701,7 +606,7 @@ namespace NetTelebot
         /// <returns>Returns True on success, false otherwise</returns>
         public BooleanResult UnbanChatMember(object chatId, int userId)
         {
-            RestRequest request = NewRestRequest(unbanChatMemberUri);
+            RestRequest request = NewRestRequest(mUnbanChatMemberUri);
 
             request.AddParameter("chat_id", chatId);
             request.AddParameter("user_id", userId);
@@ -717,13 +622,13 @@ namespace NetTelebot
         /// <returns>Returns True on success, false otherwise</returns>
         public BooleanResult LeaveChat(object chatId)
         {
-            RestRequest request = NewRestRequest(leaveChatUri);
+            RestRequest request = NewRestRequest(mLeaveChatUri);
 
             request.AddParameter("chat_id", chatId);
 
             return ExecuteRequest<BooleanResult>(request) as BooleanResult;
         }
-        
+
         /// <summary>
         /// Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). 
         /// </summary>
@@ -731,7 +636,7 @@ namespace NetTelebot
         /// <returns>Returns a <see cref="ChatInfoResult"/> object on success.</returns>
         public ChatInfoResult GetChat(object chatId)
         {
-            RestRequest request = NewRestRequest(getChatUri);
+            RestRequest request = NewRestRequest(mGetChatUri);
 
             request.AddParameter("chat_id", chatId);
 
@@ -746,7 +651,7 @@ namespace NetTelebot
         /// administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.</returns>
         public ChatMembersInfoResult GetChatAdministrators(object chatId)
         {
-            RestRequest request = NewRestRequest(getChatAdministratorsUri);
+            RestRequest request = NewRestRequest(mGetChatAdministratorsUri);
 
             request.AddParameter("chat_id", chatId);
 
@@ -760,7 +665,7 @@ namespace NetTelebot
         /// <returns>Returns <see cref="IntegerResult"/> on success</returns>
         public IntegerResult GetChatMembersCount(object chatId)
         {
-            RestRequest request = NewRestRequest(getChatMembersCountUri);
+            RestRequest request = NewRestRequest(mGetChatMembersCountUri);
 
             request.AddParameter("chat_id", chatId);
 
@@ -775,7 +680,7 @@ namespace NetTelebot
         /// <returns>Returns a <see cref="ChatMemberInfo"/> object on success.</returns>
         public ChatMemberInfoResult GetChatMember(object chatId, int userId)
         {
-            RestRequest request = NewRestRequest(getChatMemberUri);
+            RestRequest request = NewRestRequest(mGetChatMemberUri);
 
             request.AddParameter("chat_id", chatId);
             request.AddParameter("user_id", userId);
@@ -800,13 +705,13 @@ namespace NetTelebot
         /// <param name="cacheTime">The maximum amount of time in seconds that the result of the callback query may be cached client-side. 
         /// Telegram apps will support caching starting in version 3.14. Defaults to 0.</param>
         /// <returns>On success, True is returned.</returns>
-        public BooleanResult AswerCallbackQuery(string callbackQueryId, 
-            string text = null, 
+        public BooleanResult AswerCallbackQuery(string callbackQueryId,
+            string text = null,
             bool? showAlert = null,
             string url = null,
             int? cacheTime = null)
         {
-            RestRequest request = NewRestRequest(answerCallbackQueryUri);
+            RestRequest request = NewRestRequest(mAnswerCallbackQueryUri);
 
             request.AddParameter("callback_query_id", callbackQueryId);
 
@@ -823,38 +728,6 @@ namespace NetTelebot
         }
 
         //todo Inline mode methods (https://core.telegram.org/bots/api#inline-mode-methods)
-
-        private void CheckToken()
-        {
-            if (Token == null)
-                throw new Exception("Token is null");
-        }
-
-        /// <summary>
-        /// Checks new updates (sent messages to your bot) automatically. Set CheckInterval property and handle UpdatesReceived event.
-        /// </summary>
-        public void StartCheckingUpdates()
-        {
-            CheckToken();
-
-            if (mUpdateTimer == null)
-            { 
-                mUpdateTimer = new Timer(UpdateTimerCallback, null, CheckInterval, Timeout.Infinite);
-            }
-            else
-            {
-                mUpdateTimer.Change(CheckInterval, Timeout.Infinite);
-            }
-        }
-
-        /// <summary>
-        /// Stops automatic checking updates
-        /// </summary>
-        public void StopCheckUpdates()
-        {
-            mUpdateTimer?.Dispose();
-            mUpdateTimer = null;
-        }
 
         private static RestRequest AddFile(IFile iFile, RestRequest request, string name)
         {
@@ -875,85 +748,6 @@ namespace NetTelebot
             }
 
             return request;
-        }
-
-        private void UpdateTimerCallback(object state)
-        {
-            GetUpdatesResult updates = null;
-            var getUpdatesSuccess = false;
-
-            try
-            {
-                updates = mLastUpdateId == 0
-                    ? GetUpdates()
-                    : GetUpdates(mLastUpdateId + 1);
-
-                getUpdatesSuccess = true;
-            }
-            catch (Exception ex)
-            {
-                OnGetUpdatesError(ex);
-            }
-
-            if (getUpdatesSuccess)
-
-                if (updates.Ok && updates.Result != null && updates.Result.Any())
-                {
-                    mLastUpdateId = updates.Result.Last().UpdateId;
-                    OnUpdatesReceived(updates.Result);
-                }
-
-            mUpdateTimer?.Change(CheckInterval, Timeout.Infinite);
-        }
-
-        /// <summary>
-        /// Called when [updates received].
-        /// </summary>
-        /// <param name="updates">The updates</param>
-        protected virtual void OnUpdatesReceived(UpdateInfo[] updates)
-        {
-            TelegramUpdateEventArgs args = new TelegramUpdateEventArgs(updates);
-            UpdatesReceived?.Invoke(this, args);
-        }
-
-        private object ExecuteRequest<T>(IRestRequest request) where T : class
-        {
-            IRestResponse response = RestClient.Execute(request);
-
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                if (typeof(T) == typeof (SendMessageResult))
-                    return new SendMessageResult(response.Content);
-
-                if (typeof (T) == typeof (BooleanResult))
-                    return new BooleanResult(response.Content);
-
-                if (typeof(T) == typeof(UserInfoResult))
-                    return new UserInfoResult(response.Content);
-
-                if (typeof(T) == typeof (GetUserProfilePhotosResult))
-                    return new GetUserProfilePhotosResult(response.Content);
-
-                if (typeof(T) == typeof (GetUpdatesResult))
-                    return new GetUpdatesResult(response.Content);
-
-                if (typeof(T) == typeof (ChatInfoResult))
-                    return new ChatInfoResult(response.Content);
-
-                if (typeof(T) == typeof (IntegerResult))
-                    return new IntegerResult(response.Content);
-
-                if(typeof(T) == typeof(FileInfoResult))
-                    return new FileInfoResult(response.Content);
-
-                if(typeof(T) == typeof(ChatMembersInfoResult))
-                    return new ChatMembersInfoResult(response.Content);
-
-                if (typeof(T) == typeof(ChatMemberInfoResult))
-                    return new ChatMemberInfoResult(response.Content);
-            }
-
-            throw new Exception(response.StatusDescription);
         }
     }
 }

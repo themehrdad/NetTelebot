@@ -1,5 +1,4 @@
-﻿using System;
-using NetTelebot.CommonUtils;
+﻿using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type.Keyboard;
 using NUnit.Framework;
@@ -7,11 +6,11 @@ using NUnit.Framework;
 namespace NetTelebot.Tests.RequestToTelegramTest
 {
     [TestFixture]
-    internal class TelegramBotKeyboardTest
+    internal class KeyboardTest
     {
         private TelegramBotClient mTelegramBot;
-        private long mChatGroupId;
-        private long mChatSuperGroupId;
+        private long? mChatGroupId;
+        private long? mChatSuperGroupId;
 
         [SetUp]
         public void OnTestStart()
@@ -21,7 +20,6 @@ namespace NetTelebot.Tests.RequestToTelegramTest
             mChatGroupId = new TelegramBot().GetGroupChatId();
             mChatSuperGroupId = new TelegramBot().GetSuperGroupChatId();
         }
-
 
         [Test]
         public void SendReplyKeyboardToGroupTest()
@@ -88,24 +86,6 @@ namespace NetTelebot.Tests.RequestToTelegramTest
 
             SendMessageResult sendMessageToGroup = mTelegramBot.SendMessage(mChatGroupId, "Please type number", replyMarkup: forceReply);
             SendMessageResult sendMessageToSuperGroup = mTelegramBot.SendMessage(mChatSuperGroupId, "Please type number", replyMarkup: forceReply);
-            Assert.Multiple(() =>
-            {
-                Assert.True(sendMessageToGroup.Ok);
-                Assert.True(sendMessageToSuperGroup.Ok);
-            });
-        }
-
-        [Test, Obsolete("In version 1.0.11 it will be deleted")]
-        public void SendReplyKeyboardHideMarkupToGroupTest()
-        {
-            ReplyKeyboardHideMarkup hideMarkup = new ReplyKeyboardHideMarkup
-            {
-                Selective = false
-            };
-
-            SendMessageResult sendMessageToGroup = mTelegramBot.SendMessage(mChatGroupId, "Goodbay", replyMarkup: hideMarkup);
-            SendMessageResult sendMessageToSuperGroup = mTelegramBot.SendMessage(mChatSuperGroupId, "Goodbay", replyMarkup: hideMarkup);
-
             Assert.Multiple(() =>
             {
                 Assert.True(sendMessageToGroup.Ok);
