@@ -1,4 +1,5 @@
 ﻿using System;
+using NetTelebot.BotEnum;
 using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type;
@@ -11,11 +12,14 @@ namespace NetTelebot.InlineKeyboardMarkup.TestApplication
 
         private static void Main()
         {
+            AllowedUpdates[] allowedUpdateses = { AllowedUpdates.Message, AllowedUpdates.CallbackQuery };
+
             mClient = GetBot();
 
             mClient.UpdatesReceived += ClientUpdatesReceived;
             mClient.GetUpdatesError += ClientGetUpdatesError;
-            mClient.StartCheckingUpdates();
+
+            mClient.StartCheckingUpdates(allowedUpdateses:allowedUpdateses);
 
             ConsoleUtlis.WriteConsoleLog("Example bot start. For exit press any key");
             Console.ReadKey();

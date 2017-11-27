@@ -1,5 +1,4 @@
-﻿using System;
-using NetTelebot.CommonUtils;
+﻿using NetTelebot.CommonUtils;
 using NetTelebot.Result;
 using NetTelebot.Type.Keyboard;
 using NUnit.Framework;

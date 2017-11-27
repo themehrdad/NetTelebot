@@ -93,7 +93,6 @@ namespace NetTelebot
         [Obsolete("Please use named arguments. Example: GetUpdates(timeout:10). In the next version, overloaded methods will be removed")]
         public GetUpdatesResult GetUpdates(long timeout)
         {
-            //todo test this (real)
             return GetUpdates(null, null, timeout);
         }
 
@@ -108,7 +107,6 @@ namespace NetTelebot
         [Obsolete("Please use named arguments. Example: GetUpdates(allowedUpdates:new[]{AllowedUpdates.Message}). In the next version, overloaded methods will be removed")]
         public GetUpdatesResult GetUpdates(AllowedUpdates[] allowedUpdates)
         {
-            //todo test this (real)
             return GetUpdates(null, null, null, allowedUpdates);
         }
 
@@ -164,6 +162,7 @@ namespace NetTelebot
                 request.AddQueryParameter("timeout", timeout.Value.ToString());
             if (allowedUpdates != null)
                 request.AddQueryParameter("allowed_updates", allowedUpdates.ToJarray());
+            
 
             return ExecuteRequest<GetUpdatesResult>(request) as GetUpdatesResult;
         }
@@ -171,13 +170,13 @@ namespace NetTelebot
         /// <summary>
         /// Checks new updates (sent messages to your bot) automatically. Set CheckInterval property and handle UpdatesReceived event.
         /// </summary>
-        public void StartCheckingUpdates()
+        public void StartCheckingUpdates(AllowedUpdates[] allowedUpdateses = null)
         {
             CheckToken();
 
             if (mUpdateTimer == null)
             {
-                mUpdateTimer = new Timer(UpdateTimerCallback, null, CheckInterval, Timeout.Infinite);
+                mUpdateTimer = new Timer(UpdateTimerCallback, allowedUpdateses, CheckInterval, Timeout.Infinite);
             }
             else
             {
@@ -221,11 +220,13 @@ namespace NetTelebot
 
         private void UpdateTimerCallback(object state)
         {
+            AllowedUpdates[] allowedUpdateses = (AllowedUpdates[]) state;
+
             try
             {
                 GetUpdatesResult updates = mLastUpdateId == 0
                     ? GetUpdates()
-                    : GetUpdates(offset:mLastUpdateId + 1);
+                    : GetUpdates(mLastUpdateId + 1, allowedUpdates:allowedUpdateses);
 
                 UpdateReceived(updates);
             }
