@@ -54,7 +54,7 @@ See more examples in the project [wiki](https://github.com/themehrdad/NetTelebot
 ## Plans
 
 On the nearest release (1.0.13)
-- [ ] Remove obsolete methods 
+- [x] Remove obsolete methods 
 - [ ] Add all sticker methods and types
 - [ ] Add new method sendMediaGroup and two kinds of InputMedia objects to support the new albums feature
 - [ ] Add support for pinning messages in channels. pinChatMessage and unpinChatMessage accept channels

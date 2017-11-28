@@ -87,7 +87,7 @@ namespace NetTelebot.Tests.RequestToMockTest
 
             MockServer.AddNewRouter("/botToken/getUpdates*", ResponseStringGetUpdatesResult.ExpectedBodyWithObjectMessage);
 
-            mBotOkResponse.GetUpdates((byte)1);
+            mBotOkResponse.GetUpdates(limit:1);
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates*").UsingPost());
 
             ConsoleUtlis.PrintResult(request);
@@ -163,7 +163,7 @@ namespace NetTelebot.Tests.RequestToMockTest
             };
 
             
-            mBotOkResponse.GetUpdates(allowedUpdateses);
+            mBotOkResponse.GetUpdates(allowedUpdates:allowedUpdateses);
 
             var request = MockServer.ServerOkResponse.SearchLogsFor(Requests.WithUrl("/botToken/getUpdates*").UsingPost());
 

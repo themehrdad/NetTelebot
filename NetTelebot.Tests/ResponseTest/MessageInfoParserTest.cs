@@ -803,20 +803,7 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(foursquareId, messageInfo.Venue.FoursquareId);
             }); 
         }
-
-        /// <summary>
-        /// Test for <see cref="MessageInfo.NewChatMember"/> parse field.
-        /// </summary>
-        [Test]
-        public static void MessageInfoNewChatMemberTest()
-        {
-            dynamic messageInfoUser = MCommonMandatoryFieldsMessageInfo;
-            messageInfoUser.new_chat_member = MCommonUserInfo;
-            MessageInfo messageInfo = new MessageInfo(messageInfoUser);
-
-            AssertUserInfo(messageInfo.NewChatMember);
-        }
-
+        
         /// <summary>
         /// Test for <see cref="MessageInfo.LeftChatMember"/> parse field.
         /// </summary>
