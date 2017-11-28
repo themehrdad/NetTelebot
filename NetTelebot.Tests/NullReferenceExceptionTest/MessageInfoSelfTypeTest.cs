@@ -4,6 +4,7 @@ using NetTelebot.Result;
 using NetTelebot.Type;
 using NetTelebot.Type.Games;
 using NetTelebot.Type.Payment;
+using NetTelebot.Type.Sticker;
 using NUnit.Framework;
 
 

@@ -104,7 +104,7 @@
     <Compile Include="Type\Keyboard\ReplyKeyboardMarkup.cs" />
     <Compile Include="Result\SendMessageResult.cs" />
     <Compile Include="Type\Payment\ShippingAddressInfo.cs" />
-    <Compile Include="Type\StickerInfo.cs" />
+    <Compile Include="Type\Sticker\StickerInfo.cs" />
     <Compile Include="TelegramBotClientMethods.cs" />
     <Compile Include="Result\TelegramUpdateEventArgs.cs" />
     <Compile Include="Type\UpdateInfo.cs" />

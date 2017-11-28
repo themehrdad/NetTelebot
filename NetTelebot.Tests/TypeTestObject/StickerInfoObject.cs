@@ -1,4 +1,5 @@
 ﻿using NetTelebot.Type;
+using NetTelebot.Type.Sticker;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.TypeTestObject

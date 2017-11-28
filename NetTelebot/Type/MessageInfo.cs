@@ -2,6 +2,7 @@
 using NetTelebot.Extension;
 using NetTelebot.Type.Games;
 using NetTelebot.Type.Payment;
+using NetTelebot.Type.Sticker;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type

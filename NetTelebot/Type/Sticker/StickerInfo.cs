@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace NetTelebot.Type
+namespace NetTelebot.Type.Sticker
 {
     /// <summary>
     /// This object represents a sticker.
