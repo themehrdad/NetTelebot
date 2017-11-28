@@ -421,37 +421,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsNull(venue.FoursquareId);
             });
         }
-
-        /// <summary>
-        /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.NewChatMember"/>
-        /// </summary>
-        [Test]
-        public void TestAppealToTheEmptyNewChatMember()
-        {
-            SendMessageResult sendMessage = mTelegramBot.SendMessage(mChatId, "TestAppealToTheEmptyNewChatMember()");
-            
-            UserInfo newChatMember = sendMessage.Result.NewChatMember;
-            var id = sendMessage.Result.NewChatMember.Id;
-            var firstName = sendMessage.Result.NewChatMember.FirstName;
-            var lastName = sendMessage.Result.NewChatMember.LastName;
-            var userName = sendMessage.Result.NewChatMember.UserName;
-            var languageCode = sendMessage.Result.NewChatMember.LanguageCode;
-
-            ConsoleUtlis.PrintResult(newChatMember);
-
-            Assert.Multiple(() =>
-            {
-                Assert.True(sendMessage.Ok);
-                
-                Assert.IsInstanceOf(typeof (UserInfo), newChatMember);
-                Assert.AreEqual(id, 0);
-                Assert.IsNull(firstName);
-                Assert.IsNull(lastName);
-                Assert.IsNull(userName);
-                Assert.IsNull(languageCode);
-            });
-        }
-
+        
         /// <summary>
         /// Checking for NullReferenceException when accessing null fields <see cref="MessageInfo.LeftChatMember"/>
         /// </summary>

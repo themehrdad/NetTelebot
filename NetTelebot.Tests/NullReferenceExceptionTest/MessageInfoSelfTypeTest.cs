@@ -134,9 +134,6 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsInstanceOf<VenueInfo>(messageInfo.Venue);
                 Assert.AreEqual(0, messageInfo.Venue.Location.Latitude);
 
-                Assert.IsInstanceOf<UserInfo>(messageInfo.NewChatMember);
-                Assert.AreEqual(0, messageInfo.NewChatMember.Id);
-
                 Assert.IsInstanceOf<UserInfo>(messageInfo.LeftChatMember);
                 Assert.AreEqual(0, messageInfo.LeftChatMember.Id);
 

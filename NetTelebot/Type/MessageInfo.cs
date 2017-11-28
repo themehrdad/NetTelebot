@@ -136,10 +136,6 @@ namespace NetTelebot.Type
                 ? new VenueInfo(jsonObject["venue"].Value<JObject>())
                 : new VenueInfo {Location = new LocationInfo()};
 
-            NewChatMember = jsonObject["new_chat_member"] != null
-                ? new UserInfo(jsonObject["new_chat_member"].Value<JObject>())
-                : new UserInfo();
-
             NewChatMembers = jsonObject["new_chat_members"] != null
                 ? UserInfo.ParseArray(jsonObject["new_chat_members"].Value<JArray>())
                 : new UserInfo[0];
@@ -218,7 +214,6 @@ namespace NetTelebot.Type
                 Contact = new ContactInfo(),
                 Location = new LocationInfo(),
                 Venue = new VenueInfo {Location = new LocationInfo()},
-                NewChatMember = new UserInfo(),
                 LeftChatMember = new UserInfo(),
                 NewChatPhoto = new PhotoSizeInfo[0],
                 PinnedMessage = pinned,
@@ -390,15 +385,6 @@ namespace NetTelebot.Type
         /// Optional. This object represents a venue.
         /// </summary>
         public VenueInfo Venue { get; private set; }
-
-        /// <summary>
-        /// Optional. A new member was added to the group, information about them (this member may be bot itself)  
-        /// </summary>
-        [Obsolete("See Introducing Bot API 3.0: " +
-                  "Replaced the field new_chat_member in Message with new_chat_members " +
-                  "(the old field will still be available for a while for compatibility purposes). " +
-                  "In version 10.0.13 will be removed")]
-        public UserInfo NewChatMember { get; private set; }
 
         /// <summary>
         /// Optional. A member was removed from the group, information about them (this member may be bot itself) 
