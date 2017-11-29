@@ -4,6 +4,7 @@ namespace NetTelebot.Type.Sticker
 {
     /// <summary>
     /// This object represents a sticker.
+    /// See <see href="https://core.telegram.org/bots/api#sticker">API</see>
     /// </summary>
     public class StickerInfo
     {
