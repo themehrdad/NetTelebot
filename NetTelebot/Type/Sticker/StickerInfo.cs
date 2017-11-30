@@ -21,6 +21,10 @@ namespace NetTelebot.Type.Sticker
                 Thumb = new PhotoSizeInfo(jsonObject["thumb"].Value<JObject>());
             if (jsonObject["emoji"] != null)
                 Emoji = jsonObject["emoji"].Value<string>();
+            if (jsonObject["set_name"] != null)
+                SetName = jsonObject["set_name"].Value<string>();
+            if (jsonObject["mask_position"] != null)
+                MaskPosition = new MaskPositionInfo(jsonObject["mask_position"].Value<JObject>());
             if (jsonObject["file_size"] != null)
                 FileSize = jsonObject["file_size"].Value<int>();
         }
@@ -49,6 +53,16 @@ namespace NetTelebot.Type.Sticker
         /// Optional. Emoji associated with the sticker
         /// </summary>
         public string Emoji { get; set; }
+
+        /// <summary>
+        /// Optional. Name of the sticker set to which the sticker belongs
+        /// </summary>
+        public string SetName { get; private set; }
+
+        /// <summary>
+        /// Optional. For mask stickers, the position where the mask should be placed
+        /// </summary>
+        public MaskPositionInfo MaskPosition { get; private set; }
 
         /// <summary>
         /// Optional. File size

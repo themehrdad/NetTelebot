@@ -50,6 +50,7 @@
     <Compile Include="BotEnum\AllowedUpdates.cs" />
     <Compile Include="BotEnum\Countries.cs" />
     <Compile Include="BotEnum\Currency.cs" />
+    <Compile Include="BotEnum\Point.cs" />
     <Compile Include="BotEnum\Status.cs" />
     <Compile Include="Interface\IInlineKeyboardMarkup.cs" />
     <Compile Include="Result\ChatInfoResult.cs" />
