@@ -8,21 +8,21 @@
         /// <summary>
         /// Forehead
         /// </summary>
-        Forehead,
+        forehead,
 
         /// <summary>
         /// Eyes
         /// </summary>
-        Eyes,
+        eyes,
 
         /// <summary>
         /// Mouth
         /// </summary>
-        Mouth,
+        mouth,
 
         /// <summary>
         /// Chin
         /// </summary>
-        Chin
+        chin
     }
 }

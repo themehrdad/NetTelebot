@@ -15,9 +15,12 @@ namespace NetTelebot.Tests.TypeTestObject
         /// <param name="photoSizeInfo">Optional. Sticker thumbnail in .webp or .jpg format. 
         /// To simulate <see cref="PhotoSizeInfo"/> use <see cref="PhotoSizeInfoObject"/>. Json field [thumb].</param>
         /// <param name="emoji">Optional. Emoji associated with the sticker.</param>
+        /// <param name="setName"></param>
+        /// <param name="maskPosition"></param>
         /// <param name="fileSize">Optional. File size.</param>
         /// <returns><see cref="StickerInfo"/></returns>
-        internal static JObject GetObject(string fileId, int width, int height, JObject photoSizeInfo, string emoji, int fileSize)
+        internal static JObject GetObject(string fileId, int width, int height, JObject photoSizeInfo,
+            string emoji, string setName, JObject maskPosition, int fileSize)
         {
             dynamic stickerInfo = new JObject();
 
@@ -26,6 +29,8 @@ namespace NetTelebot.Tests.TypeTestObject
             stickerInfo.height = height;
             stickerInfo.thumb = photoSizeInfo;
             stickerInfo.emoji = emoji;
+            stickerInfo.set_name = setName;
+            stickerInfo.mask_position = maskPosition;
             stickerInfo.file_size = fileSize;
 
             return stickerInfo;

@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using NetTelebot.BotEnum;
+using NetTelebot.Extension;
+using Newtonsoft.Json.Linq;
+// ReSharper disable InconsistentNaming
 
 namespace NetTelebot.Type.Sticker
 {
@@ -10,7 +13,7 @@ namespace NetTelebot.Type.Sticker
     {
         internal MaskPositionInfo(JObject jsonObject)
         {
-            Point = jsonObject["point"].Value<string>();
+            Point = jsonObject["point"].Value<string>().ToEnum<Point>();
             X_shift = jsonObject["x_shift"].Value<double>();
             Y_shift = jsonObject["y_shift"].Value<double>();
             Scale = jsonObject["scale"].Value<double>();
@@ -19,9 +22,8 @@ namespace NetTelebot.Type.Sticker
         /// <summary>
         /// The part of the face relative to which the mask should be placed. 
         /// One of “forehead”, “eyes”, “mouth”, or “chin”.
-        /// //todo need enum
         /// </summary>
-        public string Point { get; private set; }
+        public Point? Point { get; private set; }
 
         /// <summary>
         /// Shift by X-axis measured in widths of the mask scaled to the face size, from left to right. 
