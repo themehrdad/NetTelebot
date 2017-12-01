@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type.Sticker
 {
@@ -68,5 +69,10 @@ namespace NetTelebot.Type.Sticker
         /// Optional. File size
         /// </summary>
         public int FileSize { get; set; }
+
+        internal static StickerInfo[] ParseArray(JArray jsonArray)
+        {
+            return jsonArray.Cast<JObject>().Select(jobject => new StickerInfo(jobject)).ToArray();
+        }
     }
 }

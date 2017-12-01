@@ -109,6 +109,7 @@
     <Compile Include="Type\Sticker\StickerInfo.cs" />
     <Compile Include="TelegramBotClientMethods.cs" />
     <Compile Include="Result\TelegramUpdateEventArgs.cs" />
+    <Compile Include="Type\Sticker\StickerSetInfo.cs" />
     <Compile Include="Type\UpdateInfo.cs" />
     <Compile Include="Type\UserInfo.cs" />
     <Compile Include="Type\UserProfilePhotosInfo.cs" />
