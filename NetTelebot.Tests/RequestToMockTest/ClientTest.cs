@@ -1049,5 +1049,26 @@ namespace NetTelebot.Tests.RequestToMockTest
                 () =>
                     mBotBadResponse.DeleteMessage("TestChatId", 123456));
         }
+
+        [Test]
+        public void GetStickerSetTest()
+        {
+            mBotOkResponse.GetStickerSet("TestStickerSetName");
+
+            var request =
+                MockServer.ServerOkResponse.SearchLogsFor(
+                    Requests.WithUrl("/botToken/getStickerSet").UsingPost());
+
+            ConsoleUtlis.PrintResult(request);
+
+
+            Assert.AreEqual("name=TestStickerSetName", request.FirstOrDefault()?.Body);
+            Assert.AreEqual("/botToken/getStickerSet", request.FirstOrDefault()?.Url);
+
+            Assert.Throws<Exception>(
+                () =>
+                    mBotBadResponse.GetStickerSet("TestStickerSetName"));
+
+        }
     }
 }

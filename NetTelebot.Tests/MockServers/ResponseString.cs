@@ -183,6 +183,27 @@ namespace NetTelebot.Tests.MockServers
             new JProperty("result",
                 new JObject(ChatMemberInfoObject.GetObject(commonUserInfoObject, "member").Properties()))).ToString();
 
+        //todo refact 
+        /// <summary>
+        /// Gets the expected body for get sticker set.
+        /// </summary>
+        /// <value>
+        /// The expected body for get sticker set.
+        /// </value>
+        internal static string ExpectedBodyForGetStickerSet { get; } = new JObject(
+            new JProperty("ok", true),
+            new JProperty("result",
+                new JObject(
+                    new JProperty("name", "TestName"),
+                    new JProperty("title", "TestrTitle"),
+                    new JProperty("contains_masks", true),
+                    new JProperty("stickers",
+                    new JArray(
+                        new JObject(
+                            new JProperty("file_id", "TestFileId"),
+                            new JProperty("width", 100),
+                            new JProperty("height", 100))))))).ToString();
+
         /// <summary>
         /// The expected body for bad response.
         /// Represent JSON string:
@@ -193,6 +214,9 @@ namespace NetTelebot.Tests.MockServers
             new JProperty("ok", false),
             new JProperty("error_code", 401),
             new JProperty("description", "Unauthorized")).ToString();
+
+
+        
 
         private static JArray GetJarrayOfJarry(string jArray)
         {

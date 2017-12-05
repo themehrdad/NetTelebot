@@ -9,7 +9,6 @@ namespace NetTelebot.Type.Sticker
     {
         internal StickerSetInfo(JObject jsonObject)
         {
-            //todo add result object for this ans test
             Name = jsonObject["name"].Value<string>();
             Title = jsonObject["title"].Value<string>();
             ContainsMask = jsonObject["contains_masks"].Value<bool>();

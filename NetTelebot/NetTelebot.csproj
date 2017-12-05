@@ -58,9 +58,11 @@
     <Compile Include="Result\ChatMembersInfoResult.cs" />
     <Compile Include="Result\FileInfoResult.cs" />
     <Compile Include="Result\IntegerResult.cs" />
+    <Compile Include="Result\StickerSetInfoResult.cs" />
     <Compile Include="Result\UserInfoResult.cs" />
     <Compile Include="TelegramBotClientCommon.cs" />
     <Compile Include="TelegramBotClientPayment.cs" />
+    <Compile Include="TelegramBotClientStiker.cs" />
     <Compile Include="TelegramBotClientUpdate.cs" />
     <Compile Include="TelegramBotClientUpdatingMessages.cs" />
     <Compile Include="Type\AudioInfo.cs" />
