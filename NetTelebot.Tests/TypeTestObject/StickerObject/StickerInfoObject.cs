@@ -1,11 +1,21 @@
-﻿using NetTelebot.Type;
+using NetTelebot.Type;
 using NetTelebot.Type.Sticker;
 using Newtonsoft.Json.Linq;
 
-namespace NetTelebot.Tests.TypeTestObject
+namespace NetTelebot.Tests.TypeTestObject.StickerObject
 {
-    internal static class StickerInfoObject
+    internal class StickerInfoObject
     {
+        internal string FileId { get; set; }
+        
+        internal int Width { get; set; }
+        
+        internal int Height { get; set; }
+
+        internal PhotoSizeInfoObjects Thumb { get; set; }
+
+        //todo end this
+
         /// <summary>
         /// This object represents a sticker for test. See <see href="https://core.telegram.org/bots/api#sticker">API</see>
         /// </summary>

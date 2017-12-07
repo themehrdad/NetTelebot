@@ -1,17 +1,14 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using NetTelebot.Tests.TypeTestObject.StickerObject;
+using Newtonsoft.Json;
 
 namespace NetTelebot.Tests.TypeTestObject.ResultTestObject
 {
-    internal static class StickerSetInfoResultObject
+    internal class StickerSetInfoResultObject
     {
-        internal static JObject GetObject(bool ok, JObject result)
-        {
-            dynamic stickerSetInfoResult = new JObject();
+        [JsonProperty("ok")]
+        internal bool Ok { get; set; }
 
-            stickerSetInfoResult.ok = ok;
-            stickerSetInfoResult.result = result;
-
-            return stickerSetInfoResult;
-        }
+        [JsonProperty("result")]
+        internal StickerSetInfoObject Result { get; set; }
     }
 }

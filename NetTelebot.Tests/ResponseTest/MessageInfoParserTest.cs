@@ -5,6 +5,7 @@ using NetTelebot.Extension;
 using NetTelebot.Tests.TypeTestObject;
 using NetTelebot.Tests.TypeTestObject.GameObject;
 using NetTelebot.Tests.TypeTestObject.PaymentObject;
+using NetTelebot.Tests.TypeTestObject.StickerObject;
 using NetTelebot.Type;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
