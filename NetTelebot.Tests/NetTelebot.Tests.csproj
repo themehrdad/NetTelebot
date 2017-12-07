@@ -133,8 +133,10 @@
     <Compile Include="TypeTestObject\MessageInfoObject.cs" />
     <Compile Include="TypeTestObject\PhotoSizeInfoObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\IntegerResultObject.cs" />
+    <Compile Include="TypeTestObject\ResultTestObject\StickerSetInfoResultObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\UserInfoResultObject.cs" />
     <Compile Include="TypeTestObject\StickerInfoObject.cs" />
+    <Compile Include="TypeTestObject\StickerObject\StickerSetInfoObject.cs" />
     <Compile Include="TypeTestObject\UpdateInfoObject.cs" />
     <Compile Include="TypeTestObject\UserInfoObject.cs" />
     <Compile Include="TypeTestObject\UserProfilePhotosInfoObject.cs" />

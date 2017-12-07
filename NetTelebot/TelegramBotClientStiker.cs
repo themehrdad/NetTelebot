@@ -24,7 +24,6 @@ namespace NetTelebot
      * 
      */
 
-
     public partial class TelegramBotClient
     {
         private const string mGetStickerSet = "/bot{0}/getStickerSet";
