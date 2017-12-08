@@ -107,7 +107,6 @@
     <Compile Include="TypeTestObject\GameObject\GameInfoObject.cs" />
     <Compile Include="TypeTestObject\InlineModeObject\ChosenInlineResultInfoObject.cs" />
     <Compile Include="TypeTestObject\InlineModeObject\InlineQueryInfoObject.cs" />
-    <Compile Include="TypeTestObject\MaskPositionInfoObject.cs" />
     <Compile Include="TypeTestObject\PaymentObject\InvoiceInfoObject.cs" />
     <Compile Include="TypeTestObject\PaymentObject\OrderInfoObject.cs" />
     <Compile Include="TypeTestObject\PaymentObject\PreCheckoutQueryInfoObject.cs" />
@@ -136,6 +135,7 @@
     <Compile Include="TypeTestObject\ResultTestObject\IntegerResultObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\StickerSetInfoResultObject.cs" />
     <Compile Include="TypeTestObject\ResultTestObject\UserInfoResultObject.cs" />
+    <Compile Include="TypeTestObject\StickerObject\MaskPositiontInfoObject.cs" />
     <Compile Include="TypeTestObject\StickerObject\StickerInfoObject.cs" />
     <Compile Include="TypeTestObject\StickerObject\StickerSetInfoObject.cs" />
     <Compile Include="TypeTestObject\UpdateInfoObject.cs" />

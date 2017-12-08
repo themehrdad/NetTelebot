@@ -1,21 +1,36 @@
 using NetTelebot.Type;
 using NetTelebot.Type.Sticker;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.TypeTestObject.StickerObject
 {
     internal class StickerInfoObject
     {
+        [JsonProperty("file_id")]
         internal string FileId { get; set; }
-        
+
+        [JsonProperty("width")]
         internal int Width { get; set; }
-        
+
+        [JsonProperty("height")]
         internal int Height { get; set; }
 
+        [JsonProperty("thumb")]
         internal PhotoSizeInfoObjects Thumb { get; set; }
 
-        //todo end this
+        [JsonProperty("emoji")]
+        internal string Emoji { get; set; }
 
+        [JsonProperty("set_name")]
+        internal string SetName { get; set; }
+
+        [JsonProperty("mask_position")]
+        internal MaskPositiontInfoObject MaskPosition { get; set; }
+
+        [JsonProperty("file_size")]
+        internal int FileSize { get; set; }
+        
         /// <summary>
         /// This object represents a sticker for test. See <see href="https://core.telegram.org/bots/api#sticker">API</see>
         /// </summary>
@@ -45,12 +60,5 @@ namespace NetTelebot.Tests.TypeTestObject.StickerObject
 
             return stickerInfo;
         }
-
-        
-        
-        
-        
-        
-        
     }
 }

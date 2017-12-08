@@ -1,4 +1,5 @@
-﻿using NetTelebot.Type.Sticker;
+﻿using NetTelebot.Result;
+using NetTelebot.Type.Sticker;
 using Newtonsoft.Json;
 
 namespace NetTelebot.Tests.TypeTestObject.StickerObject
@@ -15,6 +16,6 @@ namespace NetTelebot.Tests.TypeTestObject.StickerObject
         public bool ContainsMask { get; set; }
 
         [JsonProperty("stickers")]
-        public StickerInfo[] Stickers { get; set; }
+        public StickerInfoObject[] Stickers { get; set; }
     }
 }
