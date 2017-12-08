@@ -1,6 +1,4 @@
-﻿using NetTelebot.Result;
-using NetTelebot.Type.Sticker;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace NetTelebot.Tests.TypeTestObject.StickerObject
 {

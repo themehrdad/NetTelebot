@@ -39,7 +39,7 @@ namespace NetTelebot.Tests.TypeTestObject
         [JsonProperty("height")]
         internal int Height { get; set; }
 
-        [JsonProperty("stickers")]
+        [JsonProperty("file_size")]
         internal int FileSize { get; set; }
     }
 }
