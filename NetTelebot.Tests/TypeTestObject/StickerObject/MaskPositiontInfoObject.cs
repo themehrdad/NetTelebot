@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.TypeTestObject.StickerObject
 {
@@ -30,5 +31,17 @@ namespace NetTelebot.Tests.TypeTestObject.StickerObject
         /// </summary>
         [JsonProperty("scale")]
         internal double Scale { get; set; }
+
+        public static JObject GetObject(string point, double xShift, double yShift, double scale)
+        {
+            dynamic maskPositiontInfo = new JObject();
+
+            maskPositiontInfo.point = point;
+            maskPositiontInfo.x_shift = xShift;
+            maskPositiontInfo.y_shift = yShift;
+            maskPositiontInfo.scale = scale;
+
+            return maskPositiontInfo;
+        }
     }
 }

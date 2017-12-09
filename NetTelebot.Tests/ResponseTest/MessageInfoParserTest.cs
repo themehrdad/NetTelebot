@@ -7,7 +7,6 @@ using NetTelebot.Tests.TypeTestObject.GameObject;
 using NetTelebot.Tests.TypeTestObject.PaymentObject;
 using NetTelebot.Tests.TypeTestObject.StickerObject;
 using NetTelebot.Type;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 #pragma warning disable 618
@@ -578,7 +577,7 @@ namespace NetTelebot.Tests.ResponseTest
         /// <summary>
         /// Test for <see cref="MessageInfo.Sticker"/> parse field.
         /// </summary>
-        [Test, Ignore("Fail")]
+        [Test]
         public static void MessageInfoStickerTest()
         {
             const string fileId = "100";
@@ -588,28 +587,13 @@ namespace NetTelebot.Tests.ResponseTest
             const string setName = "TestSetName";
             const int fileSize = 10;
 
+
+            JObject maskPositionObject = MaskPositiontInfoObject.GetObject("forehead", 1.01, 1.01, 1.01);
+ 
             dynamic messageInfoSticker = MCommonMandatoryFieldsMessageInfo;
 
-            StickerInfoObject stickerInfoString = new StickerInfoObject()
-            {
-                FileId = fileId,
-                Width = width,
-                Height = height,
-                Emoji = emoji,
-                SetName = setName,
-                MaskPosition = new MaskPositiontInfoObject
-                {
-                    Point = "forehead",
-                    X_shift = 1.01,
-                    Y_shift = 1.01,
-                    Scale = 1.01
-                },
-                FileSize = fileSize,
-
-            };
-
-            messageInfoSticker.sticker = 
-                new JProperty(JsonConvert.SerializeObject(stickerInfoString, Formatting.Indented));
+            messageInfoSticker.sticker = StickerInfoObject.GetObject(fileId, width, height,
+                MCommonPhotoSizeInfo, emoji, setName, maskPositionObject, fileSize);
 
             MessageInfo messageInfo = new MessageInfo(messageInfoSticker);
 
