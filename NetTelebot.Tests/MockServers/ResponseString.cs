@@ -1,7 +1,10 @@
-﻿using NetTelebot.Tests.TypeTestObject;
+﻿using System;
+using NetTelebot.Tests.TypeTestObject;
 using NetTelebot.Tests.TypeTestObject.ResultTestObject;
 using NetTelebot.Tests.TypeTestObject.StickerObject;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 
 namespace NetTelebot.Tests.MockServers
 {
@@ -183,50 +186,84 @@ namespace NetTelebot.Tests.MockServers
             new JProperty("ok", true),
             new JProperty("result",
                 new JObject(ChatMemberInfoObject.GetObject(commonUserInfoObject, "member").Properties()))).ToString();
-
-        //todo refact 
+        
         /// <summary>
-        /// Gets the expected body for get sticker set.
+        /// Gets the expected body for getStickerSet.
+        /// Represent JSON string
+        /// {
+        /// "ok": true,
+        /// "result": {
+        ///   "name": "TestName",
+        ///   "title": "TestTitle",
+        ///   "contains_masks": true,
+        ///   "stickers": [
+        ///     {
+        ///       "file_id": "TestFileId",
+        ///       "width": 123,
+        ///       "height": 456,
+        ///       "thumb": {
+        ///          "file_id": "TestFileId",
+        ///          "width": 123,
+        ///          "height": 456,
+        ///          "file_size": 789
+        ///        },
+        ///        "emoji": "TestEmoji",
+        ///        "set_name": "TestName",
+        ///        "mask_position": {
+        ///          "point": "TestPoint",
+        ///          "x_shift": 123.456,
+        ///          "y_shift": 456.123,
+        ///          "scale": 789.456
+        ///        },
+        ///        "file_size": 123
+        ///      }
+        ///    ]
+        ///  }
+        /// }
         /// </summary>
-        /// <value>
-        /// The expected body for get sticker set.
-        /// </value>
-        internal static string ExpectedBodyForGetStickerSet { get; } = new JObject(
-            new JProperty("ok", true),
-            new JProperty("result",
-                new JObject(
-                    new JObject(new StickerSetInfoObject
+
+        internal static string ExpectedBodyForGetStickerSet { get; } = JsonConvert.SerializeObject(new StickerSetInfoResultObject
+        {
+            Ok = true,
+            Result = new StickerSetInfoObject
+            {
+                Name = "TestName",
+                Title = "TestTitle",
+                ContainsMask = true,
+                Stickers = new []
+                {
+                    new StickerInfoObject
                     {
-                        Name = "TestName",
-                        Title = "TestrTitle",
-                        ContainsMask = true,
-                        Stickers = new[]
+                        FileId = "TestFileId",
+                        Width = 123,
+                        Height = 456,
+                        Thumb = new PhotoSizeInfoObjects
                         {
-                            new StickerInfoObject
-                            {
-                                FileId = "TestFileId",
-                                Width = 123,
-                                Height = 456,
-                                Thumb = new PhotoSizeInfoObjects
-                                {
-                                    FileId = "TestFileId",
-                                    Width = 123,
-                                    Height = 456,
-                                    FileSize = 789
-                                },
-                                Emoji = "TestEmoji",
-                                SetName = "TestName",
-                                MaskPosition = new MaskPositiontInfoObject
-                                {
-                                    Point = "TestPoint",
-                                    X_shift = 123.456,
-                                    Y_shift = 456.123,
-                                    Scale = 789.456
-                                },
-                                FileSize = 123
-                            }
-                        }
-                    })))).ToString();
+                            FileId = "TestFileId",
+                            Width = 123,
+                            Height = 456,
+                            FileSize = 789
+                        },
+                        Emoji = "TestEmoji",
+                        SetName = "TestName",
+                        MaskPosition = new MaskPositiontInfoObject
+                        {
+                            Point = "TestPoint",
+                            X_shift = 123.456,
+                            Y_shift = 456.123,
+                            Scale = 789.456
+                        },
+                        FileSize = 123
+                    }
+                }
+            }
+        }, Formatting.Indented);
+
+        [Test]
+        public static void TestPrint()
+        {
+            Console.WriteLine(ExpectedBodyForGetStickerSet);
+        }
 
         /// <summary>
         /// The expected body for bad response.
