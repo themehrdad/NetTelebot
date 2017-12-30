@@ -1,5 +1,6 @@
 ﻿using NetTelebot.Tests.TypeTestObject;
 using NetTelebot.Tests.TypeTestObject.ResultTestObject;
+using NetTelebot.Tests.TypeTestObject.StickerObject;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.MockServers
@@ -194,15 +195,38 @@ namespace NetTelebot.Tests.MockServers
             new JProperty("ok", true),
             new JProperty("result",
                 new JObject(
-                    new JProperty("name", "TestName"),
-                    new JProperty("title", "TestrTitle"),
-                    new JProperty("contains_masks", true),
-                    new JProperty("stickers",
-                    new JArray(
-                        new JObject(
-                            new JProperty("file_id", "TestFileId"),
-                            new JProperty("width", 100),
-                            new JProperty("height", 100))))))).ToString();
+                    new JObject(new StickerSetInfoObject
+                    {
+                        Name = "TestName",
+                        Title = "TestrTitle",
+                        ContainsMask = true,
+                        Stickers = new[]
+                        {
+                            new StickerInfoObject
+                            {
+                                FileId = "TestFileId",
+                                Width = 123,
+                                Height = 456,
+                                Thumb = new PhotoSizeInfoObjects
+                                {
+                                    FileId = "TestFileId",
+                                    Width = 123,
+                                    Height = 456,
+                                    FileSize = 789
+                                },
+                                Emoji = "TestEmoji",
+                                SetName = "TestName",
+                                MaskPosition = new MaskPositiontInfoObject
+                                {
+                                    Point = "TestPoint",
+                                    X_shift = 123.456,
+                                    Y_shift = 456.123,
+                                    Scale = 789.456
+                                },
+                                FileSize = 123
+                            }
+                        }
+                    })))).ToString();
 
         /// <summary>
         /// The expected body for bad response.
@@ -214,9 +238,6 @@ namespace NetTelebot.Tests.MockServers
             new JProperty("ok", false),
             new JProperty("error_code", 401),
             new JProperty("description", "Unauthorized")).ToString();
-
-
-        
 
         private static JArray GetJarrayOfJarry(string jArray)
         {

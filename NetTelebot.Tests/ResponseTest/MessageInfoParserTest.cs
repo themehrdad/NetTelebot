@@ -572,8 +572,7 @@ namespace NetTelebot.Tests.ResponseTest
 
             AssertPhotoSizeInfo(messageInfo.Photo[0]);
         }
-
-        //todo work this
+        
         /// <summary>
         /// Test for <see cref="MessageInfo.Sticker"/> parse field.
         /// </summary>
