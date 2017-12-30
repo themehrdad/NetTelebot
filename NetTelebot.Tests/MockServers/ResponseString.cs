@@ -259,12 +259,6 @@ namespace NetTelebot.Tests.MockServers
             }
         }, Formatting.Indented);
 
-        [Test]
-        public static void TestPrint()
-        {
-            Console.WriteLine(ExpectedBodyForGetStickerSet);
-        }
-
         /// <summary>
         /// The expected body for bad response.
         /// Represent JSON string:
