@@ -15,7 +15,6 @@ namespace NetTelebot.Tests.RequestToMockTest
     [TestFixture]
     internal class ClientTest
     {
-
         private const int mOkServerPort = 8091;
         private const int mBadServerPort = 8092;
 
@@ -1050,6 +1049,9 @@ namespace NetTelebot.Tests.RequestToMockTest
                     mBotBadResponse.DeleteMessage("TestChatId", 123456));
         }
 
+        /// <summary>
+        /// Test method <see cref="TelegramBotClient.GetStickerSet"/>.
+        /// </summary>
         [Test]
         public void GetStickerSetTest()
         {

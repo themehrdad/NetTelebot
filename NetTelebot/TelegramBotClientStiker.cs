@@ -27,6 +27,7 @@ namespace NetTelebot
     public partial class TelegramBotClient
     {
         private const string mGetStickerSet = "/bot{0}/getStickerSet";
+        private const string mDeleteStickerFromSet = "/bot{0}/deleteStickerFromSet";
 
         /// <summary>
         /// Use this method to get a sticker set
@@ -40,6 +41,20 @@ namespace NetTelebot
             request.AddParameter("name", name);
 
             return ExecuteRequest<StickerSetInfoResult>(request) as StickerSetInfoResult; 
+        }
+
+        /// <summary>
+        /// Use this method to delete a sticker from a set created by the bot. 
+        /// </summary>
+        /// <param name="sticker">File identifier of the sticker </param>
+        /// <returns>True on success</returns>
+        public BooleanResult DeleteStickerFromSet(string sticker)
+        {
+            RestRequest request = NewRestRequest(mDeleteStickerFromSet);
+
+            request.AddParameter("sticker", sticker);
+
+            return  ExecuteRequest<BooleanResult>(request) as BooleanResult;
         }
     }
 }
