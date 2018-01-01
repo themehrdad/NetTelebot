@@ -5,6 +5,7 @@ using NetTelebot.Extension;
 using NetTelebot.Tests.TypeTestObject;
 using NetTelebot.Tests.TypeTestObject.GameObject;
 using NetTelebot.Tests.TypeTestObject.PaymentObject;
+using NetTelebot.Tests.TypeTestObject.StickerObject;
 using NetTelebot.Type;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -571,7 +572,7 @@ namespace NetTelebot.Tests.ResponseTest
 
             AssertPhotoSizeInfo(messageInfo.Photo[0]);
         }
-
+        
         /// <summary>
         /// Test for <see cref="MessageInfo.Sticker"/> parse field.
         /// </summary>
@@ -582,12 +583,16 @@ namespace NetTelebot.Tests.ResponseTest
             const int width = 100;
             const int height = 100;
             const string emoji = "emoji";
+            const string setName = "TestSetName";
             const int fileSize = 10;
 
+
+            JObject maskPositionObject = MaskPositiontInfoObject.GetObject("forehead", 1.01, 1.01, 1.01);
+ 
             dynamic messageInfoSticker = MCommonMandatoryFieldsMessageInfo;
 
             messageInfoSticker.sticker = StickerInfoObject.GetObject(fileId, width, height,
-                MCommonPhotoSizeInfo, emoji, fileSize);
+                MCommonPhotoSizeInfo, emoji, setName, maskPositionObject, fileSize);
 
             MessageInfo messageInfo = new MessageInfo(messageInfoSticker);
 
@@ -598,11 +603,21 @@ namespace NetTelebot.Tests.ResponseTest
                 Assert.AreEqual(width, messageInfo.Sticker.Width);
                 Assert.AreEqual(height, messageInfo.Sticker.Height);
                 Assert.AreEqual(emoji, messageInfo.Sticker.Emoji);
+                Assert.AreEqual(setName, messageInfo.Sticker.SetName);
                 Assert.AreEqual(fileSize, messageInfo.Sticker.FileSize);
             });
 
             //test MessageInfo.Sticker.Thumb
             AssertPhotoSizeInfo(messageInfo.Sticker.Thumb);
+
+            //test MessageInfo.Sticker.MaskPosition
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(Point.forehead, messageInfo.Sticker.MaskPosition.Point);
+                Assert.AreEqual(1.01, messageInfo.Sticker.MaskPosition.X_shift);
+                Assert.AreEqual(1.01, messageInfo.Sticker.MaskPosition.Y_shift);
+                Assert.AreEqual(1.01, messageInfo.Sticker.MaskPosition.Scale);
+            });
         }
 
         /// <summary>

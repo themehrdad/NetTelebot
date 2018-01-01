@@ -12,13 +12,13 @@ namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
     {
         private static readonly List<string> mKeyList = GetCurrencyList();
 
-        [Test, Timeout(30000)]
+        [Test]
         public static void ActualCurrenciesJsonEqualsEnumTest()
         {
             Assert.AreEqual(GetEnumList(), mKeyList);
         }
 
-        [Test, Timeout(30000)]
+        [Test]
         public static void ComparsionWhenItemsSmallerTest()
         {
             var listEnum = GetEnumList();
@@ -33,7 +33,7 @@ namespace NetTelebot.Tests.TestForDiscrepanciesWithApi
             Assert.AreNotEqual(listEnum, mKeyList);
         }
 
-        [Test, Timeout(30000)]
+        [Test]
         public static void ComparsionWhenItemsMoreTest()
         {
             var listEnum = GetEnumList();

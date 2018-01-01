@@ -105,7 +105,7 @@ namespace NetTelebot.Tests
                             "\"chosen_inline_result\",\r\n  " +
                             "\"callback_query\",\r\n  " +
                             "\"shipping_query\",\r\n  " +
-                            "\"pre_checkout_query\"\r\n]", allowedUpdateses.ToJarray());
+                            "\"pre_checkout_query\"\r\n]", allowedUpdateses.ToJarrayString());
         }
 
     }

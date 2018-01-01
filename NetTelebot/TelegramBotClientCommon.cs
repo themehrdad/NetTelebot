@@ -86,6 +86,9 @@ namespace NetTelebot
 
                 if (typeof(T) == typeof(ChatMemberInfoResult))
                     return new ChatMemberInfoResult(response.Content);
+
+                if(typeof(T) == typeof(StickerSetInfoResult))
+                    return new StickerSetInfoResult(response.Content);
             }
 
             throw new Exception(response.StatusDescription);

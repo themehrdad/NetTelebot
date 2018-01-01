@@ -9,7 +9,7 @@ namespace NetTelebot.Extension
     /// </summary>
     public static class UtilityExtensions
     {
-        private static DateTime baseDate = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        private static DateTime mBaseDate = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
         
         /// <summary>
         /// Convert date from unix time to the <see cref="DateTime"/>.
@@ -18,7 +18,7 @@ namespace NetTelebot.Extension
         /// <returns>Convert DateTime</returns>
         public static DateTime ToDateTime(this long unixDate)
         {
-            return baseDate.AddSeconds(unixDate).ToLocalTime();
+            return mBaseDate.AddSeconds(unixDate).ToLocalTime();
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace NetTelebot.Extension
         /// <returns>Returns a numerical representation (Unix time) of the DateTime object.</returns>
         public static long ToUnixTime(this DateTime dateTime)
         {
-            return (long)(dateTime - baseDate).TotalSeconds;
+            return (long)(dateTime - mBaseDate).TotalSeconds;
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace NetTelebot.Extension
         /// </summary>
         /// <param name="allowedUpdateses">List the types of updates you want your bot to receive</param>
         /// <returns>Jarray the types of updates</returns>
-        public static string ToJarray(this AllowedUpdates[] allowedUpdateses)
+        public static string ToJarrayString(this AllowedUpdates[] allowedUpdateses)
         {
             JArray jArray = new JArray();
 

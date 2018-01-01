@@ -15,7 +15,6 @@ namespace NetTelebot.Tests.RequestToMockTest
     [TestFixture]
     internal class ClientTest
     {
-
         private const int mOkServerPort = 8091;
         private const int mBadServerPort = 8092;
 
@@ -1048,6 +1047,76 @@ namespace NetTelebot.Tests.RequestToMockTest
             Assert.Throws<Exception>(
                 () =>
                     mBotBadResponse.DeleteMessage("TestChatId", 123456));
+        }
+
+        /// <summary>
+        /// Test method <see cref="TelegramBotClient.GetStickerSet"/>.
+        /// </summary>
+        [Test]
+        public void GetStickerSetTest()
+        {
+            mBotOkResponse.GetStickerSet("TestStickerSetName");
+
+            var request =
+                MockServer.ServerOkResponse.SearchLogsFor(
+                    Requests.WithUrl("/botToken/getStickerSet").UsingPost());
+
+            ConsoleUtlis.PrintResult(request);
+
+
+            Assert.AreEqual("name=TestStickerSetName", request.FirstOrDefault()?.Body);
+            Assert.AreEqual("/botToken/getStickerSet", request.FirstOrDefault()?.Url);
+
+            Assert.Throws<Exception>(
+                () =>
+                    mBotBadResponse.GetStickerSet("TestStickerSetName"));
+
+        }
+
+        /// <summary>
+        /// Test method <see cref="TelegramBotClient.SetStickerPositionInSet"/>.
+        /// </summary>
+        [Test]
+        public void SetStickerPositionInSetTest()
+        {
+            mBotOkResponse.SetStickerPositionInSet("TestStickerSetName", 1);
+
+            var request =
+                MockServer.ServerOkResponse.SearchLogsFor(
+                    Requests.WithUrl("/botToken/setStickerPositionInSet").UsingPost());
+
+            ConsoleUtlis.PrintResult(request);
+
+
+            Assert.AreEqual("sticker=TestStickerSetName&position=1", request.FirstOrDefault()?.Body);
+            Assert.AreEqual("/botToken/setStickerPositionInSet", request.FirstOrDefault()?.Url);
+
+            Assert.Throws<Exception>(
+                () =>
+                    mBotBadResponse.SetStickerPositionInSet("TestStickerSetName", 1));
+        }
+
+        /// <summary>
+        /// Test method <see cref="TelegramBotClient.DeleteStickerFromSet"/>.
+        /// </summary>
+        [Test]
+        public void DeleteStickerFromSetTest()
+        {
+            mBotOkResponse.DeleteStickerFromSet("TestStickerSetName");
+
+            var request =
+                MockServer.ServerOkResponse.SearchLogsFor(
+                    Requests.WithUrl("/botToken/deleteStickerFromSet").UsingPost());
+
+            ConsoleUtlis.PrintResult(request);
+
+
+            Assert.AreEqual("sticker=TestStickerSetName", request.FirstOrDefault()?.Body);
+            Assert.AreEqual("/botToken/deleteStickerFromSet", request.FirstOrDefault()?.Url);
+
+            Assert.Throws<Exception>(
+                () =>
+                    mBotBadResponse.DeleteStickerFromSet("TestStickerSetName"));
         }
     }
 }

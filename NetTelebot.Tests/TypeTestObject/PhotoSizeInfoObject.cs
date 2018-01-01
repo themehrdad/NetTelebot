@@ -1,4 +1,5 @@
 ﻿using NetTelebot.Type;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Tests.TypeTestObject
@@ -17,7 +18,7 @@ namespace NetTelebot.Tests.TypeTestObject
         internal static JObject GetObject(string fileId, int width, int height, int fileSize)
         {
             dynamic photoSizeInfo = new JObject();
-            
+
             photoSizeInfo.file_id = fileId;
             photoSizeInfo.width = width;
             photoSizeInfo.height = height;
@@ -25,5 +26,20 @@ namespace NetTelebot.Tests.TypeTestObject
 
             return photoSizeInfo;
         }
+    }
+
+    internal class PhotoSizeInfoObjects
+    {
+        [JsonProperty("file_id")]
+        internal string FileId { get; set; }
+
+        [JsonProperty("width")]
+        internal int Width { get; set; }
+
+        [JsonProperty("height")]
+        internal int Height { get; set; }
+
+        [JsonProperty("file_size")]
+        internal int FileSize { get; set; }
     }
 }
