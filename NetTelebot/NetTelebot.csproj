@@ -62,7 +62,7 @@
     <Compile Include="Result\UserInfoResult.cs" />
     <Compile Include="TelegramBotClientCommon.cs" />
     <Compile Include="TelegramBotClientPayment.cs" />
-    <Compile Include="TelegramBotClientStiker.cs" />
+    <Compile Include="TelegramBotClientStiсker.cs" />
     <Compile Include="TelegramBotClientUpdate.cs" />
     <Compile Include="TelegramBotClientUpdatingMessages.cs" />
     <Compile Include="Type\AudioInfo.cs" />

@@ -1072,5 +1072,29 @@ namespace NetTelebot.Tests.RequestToMockTest
                     mBotBadResponse.GetStickerSet("TestStickerSetName"));
 
         }
+
+        /// <summary>
+        /// Test method <see cref="TelegramBotClient.DeleteStickerFromSet"/>.
+        /// </summary>
+        [Test]
+        public void DeleteStickerFromSetTest()
+        {
+            mBotOkResponse.DeleteStickerFromSet("TestStickerSetName");
+
+            var request =
+                MockServer.ServerOkResponse.SearchLogsFor(
+                    Requests.WithUrl("/botToken/deleteStickerFromSet").UsingPost());
+
+            ConsoleUtlis.PrintResult(request);
+
+
+            Assert.AreEqual("sticker=TestStickerSetName", request.FirstOrDefault()?.Body);
+            Assert.AreEqual("/botToken/deleteStickerFromSet", request.FirstOrDefault()?.Url);
+
+            Assert.Throws<Exception>(
+                () =>
+                    mBotBadResponse.DeleteStickerFromSet("TestStickerSetName"));
+
+        }
     }
 }
