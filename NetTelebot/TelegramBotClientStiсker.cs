@@ -50,7 +50,7 @@ namespace NetTelebot
         /// <param name="sticker">File identifier of the sticker</param>
         /// <param name="position">New sticker position in the set, zero-based</param>
         /// <returns>True on success</returns>
-        public BooleanResult SetStickerPositionSet(string sticker, int position)
+        public BooleanResult SetStickerPositionInSet(string sticker, int position)
         {
             RestRequest request = NewRestRequest(mSetStickerPositionInSet);
 

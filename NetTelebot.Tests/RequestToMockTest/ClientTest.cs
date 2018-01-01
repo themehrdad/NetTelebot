@@ -1074,6 +1074,29 @@ namespace NetTelebot.Tests.RequestToMockTest
         }
 
         /// <summary>
+        /// Test method <see cref="TelegramBotClient.SetStickerPositionInSet"/>.
+        /// </summary>
+        [Test]
+        public void SetStickerPositionInSetTest()
+        {
+            mBotOkResponse.SetStickerPositionInSet("TestStickerSetName", 1);
+
+            var request =
+                MockServer.ServerOkResponse.SearchLogsFor(
+                    Requests.WithUrl("/botToken/setStickerPositionInSet").UsingPost());
+
+            ConsoleUtlis.PrintResult(request);
+
+
+            Assert.AreEqual("sticker=TestStickerSetName&position=1", request.FirstOrDefault()?.Body);
+            Assert.AreEqual("/botToken/setStickerPositionInSet", request.FirstOrDefault()?.Url);
+
+            Assert.Throws<Exception>(
+                () =>
+                    mBotBadResponse.SetStickerPositionInSet("TestStickerSetName", 1));
+        }
+
+        /// <summary>
         /// Test method <see cref="TelegramBotClient.DeleteStickerFromSet"/>.
         /// </summary>
         [Test]
@@ -1094,7 +1117,6 @@ namespace NetTelebot.Tests.RequestToMockTest
             Assert.Throws<Exception>(
                 () =>
                     mBotBadResponse.DeleteStickerFromSet("TestStickerSetName"));
-
         }
     }
 }
