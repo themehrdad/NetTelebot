@@ -27,6 +27,7 @@ namespace NetTelebot
     public partial class TelegramBotClient
     {
         private const string mGetStickerSet = "/bot{0}/getStickerSet";
+        private const string mSetStickerPositionInSet = "/bot{0}/setStickerPositionInSet";
         private const string mDeleteStickerFromSet = "/bot{0}/deleteStickerFromSet";
 
         /// <summary>
@@ -41,6 +42,22 @@ namespace NetTelebot
             request.AddParameter("name", name);
 
             return ExecuteRequest<StickerSetInfoResult>(request) as StickerSetInfoResult; 
+        }
+
+        /// <summary>
+        /// Use this method to move a sticker in a set created by the bot to a specific position.
+        /// </summary>
+        /// <param name="sticker">File identifier of the sticker</param>
+        /// <param name="position">New sticker position in the set, zero-based</param>
+        /// <returns>True on success</returns>
+        public BooleanResult SetStickerPositionSet(string sticker, int position)
+        {
+            RestRequest request = NewRestRequest(mSetStickerPositionInSet);
+
+            request.AddParameter("sticker", sticker);
+            request.AddParameter("position", position);
+
+            return ExecuteRequest<BooleanResult>(request) as BooleanResult;
         }
 
         /// <summary>
