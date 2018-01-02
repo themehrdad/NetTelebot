@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
+using NetTelebot.Interface;
 using NetTelebot.Result;
+using NetTelebot.Type;
 using RestSharp;
 
 namespace NetTelebot
@@ -92,6 +94,27 @@ namespace NetTelebot
             }
 
             throw new Exception(response.StatusDescription);
+        }
+
+        private static RestRequest AddFile(IFile iFile, RestRequest request, string name)
+        {
+            ExistingFile file = iFile as ExistingFile;
+
+            if (file?.FileId != null)
+            {
+                request.AddParameter(name, file.FileId);
+            }
+            else if (file?.Url != null)
+            {
+                request.AddParameter(name, file.Url);
+            }
+            else
+            {
+                NewFile newFile = (NewFile)iFile;
+                request.AddFile(name, newFile.FileContent, newFile.FileName);
+            }
+
+            return request;
         }
     }
 }
