@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetTelebot.Type.Sticker
@@ -25,7 +26,9 @@ namespace NetTelebot.Type.Sticker
             if (jsonObject["set_name"] != null)
                 SetName = jsonObject["set_name"].Value<string>();
             if (jsonObject["mask_position"] != null)
-                MaskPosition = new MaskPositionInfo(jsonObject["mask_position"].Value<JObject>());
+                MaskPosition =
+                    JsonConvert.DeserializeObject<MaskPositionInfo>(
+                        jsonObject["mask_position"].Value<JObject>().ToString());
             if (jsonObject["file_size"] != null)
                 FileSize = jsonObject["file_size"].Value<int>();
         }
@@ -63,7 +66,7 @@ namespace NetTelebot.Type.Sticker
         /// <summary>
         /// Optional. For mask stickers, the position where the mask should be placed
         /// </summary>
-        public MaskPositionInfo MaskPosition { get; private set; }
+        public MaskPositionInfo MaskPosition { get; internal set; }
 
         /// <summary>
         /// Optional. File size

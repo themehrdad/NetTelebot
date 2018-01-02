@@ -110,6 +110,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsEmpty(messageInfo.Photo);
 
                 Assert.IsInstanceOf<StickerInfo>(messageInfo.Sticker);
+                Assert.IsInstanceOf<MaskPositionInfo>(messageInfo.Sticker.MaskPosition);
                 Assert.IsNull(messageInfo.Sticker.FileId);
 
                 Assert.IsInstanceOf<VideoInfo>(messageInfo.Video);

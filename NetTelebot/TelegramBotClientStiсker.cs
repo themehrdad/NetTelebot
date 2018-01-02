@@ -1,6 +1,8 @@
 ﻿using NetTelebot.Interface;
 using NetTelebot.Result;
 using NetTelebot.Type;
+using NetTelebot.Type.Sticker;
+using Newtonsoft.Json;
 using RestSharp;
 
 namespace NetTelebot
@@ -30,6 +32,7 @@ namespace NetTelebot
     {
         private const string mSendStickerUri = "/bot{0}/sendSticker";
         private const string mGetStickerSetUri = "/bot{0}/getStickerSet";
+        private const string mAddStickerToSet = "/bot{0}/addStickerToSet";
         private const string mSetStickerPositionInSetUri = "/bot{0}/setStickerPositionInSet";
         private const string mDeleteStickerFromSetUri = "/bot{0}/deleteStickerFromSet";
 
@@ -77,6 +80,38 @@ namespace NetTelebot
             request.AddParameter("name", name);
 
             return ExecuteRequest<StickerSetInfoResult>(request) as StickerSetInfoResult; 
+        }
+
+        /// <summary>
+        /// Use this method to add a new sticker to a set created by the bot.
+        /// See <see href="https://core.telegram.org/bots/api#addstickertoset">API</see>
+        /// </summary>
+        /// <param name="userId">User identifier of sticker set owner</param>
+        /// <param name="name">Sticker set name</param>
+        /// <param name="pngSticker">Png image with the sticker, must be up to 512 kilobytes in size, 
+        /// dimensions must not exceed 512px, and either width or height must be exactly 512px. 
+        /// Pass a file_id as a String to send a file that already exists on the Telegram servers, 
+        /// pass an HTTP URL as a String for Telegram to get a file from the Internet, 
+        /// or upload a new one using multipart/form-data.</param>
+        /// <param name="emojis">One or more emoji corresponding to the sticker</param>
+        /// <param name="maskPosition">A JSON-serialized object for position where the mask should be placed on faces</param>
+        /// <returns>True on success.</returns>
+        public BooleanResult AddStickerToSet(int userId, string name, 
+            IFile pngSticker, 
+            string emojis, 
+            MaskPositionInfo maskPosition = null)
+        {
+            RestRequest request = NewRestRequest(mAddStickerToSet);
+
+            request.AddParameter("userId", userId);
+            request.AddParameter("name", name);
+            request = AddFile(pngSticker, request, "png_sticker");
+            request.AddParameter("emojis", emojis);
+
+            if (maskPosition != null)
+                request.AddParameter("mask_position", JsonConvert.SerializeObject(maskPosition));
+
+            return ExecuteRequest<BooleanResult>(request) as BooleanResult;
         }
 
         /// <summary>
