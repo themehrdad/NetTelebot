@@ -2,8 +2,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-// ReSharper disable InconsistentNaming
-
 namespace NetTelebot.Type.Sticker
 {
     /// <summary>
@@ -24,14 +22,14 @@ namespace NetTelebot.Type.Sticker
         /// For example, choosing -1.0 will place mask just to the left of the default mask position.
         /// </summary>
         [JsonProperty("x_shift", Required = Required.Always)]
-        public double X_shift { get; set; }
+        public double xShift { get; set; }
 
         /// <summary>
         /// Shift by Y-axis measured in heights of the mask scaled to the face size, from top to bottom. 
         /// For example, 1.0 will place the mask just below the default mask position.
         /// </summary>
         [JsonProperty("y_shift", Required = Required.Always)]
-        public double Y_shift { get; set; }
+        public double yShift { get; set; }
 
         /// <summary>
         /// Mask scaling coefficient. For example, 2.0 means double size.

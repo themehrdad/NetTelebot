@@ -614,8 +614,8 @@ namespace NetTelebot.Tests.ResponseTest
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(Point.forehead, messageInfo.Sticker.MaskPosition.Point);
-                Assert.AreEqual(1.01, messageInfo.Sticker.MaskPosition.X_shift);
-                Assert.AreEqual(1.01, messageInfo.Sticker.MaskPosition.Y_shift);
+                Assert.AreEqual(1.01, messageInfo.Sticker.MaskPosition.xShift);
+                Assert.AreEqual(1.01, messageInfo.Sticker.MaskPosition.yShift);
                 Assert.AreEqual(1.01, messageInfo.Sticker.MaskPosition.Scale);
             });
         }

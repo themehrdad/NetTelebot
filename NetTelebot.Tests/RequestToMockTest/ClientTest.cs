@@ -1085,8 +1085,8 @@ namespace NetTelebot.Tests.RequestToMockTest
                 {
                     Point = Point.chin,
                     Scale = 123.5,
-                    X_shift = 456.7,
-                    Y_shift = 789.45
+                    xShift = 456.7,
+                    yShift = 789.45
                 });
 
             var request =
@@ -1111,8 +1111,8 @@ namespace NetTelebot.Tests.RequestToMockTest
                 {
                     Point = Point.chin,
                     Scale = 123.5,
-                    X_shift = 456.7,
-                    Y_shift = 789.45
+                    xShift = 456.7,
+                    yShift = 789.45
                 }));
 
         }
