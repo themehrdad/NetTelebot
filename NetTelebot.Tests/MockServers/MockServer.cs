@@ -35,6 +35,7 @@ namespace NetTelebot.Tests.MockServers
             AddNewRouter("/botToken/editMessageReplyMarkup", ResponseString.ExpectedBodyForSendMessageResult);
             AddNewRouter("/botToken/deleteMessage", ResponseString.ExpectedBodyForBooleanResult);
             AddNewRouter("/botToken/getStickerSet", ResponseString.ExpectedBodyForGetStickerSet);
+            AddNewRouter("/botToken/addStickerToSet", ResponseString.ExpectedBodyForBooleanResult);
             AddNewRouter("/botToken/deleteStickerFromSet", ResponseString.ExpectedBodyForBooleanResult);
             AddNewRouter("/botToken/setStickerPositionInSet", ResponseString.ExpectedBodyForBooleanResult);
 
