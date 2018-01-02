@@ -266,8 +266,8 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.IsInstanceOf(typeof(MaskPositionInfo), sticker.MaskPosition);
                 Assert.AreEqual(sticker.MaskPosition.Point, null);
                 Assert.AreEqual(sticker.MaskPosition.Scale, 0);
-                Assert.AreEqual(sticker.MaskPosition.xShift, 0);
-                Assert.AreEqual(sticker.MaskPosition.yShift, 0);
+                Assert.AreEqual(sticker.MaskPosition.XShift, 0);
+                Assert.AreEqual(sticker.MaskPosition.YShift, 0);
             });
         }
 
