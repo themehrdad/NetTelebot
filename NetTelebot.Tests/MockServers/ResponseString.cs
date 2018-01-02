@@ -248,7 +248,7 @@ namespace NetTelebot.Tests.MockServers
                         SetName = "TestName",
                         MaskPosition = new MaskPositiontInfoObject
                         {
-                            Point = "TestPoint",
+                            Point = "forehead",
                             X_shift = 123.456,
                             Y_shift = 456.123,
                             Scale = 789.456

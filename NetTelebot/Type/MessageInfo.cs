@@ -107,7 +107,7 @@ namespace NetTelebot.Type
 
             Sticker = jsonObject["sticker"] != null
                 ? new StickerInfo(jsonObject["sticker"].Value<JObject>())
-                : new StickerInfo {Thumb = new PhotoSizeInfo()};
+                : new StickerInfo {Thumb = new PhotoSizeInfo(), MaskPosition = new MaskPositionInfo()};
 
             Video = jsonObject["video"] != null
                 ? new VideoInfo(jsonObject["video"].Value<JObject>())
@@ -207,7 +207,7 @@ namespace NetTelebot.Type
                     }
                 },
                 Photo = new PhotoSizeInfo[0],
-                Sticker = new StickerInfo {Thumb = new PhotoSizeInfo()},
+                Sticker = new StickerInfo {Thumb = new PhotoSizeInfo(), MaskPosition = new MaskPositionInfo()},
                 Video = new VideoInfo {Thumb = new PhotoSizeInfo()},
                 Voice = new VoiceInfo(),
                 VideoNote = new VideoNoteInfo {Thumb = new PhotoSizeInfo()},

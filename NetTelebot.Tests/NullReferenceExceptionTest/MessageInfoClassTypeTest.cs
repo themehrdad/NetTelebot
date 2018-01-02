@@ -244,6 +244,7 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
 
             ConsoleUtlis.PrintResult(sticker);
             ConsoleUtlis.PrintResult(sticker.Thumb);
+            ConsoleUtlis.PrintResult(sticker.MaskPosition);
 
             Assert.Multiple(() =>
             {
@@ -261,6 +262,12 @@ namespace NetTelebot.Tests.NullReferenceExceptionTest
                 Assert.AreEqual(sticker.Thumb.Height, 0);
                 Assert.IsNull(sticker.Thumb.FileId);
                 Assert.AreEqual(sticker.Thumb.FileSize, 0);
+
+                Assert.IsInstanceOf(typeof(MaskPositionInfo), sticker.MaskPosition);
+                Assert.AreEqual(sticker.MaskPosition.Point, null);
+                Assert.AreEqual(sticker.MaskPosition.Scale, 0);
+                Assert.AreEqual(sticker.MaskPosition.XShift, 0);
+                Assert.AreEqual(sticker.MaskPosition.YShift, 0);
             });
         }
 

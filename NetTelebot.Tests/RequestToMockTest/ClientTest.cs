@@ -7,6 +7,7 @@ using NetTelebot.Tests.MockServers;
 using NetTelebot.Type;
 using NetTelebot.Type.Keyboard;
 using NetTelebot.Type.Payment;
+using NetTelebot.Type.Sticker;
 using NUnit.Framework;
 using RestSharp;
 
@@ -1070,6 +1071,49 @@ namespace NetTelebot.Tests.RequestToMockTest
             Assert.Throws<Exception>(
                 () =>
                     mBotBadResponse.GetStickerSet("TestStickerSetName"));
+
+        }
+
+        /// <summary>
+        /// Test method <see cref="TelegramBotClient.AddStickerToSet"/>.
+        /// </summary>
+        [Test]
+        public void AddStickerToSetTest()
+        {
+            mBotOkResponse.AddStickerToSet(12345678, "TestName", new ExistingFile { FileId = "123" },
+                "TestEmojis", new MaskPositionInfo
+                {
+                    Point = Point.chin,
+                    Scale = 123.5,
+                    XShift = 456.7,
+                    YShift = 789.45
+                });
+
+            var request =
+                MockServer.ServerOkResponse.SearchLogsFor(
+                    Requests.WithUrl("/botToken/addStickerToSet").UsingPost());
+
+            ConsoleUtlis.PrintResult(request);
+
+
+            Assert.AreEqual("userId=12345678&" +
+                            "name=TestName&" +
+                            "png_sticker=123&" +
+                            "emojis=TestEmojis&" +
+                            "mask_position=%7B%22point%22%3A%22chin%22%2C%22x_shift%22%3A456.7%2C%22y_shift%22%3A789.45%2C%22scale%22%3A123.5%7D", 
+                            request.FirstOrDefault()?.Body);
+            Assert.AreEqual("/botToken/addStickerToSet", request.FirstOrDefault()?.Url);
+
+            Assert.Throws<Exception>(
+                () =>
+                    mBotBadResponse.AddStickerToSet(12345678, "TestName", new ExistingFile { FileId = "123" },
+                "TestEmojis", new MaskPositionInfo
+                {
+                    Point = Point.chin,
+                    Scale = 123.5,
+                    XShift = 456.7,
+                    YShift = 789.45
+                }));
 
         }
 

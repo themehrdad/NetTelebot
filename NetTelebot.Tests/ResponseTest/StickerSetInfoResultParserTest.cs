@@ -71,8 +71,8 @@ namespace NetTelebot.Tests.ResponseTest
             Assert.AreEqual(stickerSetInfoResultString.Result.Stickers[0].Emoji, stickerSetInfoResult.Result.Stickers[0].Emoji);
             Assert.AreEqual(stickerSetInfoResultString.Result.Stickers[0].SetName, stickerSetInfoResult.Result.Stickers[0].SetName);
             Assert.AreEqual(Point.chin, stickerSetInfoResult.Result.Stickers[0].MaskPosition.Point);
-            Assert.AreEqual(stickerSetInfoResultString.Result.Stickers[0].MaskPosition.X_shift, stickerSetInfoResult.Result.Stickers[0].MaskPosition.X_shift);
-            Assert.AreEqual(stickerSetInfoResultString.Result.Stickers[0].MaskPosition.Y_shift, stickerSetInfoResult.Result.Stickers[0].MaskPosition.Y_shift);
+            Assert.AreEqual(stickerSetInfoResultString.Result.Stickers[0].MaskPosition.X_shift, stickerSetInfoResult.Result.Stickers[0].MaskPosition.XShift);
+            Assert.AreEqual(stickerSetInfoResultString.Result.Stickers[0].MaskPosition.Y_shift, stickerSetInfoResult.Result.Stickers[0].MaskPosition.YShift);
             Assert.AreEqual(stickerSetInfoResultString.Result.Stickers[0].MaskPosition.Scale, stickerSetInfoResult.Result.Stickers[0].MaskPosition.Scale);
             Assert.AreEqual(stickerSetInfoResultString.Result.Stickers[0].FileSize, stickerSetInfoResult.Result.Stickers[0].FileSize);
         }

@@ -48,7 +48,6 @@ namespace NetTelebot
         private const string mSendPhotoUri = "/bot{0}/sendPhoto";
         private const string mSendAudioUri = "/bot{0}/sendAudio";
         private const string mSendDocumentUri = "/bot{0}/sendDocument";
-        private const string mSendStickerUri = "/bot{0}/sendSticker";
         private const string mSendVideoUri = "/bot{0}/sendVideo";
         private const string mSendVoiceUri = "/bot{0}/sendVoice";
         private const string mSendVideoNoteUri = "/bot{0}/sendVideoNote";
@@ -248,35 +247,6 @@ namespace NetTelebot
 
             if (!string.IsNullOrEmpty(caption))
                 request.AddParameter("caption", caption);
-            if (disableNotification.HasValue)
-                request.AddParameter("disable_notification", disableNotification.Value);
-            if (replyToMessageId != null)
-                request.AddParameter("reply_to_message_id", replyToMessageId);
-            if (replyMarkup != null)
-                request.AddParameter("reply_markup", replyMarkup.GetJson());
-
-            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
-        }
-
-        /// <summary>
-        /// Use this method to send .webp stickers. See <see href="https://core.telegram.org/bots/api#sendsticker">API</see>
-        /// </summary>
-        /// <param name="chatId">Unique identifier for the target chat or username of the target channel (in the format @channelusername)</param>
-        /// <param name="sticker">Sticker to send. You can either pass a file_id as String to resend a sticker that is 
-        /// already on the Telegram servers, or upload a new sticker using multipart/form-data.</param>
-        /// <param name="disableNotification">Sends the message silently. Users will receive a notification with no sound.</param> 
-        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
-        /// <param name="replyMarkup">Additional interface options. A JSON-serialized object for a custom reply keyboard, instructions to hide keyboard or to force a reply from the user.</param>
-        /// <returns>On success, the sent <see cref="MessageInfo"/> is returned.</returns>
-        public SendMessageResult SendSticker(object chatId, IFile sticker,
-            bool? disableNotification = null,
-            int? replyToMessageId = null,
-            IReplyMarkup replyMarkup = null)
-        {
-            RestRequest request = NewRestRequest(mSendStickerUri);
-            request.AddParameter("chat_id", chatId);
-            request = AddFile(sticker, request, "sticker");
-
             if (disableNotification.HasValue)
                 request.AddParameter("disable_notification", disableNotification.Value);
             if (replyToMessageId != null)
@@ -728,26 +698,5 @@ namespace NetTelebot
         }
 
         //todo Inline mode methods (https://core.telegram.org/bots/api#inline-mode-methods)
-
-        private static RestRequest AddFile(IFile iFile, RestRequest request, string name)
-        {
-            ExistingFile file = iFile as ExistingFile;
-
-            if (file?.FileId != null)
-            {
-                request.AddParameter(name, file.FileId);
-            }
-            else if(file?.Url != null)
-            {
-                request.AddParameter(name, file.Url);
-            }
-            else
-            {
-                NewFile newFile = (NewFile)iFile;
-                request.AddFile(name, newFile.FileContent, newFile.FileName);
-            }
-
-            return request;
-        }
     }
 }
