@@ -66,6 +66,14 @@ namespace NetTelebot
         private const string mGetChatMembersCountUri = "/bot{0}/getChatMembersCount";
         private const string mGetChatMemberUri = "/bot{0}/getChatMember";
         private const string mAnswerCallbackQueryUri = "/bot{0}/answerCallbackQuery";
+        private const string mSendAnimationUri = "/bot{0}/sendAnimation";
+        private const string mSendDiceUri = "/bot{0}/sendDice";
+        private const string mSendPollUri = "/bot{0}/sendPoll";
+        private const string mStopPollUri = "/bot{0}/stopPoll";
+        private const string mCopyMessageUri = "/bot{0}/copyMessage";
+        private const string mSendMediaGroupUri = "/bot{0}/sendMediaGroup";
+        private const string mPinChatMessageUri = "/bot{0}/pinChatMessage";
+        private const string mUnpinChatMessageUri = "/bot{0}/unpinChatMessage";
 
         private RestRequest NewRestRequest(string uri)
         {
@@ -689,23 +697,23 @@ namespace NetTelebot
         }
 
         /// <summary>
-        /// Use this method to send answers to callback queries sent from inline keyboards. 
-        /// The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. 
-        /// 
-        /// Note: Alternatively, the user can be redirected to the specified Game URL. 
-        /// For this option to work, you must first create a game for your bot via @Botfather and accept the terms. 
+        /// Use this method to send answers to callback queries sent from inline keyboards.
+        /// The answer will be displayed to the user as a notification at the top of the chat screen or as an alert.
+        ///
+        /// Note: Alternatively, the user can be redirected to the specified Game URL.
+        /// For this option to work, you must first create a game for your bot via @Botfather and accept the terms.
         /// Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
         /// </summary>
         /// <param name="callbackQueryId">Unique identifier for the query to be answered</param>
         /// <param name="text">Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters</param>
         /// <param name="showAlert">If true, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to false.</param>
-        /// <param name="url">URL that will be opened by the user's client. If you have created a Game and accepted the conditions via @Botfather, 
-        /// specify the URL that opens your game – note that this will only work if the query comes from a callback_game button. 
+        /// <param name="url">URL that will be opened by the user's client. If you have created a Game and accepted the conditions via @Botfather,
+        /// specify the URL that opens your game – note that this will only work if the query comes from a callback_game button.
         /// Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.</param>
-        /// <param name="cacheTime">The maximum amount of time in seconds that the result of the callback query may be cached client-side. 
+        /// <param name="cacheTime">The maximum amount of time in seconds that the result of the callback query may be cached client-side.
         /// Telegram apps will support caching starting in version 3.14. Defaults to 0.</param>
         /// <returns>On success, True is returned.</returns>
-        public BooleanResult AswerCallbackQuery(string callbackQueryId,
+        public BooleanResult AnswerCallbackQuery(string callbackQueryId,
             string text = null,
             bool? showAlert = null,
             string url = null,
@@ -723,6 +731,299 @@ namespace NetTelebot
                 request.AddParameter("url", url);
             if (cacheTime != null)
                 request.AddParameter("cache_time", cacheTime);
+
+            return ExecuteRequest<BooleanResult>(request) as BooleanResult;
+        }
+
+        /// <summary>
+        /// [Obsolete - typo in method name] Use AnswerCallbackQuery instead.
+        /// Use this method to send answers to callback queries sent from inline keyboards.
+        /// </summary>
+        /// <param name="callbackQueryId">Unique identifier for the query to be answered</param>
+        /// <param name="text">Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters</param>
+        /// <param name="showAlert">If true, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to false.</param>
+        /// <param name="url">URL that will be opened by the user's client.</param>
+        /// <param name="cacheTime">The maximum amount of time in seconds that the result of the callback query may be cached client-side.</param>
+        /// <returns>On success, True is returned.</returns>
+        [Obsolete("Method name has a typo. Use AnswerCallbackQuery instead.")]
+        public BooleanResult AswerCallbackQuery(string callbackQueryId,
+            string text = null,
+            bool? showAlert = null,
+            string url = null,
+            int? cacheTime = null)
+        {
+            return AnswerCallbackQuery(callbackQueryId, text, showAlert, url, cacheTime);
+        }
+
+        /// <summary>
+        /// Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound).
+        /// See <see href="https://core.telegram.org/bots/api#sendanimation">API</see>
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel</param>
+        /// <param name="animation">Animation to send. Pass a file_id as string to send an animation that exists on the Telegram servers, or upload a new one.</param>
+        /// <param name="caption">Animation caption, 0-1024 characters</param>
+        /// <param name="parseMode">Mode for parsing entities in the animation caption</param>
+        /// <param name="duration">Duration of sent animation in seconds</param>
+        /// <param name="width">Animation width</param>
+        /// <param name="height">Animation height</param>
+        /// <param name="disableNotification">Sends the message silently</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options</param>
+        /// <returns>On success, the sent Message is returned.</returns>
+        public SendMessageResult SendAnimation(object chatId, IFile animation,
+            string caption = null,
+            ParseMode? parseMode = null,
+            int? duration = null,
+            int? width = null,
+            int? height = null,
+            bool? disableNotification = null,
+            int? replyToMessageId = null,
+            IReplyMarkup replyMarkup = null)
+        {
+            RestRequest request = NewRestRequest(mSendAnimationUri);
+
+            request.AddParameter("chat_id", chatId);
+            AddFile(animation, request, "animation");
+
+            if (!string.IsNullOrEmpty(caption))
+                request.AddParameter("caption", caption);
+            if (parseMode.HasValue)
+                request.AddParameter("parse_mode", parseMode.Value);
+            if (duration.HasValue)
+                request.AddParameter("duration", duration.Value);
+            if (width.HasValue)
+                request.AddParameter("width", width.Value);
+            if (height.HasValue)
+                request.AddParameter("height", height.Value);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+            if (replyToMessageId.HasValue)
+                request.AddParameter("reply_to_message_id", replyToMessageId.Value);
+            if (replyMarkup != null)
+                request.AddParameter("reply_markup", replyMarkup.GetJson());
+
+            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
+        }
+
+        /// <summary>
+        /// Use this method to send an animated emoji that will display a random value.
+        /// See <see href="https://core.telegram.org/bots/api#senddice">API</see>
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel</param>
+        /// <param name="emoji">Emoji on which the dice throw animation is based. Currently, must be one of "🎲", "🎯", "🏀", "⚽", "🎳", or "🎰". Defaults to "🎲"</param>
+        /// <param name="disableNotification">Sends the message silently</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options</param>
+        /// <returns>On success, the sent Message is returned.</returns>
+        public SendMessageResult SendDice(object chatId,
+            string emoji = null,
+            bool? disableNotification = null,
+            int? replyToMessageId = null,
+            IReplyMarkup replyMarkup = null)
+        {
+            RestRequest request = NewRestRequest(mSendDiceUri);
+
+            request.AddParameter("chat_id", chatId);
+            if (!string.IsNullOrEmpty(emoji))
+                request.AddParameter("emoji", emoji);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+            if (replyToMessageId.HasValue)
+                request.AddParameter("reply_to_message_id", replyToMessageId.Value);
+            if (replyMarkup != null)
+                request.AddParameter("reply_markup", replyMarkup.GetJson());
+
+            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
+        }
+
+        /// <summary>
+        /// Use this method to send a native poll.
+        /// See <see href="https://core.telegram.org/bots/api#sendpoll">API</see>
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel</param>
+        /// <param name="question">Poll question, 1-300 characters</param>
+        /// <param name="options">List of answer options, 2-10 strings 1-100 characters each</param>
+        /// <param name="isAnonymous">True, if the poll needs to be anonymous, defaults to True</param>
+        /// <param name="type">Poll type, "quiz" or "regular", defaults to "regular"</param>
+        /// <param name="allowsMultipleAnswers">True, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to False</param>
+        /// <param name="correctOptionId">0-based identifier of the correct answer option, required for polls in quiz mode</param>
+        /// <param name="explanation">Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters</param>
+        /// <param name="explanationParseMode">Mode for parsing entities in the explanation</param>
+        /// <param name="openPeriod">Amount of time in seconds the poll will be active after creation, 5-600. Can't be used together with close_date.</param>
+        /// <param name="closeDate">Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future. Can't be used together with open_period.</param>
+        /// <param name="isClosed">Pass True, if the poll needs to be immediately closed</param>
+        /// <param name="disableNotification">Sends the message silently</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options</param>
+        /// <returns>On success, the sent Message is returned.</returns>
+        public SendMessageResult SendPoll(object chatId, string question, string[] options,
+            bool? isAnonymous = null,
+            string type = null,
+            bool? allowsMultipleAnswers = null,
+            int? correctOptionId = null,
+            string explanation = null,
+            ParseMode? explanationParseMode = null,
+            int? openPeriod = null,
+            long? closeDate = null,
+            bool? isClosed = null,
+            bool? disableNotification = null,
+            int? replyToMessageId = null,
+            IReplyMarkup replyMarkup = null)
+        {
+            RestRequest request = NewRestRequest(mSendPollUri);
+
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("question", question);
+            request.AddParameter("options", Newtonsoft.Json.JsonConvert.SerializeObject(options));
+
+            if (isAnonymous.HasValue)
+                request.AddParameter("is_anonymous", isAnonymous.Value);
+            if (!string.IsNullOrEmpty(type))
+                request.AddParameter("type", type);
+            if (allowsMultipleAnswers.HasValue)
+                request.AddParameter("allows_multiple_answers", allowsMultipleAnswers.Value);
+            if (correctOptionId.HasValue)
+                request.AddParameter("correct_option_id", correctOptionId.Value);
+            if (!string.IsNullOrEmpty(explanation))
+                request.AddParameter("explanation", explanation);
+            if (explanationParseMode.HasValue)
+                request.AddParameter("explanation_parse_mode", explanationParseMode.Value);
+            if (openPeriod.HasValue)
+                request.AddParameter("open_period", openPeriod.Value);
+            if (closeDate.HasValue)
+                request.AddParameter("close_date", closeDate.Value);
+            if (isClosed.HasValue)
+                request.AddParameter("is_closed", isClosed.Value);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+            if (replyToMessageId.HasValue)
+                request.AddParameter("reply_to_message_id", replyToMessageId.Value);
+            if (replyMarkup != null)
+                request.AddParameter("reply_markup", replyMarkup.GetJson());
+
+            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
+        }
+
+        /// <summary>
+        /// Use this method to stop a poll which was sent by the bot.
+        /// See <see href="https://core.telegram.org/bots/api#stoppoll">API</see>
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel</param>
+        /// <param name="messageId">Identifier of the original message with the poll</param>
+        /// <param name="replyMarkup">A JSON-serialized object for a new message inline keyboard</param>
+        /// <returns>On success, the stopped Poll is returned.</returns>
+        public SendMessageResult StopPoll(object chatId, int messageId, IReplyMarkup replyMarkup = null)
+        {
+            RestRequest request = NewRestRequest(mStopPollUri);
+
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("message_id", messageId);
+            if (replyMarkup != null)
+                request.AddParameter("reply_markup", replyMarkup.GetJson());
+
+            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
+        }
+
+        /// <summary>
+        /// Use this method to copy messages of any kind.
+        /// See <see href="https://core.telegram.org/bots/api#copymessage">API</see>
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel</param>
+        /// <param name="fromChatId">Unique identifier for the chat where the original message was sent</param>
+        /// <param name="messageId">Message identifier in the chat specified in from_chat_id</param>
+        /// <param name="caption">New caption for media, 0-1024 characters after entities parsing. If not specified, the original caption is kept</param>
+        /// <param name="parseMode">Mode for parsing entities in the new caption</param>
+        /// <param name="disableNotification">Sends the message silently</param>
+        /// <param name="replyToMessageId">If the message is a reply, ID of the original message</param>
+        /// <param name="replyMarkup">Additional interface options</param>
+        /// <returns>Returns the MessageId of the sent message on success.</returns>
+        public SendMessageResult CopyMessage(object chatId, object fromChatId, int messageId,
+            string caption = null,
+            ParseMode? parseMode = null,
+            bool? disableNotification = null,
+            int? replyToMessageId = null,
+            IReplyMarkup replyMarkup = null)
+        {
+            RestRequest request = NewRestRequest(mCopyMessageUri);
+
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("from_chat_id", fromChatId);
+            request.AddParameter("message_id", messageId);
+
+            if (!string.IsNullOrEmpty(caption))
+                request.AddParameter("caption", caption);
+            if (parseMode.HasValue)
+                request.AddParameter("parse_mode", parseMode.Value);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+            if (replyToMessageId.HasValue)
+                request.AddParameter("reply_to_message_id", replyToMessageId.Value);
+            if (replyMarkup != null)
+                request.AddParameter("reply_markup", replyMarkup.GetJson());
+
+            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
+        }
+
+        /// <summary>
+        /// Use this method to send a group of photos, videos, documents or audios as an album.
+        /// See <see href="https://core.telegram.org/bots/api#sendmediagroup">API</see>
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel</param>
+        /// <param name="media">Array describing messages to be sent, must include 2-10 items</param>
+        /// <param name="disableNotification">Sends messages silently</param>
+        /// <param name="replyToMessageId">If the messages are a reply, ID of the original message</param>
+        /// <returns>On success, an array of Messages that were sent is returned.</returns>
+        public SendMessageResult SendMediaGroup(object chatId, InputMedia[] media,
+            bool? disableNotification = null,
+            int? replyToMessageId = null)
+        {
+            RestRequest request = NewRestRequest(mSendMediaGroupUri);
+
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("media", Newtonsoft.Json.JsonConvert.SerializeObject(media));
+
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+            if (replyToMessageId.HasValue)
+                request.AddParameter("reply_to_message_id", replyToMessageId.Value);
+
+            return ExecuteRequest<SendMessageResult>(request) as SendMessageResult;
+        }
+
+        /// <summary>
+        /// Use this method to add a message to the list of pinned messages in a chat.
+        /// See <see href="https://core.telegram.org/bots/api#pinchatmessage">API</see>
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel</param>
+        /// <param name="messageId">Identifier of a message to pin</param>
+        /// <param name="disableNotification">Pass True, if it is not necessary to send a notification to all chat members about the new pinned message</param>
+        /// <returns>Returns True on success.</returns>
+        public BooleanResult PinChatMessage(object chatId, int messageId, bool? disableNotification = null)
+        {
+            RestRequest request = NewRestRequest(mPinChatMessageUri);
+
+            request.AddParameter("chat_id", chatId);
+            request.AddParameter("message_id", messageId);
+            if (disableNotification.HasValue)
+                request.AddParameter("disable_notification", disableNotification.Value);
+
+            return ExecuteRequest<BooleanResult>(request) as BooleanResult;
+        }
+
+        /// <summary>
+        /// Use this method to remove a message from the list of pinned messages in a chat.
+        /// See <see href="https://core.telegram.org/bots/api#unpinchatmessage">API</see>
+        /// </summary>
+        /// <param name="chatId">Unique identifier for the target chat or username of the target channel</param>
+        /// <param name="messageId">Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.</param>
+        /// <returns>Returns True on success.</returns>
+        public BooleanResult UnpinChatMessage(object chatId, int? messageId = null)
+        {
+            RestRequest request = NewRestRequest(mUnpinChatMessageUri);
+
+            request.AddParameter("chat_id", chatId);
+            if (messageId.HasValue)
+                request.AddParameter("message_id", messageId.Value);
 
             return ExecuteRequest<BooleanResult>(request) as BooleanResult;
         }

@@ -120,8 +120,20 @@ namespace NetTelebot.Type
                 ? new VideoNoteInfo(jsonObject["video_note"].Value<JObject>())
                 : new VideoNoteInfo {Thumb = new PhotoSizeInfo()};
 
-            Caption = jsonObject["caption"] != null 
-                ? jsonObject["caption"].Value<string>() 
+            Animation = jsonObject["animation"] != null
+                ? new AnimationInfo(jsonObject["animation"].Value<JObject>())
+                : new AnimationInfo {Thumbnail = new PhotoSizeInfo()};
+
+            Dice = jsonObject["dice"] != null
+                ? new DiceInfo(jsonObject["dice"].Value<JObject>())
+                : new DiceInfo();
+
+            Poll = jsonObject["poll"] != null
+                ? new PollInfo(jsonObject["poll"].Value<JObject>())
+                : new PollInfo {Options = new PollOptionInfo[0], ExplanationEntities = new MessageEntityInfo[0]};
+
+            Caption = jsonObject["caption"] != null
+                ? jsonObject["caption"].Value<string>()
                 : string.Empty;
 
             Contact = jsonObject["contact"] != null
@@ -214,6 +226,9 @@ namespace NetTelebot.Type
                 Video = new VideoInfo {Thumb = new PhotoSizeInfo()},
                 Voice = new VoiceInfo(),
                 VideoNote = new VideoNoteInfo {Thumb = new PhotoSizeInfo()},
+                Animation = new AnimationInfo {Thumbnail = new PhotoSizeInfo()},
+                Dice = new DiceInfo(),
+                Poll = new PollInfo {Options = new PollOptionInfo[0], ExplanationEntities = new MessageEntityInfo[0]},
                 NewChatMembers = new UserInfo[0],
                 Contact = new ContactInfo(),
                 Location = new LocationInfo(),
@@ -365,6 +380,21 @@ namespace NetTelebot.Type
         /// This object represents a video message (available in Telegram apps as of v.4.0).
         /// </summary>
         public VideoNoteInfo VideoNote { get; private set; }
+
+        /// <summary>
+        /// Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
+        /// </summary>
+        public AnimationInfo Animation { get; private set; }
+
+        /// <summary>
+        /// Optional. Message is a dice with random value
+        /// </summary>
+        public DiceInfo Dice { get; private set; }
+
+        /// <summary>
+        /// Optional. Message is a native poll, information about the poll
+        /// </summary>
+        public PollInfo Poll { get; private set; }
 
         /// <summary>
         /// Optional. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)

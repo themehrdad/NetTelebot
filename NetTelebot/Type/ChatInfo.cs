@@ -35,6 +35,18 @@ namespace NetTelebot.Type
                 Description = jsonObject["description"].Value<string>();
             if (jsonObject["invite_link"] != null)
                 InviteLink = jsonObject["invite_link"].Value<string>();
+            if (jsonObject["is_forum"] != null)
+                IsForum = jsonObject["is_forum"].Value<bool>();
+            if (jsonObject["emoji_status_custom_emoji_id"] != null)
+                EmojiStatusCustomEmojiId = jsonObject["emoji_status_custom_emoji_id"].Value<string>();
+            if (jsonObject["has_private_forwards"] != null)
+                HasPrivateForwards = jsonObject["has_private_forwards"].Value<bool>();
+            if (jsonObject["has_restricted_voice_and_video_messages"] != null)
+                HasRestrictedVoiceAndVideoMessages = jsonObject["has_restricted_voice_and_video_messages"].Value<bool>();
+            if (jsonObject["join_to_send_messages"] != null)
+                JoinToSendMessages = jsonObject["join_to_send_messages"].Value<bool>();
+            if (jsonObject["join_by_request"] != null)
+                JoinByRequest = jsonObject["join_by_request"].Value<bool>();
         }
         
         /// <summary>
@@ -88,5 +100,35 @@ namespace NetTelebot.Type
         /// Optional. Chat invite link, for supergroups and channel chats. Returned only in getChat.
         /// </summary>
         public string InviteLink { get; private set;  }
+
+        /// <summary>
+        /// Optional. True, if the supergroup chat is a forum (has topics enabled)
+        /// </summary>
+        public bool IsForum { get; private set; }
+
+        /// <summary>
+        /// Optional. Custom emoji identifier of emoji status of the other party in a private chat. Returned only in getChat.
+        /// </summary>
+        public string EmojiStatusCustomEmojiId { get; private set; }
+
+        /// <summary>
+        /// Optional. True, if privacy settings of the other party in the private chat allows to use tg://user?id=<user_id> links only in chats with the user. Returned only in getChat.
+        /// </summary>
+        public bool HasPrivateForwards { get; private set; }
+
+        /// <summary>
+        /// Optional. True, if the privacy settings of the other party restrict sending voice and video note messages in the private chat. Returned only in getChat.
+        /// </summary>
+        public bool HasRestrictedVoiceAndVideoMessages { get; private set; }
+
+        /// <summary>
+        /// Optional. True, if users need to join the supergroup before they can send messages. Returned only in getChat.
+        /// </summary>
+        public bool JoinToSendMessages { get; private set; }
+
+        /// <summary>
+        /// Optional. True, if all users directly joining the supergroup need to be approved by supergroup administrators. Returned only in getChat.
+        /// </summary>
+        public bool JoinByRequest { get; private set; }
     }
 }
